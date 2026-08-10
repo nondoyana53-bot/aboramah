@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ديوان أبو رماح وليان - المخطوطة الملكية</title>
-    <!-- خطوط عربية جاهلية وفصيحة -->
+    <!-- خطوط عربية فصيحة وتراثية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
@@ -16,7 +16,6 @@
             --gold-ancient: #d4af37;
             --gold-glow: #ffc83b;
             --gold-muted: rgba(212, 175, 55, 0.25);
-            --burgundy-dark: #3a0a11;
             --sand-text: #cbbba9;
             --text-light: #f5f0eb;
             --border-gold: #8c6d1d;
@@ -60,7 +59,6 @@
             filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
             animation: flicker 3s infinite alternate ease-in-out;
         }
-
         .lantern-right { right: 15px; }
         .lantern-left { left: 15px; transform: scaleX(-1); }
 
@@ -104,16 +102,6 @@
                         url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            inset: 4px;
-            border: 1px dashed var(--gold-muted);
-            border-radius: 4px;
-            pointer-events: none;
         }
 
         .sword-illustration {
@@ -131,9 +119,6 @@
             font-size: 36px;
             color: var(--gold-ancient);
             font-weight: 700;
-            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.2);
-            position: relative;
-            z-index: 2;
         }
 
         .subtitle {
@@ -142,8 +127,6 @@
             color: var(--sand-text);
             margin-top: 2px;
             font-style: italic;
-            position: relative;
-            z-index: 2;
         }
 
         .diwan-royal-banner {
@@ -161,20 +144,10 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7), inset 0 0 20px rgba(0,0,0,0.9);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
         }
-
-        .diwan-royal-banner::before {
-            content: '';
-            position: absolute;
-            inset: 4px;
-            border: 1px dashed var(--gold-muted);
-            border-radius: 4px;
-            pointer-events: none;
-        }
-
         .royal-banner-content { text-align: center; z-index: 2; }
-        .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); text-shadow: 0 2px 6px rgba(0,0,0,1); }
+        .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); }
         .royal-banner-sub { font-family: 'Amiri', serif; font-size: 13px; color: var(--sand-text); margin-top: 2px; }
 
         .nav-menu {
@@ -195,10 +168,9 @@
             font-family: 'Aref Ruqaa', serif;
             font-size: 18px;
             cursor: pointer;
-            transition: background 0.2s ease, border-color 0.2s ease;
+            transition: all 0.2s ease;
         }
-
-        .nav-btn:hover { background: #140f0c; border-color: var(--border-gold); color: var(--text-light); }
+        .nav-btn:hover { background: #140f0c; color: var(--text-light); }
         .nav-btn.active {
             background: #020101 !important;
             color: #d4af37 !important;
@@ -224,100 +196,150 @@
             margin-bottom: 22px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.9);
         }
-
         .horse-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 25%;
-            filter: brightness(0.65) contrast(1.15);
+            width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: brightness(0.65) contrast(1.15);
         }
-
         .horse-banner-overlay {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, rgba(8, 6, 5, 0.3) 60%, transparent 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-            text-align: center;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; text-align: center;
         }
-
-        .horse-banner-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 28px;
-            color: var(--gold-ancient);
-            text-shadow: 0 2px 8px rgba(0,0,0,1);
-        }
+        .horse-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 28px; color: var(--gold-ancient); }
 
         .featured-quote-card {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--gold-ancient);
-            border-radius: 6px;
-            padding: 25px 18px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            margin-bottom: 25px;
+            border-radius: 6px; padding: 25px 18px; text-align: center; cursor: pointer; position: relative; margin-bottom: 25px;
             box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(212, 175, 55, 0.05);
         }
-
         .featured-tag { font-family: 'Reem Kufi', sans-serif; font-size: 13px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
         .featured-quote-text { font-size: 22px; line-height: 2; color: #ffffff; font-weight: bold; margin: 10px 0; font-family: 'Amiri', serif; }
         .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
 
-        /* مشغل الصوت والصورة المحدث */
+        /* مشغل الصوت */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #140f0c, #0a0806);
-            border: 1px solid var(--border-gold);
-            border-radius: 8px;
-            padding: 18px 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.05);
+            border: 1px solid var(--border-gold); border-radius: 8px; padding: 18px 20px; margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
         }
-
         .audio-player-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            border-bottom: 1px dashed var(--gold-muted);
-            padding-bottom: 8px;
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px;
         }
-
         .audio-player-title { font-family: 'Aref Ruqaa', serif; font-size: 18px; color: var(--gold-ancient); }
         .audio-controls { display: flex; align-items: center; gap: 15px; }
-
         .audio-play-btn {
             background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
             border: none; color: #000; width: 44px; height: 44px; border-radius: 50%;
             cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 12px rgba(212, 175, 55, 0.4); flex-shrink: 0;
         }
-
         .audio-progress-container {
             flex-grow: 1; background: #1c1510; height: 8px; border-radius: 4px; cursor: pointer; position: relative; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden;
         }
-
         .audio-progress-bar { background: linear-gradient(90deg, var(--border-gold), var(--gold-glow)); width: 0%; height: 100%; border-radius: 4px; }
         .audio-time { font-family: 'Amiri', serif; font-size: 14px; color: var(--sand-text); min-width: 80px; text-align: center; direction: ltr; }
 
-        /* الأرشيف ونقش القصائد */
-        .search-box input {
-            width: 100%; background: #090705; border: 1px solid var(--border-gold); border-radius: 4px; padding: 10px 16px; font-family: 'Amiri', serif; font-size: 16px; color: var(--text-light); outline: none; margin-bottom: 18px;
+        /* === أرشيف الأبيات الفخم والتراثي الجديد === */
+        .archive-banner {
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(rgba(10, 7, 5, 0.8), rgba(10, 7, 5, 0.9)), 
+                        url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border: 1px solid var(--border-gold);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+        .archive-banner-text {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            color: var(--gold-ancient);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
         }
 
-        .poems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
-        .poem-mini-card {
-            background: #0d0a08; border: 1px solid var(--gold-muted); border-radius: 6px; padding: 16px; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between;
+        .search-box input {
+            width: 100%; background: #090705; border: 1px solid var(--border-gold); border-radius: 6px; padding: 12px 18px; font-family: 'Amiri', serif; font-size: 16px; color: var(--text-light); outline: none; margin-bottom: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
         }
-        .poem-mini-card:hover { border-color: var(--gold-ancient); background: #14100c; transform: translateY(-3px); }
-        .mini-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 6px; }
-        .mini-card-title { font-family: 'Aref Ruqaa', serif; font-size: 19px; color: var(--gold-ancient); }
-        .mini-card-badge { font-size: 11px; background: #1a1510; border: 1px solid #4a3822; color: var(--sand-text); padding: 2px 7px; border-radius: 3px; }
-        .mini-card-snippet { font-size: 15px; color: var(--sand-text); line-height: 1.7; margin-bottom: 12px; }
-        .mini-card-footer { font-size: 12px; color: var(--border-gold); display: flex; justify-content: space-between; }
+        .search-box input:focus { border-color: var(--gold-ancient); }
+
+        .poems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+        
+        /* القالب الفخم لكل قصيدة في الأرشيف */
+        .poem-mini-card {
+            background: linear-gradient(145deg, #130f0c, #0a0806);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+        }
+        .poem-mini-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; width: 40px; height: 40px;
+            background: linear-gradient(135deg, var(--gold-ancient) 0%, transparent 70%);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+        .poem-mini-card:hover {
+            border-color: var(--gold-glow);
+            background: linear-gradient(145deg, #1b130e, #0f0c09);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+        }
+        .mini-card-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px;
+        }
+        .mini-card-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            color: var(--gold-ancient);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .mini-card-badge {
+            font-size: 11px;
+            font-family: 'Reem Kufi', sans-serif;
+            background: #1e1610;
+            border: 1px solid var(--border-gold);
+            color: var(--gold-glow);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .mini-card-snippet {
+            font-size: 16px;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        .mini-card-footer {
+            font-size: 12px;
+            color: var(--sand-text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            padding-top: 8px;
+        }
+        .open-book-btn-text {
+            color: var(--gold-ancient);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
         /* النوافذ التفاعلية (Modal) */
         .modal-overlay {
@@ -413,7 +435,7 @@
                 <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
             </div>
 
-            <!-- مشغل الميديا المحدث بالاسم الجديد DLVideo.mp4 -->
+            <!-- مشغل الميديا المحدث DLVideo.mp4 -->
             <div class="audio-player-wrapper">
                 <div class="audio-player-header">
                     <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
@@ -442,11 +464,16 @@
             </div>
         </div>
 
-        <!-- TAB 2: الأرشيف -->
+        <!-- TAB 2: أرشيف الأبيات (المحدث بتصميم فخم وتراثي) -->
         <div id="poemsTab" class="tab-content">
-            <div class="search-box">
-                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في العناوين أو الأبيات...">
+            <div class="archive-banner">
+                <div class="archive-banner-text">📜 سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ 📜</div>
             </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في دواوين العز والعناوين والأبيات...">
+            </div>
+            
             <div class="poems-grid" id="poemsGrid"></div>
         </div>
 
@@ -526,7 +553,7 @@
             const listToRender = filteredList || poems;
 
             if (listToRender.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px;">لا توجد قصائد في الأرشيف حالياً...</div>`;
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px; font-family: 'Aref Ruqaa'; font-size: 20px;">لا توجد درر منقوشة في الأرشيف بعد...</div>`;
                 return;
             }
 
@@ -542,11 +569,11 @@
                             <div class="mini-card-title">${poem.title}</div>
                             <span class="mini-card-badge">${poem.category}</span>
                         </div>
-                        <div class="mini-card-snippet">${firstLine}</div>
+                        <div class="mini-card-snippet">"${firstLine}"</div>
                     </div>
                     <div class="mini-card-footer">
-                        <span>📖 فتح الكتاب (${lines.length} أبيات)</span>
                         <span>🗓️ ${poem.date}</span>
+                        <span class="open-book-btn-text">📖 قراءة (${lines.length} أبيات)</span>
                     </div>
                 `;
                 grid.appendChild(card);
@@ -600,12 +627,12 @@
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
             renderPoemsGrid();
-            alert('تم نقش القصيدة بنجاح!');
+            alert('تم نقش القصيدة بنجاح في سجل الديوان!');
             switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
         }
 
         function deleteCurrentModalPoem() {
-            if (confirm('هل أنت متأكد من مسح هذه القصيدة؟')) {
+            if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف؟')) {
                 poems = poems.filter(p => p.id !== activePoemId);
                 localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
                 closeModal();
@@ -625,7 +652,7 @@
             renderPoemsGrid(filtered);
         }
 
-        // تشغيل ميديا الفيديو الصوتي المحدث
+        // تشغيل ميديا الفيديو الصوتي
         document.addEventListener("DOMContentLoaded", function () {
             const audio = document.getElementById("mainAudioPlayer");
             const playBtn = document.getElementById("audioPlayBtn");
