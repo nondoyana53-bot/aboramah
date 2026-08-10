@@ -142,7 +142,7 @@
             object-fit: cover;
         }
 
-        /* الهيكل الأساسي لتطبيق R (أوسع وأكثر فخامة) */
+        /* الهيكل الأساسي لتطبيق R */
         .app-shell {
             display: none;
             width: 100%;
@@ -155,7 +155,7 @@
             padding-bottom: 60px;
         }
 
-        /* الهيدر العلوي مطابق تماماً لـ X في الصورة المرفقة */
+        /* الهيدر العلوي */
         .app-header {
             position: sticky;
             top: 0;
@@ -196,7 +196,6 @@
             letter-spacing: -1px;
         }
 
-        /* الأفاتار في الزاوية اليمنى تماماً كما طلب */
         .header-avatar-btn {
             width: 32px;
             height: 32px;
@@ -224,7 +223,55 @@
             display: flex;
         }
 
-        /* حاوية القصص/الدوائر العلوية في الرئيسية (المتحدثين والترندات) */
+        /* قائمة إكس الجانبية الشاملة المماثلة تماماً للطلب */
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3000;
+        }
+
+        .drawer-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--bg-color);
+            border-left: 1px solid var(--border-color);
+            z-index: 3001;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-color);
+            cursor: pointer;
+            border-bottom: 1px solid rgba(47, 51, 54, 0.4);
+        }
+
+        .drawer-item:hover {
+            color: var(--accent-color);
+        }
+
+        /* دوائر الترندات والمتحدثين */
         .stories-bar {
             display: flex;
             gap: 16px;
@@ -274,11 +321,11 @@
             width: 100%;
         }
 
-        /* زر التغريد الدائري العائم (Floating Action Button) في أسفل اليمين كما في الصورة */
+        /* زر التغريد الدائري العائم */
         .fab-tweet-btn {
             position: fixed;
             bottom: 75px;
-            left: 20px; /* أو حسب الرغبة، وضعه في أقصى الشاشة */
+            left: 20px;
             width: 56px;
             height: 56px;
             background-color: var(--accent-color);
@@ -305,7 +352,7 @@
             fill: #ffffff;
         }
 
-        /* نافذة إنشاء التغريدة المنبثقة (Modal) */
+        /* نافذة إنشاء التغريدة المنبثقة */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -357,7 +404,7 @@
             margin-bottom: 12px;
         }
 
-        /* شريط بحث انستغرامي سلس */
+        /* شريط البحث */
         .instagram-search-header {
             padding: 10px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -376,11 +423,6 @@
             border: 1px solid transparent;
         }
 
-        .instagram-search-input-wrapper:focus-within {
-            border-color: var(--accent-color);
-            background-color: var(--bg-color);
-        }
-
         .instagram-search-input-wrapper input {
             background: none;
             border: none;
@@ -392,7 +434,6 @@
             padding-right: 8px;
         }
 
-        /* قسم الترندات الثابتة المطلوبة في البحث */
         .trends-section-title {
             padding: 12px 16px;
             font-size: 18px;
@@ -429,7 +470,7 @@
             color: var(--text-secondary);
         }
 
-        /* شكل التغريدة المطابق لتطبيق X تماماً */
+        /* شكل التغريدة */
         .tweet-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -474,7 +515,6 @@
             margin-right: 4px;
         }
 
-        /* شارة التوثيق الذهبية للـ R */
         .gold-badge {
             display: inline-flex;
             align-items: center;
@@ -500,7 +540,6 @@
             word-break: break-word;
         }
 
-        /* أزرار التفاعل تحت التغريدة */
         .tweet-actions {
             display: flex;
             justify-content: space-between;
@@ -527,20 +566,30 @@
             background-color: var(--accent-bg-hover);
         }
 
-        .tweet-action-btn.repost-btn:hover {
-            color: #00ba7c;
-            background-color: rgba(0, 186, 124, 0.1);
-        }
-
         .tweet-action-btn.liked {
             color: var(--like-color);
         }
 
-        .tweet-action-btn.liked:hover {
-            background-color: var(--like-bg-hover);
+        /* صفحة التنبيهات مع تبويبي "الكل" و"الإشارات" */
+        .notif-sub-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* التنبيهات */
+        .notif-tab {
+            flex-grow: 1;
+            text-align: center;
+            padding: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .notif-tab.active {
+            color: var(--text-color);
+            border-bottom: 4px solid var(--accent-color);
+        }
+
         .notification-item {
             display: flex;
             gap: 12px;
@@ -549,11 +598,20 @@
             align-items: flex-start;
         }
 
-        /* صفحة الرسائل الخاصة */
+        /* صفحة الدردشة الخاصة المخصصة حصرياً لحسابك الموثق R */
         .dm-container {
             display: flex;
             flex-direction: column;
             height: calc(100vh - 110px);
+        }
+
+        .dm-header-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: #16181c;
         }
 
         .dm-messages-list {
@@ -619,7 +677,7 @@
             cursor: pointer;
         }
 
-        /* صفحة الملف الشخصي والإعدادات الشاملة نفس X */
+        /* صفحة الحساب الشخصي */
         .profile-header-banner {
             height: 160px;
             background-size: cover;
@@ -701,7 +759,6 @@
             line-height: 1.4;
         }
 
-        /* قائمة إعدادات اكس الشاملة */
         .settings-menu-container {
             background: #16181c;
             border-radius: 12px;
@@ -719,55 +776,12 @@
             cursor: pointer;
             font-size: 15px;
             font-weight: 600;
-            transition: background 0.2s;
         }
 
         .settings-item:hover {
             background-color: var(--hover-color);
         }
 
-        .settings-item:last-child {
-            border-bottom: none;
-        }
-
-        .planets-selector-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .planet-thumb {
-            height: 45px;
-            border-radius: 6px;
-            background-size: cover;
-            background-position: center;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .planet-thumb.selected {
-            border-color: var(--accent-color);
-        }
-
-        .file-upload-wrapper {
-            margin-bottom: 10px;
-            text-align: right;
-        }
-
-        .file-upload-label {
-            display: inline-block;
-            background: #202327;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        /* التبويبات الفئوية داخل البروفايل */
         .profile-tabs {
             display: flex;
             border-bottom: 1px solid var(--border-color);
@@ -781,24 +795,12 @@
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            position: relative;
         }
 
         .profile-tab.active {
             color: var(--text-color);
             font-weight: 700;
-        }
-
-        .profile-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 56px;
-            height: 4px;
-            background-color: var(--accent-color);
-            border-radius: 2px;
+            border-bottom: 4px solid var(--accent-color);
         }
 
         /* النافبار السفلي */
@@ -827,11 +829,6 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .nav-item:hover {
-            background-color: var(--hover-color);
         }
 
         .nav-item.active {
@@ -847,63 +844,78 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول وإنشاء حساب مع كلمة مرور لحماية الخصوصية -->
+    <!-- شاشة تسجيل الدخول وإنشاء حساب بكلمة مرور -->
     <div class="auth-container" id="authScreen">
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
-            <h3>تسجيل حساب جديد وحمايته بكلمة مرور</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">كلمة المرور تضمن عدم دخول أي شخص لحسابك الآخر</p>
+            <h3>تسجيل حساب جديد وتأمينه بكلمة مرور</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">أدخل اسم المستخدم وكلمة المرور الخاصة بك</p>
             
             <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل">
-            <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @R_User)">
-            <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور لحسابك">
+            <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @R)">
+            <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور">
             
-            <div class="file-upload-wrapper">
-                <label class="file-upload-label">
-                    📁 اختر صورة الـ Avatar من جهازك
-                    <input type="file" id="setupAvatarFile" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
-                </label>
-            </div>
-            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="أو ضع رابط صورة مباشر (URL)">
-
-            <button class="btn-r-primary" onclick="createNewAccount()">إنشاء وتأمين الحساب</button>
+            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="رابط صورة الـ Avatar (URL)">
+            <button class="btn-r-primary" onclick="createNewAccount()">إنشاء الدخول</button>
         </div>
 
         <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة (أدخل كلمة المرور للدخول):</p>
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة:</p>
             <div id="savedAccountsList"></div>
         </div>
     </div>
 
-    <!-- الهيكل الرئيسي لتطبيق R (واسع، سلس، وفخم) -->
+    <!-- الهيكل الرئيسي لتطبيق R -->
     <div class="app-shell" id="appShell">
         
-        <!-- الهيدر العلوي مطابق تماماً لصورة X -->
+        <!-- القائمة الجانبية (Drawer) المطابقة تماماً لطلبك -->
+        <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)">
+            <div class="drawer-menu" onclick="event.stopPropagation()">
+                <div class="drawer-header">
+                    <img id="drawerAvatar" src="" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <button onclick="toggleDrawer(false)" style="background:none; border:none; color:#fff; font-size:20px; cursor:pointer;">✕</button>
+                </div>
+                <div style="font-weight: 800; font-size: 16px;" id="drawerName">الاسم</div>
+                <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;" id="drawerHandle">@handle</div>
+                
+                <div class="drawer-item" onclick="openProfileFromHeader(); toggleDrawer(false);">👤 الملف الشخصي</div>
+                <div class="drawer-item" onclick="alert('ميزة Premium مفعلة')">⭐ Premium</div>
+                <div class="drawer-item" onclick="alert('السجل')">🔖 السجل</div>
+                <div class="drawer-item" onclick="alert('المجتمعات')">👥 المجتمعات</div>
+                <div class="drawer-item" onclick="alert('القوائم')">📑 القوائم</div>
+                <div class="drawer-item" onclick="alert('المساحات')">🎙️ المساحات</div>
+                <div class="drawer-item" onclick="alert('أستوديو منشئ المحتوى')">🚀 أستوديو منشئ المحتوى</div>
+                <hr style="border-color: var(--border-color); margin: 15px 0;">
+                <div class="drawer-item" onclick="alert('تنزيل Grok')">⚡ تنزيل Grok</div>
+                <div class="drawer-item" onclick="alert('الإعدادات والخصوصية')">⚙️ الإعدادات والخصوصية</div>
+                <div class="drawer-item" onclick="alert('مركز المساعدة')">❓ مركز المساعدة</div>
+                <div class="drawer-item" onclick="logoutAccount()" style="color: #f91880;">🚪 تسجيل خروج</div>
+            </div>
+        </div>
+
+        <!-- الهيدر العلوي -->
         <div class="app-header">
             <div class="header-left-area">
                 <span class="header-tab-top active">لك</span>
                 <span class="header-tab-top">متابعة</span>
             </div>
             <div class="header-x-logo">𝕽</div>
-            <button class="header-avatar-btn" onclick="openProfileFromHeader()" title="حسابي الشخصي والإعدادات">
+            <button class="header-avatar-btn" onclick="toggleDrawer(true)" title="القائمة الجانبية">
                 <img id="headerAvatarImg" src="" alt="Profile">
             </button>
         </div>
 
-        <!-- 1. الرئيسية (تحتوي شريط الدوائر للترندات والمتحدثين + زر التغريد الدائري) -->
+        <!-- 1. الرئيسية -->
         <div id="homePane" class="pane active">
-            <!-- شريط الترندات والمتحدثين بشكل دوائر دقيقة كما طلبت -->
             <div class="stories-bar" id="storiesBarContainer"></div>
-            <!-- تايملاين التغريدات -->
             <div id="timelineContainer"></div>
             
-            <!-- زر التغريد الدائري العائم في أسفل الشاشة -->
             <button class="fab-tweet-btn" onclick="openTweetModal()" title="تغريد">
                 <svg viewBox="0 0 24 24"><path d="M23 3c-6.62-.1-10.38 2.42-12.05 4.3C9.04 5.18 5.62 3.1 1 3c2.45 5.66 5.35 10.87 11.26 13.5C6.18 19.38 2.92 21.6 1 22c7.22 1.34 12.35-.35 15.75-3.5C20.5 15.2 22.8 10.3 23 3z"></path></svg>
             </button>
         </div>
 
-        <!-- 2. الاستكشاف / البحث (الترندات المحددة تماماً: عبس، عنزه، حرب، بني رشيد، 404، رامي وقفل) -->
+        <!-- 2. الاستكشاف / البحث (الترندات المحددة حرفياً) -->
         <div id="searchPane" class="pane">
             <div class="instagram-search-header">
                 <div class="instagram-search-input-wrapper">
@@ -913,40 +925,44 @@
             </div>
             
             <div class="trends-section-title">الترندات الرائجة الآن</div>
-            <div id="requiredTrendsContainer">
-                <!-- الترندات المحددة حرفياً -->
-            </div>
+            <div id="requiredTrendsContainer"></div>
             <div id="searchResultsContainer"></div>
         </div>
 
-        <!-- 3. التنبيهات (نفس شكل وتصميم إشعارات اكس) -->
+        <!-- 3. التنبيهات (الكل / الإشارات - تظهر بيوزر R فقط) -->
         <div id="notificationsPane" class="pane">
-            <div style="padding: 16px; border-bottom: 1px solid var(--border-color); font-weight: 700; font-size: 18px;">التنبيهات</div>
-            <div id="notificationsContainer">
-                <div class="notification-item">
-                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--accent-color)"><path d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.45-5.55 5.468-5.55 1.9 0 3.658.985 4.682 2.622.083.133.27.133.354 0 1.024-1.637 2.782-2.622 4.682-2.622 3.018 0 5.468 2.486 5.468 5.55 0 6.378-7.453 13.112-10.036 13.16H12z"></path></svg>
-                    <div>
-                        <div style="font-weight: 700; font-size: 15px;">أعجب شخص ما بتغريدتك</div>
-                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">قبل قليل</div>
-                    </div>
-                </div>
+            <div style="padding: 16px; font-weight: 700; font-size: 18px; border-bottom: 1px solid var(--border-color);">التنبيهات</div>
+            <div class="notif-sub-tabs">
+                <div class="notif-tab active" id="notifTabAll" onclick="switchNotifTab('all')">الكل</div>
+                <div class="notif-tab" id="notifTabMentions" onclick="switchNotifTab('mentions')">الإشارات</div>
             </div>
+            <div id="notificationsContainer"></div>
         </div>
 
-        <!-- 4. الخاص (نفس الشكل والتصميم المطلوب) -->
+        <!-- 4. الخاص (مخصص لحسابك الموثق R فقط لجميع المستخدمين) -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
+                <div class="dm-header-profile">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
+                    <div>
+                        <div style="font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 4px;">
+                            <span>R</span>
+                            <span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">@R</div>
+                    </div>
+                </div>
                 <div class="dm-messages-list" id="dmMessagesList"></div>
                 <div class="dm-input-area">
-                    <input type="text" id="dmInputText" placeholder="اكتب رسالة خاصة..." onkeypress="handleDmKeyPress(event)">
+                    <input type="text" id="dmInputText" placeholder="ابدأ محادثة مع حساب R..." onkeypress="handleDmKeyPress(event)">
                     <button class="dm-send-btn" onclick="sendDmMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- 5. الحساب الشخصي والإعدادات (تدخل له حصرياً عبر الضغط على الأفاتار في الزاوية اليمنى) -->
+        <!-- 5. الحساب الشخصي -->
         <div id="profilePane" class="pane">
-            <div class="profile-header-banner" id="profileBannerDiv"></div>
+            <div class="profile-header-banner" id="profileBannerDiv" style="background-image: url('https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop');"></div>
             <div class="profile-info-section">
                 <div class="profile-avatar-wrapper">
                     <img id="profilePageAvatar" src="" alt="Avatar">
@@ -958,53 +974,27 @@
                 <div class="profile-names">
                     <div class="profile-display-name-row">
                         <div class="profile-display-name" id="profileDisplayName">الاسم</div>
-                        <span class="gold-badge" title="موثق ذهبي">
-                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg>
-                        </span>
+                        <span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
                     </div>
-                    <div class="profile-user-handle" id="profileUserHandle">@handle</div>
+                    <div class="profile-user-handle" id="profileUserHandle">@R</div>
                 </div>
-                <div class="profile-bio" id="profileBioText">لم تتم إضافة نبذة بعد.</div>
+                <div class="profile-bio" id="profileBioText">مهتم بالتقنية والفضاء في منصة R.</div>
 
-                <!-- نموذج تعديل الملف الشخصي -->
                 <div class="profile-edit-form" id="profileEditForm" style="display: none; background: #16181c; padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 15px;">
-                    <h4 style="font-size: 15px; margin-bottom: 8px;">اختر هيدر من الكواكب الفخمة:</h4>
-                    <div class="planets-selector-grid" id="planetsGrid"></div>
-
                     <h4 style="font-size: 15px; margin-bottom: 8px;">تعديل بيانات الحساب:</h4>
                     <input type="text" id="editNameInput" class="input-r" placeholder="الاسم الكامل">
                     <input type="text" id="editHandleInput" class="input-r" placeholder="اسم المستخدم">
-                    <textarea id="editBioInput" class="input-r" placeholder="نبذة شخصية (Bio)..." style="resize: vertical; min-height: 60px;"></textarea>
-                    
+                    <textarea id="editBioInput" class="input-r" placeholder="نبذة شخصية..."></textarea>
                     <button class="btn-r-primary" onclick="saveProfileChanges()">حفظ التغييرات</button>
                 </div>
 
-                <!-- قائمة إعدادات تطبيق X الشاملة -->
                 <div class="settings-menu-container">
-                    <div class="settings-item" onclick="alert('الإعدادات والخصوصية: التحكم بالحساب والأمان')">
-                        <span>⚙️ الإعدادات والخصوصية</span>
-                        <span>‹</span>
-                    </div>
-                    <div class="settings-item" onclick="alert('الحساب: معلومات وتفضيلات الحساب الشخصي')">
-                        <span>👤 الحساب والأمان</span>
-                        <span>‹</span>
-                    </div>
-                    <div class="settings-item" onclick="alert('الاشتراكات: شارة التوثيق الذهبية ومميزات R Pro')">
-                        <span>⭐ اشتراكات R Premium</span>
-                        <span>‹</span>
-                    </div>
-                    <div class="settings-item" onclick="alert('الأمان والوصول إلى الحساب: كلمات المرور والمصادقة')">
-                        <span>🔒 كلمة المرور والأمان</span>
-                        <span>‹</span>
-                    </div>
-                    <div class="settings-item" onclick="alert('الإشعارات: تخصيص التنبيهات والتنبيهات المباشرة')">
-                        <span>🔔 إعدادات التنبيهات</span>
-                        <span>‹</span>
-                    </div>
-                    <div class="settings-item" onclick="alert('إمكانية الوصول والعرض: الوضع الليلي والألوان')">
-                        <span>🎨 العرض واللغة (الوضع الداكن)</span>
-                        <span>‹</span>
-                    </div>
+                    <div class="settings-item"><span>⚙️ الإعدادات والخصوصية</span><span>‹</span></div>
+                    <div class="settings-item"><span>👤 الحساب والأمان</span><span>‹</span></div>
+                    <div class="settings-item"><span>⭐ اشتراكات R Premium</span><span>‹</span></div>
+                    <div class="settings-item"><span>🔒 كلمة المرور والأمان</span><span>‹</span></div>
+                    <div class="settings-item"><span>🔔 إعدادات التنبيهات</span><span>‹</span></div>
+                    <div class="settings-item"><span>🎨 العرض واللغة (الوضع الداكن)</span><span>‹</span></div>
                 </div>
             </div>
 
@@ -1032,44 +1022,34 @@
                 <svg viewBox="0 0 24 24"><path d="M1.998 5.5c0-1.38 1.12-2.5 2.5-2.5h15c1.38 0 2.5 1.12 2.5 2.5v13c0 1.38-1.12 2.5-2.5 2.5h-15c-1.38 0-2.5-1.12-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.81 8-3.81V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.81-8-3.81v8.037c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z"></path></svg>
             </button>
         </div>
-
     </div>
 
-    <!-- نافذة كتابة التغريدة المنبثقة عند الضغط على الدوائر أو زر التغريد العائم -->
+    <!-- نافذة كتابة التغريدة المنبثقة -->
     <div class="modal-overlay" id="tweetModalOverlay">
         <div class="modal-card">
             <div class="modal-header">
                 <button class="modal-close-btn" onclick="closeTweetModal()">✕</button>
-                <button class="btn-tweet" onclick="publishTweetFromModal()" style="padding: 6px 16px; background: var(--accent-color); color: #fff; border:none; border-radius:50px; font-weight:700; cursor:pointer;">تغريد</button>
+                <button onclick="publishTweetFromModal()" style="padding: 6px 16px; background: var(--accent-color); color: #fff; border:none; border-radius:50px; font-weight:700; cursor:pointer;">تغريد</button>
             </div>
-            <textarea id="modalTweetText" class="modal-textarea" placeholder="ما الذي يحدث؟! تغريد لحسابك الفخري..."></textarea>
+            <textarea id="modalTweetText" class="modal-textarea" placeholder="ما الذي يحدث؟!"></textarea>
         </div>
     </div>
 
     <script>
-        const planetHeaders = [
-            'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=1000&auto=format&fit=crop'
-        ];
-
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts')) || {};
         let currentHandle = localStorage.getItem('r_current_handle') || null;
 
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets')) || [
-            { id: 1, name: 'رئيس المنصة', handle: '@R_Admin', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بك في منصة R المتكاملة.', time: 'منذ ساعة', likesCount: 45, likedBy: [] }
+            { id: 1, name: 'R', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بك في منصة R.', time: 'منذ ساعة', likesCount: 12, likedBy: [] }
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm')) || [
-            { sender: 'system', text: 'مرحباً بك في قسم الرسائل الخاصة.' }
+            { sender: 'theirs', text: 'أهلاً بك، كيف يمكنني مساعدتك في حساب R الموثق؟' }
         ];
 
-        let tempAvatarBase64 = '';
+        let currentNotifTab = 'all';
         let currentProfileSubTab = 'tweets';
 
-        // الترندات المطلوبة حرفياً في البحث
         const requiredTrends = [
             { category: 'ترند في السعودية', name: 'عبس', tweets: '٢٥٫٤ ألف تغريدة' },
             { category: 'ترند في السعودية', name: 'عنزه', tweets: '١٨٫٢ ألف تغريدة' },
@@ -1080,42 +1060,12 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderPlanetsPicker();
             renderRequiredTrends();
             checkAndLoadSession();
         });
 
-        function previewAvatar(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    tempAvatarBase64 = e.target.result;
-                    alert('تم تحميل صورة الـ Avatar بنجاح!');
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function renderPlanetsPicker() {
-            const grid = document.getElementById('planetsGrid');
-            if(!grid) return;
-            grid.innerHTML = '';
-            planetHeaders.forEach((url) => {
-                const div = document.createElement('div');
-                div.className = 'planet-thumb';
-                div.style.backgroundImage = `url(${url})`;
-                div.onclick = () => {
-                    const user = getCurrentUser();
-                    if(user) {
-                        user.banner = url;
-                        localStorage.setItem('r_accounts', JSON.stringify(allAccounts));
-                        document.getElementById('profileBannerDiv').style.backgroundImage = `url(${url})`;
-                        alert('تم تحديث الهيدر بنجاح!');
-                    }
-                };
-                grid.appendChild(div);
-            });
+        function toggleDrawer(show) {
+            document.getElementById('drawerOverlay').style.display = show ? 'block' : 'none';
         }
 
         function checkAndLoadSession() {
@@ -1137,10 +1087,9 @@
                                 <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
                             </div>
                         </div>
-                        <input type="password" id="pass_${handle.replace('@','')}" placeholder="أدخل كلمة المرور" style="width: 130px; padding: 6px; background:#000; border:1px solid var(--border-color); color:#fff; border-radius:4px; font-size:12px;">
+                        <input type="password" id="pass_${handle.replace('@','')}" placeholder="كلمة المرور" style="width: 110px; padding: 6px; background:#000; border:1px solid var(--border-color); color:#fff; border-radius:4px; font-size:12px;">
                     `;
                     item.onclick = (e) => {
-                        // إذا لم يضغط على خانة الباسورد مباشرة
                         if(e.target.tagName !== 'INPUT') {
                             const pInput = document.getElementById(`pass_${handle.replace('@','')}`);
                             loginIntoAccount(handle, pInput.value);
@@ -1148,8 +1097,6 @@
                     };
                     savedListContainer.appendChild(item);
                 });
-            } else {
-                document.getElementById('savedAccountsSection').style.display = 'none';
             }
 
             if (currentHandle && allAccounts[currentHandle]) {
@@ -1164,21 +1111,13 @@
             const urlInput = document.getElementById('setupAvatarUrl').value.trim();
 
             if (!name || !handle || !pass) {
-                alert('يرجى كتابة الاسم، اسم المستخدم، وكلمة المرور لتأمين الحساب.');
+                alert('يرجى ملء الحقول المطلوبة.');
                 return;
             }
 
-            const avatar = tempAvatarBase64 || urlInput || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
+            const avatar = urlInput || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
             
-            allAccounts[handle] = {
-                name,
-                handle,
-                pass,
-                avatar,
-                banner: planetHeaders[0],
-                bio: 'مهتم بالتقنية في منصة R.'
-            };
-
+            allAccounts[handle] = { name, handle, pass, avatar, bio: 'مهتم بالتقنية والفضاء في منصة R.' };
             localStorage.setItem('r_accounts', JSON.stringify(allAccounts));
             loginIntoAccount(handle, pass);
         }
@@ -1186,12 +1125,10 @@
         function loginIntoAccount(handle, enteredPass) {
             const acc = allAccounts[handle];
             if (!acc) return;
-
             if (acc.pass && acc.pass !== enteredPass) {
-                alert('كلمة المرور غير صحيحة! لا يمكنك دخول حساب غيرك.');
+                alert('كلمة المرور غير صحيحة!');
                 return;
             }
-
             currentHandle = handle;
             localStorage.setItem('r_current_handle', handle);
             startAppShell();
@@ -1202,6 +1139,7 @@
             currentHandle = null;
             document.getElementById('appShell').style.display = 'none';
             document.getElementById('authScreen').style.display = 'flex';
+            toggleDrawer(false);
             checkAndLoadSession();
         }
 
@@ -1211,87 +1149,68 @@
 
         function startAppShell() {
             const user = getCurrentUser();
-            if (!user) {
-                logoutAccount();
-                return;
-            }
+            if (!user) { logoutAccount(); return; }
 
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appShell').style.display = 'flex';
 
             document.getElementById('headerAvatarImg').src = user.avatar;
             document.getElementById('profilePageAvatar').src = user.avatar;
-            document.getElementById('profileBannerDiv').style.backgroundImage = `url(${user.banner || planetHeaders[0]})`;
+            document.getElementById('drawerAvatar').src = user.avatar;
+            document.getElementById('drawerName').innerText = user.name;
+            document.getElementById('drawerHandle').innerText = user.handle;
 
             document.getElementById('profileDisplayName').innerText = user.name;
             document.getElementById('profileUserHandle').innerText = user.handle;
             document.getElementById('profileBioText').innerText = user.bio;
 
-            document.getElementById('editNameInput').value = user.name;
-            document.getElementById('editHandleInput').value = user.handle;
-            document.getElementById('editBioInput').value = user.bio;
-
             renderStoriesBar();
             renderTimeline();
+            renderNotifications();
+            renderDmMessages();
             renderProfileContent();
         }
 
-        // إخفاء صندوق التغريد التقليدي وجعله بشكل دوائر في الرئيسية (الترندات والمتحدثين)
         function renderStoriesBar() {
             const bar = document.getElementById('storiesBarContainer');
             bar.innerHTML = '';
-
-            // إضافة الحساب الحالي وأبرز الحسابات كدوائر تضغط عليها فتفتح لك نافذة التغريد لحالك
-            const usersList = Object.values(allAccounts);
-            // إضافة دوائر للمتحدثين والترندات
             const sampleSpeakers = [
-                { name: 'ترند عبس', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
-                { name: 'ترند عنزه', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' },
-                { name: 'ترند حرب', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop' },
-                { name: 'بني رشيد', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=300&auto=format&fit=crop' },
-                { name: '404 Tech', avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=300&auto=format&fit=crop' },
-                { name: 'رامي وقفل', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=crop' }
+                { name: 'R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop' },
+                { name: 'عبس', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
+                { name: 'عنزه', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' },
+                { name: 'حرب', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop' },
+                { name: 'بني رشيد', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=300&auto=format&fit=crop' }
             ];
 
             sampleSpeakers.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'story-item';
                 item.innerHTML = `
-                    <div class="story-ring">
-                        <img src="${s.avatar}" class="story-avatar" alt="speaker">
-                    </div>
+                    <div class="story-ring"><img src="${s.avatar}" class="story-avatar"></div>
                     <div class="story-name">${s.name}</div>
                 `;
-                // الضغط على الدائرة يتيح لك التغريد لحالك
                 item.onclick = () => openTweetModal();
                 bar.appendChild(item);
             });
         }
 
-        function openTweetModal() {
-            document.getElementById('tweetModalOverlay').style.display = 'flex';
-        }
-
-        function closeTweetModal() {
-            document.getElementById('tweetModalOverlay').style.display = 'none';
-        }
+        function openTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'flex'; }
+        function closeTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'none'; }
 
         function publishTweetFromModal() {
             const text = document.getElementById('modalTweetText').value.trim();
             if (!text) return;
-
             const user = getCurrentUser();
             tweetsData.unshift({
                 id: Date.now(),
                 name: user.name,
-                handle: user.handle,
+                handle: user.handle, // يقتصر على يوزرك R أو الحساب المسجل
                 avatar: user.avatar,
                 text: text,
                 time: 'الآن',
                 likesCount: 0,
                 likedBy: []
             });
-
             localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             document.getElementById('modalTweetText').value = '';
             closeTweetModal();
@@ -1302,21 +1221,19 @@
         function switchPane(paneId, btnEl) {
             document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-
             document.getElementById(paneId).classList.add('active');
             if (btnEl) btnEl.classList.add('active');
         }
 
-        // الدخول للحساب الشخصي حصرياً عبر الضغط على الأفاتار في الزاوية يمين
         function openProfileFromHeader() {
-            switchPane('profilePane', document.getElementById('navHome')); // افتراضي
-            // تفعيل التبويب المخصص للبروفايل
+            switchPane('profilePane', document.getElementById('navHome'));
             document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
             document.getElementById('profilePane').classList.add('active');
         }
 
         function renderRequiredTrends() {
             const container = document.getElementById('requiredTrendsContainer');
+            if(!container) return;
             container.innerHTML = '';
             requiredTrends.forEach(t => {
                 const div = document.createElement('div');
@@ -1326,37 +1243,20 @@
                     <div class="trend-name">#${t.name}</div>
                     <div class="trend-tweets-count">${t.tweets}</div>
                 `;
-                div.onclick = () => {
-                    document.getElementById('igSearchInput').value = t.name;
-                    performSearch();
-                };
                 container.appendChild(div);
             });
         }
 
         function performSearch() {
             const query = document.getElementById('igSearchInput').value.toLowerCase();
-            const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.name.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query));
-            const resContainer = document.getElementById('searchResultsContainer');
-            resContainer.innerHTML = '';
-            
-            if (results.length === 0) {
-                resContainer.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 20px;">لا توجد نتائج مطابقة</div>`;
-                return;
-            }
+            const results = tweetsData.filter(t => t.text.toLowerCase().includes(query));
             renderTimeline(results, 'searchResultsContainer');
         }
 
-        // رسم التغريدات مع التوثيق الذهبي الموثوق
         function renderTimeline(list = tweetsData, containerId = 'timelineContainer') {
             const container = document.getElementById(containerId);
             if(!container) return;
             container.innerHTML = '';
-
-            if (list.length === 0 && containerId !== 'searchResultsContainer') {
-                container.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 30px;">لا توجد تغريدات حالياً</div>`;
-                return;
-            }
 
             const user = getCurrentUser();
             list.forEach(t => {
@@ -1364,29 +1264,18 @@
                 const card = document.createElement('div');
                 card.className = 'tweet-card';
                 card.innerHTML = `
-                    <img src="${t.avatar}" class="tweet-avatar" alt="avatar">
+                    <img src="${t.avatar}" class="tweet-avatar">
                     <div class="tweet-body">
                         <div class="tweet-header-info">
                             <span class="tweet-name">${t.name}</span>
-                            <span class="gold-badge" title="موثق ذهبي">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg>
-                            </span>
+                            <span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
                             <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
                         </div>
                         <div class="tweet-text">${t.text}</div>
                         <div class="tweet-actions">
-                            <button class="tweet-action-btn">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M1.5 4.5h21v15h-21v-15zm2 2v11h17v-11h-17zm3.5 3h10v1.5h-10v-1.5zm0 4h7v1.5h-7v-1.5z"></path></svg>
-                                <span>رد</span>
-                            </button>
-                            <button class="tweet-action-btn repost-btn">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.5 3.88l4.43 4.43-1.06 1.06-2.62-2.62V13c0 2.76 2.24 5 5 5h1v1.5h-1c-3.59 0-6.5-2.91-6.5-6.5V6.75L3.44 7.94 2.38 6.88 4.5 3.88zm15 16.24l-4.43-4.43 1.06-1.06 2.62 2.62V11c0-2.76-2.24-5-5-5h-1V4.5h1c3.59 0 6.5 2.91 6.5 6.5v5.75l2.06-2.06 1.06 1.06-2.12 3.12z"></path></svg>
-                                <span>0</span>
-                            </button>
-                            <button class="tweet-action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${t.id})">
-                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.1-.806-1.1C9.986 6.01 8.53 5.44 7.307 5.5c-1.23.012-2.374.55-3.13 1.45-1.025 1.22-1.18 2.84-.42 4.31.83 1.63 2.11 3.2 4.13 5.2 2.05 1.99 4.52 3.86 5.02 4.23.5-.37 2.97-2.24 5.02-4.23 2.02-2 3.3-3.57 4.13-5.2.76-1.47.605-3.09-.42-4.31-.756-.9-1.9-1.438-3.13-1.45z"></path></svg>
-                                <span>${t.likesCount}</span>
-                            </button>
+                            <button class="tweet-action-btn">رد</button>
+                            <button class="tweet-action-btn">إعادة نشر</button>
+                            <button class="tweet-action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${t.id})">❤ <span>${t.likesCount}</span></button>
                         </div>
                     </div>
                 `;
@@ -1397,11 +1286,9 @@
         function toggleLike(id) {
             const tweet = tweetsData.find(t => t.id === id);
             if (!tweet) return;
-
             const user = getCurrentUser();
             if (!tweet.likedBy) tweet.likedBy = [];
             const idx = tweet.likedBy.indexOf(user.handle);
-
             if (idx > -1) {
                 tweet.likedBy.splice(idx, 1);
                 tweet.likesCount = Math.max(0, tweet.likesCount - 1);
@@ -1409,10 +1296,42 @@
                 tweet.likedBy.push(user.handle);
                 tweet.likesCount += 1;
             }
-
             localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             renderTimeline();
             renderProfileContent();
+        }
+
+        function switchNotifTab(tab) {
+            currentNotifTab = tab;
+            document.getElementById('notifTabAll').classList.toggle('active', tab === 'all');
+            document.getElementById('notifTabMentions').classList.toggle('active', tab === 'mentions');
+            renderNotifications();
+        }
+
+        function renderNotifications() {
+            const container = document.getElementById('notificationsContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            const items = currentNotifTab === 'all' ? [
+                { text: 'أعجب حساب R بتغريدتك الجديدة', time: 'منذ دقيقتين' },
+                { text: 'قام R بمتابعتك', time: 'منذ ساعة' }
+            ] : [
+                { text: 'أشار إليك R في رد جديد', time: 'منذ 5 دقائق' }
+            ];
+
+            items.forEach(n => {
+                const div = document.createElement('div');
+                div.className = 'notification-item';
+                div.innerHTML = `
+                    <div style="font-weight: 700; color: var(--accent-color);">R</div>
+                    <div>
+                        <div style="font-weight: 700; font-size: 15px;">${n.text}</div>
+                        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">${n.time}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
         }
 
         function switchProfileTab(tabName) {
@@ -1430,11 +1349,11 @@
             if (currentProfileSubTab === 'tweets') {
                 const myTweets = tweetsData.filter(t => t.handle === user.handle);
                 renderTimeline(myTweets, 'userProfileContentContainer');
-            } else if (currentProfileSubTab === 'replies') {
-                renderTimeline([], 'userProfileContentContainer');
             } else if (currentProfileSubTab === 'likes') {
                 const myLiked = tweetsData.filter(t => t.likedBy && t.likedBy.includes(user.handle));
                 renderTimeline(myLiked, 'userProfileContentContainer');
+            } else {
+                document.getElementById('userProfileContentContainer').innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-secondary);">لا توجد ردود</div>`;
             }
         }
 
@@ -1446,41 +1365,26 @@
         function saveProfileChanges() {
             const user = getCurrentUser();
             const name = document.getElementById('editNameInput').value.trim();
-            const handle = document.getElementById('editHandleInput').value.trim();
             const bio = document.getElementById('editBioInput').value.trim();
-
             if (name) user.name = name;
             if (bio) user.bio = bio;
-
-            if (handle && handle !== user.handle) {
-                delete allAccounts[user.handle];
-                user.handle = handle;
-                currentHandle = handle;
-                localStorage.setItem('r_current_handle', handle);
-            }
-
             allAccounts[user.handle] = user;
             localStorage.setItem('r_accounts', JSON.stringify(allAccounts));
-
             startAppShell();
             toggleEditProfileForm();
-            alert('تم حفظ الملف الشخصي وتحديث التغييرات بنجاح!');
         }
 
         function sendDmMessage() {
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
             if (!txt) return;
-
-            dmMessages.push({ sender: 'me', text: txt });
+            dmMessages.push({ sender: 'mine', text: txt });
             localStorage.setItem('r_dm', JSON.stringify(dmMessages));
             input.value = '';
             renderDmMessages();
         }
 
-        function handleDmKeyPress(e) {
-            if (e.key === 'Enter') sendDmMessage();
-        }
+        function handleDmKeyPress(e) { if (e.key === 'Enter') sendDmMessage(); }
 
         function renderDmMessages() {
             const list = document.getElementById('dmMessagesList');
@@ -1488,7 +1392,7 @@
             list.innerHTML = '';
             dmMessages.forEach(m => {
                 const bubble = document.createElement('div');
-                bubble.className = `dm-bubble ${m.sender === 'me' ? 'mine' : 'theirs'}`;
+                bubble.className = `dm-bubble ${m.sender === 'mine' ? 'mine' : 'theirs'}`;
                 bubble.innerText = m.text;
                 list.appendChild(bubble);
             });
