@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ديوان الحرف والعدالة - المنصة المزدوجة</title>
+    <title>منصة الحرف والعدالة - بوابتان مستقلتان</title>
     <!-- خطوط عربية فاخرة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,7 +22,7 @@
             --border-gold: #8c6d1d;
         }
 
-        /* سمات موقع الشاعر (ثيم ليلي شاعري / كلاسيكي) */
+        /* ثيم الشاعر */
         body.theme-poet {
             --bg-base: #08070b;
             --card-dark: #100e14;
@@ -31,14 +31,9 @@
             --gold-muted: rgba(209, 154, 102, 0.25);
             --burgundy-dark: #221524;
             --border-gold: #8c5d35;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(209, 154, 102, 0.07) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(198, 120, 221, 0.05) 0%, transparent 40%),
-                linear-gradient(rgba(8, 7, 11, 0.96), rgba(8, 7, 11, 0.96)),
-                url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600&auto=format&fit=crop');
         }
 
-        /* سمات موقع المحامية (ثيم قانوني رسمي ملكي) */
+        /* ثيم المحامية */
         body.theme-lawyer {
             --bg-base: #060607;
             --card-dark: #0b0c0e;
@@ -47,11 +42,6 @@
             --gold-muted: rgba(212, 175, 55, 0.25);
             --burgundy-dark: #121824;
             --border-gold: #8c6d1d;
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(6, 6, 7, 0.96), rgba(6, 6, 7, 0.96)),
-                url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1600&auto=format&fit=crop');
         }
 
         * {
@@ -62,267 +52,169 @@
         }
 
         body {
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background-color: var(--bg-base);
             color: var(--text-light);
             font-family: 'Amiri', serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px 10px;
-            position: relative;
-            transition: background 0.5s ease;
+            padding: 10px;
+            transition: background 0.4s ease;
         }
 
-        /* شاشة اختيار العالم أو تسجيل الدخول */
-        #portalScreen {
+        /* بوابات الاختيار المستقلة */
+        .portal-wrapper {
             width: 100%;
-            max-width: 480px;
+            max-width: 440px;
             background: var(--card-dark);
             border: 2px solid var(--border-gold);
             border-radius: 12px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
-            padding: 35px 25px;
-            position: relative;
+            padding: 30px 20px;
             text-align: center;
-            z-index: 10;
-        }
-
-        #portalScreen::before {
-            content: '';
-            position: absolute;
-            inset: 6px;
-            border: 1px solid var(--gold-muted);
-            border-radius: 8px;
-            pointer-events: none;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
         }
 
         .portal-title {
             font-family: 'Aref Ruqaa', serif;
             color: var(--gold-ancient);
-            font-size: 32px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.3);
+            font-size: 30px;
+            margin-bottom: 8px;
         }
 
-        .portal-subtitle {
-            font-size: 15px;
+        .portal-sub {
+            font-size: 14px;
             color: var(--sand-text);
             margin-bottom: 25px;
-            line-height: 1.8;
         }
 
-        .portal-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .portal-card {
-            background: rgba(18, 24, 36, 0.6);
+        .portal-btn {
+            background: #131821;
             border: 1px solid var(--border-gold);
+            color: var(--text-light);
+            width: 100%;
+            padding: 16px;
             border-radius: 8px;
-            padding: 18px;
+            margin-bottom: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-align: right;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: all 0.3s;
         }
 
-        .portal-card:hover {
+        .portal-btn:hover {
             border-color: var(--gold-ancient);
             background: var(--burgundy-dark);
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
-        .portal-card-info h3 {
+        .portal-btn span {
             font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
             color: var(--gold-ancient);
-            font-size: 22px;
-            margin-bottom: 4px;
         }
 
-        .portal-card-info p {
-            font-size: 13px;
-            color: var(--sand-text);
-        }
-
-        /* الحاوية الرئيسية للتطبيق بعد الدخول */
-        .app-container {
+        /* واجهة التطبيق المستقلة لكل حساب */
+        .app-shell {
             display: none;
             width: 100%;
-            max-width: 900px;
+            max-width: 480px;
+            height: 92vh;
+            max-height: 850px;
             background: var(--card-dark);
             border: 2px solid var(--border-gold);
-            border-radius: 12px;
-            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
-            padding: 22px 18px;
+            border-radius: 14px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
             position: relative;
-            margin: 20px 0;
-        }
-
-        .app-container::before {
-            content: '';
-            position: absolute;
-            inset: 6px;
-            border: 1px solid var(--gold-muted);
-            border-radius: 8px;
-            pointer-events: none;
-        }
-
-        header {
-            text-align: center;
-            position: relative;
-            border-radius: 8px;
+            flex-direction: column;
             overflow: hidden;
-            border: 1px solid var(--border-gold);
-            margin-bottom: 20px;
-            background: #121824;
         }
 
-        .header-overlay {
-            background: linear-gradient(180deg, rgba(6, 6, 7, 0.8) 0%, rgba(6, 6, 7, 0.95) 100%);
-            padding: 25px 15px 20px 15px;
-            position: relative;
-        }
-
-        .top-action-btns {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
+        /* رأس الصفحة */
+        .app-header {
+            padding: 15px 20px;
+            background: rgba(18, 24, 36, 0.9);
+            border-bottom: 1px solid var(--gold-muted);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .action-btn-sm {
-            background: rgba(201, 59, 59, 0.2);
-            border: 1px solid rgba(201, 59, 59, 0.5);
-            color: #ff8b8b;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-family: 'Amiri', serif;
+        .app-header-title {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 22px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-top-btn {
+            background: none;
+            border: 1px solid var(--gold-muted);
+            color: var(--gold-ancient);
+            padding: 5px 10px;
+            border-radius: 6px;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-family: 'Amiri', serif;
         }
 
-        .action-btn-sm:hover {
-            background: rgba(201, 59, 59, 0.4);
+        /* شاشات المحتوى (Pages) */
+        .page-pane {
+            display: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .switch-universe-btn {
-            background: var(--gold-muted);
-            border: 1px solid var(--gold-ancient);
-            color: var(--gold-ancient);
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 14px;
-            cursor: pointer;
+        .page-pane.active {
+            display: flex;
         }
 
-        .switch-universe-btn:hover {
-            background: var(--burgundy-dark);
-        }
-
-        h1 {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 34px;
-            color: var(--gold-ancient);
-            font-weight: 700;
-            text-shadow: 0 2px 12px rgba(255, 200, 59, 0.4);
-            margin-top: 10px;
-        }
-
-        .subtitle {
+        /* شريط البحث الطويل الفخم */
+        .search-bar-long {
+            width: 100%;
+            background: #131821;
+            border: 1px solid var(--border-gold);
+            border-radius: 25px;
+            padding: 10px 20px;
             font-family: 'Amiri', serif;
             font-size: 15px;
-            color: var(--sand-text);
-            margin-top: 2px;
-            font-style: italic;
-        }
-
-        /* القائمة العلوية للتنقل بين الأقسام (تغريدات ثنائية / دردشة خاصة / الأرشيف) */
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 22px;
-            border-bottom: 1px solid var(--gold-muted);
-            padding-bottom: 12px;
-            flex-wrap: wrap;
-        }
-
-        .nav-btn {
-            background: #10131a;
-            border: 1px solid var(--border-gold);
             color: var(--text-light);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 17px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            outline: none;
+            margin-bottom: 5px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        .nav-btn.active {
-            background: var(--burgundy-dark);
-            color: var(--gold-ancient);
+        .search-bar-long:focus {
             border-color: var(--gold-ancient);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.35s ease-in-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* صندوق إنشاء التغريدات والمنشورات */
-        .composer-box {
+        /* بوكس النشر والتغريد */
+        .post-composer {
             background: #0d1015;
-            border: 1px solid var(--border-gold);
-            border-radius: 8px;
-            padding: 18px;
-            margin-bottom: 22px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 10px;
+            padding: 14px;
         }
 
-        .composer-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 20px;
-            color: var(--gold-ancient);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        textarea, input {
+        textarea, input[type="text"] {
             width: 100%;
             background: #131821;
             border: 1px solid var(--gold-muted);
             border-radius: 6px;
             color: var(--text-light);
-            padding: 12px;
+            padding: 10px;
             font-family: 'Amiri', serif;
-            font-size: 16px;
-            margin-bottom: 10px;
+            font-size: 15px;
+            margin-bottom: 8px;
             outline: none;
         }
 
@@ -330,601 +222,657 @@
             border-color: var(--gold-ancient);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+        textarea { resize: vertical; min-height: 80px; }
 
-        .btn-feather {
-            background: linear-gradient(135deg, #182232 0%, #0c111a 100%);
+        .btn-gold {
+            background: linear-gradient(135deg, var(--burgundy-dark), #0c111a);
             color: var(--gold-ancient);
             border: 1px solid var(--gold-ancient);
-            padding: 10px 20px;
+            padding: 8px 18px;
             border-radius: 6px;
             font-family: 'Aref Ruqaa', serif;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.2s;
+            width: 100%;
+            font-weight: bold;
         }
 
-        .btn-feather:hover {
-            background: var(--burgundy-dark);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-        }
+        .btn-gold:hover { background: var(--burgundy-dark); }
 
-        /* قائمة التغريدات الثنائية والمنشورات */
-        .feed-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .feed-card {
+        /* بطاقات المنشورات والتغريدات */
+        .card-item {
             background: #0d1015;
             border: 1px solid var(--gold-muted);
-            border-radius: 8px;
-            padding: 18px;
-            position: relative;
-            transition: all 0.2s ease;
+            border-radius: 10px;
+            padding: 14px;
         }
 
-        .feed-card:hover {
-            border-color: var(--border-gold);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-        }
-
-        .feed-header {
+        .card-top {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 10px;
             margin-bottom: 10px;
             border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
             padding-bottom: 8px;
         }
 
-        .feed-author {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 19px;
-            color: var(--gold-ancient);
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .card-avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold-ancient);
         }
 
-        .feed-date {
-            font-size: 12px;
+        .card-user-info h4 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 16px;
+        }
+
+        .card-user-info span {
+            font-size: 11px;
             color: var(--sand-text);
         }
 
-        .feed-text {
-            font-size: 18px;
-            line-height: 1.9;
-            color: #ffffff;
-            margin-bottom: 15px;
+        .card-body-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
             white-space: pre-wrap;
-            text-align: justify;
         }
 
-        .feed-footer {
+        .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        .like-btn {
+        .like-action-btn {
             background: none;
             border: 1px solid var(--gold-muted);
             color: var(--text-light);
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
+            gap: 5px;
             font-family: 'Amiri', serif;
         }
 
-        .like-btn.liked {
+        .like-action-btn.liked {
             background: rgba(212, 175, 55, 0.2);
             border-color: var(--gold-ancient);
             color: var(--gold-glow);
         }
 
-        .delete-post-btn {
+        .delete-btn-sm {
             background: none;
             border: none;
             color: #ff6b6b;
-            font-size: 13px;
             cursor: pointer;
-            font-family: 'Amiri', serif;
+            font-size: 13px;
         }
 
-        /* نظام الدردشة الخاصة الثنائية مع خيار المسح */
-        .chat-container {
+        /* شاشة الدردشة الخاصة (تصميم راقي جداً يشبه تطبيقات الدردشة الفخمة) */
+        .chat-box-container {
+            flex-grow: 1;
             background: #0d1015;
-            border: 1px solid var(--border-gold);
-            border-radius: 8px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
-            height: 500px;
             overflow: hidden;
+            height: 100%;
         }
 
-        .chat-header {
-            background: #131821;
-            padding: 12px 18px;
-            border-bottom: 1px solid var(--gold-muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 18px;
-        }
-
-        .clear-chat-btn {
-            background: none;
-            border: 1px solid rgba(201, 59, 59, 0.4);
-            color: #ff8b8b;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            cursor: pointer;
-            font-family: 'Amiri', serif;
-        }
-
-        .chat-messages {
+        .chat-messages-area {
             flex-grow: 1;
-            padding: 15px;
+            padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .chat-bubble {
-            max-width: 75%;
+        .chat-bubble-ui {
+            max-width: 80%;
             padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 16px;
-            line-height: 1.7;
+            border-radius: 12px;
+            font-size: 15px;
+            line-height: 1.6;
             position: relative;
-            word-break: break-word;
         }
 
-        .chat-bubble.mine {
+        .chat-bubble-ui.mine {
             background: var(--burgundy-dark);
             border: 1px solid var(--gold-ancient);
             color: var(--text-light);
             align-self: flex-start;
-            border-bottom-left-radius: 2px;
+            border-bottom-left-radius: 3px;
         }
 
-        .chat-bubble.theirs {
+        .chat-bubble-ui.theirs {
             background: #151a24;
             border: 1px solid rgba(212, 175, 55, 0.2);
             color: var(--sand-text);
             align-self: flex-end;
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 3px;
         }
 
-        .chat-bubble .msg-time {
-            font-size: 10px;
-            color: var(--sand-text);
-            display: block;
-            margin-top: 4px;
-            text-align: left;
-        }
-
-        .chat-input-area {
-            padding: 12px;
+        .chat-input-row {
+            padding: 10px;
             background: #131821;
             border-top: 1px solid var(--gold-muted);
             display: flex;
             gap: 8px;
         }
 
-        .chat-input-area input {
+        .chat-input-row input {
             margin-bottom: 0;
+            border-radius: 20px;
+            padding: 8px 15px;
         }
 
-        @media (max-width: 600px) {
-            .app-container {
-                padding: 15px 10px;
-            }
-            h1 { font-size: 26px; }
+        /* شاشة الملف الشخصي الفخمة */
+        .profile-card-box {
+            background: #0d1015;
+            border: 1px solid var(--gold-muted);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-avatar-lg {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold-ancient);
+            margin: 0 auto 12px;
+            display: block;
+        }
+
+        .profile-name-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 22px;
+            color: var(--gold-ancient);
+            margin-bottom: 2px;
+        }
+
+        .profile-handle {
+            font-size: 13px;
+            color: var(--sand-text);
+            margin-bottom: 12px;
+        }
+
+        .profile-bio-text {
+            font-size: 15px;
+            color: #d1d6e0;
+            background: #131821;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        /* الشريط السفلي للتنقل (Bottom Nav Bar) */
+        .bottom-nav {
+            background: rgba(11, 12, 14, 0.95);
+            border-top: 1px solid var(--gold-muted);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            position: sticky;
+            bottom: 0;
+            z-index: 20;
+        }
+
+        .nav-tab-btn {
+            background: none;
+            border: none;
+            color: var(--sand-text);
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+        }
+
+        .nav-tab-btn span.nav-icon {
+            font-size: 20px;
+        }
+
+        .nav-tab-btn.active {
+            color: var(--gold-ancient);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         }
     </style>
 </head>
 <body class="theme-poet" id="mainBody">
 
-    <!-- شاشة اختيار الحساب أو البوابة الثنائية -->
-    <div id="portalScreen">
+    <!-- بوابات الدخول المنفصلة -->
+    <div class="portal-wrapper" id="portalScreen">
         <div class="portal-title">ديوان الحرف والعدالة</div>
-        <div class="portal-subtitle">اختر هويتك للدخول إلى مساحتك الخاصة، حيث يتقاطع الشعر مع القانون في عالم ثنائي سلس وعالي الأداء.</div>
+        <div class="portal-sub">اختر بوابتك المستقلة. كل حساب له عالمه الخاص، يوزره، وصوره، وصفحاته الكاملة دون تداخل.</div>
         
-        <div class="portal-cards">
-            <div class="portal-card" onclick="enterUniverse('poet')">
-                <div class="portal-card-info">
-                    <h3>حساب الشاعر (ديوان الحرف)</h3>
-                    <p>مساحة الأبيات، المشاعر، والخواطر الأدبية.</p>
-                </div>
-                <span style="font-size: 22px; color: var(--gold-ancient);">🪶</span>
+        <button class="portal-btn" onclick="openApp('poet')">
+            <div>
+                <h3 style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px;">بوابة الشاعر</h3>
+                <p style="font-size: 12px; color: var(--sand-text);">أبيات، خواطر، وحساب مستقل تماماً</p>
             </div>
+            <span>🪶</span>
+        </button>
 
-            <div class="portal-card" onclick="enterUniverse('lawyer')">
-                <div class="portal-card-info">
-                    <h3>حساب المحامية ليان العنزي</h3>
-                    <p>سجل القضايا، المبادئ القانونية، والاستشارات.</p>
-                </div>
-                <span style="font-size: 22px; color: var(--gold-ancient);">⚖️</span>
+        <button class="portal-btn" onclick="openApp('lawyer')">
+            <div>
+                <h3 style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px;">بوابة المحامية ليان العنزي</h3>
+                <p style="font-size: 12px; color: var(--sand-text);">قضايا، استشارات، وحساب مستقل تماماً</p>
             </div>
-        </div>
-        <div style="font-size: 11px; color: var(--sand-text); margin-top: 10px;">التطبيق يحفظ هويتك ويدعم التغريدات والمراسلة الخاصة المتبادلة بينكما فورياً.</div>
+            <span>⚖️</span>
+        </button>
     </div>
 
-    <!-- التطبيق الرئيسي المدمج -->
-    <div class="app-container" id="appContainer">
-
-        <header>
-            <div class="header-overlay">
-                <div class="top-action-btns">
-                    <button class="action-btn-sm" onclick="logoutPortal()">تسجيل الخروج ✕</button>
-                    <button class="switch-universe-btn" id="switchUniverseBtn" onclick="toggleUniverse()">تبديل الحساب</button>
-                </div>
-
-                <div id="headerIcon" style="font-size: 28px; margin-bottom: 4px;">🪶</div>
-                <h1 id="appTitle">ديوان الشاعر</h1>
-                <div class="subtitle" id="appSubtitle">مساحة التغريدات والأبيات الشعرية الخاصة</div>
+    <!-- غلاف التطبيق المستقل -->
+    <div class="app-shell" id="appShell">
+        
+        <!-- رأس التطبيق الثابت -->
+        <div class="app-header">
+            <div class="app-header-title" id="appHeaderTitle">بوابة الشاعر</div>
+            <div class="header-actions">
+                <button class="icon-top-btn" onclick="switchPortal()">تبديل الحساب ↩</button>
+                <button class="icon-top-btn" onclick="logoutApp()" style="color: #ff8b8b; border-color: rgba(201, 59, 59, 0.4);">خروج</button>
             </div>
-        </header>
-
-        <!-- الأقسام داخل التطبيق -->
-        <div class="nav-menu">
-            <button class="nav-btn active" onclick="switchTab('feedTab', this)">التغريدات الثنائية</button>
-            <button class="nav-btn" onclick="switchTab('chatTab', this)">الدردشة الخاصة 💬</button>
-            <button class="nav-btn" onclick="switchTab('archiveTab', this)" id="archiveTabBtn">أرشيف القضايا</button>
         </div>
 
-        <!-- تبويب التغريدات الثنائية (تغريد لبعض فقط اثنين مع اللايكات ومسح) -->
-        <div id="feedTab" class="tab-content active">
-            <div class="composer-box">
-                <div class="composer-title" id="composerTitle">🪶 غرد ببيت أو خاطر جديد</div>
-                <input type="text" id="postTitle" placeholder="عنوان المنشور أو المبدأ (اختياري)">
-                <textarea id="postText" placeholder="اكتب ما يدور في خاطرك ليظهر في تغريداتكم الثنائية..."></textarea>
-                <button class="btn-feather" onclick="createPost()">نشر في التغريدات الثنائية</button>
+        <!-- 1. صفحة التغريدات والمنشورات (مع شريط بحث طويل فخم) -->
+        <div id="feedPane" class="page-pane active">
+            <input type="text" id="longSearchInput" class="search-bar-long" onkeyup="filterFeed()" placeholder="🔍 ابحث في التغريدات والمنشورات بحثاً مطولاً...">
+            
+            <div class="post-composer">
+                <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 17px; margin-bottom: 6px;" id="composerHeaderTitle">✍️ نشر خاطر جديد</div>
+                <input type="text" id="newPostTitle" placeholder="العنوان (اختياري)">
+                <textarea id="newPostText" placeholder="اكتب محتواك هنا..."></textarea>
+                <button class="btn-gold" onclick="submitPost()">نشر في السجل</button>
             </div>
 
-            <div class="feed-list" id="feedList"></div>
+            <div id="feedListContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
 
-        <!-- تبويب الدردشة الخاصة المباشرة (مع خيار المسح الفوري) -->
-        <div id="chatTab" class="tab-content">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <span>الرسائل الخاصة (بين الشاعر والمحامية)</span>
-                    <button class="clear-chat-btn" onclick="clearChat()">مسح المحادثة بالكامل 🗑️</button>
+        <!-- 2. صفحة الدردشة الخاصة الثنائية -->
+        <div id="chatPane" class="page-pane">
+            <div class="chat-box-container">
+                <div style="background: #131821; padding: 10px 15px; border-bottom: 1px solid var(--gold-muted); display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 16px;">المراسلة الخاصة الثنائية</span>
+                    <button class="icon-top-btn" onclick="clearPrivateChat()" style="font-size: 11px; color: #ff8b8b;">مسح المحادثة 🗑️</button>
                 </div>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-input-area">
-                    <input type="text" id="chatInput" placeholder="اكتب رسالة خاصة..." onkeypress="checkChatEnter(event)">
-                    <button class="btn-feather" style="padding: 0 16px;" onclick="sendChatMessage()">إرسال</button>
+                <div class="chat-messages-area" id="chatMessagesArea"></div>
+                <div class="chat-input-row">
+                    <input type="text" id="chatMsgInput" placeholder="اكتب رسالة خاصة..." onkeypress="checkChatEnter(event)">
+                    <button class="btn-gold" style="width: auto; padding: 0 16px; border-radius: 20px;" onclick="sendPrivateMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- تبويب أرشيف القضايا (يظهر خصيصاً في حساب المحامية أو متاح كأرشيف متكامل) -->
-        <div id="archiveTab" class="tab-content">
-            <div class="composer-box">
-                <div class="composer-title">⚖️ توثيق ملف أو مبدأ قانوني</div>
-                <input type="text" id="archiveTitle" placeholder="عنوان القضية أو المبدأ القانوني">
-                <textarea id="archiveText" placeholder="اكتب تفاصيل الحكم أو القصة القانونية..."></textarea>
-                <button class="btn-feather" onclick="createArchiveItem()">حفظ في السجل</button>
+        <!-- 3. صفحة الإعجابات -->
+        <div id="likesPane" class="page-pane">
+            <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px; text-align: center; margin-bottom: 5px;">❤ المنشورات المعجب بها</div>
+            <div id="likedListContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+
+        <!-- 4. صفحة الحساب الشخصي (يوزر، بايو، وصورة افتار مخصصة) -->
+        <div id="profilePane" class="page-pane">
+            <div class="profile-card-box">
+                <img id="profileAvatarDisplay" src="" alt="Avatar" class="profile-avatar-lg">
+                <div class="profile-name-title" id="profileDisplayName">اسم المستخدم</div>
+                <div class="profile-handle" id="profileHandleDisplay">@username</div>
+                
+                <div class="profile-bio-text" id="profileBioDisplay">النبذة الشخصية تظهر هنا...</div>
+
+                <div style="text-align: right; background: #131821; padding: 15px; border-radius: 8px; border: 1px solid var(--gold-muted);">
+                    <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 16px; margin-bottom: 10px;">تعديل ملفك الشخصي</div>
+                    <label style="font-size: 12px; color: var(--sand-text);">رابط صورة الـ Avatar (صورة شخصية):</label>
+                    <input type="text" id="editAvatarInput" placeholder="ضع رابط الصورة هنا">
+                    
+                    <label style="font-size: 12px; color: var(--sand-text);">اليوزر الخاص بك:</label>
+                    <input type="text" id="editHandleInput" placeholder="@username">
+                    
+                    <label style="font-size: 12px; color: var(--sand-text);">البايو (النبذة التعريفيّة):</label>
+                    <textarea id="editBioInput" placeholder="اكتب نبذة عنك..."></textarea>
+                    
+                    <button class="btn-gold" onclick="saveProfileChanges()">حفظ التعديلات</button>
+                </div>
             </div>
-            <div class="feed-list" id="archiveList"></div>
+        </div>
+
+        <!-- الشريط السفلي للتنقل الفخم (علامات واضحة وسلسة) -->
+        <div class="bottom-nav">
+            <button class="nav-tab-btn active" onclick="switchTab('feedPane', this)">
+                <span class="nav-icon">🏠</span>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-tab-btn" onclick="switchTab('chatPane', this)">
+                <span class="nav-icon">💬</span>
+                <span>الخاص</span>
+            </button>
+            <button class="nav-tab-btn" onclick="switchTab('likesPane', this)">
+                <span class="nav-icon">❤</span>
+                <span>الإعجابات</span>
+            </button>
+            <button class="nav-tab-btn" onclick="switchTab('profilePane', this)">
+                <span class="nav-icon">👤</span>
+                <span>حسابي</span>
+            </button>
         </div>
 
     </div>
 
     <script>
-        // حالة الحساب الحالي: 'poet' أو 'lawyer'
-        let currentRole = localStorage.getItem('layal_active_role') || null;
+        let activeRole = localStorage.getItem('sep_active_role') || null;
 
-        // قاعدة البيانات الموحدة في التخزين المحلي
-        let postsData = JSON.parse(localStorage.getItem('layal_unified_posts')) || [
-            { id: 1, author: 'الشاعر', role: 'poet', title: 'نسيم الليل', text: 'ألا يا نَسيمَ الليلِ هل لَكَ عودةٌ ... تُعَرِّفُنا بالصَّبِّ كيفَ يَنامُ', date: 'منذ ساعة', likes: 2, likedBy: [] },
-            { id: 2, author: 'المحامية ليان', role: 'lawyer', title: 'مبدأ العدالة والأبرياء', text: 'أن يفرّ مائة مجرم من العدالة خيرٌ من أن يُدان شخص واحد بغير حق.\nسيادة القانون تُبنى على اليقين والبرهان.', date: 'منذ ساعتين', likes: 1, likedBy: [] }
+        // بيانات الحسابات مستقلة تماماً
+        let profilesData = JSON.parse(localStorage.getItem('sep_profiles')) || {
+            poet: {
+                name: 'الشاعر',
+                handle: '@poet_diwan',
+                bio: 'أهيم في عوالم الحرف والأبيات الأدبية العميقة.',
+                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop'
+            },
+            lawyer: {
+                name: 'المحامية ليان العنزي',
+                handle: '@layan_law',
+                bio: 'محامية ومستشارة قانونية، أؤمن أن العدالة أساس الملك.',
+                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop'
+            }
+        };
+
+        let postsData = JSON.parse(localStorage.getItem('sep_posts')) || [
+            { id: 1, role: 'poet', title: 'نسيم الليل', text: 'ألا يا نَسيمَ الليلِ هل لَكَ عودةٌ ... تُعَرِّفُنا بالصَّبِّ كيفَ يَنامُ', date: 'منذ ساعة', likesCount: 1, likedBy: [] },
+            { id: 2, role: 'lawyer', title: 'سيادة القانون', text: 'أن يفرّ مائة مجرم من العدالة خيرٌ من أن يُدان شخص واحد بغير حق.', date: 'منذ ساعتين', likesCount: 0, likedBy: [] }
         ];
 
-        let chatData = JSON.parse(localStorage.getItem('layal_unified_chat')) || [
-            { sender: 'poet', name: 'الشاعر', text: 'أهلاً بكِ في مساحتنا المدمجة الجديدة.', time: '10:00 ص' },
-            { sender: 'lawyer', name: 'المحامية ليان', text: 'أهلاً بك، خطوة ذكية لتكون كل شؤوننا بسلاسة في منصة واحدة.', time: '10:02 ص' }
-        ];
-
-        let archiveData = JSON.parse(localStorage.getItem('layal_unified_archive')) || [
-            { id: 1, title: 'قصة الحطاب والقاضي إياس', text: 'تخاصم حطاب وزيّات في كيس دراهم... والدليل المادي الذكي يحسم النزاع.', date: 'سجل القضاء' }
+        let privateChatData = JSON.parse(localStorage.getItem('sep_chat')) || [
+            { sender: 'poet', text: 'مرحباً بكِ في صفحة المراسلة الخاصة المستقلة.', time: '10:00 ص' },
+            { sender: 'lawyer', text: 'أهلاً بك، التواصل هنا سلس ومباشر بيننا.', time: '10:02 ص' }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (currentRole) {
-                applyThemeAndRole(currentRole);
+            if (activeRole) {
+                launchAppShell(activeRole);
             }
         });
 
-        function enterUniverse(role) {
-            currentRole = role;
-            localStorage.setItem('layal_active_role', role);
-            applyThemeAndRole(role);
+        function openApp(role) {
+            activeRole = role;
+            localStorage.setItem('sep_active_role', role);
+            launchAppShell(role);
         }
 
-        function toggleUniverse() {
-            currentRole = (currentRole === 'poet') ? 'lawyer' : 'poet';
-            localStorage.setItem('layal_active_role', currentRole);
-            applyThemeAndRole(currentRole);
-        }
-
-        function logoutPortal() {
-            localStorage.removeItem('layal_active_role');
-            currentRole = null;
-            document.getElementById('appContainer').style.display = 'none';
+        function switchPortal() {
+            localStorage.removeItem('sep_active_role');
+            activeRole = null;
+            document.getElementById('appShell').style.display = 'none';
             document.getElementById('portalScreen').style.display = 'block';
             document.body.className = 'theme-poet';
         }
 
-        function applyThemeAndRole(role) {
+        function logoutApp() {
+            switchPortal();
+        }
+
+        function launchAppShell(role) {
             document.getElementById('portalScreen').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'block';
+            document.getElementById('appShell').style.display = 'flex';
 
             const body = document.getElementById('mainBody');
-            const appTitle = document.getElementById('appTitle');
-            const appSubtitle = document.getElementById('appSubtitle');
-            const headerIcon = document.getElementById('headerIcon');
-            const composerTitle = document.getElementById('composerTitle');
-            const postText = document.getElementById('postText');
-            const archiveTabBtn = document.getElementById('archiveTabBtn');
-            const switchBtn = document.getElementById('switchUniverseBtn');
+            const titleEl = document.getElementById('appHeaderTitle');
+            const composerTitle = document.getElementById('composerHeaderTitle');
 
             if (role === 'poet') {
                 body.className = 'theme-poet';
-                appTitle.innerText = 'ديوان الحرف (حساب الشاعر)';
-                appSubtitle.innerText = 'مساحة التغريدات والأبيات الشعرية الثنائية';
-                headerIcon.innerText = '🪶';
-                composerTitle.innerHTML = '🪶 غرد ببيت أو خاطر جديد';
-                postText.placeholder = 'اكتب شعرك أو خاطرتك لتظهر هنا...';
-                archiveTabBtn.style.display = 'none'; // الشاعر يركز على الشعر والتغريدات
-                switchBtn.innerText = 'الانتقال لحساب ليان ⚖️';
+                titleEl.innerText = 'بوابة الشاعر';
+                composerTitle.innerText = '🪶 انشر بيتاً أو خاطرة';
             } else {
                 body.className = 'theme-lawyer';
-                appTitle.innerText = 'مكتب المحامية ليان العنزي';
-                appSubtitle.innerText = 'سجل القضايا، التغريدات، والاستشارات القانونية';
-                headerIcon.innerText = '⚖️';
-                composerTitle.innerHTML = '⚖️ انشر فكرة قانونية أو تغريدة';
-                postText.placeholder = 'اكتب نصك القانوني أو تغريدتك الثنائية هنا...';
-                archiveTabBtn.style.display = 'inline-block'; // المحامية يظهر لها الأرشيف والقضايا
-                switchBtn.innerText = 'الانتقال لحساب الشاعر 🪶';
+                titleEl.innerText = 'بوابة المحامية ليان';
+                composerTitle.innerText = '⚖️ انشر قضية أو فكرة قانونية';
             }
 
-            renderFeed();
-            renderChat();
-            renderArchive();
+            loadProfileInfo();
+            renderFeedList();
+            renderChatMessages();
+            renderLikedList();
         }
 
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
+        function switchTab(paneId, btnEl) {
+            document.querySelectorAll('.page-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(paneId).classList.add('active');
+            btnEl.classList.add('active');
         }
 
-        // نظام التغريدات الثنائية
-        function createPost() {
-            const title = document.getElementById('postTitle').value.trim();
-            const text = document.getElementById('postText').value.trim();
+        // إدارة الملف الشخصي (أبتاور، بايو، يوزر)
+        function loadProfileInfo() {
+            const p = profilesData[activeRole];
+            document.getElementById('profileDisplayName').innerText = p.name;
+            document.getElementById('profileHandleDisplay').innerText = p.handle;
+            document.getElementById('profileBioDisplay').innerText = p.bio;
+            document.getElementById('profileAvatarDisplay').src = p.avatar;
+
+            document.getElementById('editAvatarInput').value = p.avatar;
+            document.getElementById('editHandleInput').value = p.handle;
+            document.getElementById('editBioInput').value = p.bio;
+        }
+
+        function saveProfileChanges() {
+            const avatar = document.getElementById('editAvatarInput').value.trim();
+            const handle = document.getElementById('editHandleInput').value.trim();
+            const bio = document.getElementById('editBioInput').value.trim();
+
+            if (avatar) profilesData[activeRole].avatar = avatar;
+            if (handle) profilesData[activeRole].handle = handle;
+            if (bio) profilesData[activeRole].bio = bio;
+
+            localStorage.setItem('sep_profiles', JSON.stringify(profilesData));
+            loadProfileInfo();
+            renderFeedList();
+            alert('تم حفظ تعديلات الملف الشخصي بنجاح!');
+        }
+
+        // إدارة النشر والتغريدات مع شريط البحث الطويل
+        function submitPost() {
+            const title = document.getElementById('newPostTitle').value.trim();
+            const text = document.getElementById('newPostText').value.trim();
 
             if (!text) {
                 alert('يرجى كتابة محتوى النشر أولاً!');
                 return;
             }
 
-            const authorName = (currentRole === 'poet') ? 'الشاعر' : 'المحامية ليان';
-
-            const newPost = {
+            postsData.unshift({
                 id: Date.now(),
-                author: authorName,
-                role: currentRole,
+                role: activeRole,
                 title: title,
                 text: text,
                 date: 'الآن',
-                likes: 0,
+                likesCount: 0,
                 likedBy: []
-            };
+            });
 
-            postsData.unshift(newPost);
-            localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
-
-            document.getElementById('postTitle').value = '';
-            document.getElementById('postText').value = '';
-            renderFeed();
+            localStorage.setItem('sep_posts', JSON.stringify(postsData));
+            document.getElementById('newPostTitle').value = '';
+            document.getElementById('newPostText').value = '';
+            renderFeedList();
         }
 
-        function renderFeed() {
-            const feedList = document.getElementById('feedList');
-            feedList.innerHTML = '';
+        function renderFeedList(filteredPosts = null) {
+            const container = document.getElementById('feedListContainer');
+            container.innerHTML = '';
 
-            if (postsData.length === 0) {
-                feedList.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">لا توجد تغريدات حالياً. ابدأ بالنشر لترى إبداعكما المشترك!</div>`;
+            const list = filteredPosts || postsData;
+
+            if (list.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 20px;">لا توجد منشورات مطابقة...</div>`;
                 return;
             }
 
-            postsData.forEach(p => {
-                const isMyPost = (p.role === currentRole);
-                const hasLiked = p.likedBy && p.likedBy.includes(currentRole);
+            list.forEach(p => {
+                const author = profilesData[p.role];
+                const isMine = (p.role === activeRole);
+                const hasLiked = p.likedBy && p.likedBy.includes(activeRole);
 
                 const card = document.createElement('div');
-                card.className = 'feed-card';
+                card.className = 'card-item';
                 card.innerHTML = `
-                    <div class="feed-header">
-                        <div class="feed-author">${p.role === 'poet' ? '🪶' : '⚖️'} ${p.author}</div>
-                        <div class="feed-date">${p.date}</div>
+                    <div class="card-top">
+                        <img src="${author.avatar}" class="card-avatar-sm" alt="avatar">
+                        <div class="card-user-info">
+                            <h4>${author.name}</h4>
+                            <span>${author.handle} • ${p.date}</span>
+                        </div>
                     </div>
-                    ${p.title ? `<div style="font-family: 'Aref Ruqaa'; font-size: 20px; color: var(--gold-ancient); margin-bottom: 8px;">${p.title}</div>` : ''}
-                    <div class="feed-text">${p.text}</div>
-                    <div class="feed-footer">
-                        <button class="like-btn ${hasLiked ? 'liked' : ''}" onclick="toggleLike(${p.id})">
-                            ❤ ${p.likes} إعجاب
+                    ${p.title ? `<div style="font-family: 'Aref Ruqaa'; font-size: 18px; color: var(--gold-ancient); margin-bottom: 6px;">${p.title}</div>` : ''}
+                    <div class="card-body-text">${p.text}</div>
+                    <div class="card-footer">
+                        <button class="like-action-btn ${hasLiked ? 'liked' : ''}" onclick="toggleLikePost(${p.id})">
+                            ❤ ${p.likesCount} إعجاب
                         </button>
-                        ${isMyPost ? `<button class="delete-post-btn" onclick="deletePost(${p.id})">🗑️ حذف المنشور</button>` : '<span></span>'}
+                        ${isMine ? `<button class="delete-btn-sm" onclick="deletePostItem(${p.id})">🗑️ حذف</button>` : '<span></span>'}
                     </div>
                 `;
-                feedList.appendChild(card);
+                container.appendChild(card);
             });
         }
 
-        function toggleLike(id) {
+        function filterFeed() {
+            const query = document.getElementById('longSearchInput').value.toLowerCase();
+            const matched = postsData.filter(p => 
+                p.text.toLowerCase().includes(query) || 
+                (p.title && p.title.toLowerCase().includes(query)) ||
+                profilesData[p.role].name.toLowerCase().includes(query)
+            );
+            renderFeedList(matched);
+        }
+
+        function toggleLikePost(id) {
             const post = postsData.find(p => p.id === id);
             if (!post) return;
 
             if (!post.likedBy) post.likedBy = [];
 
-            const index = post.likedBy.indexOf(currentRole);
-            if (index > -1) {
-                post.likedBy.splice(index, 1);
-                post.likes = Math.max(0, post.likes - 1);
+            const idx = post.likedBy.indexOf(activeRole);
+            if (idx > -1) {
+                post.likedBy.splice(idx, 1);
+                post.likesCount = Math.max(0, post.likesCount - 1);
             } else {
-                post.likedBy.push(currentRole);
-                post.likes += 1;
+                post.likedBy.push(activeRole);
+                post.likesCount += 1;
             }
 
-            localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
-            renderFeed();
+            localStorage.setItem('sep_posts', JSON.stringify(postsData));
+            renderFeedList();
+            renderLikedList();
         }
 
-        function deletePost(id) {
-            if (confirm('هل تريد مسح هذا المنشور نهائياً؟')) {
+        function deletePostItem(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
                 postsData = postsData.filter(p => p.id !== id);
-                localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
-                renderFeed();
+                localStorage.setItem('sep_posts', JSON.stringify(postsData));
+                renderFeedList();
+                renderLikedList();
             }
         }
 
-        // نظام الدردشة الخاصة الثنائية مع خيار المسح والسلاسة
-        function sendChatMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
+        // عرض قائمة الإعجابات الخاصة بك
+        function renderLikedList() {
+            const container = document.getElementById('likedListContainer');
+            container.innerHTML = '';
 
-            const authorName = (currentRole === 'poet') ? 'الشاعر' : 'المحامية ليان';
+            const likedPosts = postsData.filter(p => p.likedBy && p.likedBy.includes(activeRole));
+
+            if (likedPosts.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">ليس لديك أي منشورات معجب بها حالياً.</div>`;
+                return;
+            }
+
+            likedPosts.forEach(p => {
+                const author = profilesData[p.role];
+                const card = document.createElement('div');
+                card.className = 'card-item';
+                card.innerHTML = `
+                    <div class="card-top">
+                        <img src="${author.avatar}" class="card-avatar-sm" alt="avatar">
+                        <div class="card-user-info">
+                            <h4>${author.name}</h4>
+                            <span>${author.handle}</span>
+                        </div>
+                    </div>
+                    <div class="card-body-text">${p.text}</div>
+                    <div style="font-size: 12px; color: var(--gold-ancient);">❤ معجب به</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // نظام الدردشة الخاصة الثنائية والسلسة
+        function sendPrivateMessage() {
+            const input = document.getElementById('chatMsgInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+
             const timeNow = new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
 
-            chatData.push({
-                sender: currentRole,
-                name: authorName,
-                text: text,
+            privateChatData.push({
+                sender: activeRole,
+                text: txt,
                 time: timeNow
             });
 
-            localStorage.setItem('layal_unified_chat', JSON.stringify(chatData));
+            localStorage.setItem('sep_chat', JSON.stringify(privateChatData));
             input.value = '';
-            renderChat();
+            renderChatMessages();
         }
 
         function checkChatEnter(e) {
             if (e.key === 'Enter') {
-                sendChatMessage();
+                sendPrivateMessage();
             }
         }
 
-        function renderChat() {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = '';
+        function renderChatMessages() {
+            const area = document.getElementById('chatMessagesArea');
+            area.innerHTML = '';
 
-            if (chatData.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); margin: auto;">لا توجد رسائل خاصة. ابدأ بالحديث بحرية!</div>`;
+            if (privateChatData.length === 0) {
+                area.innerHTML = `<div style="text-align: center; color: var(--sand-text); margin: auto;">لا توجد رسائل خاصة. ابدأ بالحديث!</div>`;
                 return;
             }
 
-            chatData.forEach(msg => {
-                const isMine = (msg.sender === currentRole);
+            privateChatData.forEach(m => {
+                const isMine = (m.sender === activeRole);
                 const bubble = document.createElement('div');
-                bubble.className = `chat-bubble ${isMine ? 'mine' : 'theirs'}`;
+                bubble.className = `chat-bubble-ui ${isMine ? 'mine' : 'theirs'}`;
                 bubble.innerHTML = `
-                    <div style="font-size: 12px; color: var(--gold-ancient); margin-bottom: 2px;">${msg.name}</div>
-                    <div>${msg.text}</div>
-                    <span class="msg-time">${msg.time}</span>
+                    <div style="font-size: 11px; color: var(--gold-ancient); margin-bottom: 2px;">${profilesData[m.sender].name}</div>
+                    <div>${m.text}</div>
+                    <div style="font-size: 9px; color: var(--sand-text); text-align: left; margin-top: 3px;">${m.time}</div>
                 `;
-                container.appendChild(bubble);
+                area.appendChild(bubble);
             });
-            container.scrollTop = container.scrollHeight;
+            area.scrollTop = area.scrollHeight;
         }
 
-        function clearChat() {
-            if (confirm('هل أنت متأكد من مسح جميع رسائل الدردشة الخاصة بالكامل؟')) {
-                chatData = [];
-                localStorage.removeItem('layal_unified_chat');
-                renderChat();
-            }
-        }
-
-        // أرشيف القضايا الخاص بالمحامية
-        function createArchiveItem() {
-            const title = document.getElementById('archiveTitle').value.trim();
-            const text = document.getElementById('archiveText').value.trim();
-
-            if (!text) {
-                alert('يرجى كتابة تفاصيل الملف القانوني!');
-                return;
-            }
-
-            archiveData.unshift({
-                id: Date.now(),
-                title: title || 'ملف قانوني',
-                text: text,
-                date: new Date().toLocaleDateString('ar-SA')
-            });
-
-            localStorage.setItem('layal_unified_archive', JSON.stringify(archiveData));
-            document.getElementById('archiveTitle').value = '';
-            document.getElementById('archiveText').value = '';
-            renderArchive();
-            alert('تم حفظ الملف في السجل بنجاح!');
-        }
-
-        function renderArchive() {
-            const list = document.getElementById('archiveList');
-            if (!list) return;
-            list.innerHTML = '';
-
-            if (archiveData.length === 0) {
-                list.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">لا توجد قضايا موثقة في الأرشيف حالياً.</div>`;
-                return;
-            }
-
-            archiveData.forEach(a => {
-                const card = document.createElement('div');
-                card.className = 'feed-card';
-                card.innerHTML = `
-                    <div class="feed-header">
-                        <div class="feed-author">⚖️ ${a.title}</div>
-                        <div class="feed-date">${a.date}</div>
-                    </div>
-                    <div class="feed-text">${a.text}</div>
-                    <div style="text-align: left;">
-                        <button class="delete-post-btn" onclick="deleteArchive(${a.id})">🗑️ حذف الملف</button>
-                    </div>
-                `;
-                list.appendChild(card);
-            });
-        }
-
-        function deleteArchive(id) {
-            if (confirm('هل تريد حذف هذا الملف القانوني من الأرشيف؟')) {
-                archiveData = archiveData.filter(item => item.id !== id);
-                localStorage.setItem('layal_unified_archive', JSON.stringify(archiveData));
-                renderArchive();
+        function clearPrivateChat() {
+            if (confirm('هل أنت متأكد من مسح محادثة الخاص بالكامل؟')) {
+                privateChatData = [];
+                localStorage.removeItem('sep_chat');
+                renderChatMessages();
             }
         }
     </script>
