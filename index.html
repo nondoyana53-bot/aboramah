@@ -11,14 +11,14 @@
     
     <style>
         :root {
-            --bg-sand: #0f0c09;
-            --card-dark: #17130e;
-            --gold-ancient: #c59b27;
-            --gold-muted: rgba(197, 155, 39, 0.3);
-            --burgundy-dark: #4a0e17;
-            --sand-dust: #2b1e17;
-            --sand-text: #d4c3b3;
-            --text-light: #f3ece4;
+            --bg-tent: #080605;
+            --card-dark: #0f0c09;
+            --gold-ancient: #d4af37;
+            --gold-glow: #ffc83b;
+            --gold-muted: rgba(212, 175, 55, 0.25);
+            --burgundy-dark: #3a0a11;
+            --sand-text: #cbbba9;
+            --text-light: #f5f0eb;
             --border-gold: #8c6d1d;
         }
 
@@ -30,13 +30,14 @@
         }
 
         body {
-            background-color: var(--bg-sand);
-            /* خلفية بتأثير ذرات التراب والصحراء العربية الداكنة */
+            background-color: var(--bg-tent);
+            /* خلفية الخيمة الليلية الداكنة مع توهج السراج الفاحم */
             background-image: 
-                radial-gradient(rgba(140, 109, 70, 0.15) 1px, transparent 0),
-                linear-gradient(rgba(15, 12, 9, 0.94), rgba(15, 12, 9, 0.94)), 
+                radial-gradient(circle at 10% 10%, rgba(255, 180, 50, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(255, 180, 50, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(8, 6, 5, 0.96), rgba(8, 6, 5, 0.96)),
                 url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1600&auto=format&fit=crop');
-            background-size: 30px 30px, cover, cover;
+            background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: var(--text-light);
@@ -45,6 +46,28 @@
             display: flex;
             justify-content: center;
             padding: 15px 10px;
+            position: relative;
+        }
+
+        /* ---------------- السراجان المنيران في الزوايا ---------------- */
+        .lantern {
+            position: fixed;
+            top: 15px;
+            width: 55px;
+            height: 90px;
+            z-index: 99;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
+            animation: flicker 3s infinite alternate ease-in-out;
+        }
+
+        .lantern-right { right: 15px; }
+        .lantern-left { left: 15px; transform: scaleX(-1); }
+
+        @keyframes flicker {
+            0% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(255, 200, 59, 0.5)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 22px rgba(255, 200, 59, 0.8)); }
+            100% { opacity: 0.9; filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6)); }
         }
 
         .diwan-container {
@@ -53,10 +76,11 @@
             background: var(--card-dark);
             border: 2px solid var(--border-gold);
             border-radius: 8px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 35px rgba(43, 30, 23, 0.8);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
             padding: 22px 18px;
             position: relative;
             margin-bottom: 40px;
+            margin-top: 25px;
         }
 
         .diwan-container::before {
@@ -76,11 +100,13 @@
             margin-bottom: 20px;
         }
 
-        .ancient-symbol {
-            font-size: 20px;
-            color: var(--gold-ancient);
-            margin-bottom: 4px;
-            letter-spacing: 3px;
+        /* صورة السيف الحقيقية مكان الإيموجي */
+        .sword-img-header {
+            width: 180px;
+            height: auto;
+            display: block;
+            margin: 0 auto 8px;
+            filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.4));
         }
 
         h1 {
@@ -88,7 +114,7 @@
             font-size: 36px;
             color: var(--gold-ancient);
             font-weight: 700;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.2);
         }
 
         .subtitle {
@@ -110,7 +136,7 @@
         }
 
         .nav-btn {
-            background: #1f1913;
+            background: #14100c;
             border: 1px solid var(--border-gold);
             color: var(--text-light);
             padding: 8px 18px;
@@ -125,7 +151,7 @@
             background: var(--burgundy-dark);
             color: var(--gold-ancient);
             border-color: var(--gold-ancient);
-            box-shadow: 0 0 12px rgba(197, 155, 39, 0.3);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
         .tab-content {
@@ -142,32 +168,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- SECTION: الواجهة الرئيسية ---------------- */
+        /* ---------------- SECTION: الواجهة الرئيسية (أجواء الخيمة والخيول) ---------------- */
         
-        /* بنر الخيل العربي الصريح والبارز */
         .horse-banner {
             position: relative;
             width: 100%;
-            height: 220px;
+            height: 230px;
             border-radius: 6px;
             overflow: hidden;
             border: 1px solid var(--border-gold);
             margin-bottom: 22px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
         }
 
         .horse-banner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 30%;
-            filter: brightness(0.7) contract(1.1);
+            object-position: center 25%;
+            filter: brightness(0.65) contrast(1.15);
         }
 
         .horse-banner-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(15, 12, 9, 0.95) 0%, rgba(15, 12, 9, 0.2) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, rgba(8, 6, 5, 0.3) 60%, transparent 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -179,12 +204,12 @@
             font-family: 'Aref Ruqaa', serif;
             font-size: 28px;
             color: var(--gold-ancient);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+            text-shadow: 0 2px 8px rgba(0,0,0,1);
         }
 
-        /* اقتباس البيت الأجمل (قابليته للضغط) */
+        /* بطاقة الاقتباس الأجمل */
         .featured-quote-card {
-            background: linear-gradient(145deg, #1f1913, #14100c);
+            background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--gold-ancient);
             border-radius: 6px;
             padding: 25px 18px;
@@ -193,13 +218,13 @@
             position: relative;
             transition: all 0.3s ease;
             margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(212, 175, 55, 0.05);
         }
 
         .featured-quote-card:hover {
-            border-color: #e5b32a;
+            border-color: #ffe07d;
             transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(197, 155, 39, 0.2);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
         }
 
         .featured-tag {
@@ -218,6 +243,7 @@
             font-weight: bold;
             margin: 10px 0;
             font-family: 'Amiri', serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
         .click-hint {
@@ -228,11 +254,11 @@
             border-bottom: 1px dashed var(--gold-muted);
         }
 
-        /* ---------------- SECTION: أرشيف الأبيات (مرتب ومختصر) ---------------- */
+        /* ---------------- SECTION: أرشيف الأبيات (مربعات ومختصرة) ---------------- */
         
         .search-box input {
             width: 100%;
-            background: #120e0b;
+            background: #090705;
             border: 1px solid var(--border-gold);
             border-radius: 4px;
             padding: 10px 16px;
@@ -243,7 +269,6 @@
             margin-bottom: 18px;
         }
 
-        /* شبكة الأرشيف (بطاقات ملمومة) */
         .poems-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -251,7 +276,7 @@
         }
 
         .poem-mini-card {
-            background: #14100c;
+            background: #0d0a08;
             border: 1px solid var(--gold-muted);
             border-radius: 6px;
             padding: 16px;
@@ -264,8 +289,9 @@
 
         .poem-mini-card:hover {
             border-color: var(--gold-ancient);
-            background: #1a1510;
+            background: #14100c;
             transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
         }
 
         .mini-card-header {
@@ -273,7 +299,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            border-bottom: 1px solid rgba(197, 155, 39, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             padding-bottom: 6px;
         }
 
@@ -312,13 +338,13 @@
             justify-content: space-between;
         }
 
-        /* ---------------- Modal Window (صفحة عرض القصيدة كاملة) ---------------- */
+        /* ---------------- Modal Window (عرض القصيدة الكاملة) ---------------- */
         
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -341,7 +367,7 @@
             overflow-y: auto;
             padding: 25px 20px;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
         }
 
         .modal-close {
@@ -381,7 +407,7 @@
             color: #ffffff;
             font-weight: bold;
             padding: 8px 5px;
-            border-bottom: 1px rgba(197, 155, 39, 0.08) solid;
+            border-bottom: 1px rgba(212, 175, 55, 0.08) solid;
         }
 
         .shatr {
@@ -398,7 +424,7 @@
         /* ---------------- SECTION: محرر نقش جديد ---------------- */
         
         .editor-card {
-            background: #14100c;
+            background: #0d0a08;
             border: 1px solid var(--border-gold);
             border-radius: 6px;
             padding: 20px;
@@ -415,7 +441,7 @@
 
         input, select, textarea {
             width: 100%;
-            background: #1a1510;
+            background: #14100c;
             border: 1px solid var(--gold-muted);
             border-radius: 4px;
             color: var(--text-light);
@@ -439,7 +465,7 @@
 
         .btn-feather {
             width: 100%;
-            background: linear-gradient(135deg, var(--burgundy-dark) 0%, #20050a 100%);
+            background: linear-gradient(135deg, var(--burgundy-dark) 0%, #1d0307 100%);
             color: var(--gold-ancient);
             border: 1px solid var(--gold-ancient);
             padding: 12px;
@@ -458,16 +484,43 @@
             .separator {
                 display: none;
             }
+            .lantern {
+                width: 40px;
+                height: 70px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- السراج المنير الأيمن -->
+    <svg class="lantern lantern-right" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <!-- شعلة السراج -->
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
+
+    <!-- السراج المنير الأيسر -->
+    <svg class="lantern lantern-left" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <!-- شعلة السراج -->
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
+
     <div class="diwan-container">
 
         <!-- Header -->
         <header>
-            <div class="ancient-symbol">⚔️ ⚜️ ⚔️</div>
+            <!-- صورة سيف عربي حقيقية ممتازة -->
+            <img class="sword-img-header" src="https://cdna.artstation.com/p/assets/images/images/031/130/220/large/ahmed-khalil-sword-01.jpg?1602685956" alt="سيف عربي">
             <h1>ديوان أبو رماح وليان</h1>
             <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
         </header>
@@ -581,7 +634,7 @@
 
         function updateFeaturedQuote() {
             if(poems.length > 0) {
-                const randomPoem = poems[0]; // تأخذ الأولى أو العشوائية
+                const randomPoem = poems[0];
                 activePoemId = randomPoem.id;
                 const firstLine = randomPoem.text.split('\n')[0];
                 document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
