@@ -13,9 +13,7 @@
             --hover-color: rgba(231, 233, 234, 0.1);
             --accent-color: #1d9bf0;
             --accent-hover: #1a8cd8;
-            --accent-bg-hover: rgba(29, 155, 240, 0.1);
             --like-color: #f91880;
-            --like-bg-hover: rgba(249, 24, 128, 0.1);
             --retweet-color: #00ba7c;
             --gold-color: #ffd700;
         }
@@ -36,7 +34,6 @@
             justify-content: center;
         }
 
-        /* شاشة الدخول والتسجيل */
         .auth-container {
             width: 100%;
             max-width: 440px;
@@ -89,6 +86,23 @@
             border-color: var(--accent-color);
         }
 
+        .file-upload-group {
+            text-align: right;
+            margin-bottom: 12px;
+        }
+
+        .file-upload-group label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .file-upload-group input[type="file"] {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
         .btn-r-primary {
             background-color: var(--text-color);
             color: var(--bg-color);
@@ -138,7 +152,6 @@
             object-fit: cover;
         }
 
-        /* الهيكل الأساسي للتطبيق العالمي */
         .app-shell {
             display: none;
             width: 100%;
@@ -215,7 +228,6 @@
             display: flex;
         }
 
-        /* القائمة الجانبية (Drawer) */
         .drawer-overlay {
             display: none;
             position: fixed;
@@ -263,7 +275,6 @@
             color: var(--accent-color);
         }
 
-        /* ستوري الحسابات والترندات العالمية */
         .stories-bar {
             display: flex;
             gap: 16px;
@@ -411,7 +422,6 @@
         .trend-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
         .trend-tweets-count { font-size: 12px; color: var(--text-secondary); }
 
-        /* تصميم التغريدات مع زر إعجاب مطابق لـ X */
         .tweet-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -481,7 +491,6 @@
         .tweet-action-btn.liked svg { fill: var(--like-color); }
         .tweet-action-btn.retweeted { color: var(--retweet-color); }
 
-        /* الشات المفتوح للتواصل العام وحذف الرسائل */
         .dm-container {
             display: flex;
             flex-direction: column;
@@ -576,7 +585,6 @@
             cursor: pointer;
         }
 
-        /* الملف الشخصي وتعديل الحساب */
         .profile-header-banner {
             height: 160px;
             background-size: cover;
@@ -627,7 +635,6 @@
         .profile-user-handle { font-size: 15px; color: var(--text-secondary); }
         .profile-bio { font-size: 15px; margin-bottom: 12px; line-height: 1.4; }
 
-        /* نافذة تعديل الملف الشخصي المطابقة للصورة */
         .edit-profile-modal {
             display: none;
             position: fixed;
@@ -702,17 +709,26 @@
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
             <h3>انضم إلى عالم R العالمي</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">يمدي تفتح أكثر من حسابين والتنقل بسلاسه</p>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">ارفع صورك الشخصية مباشرة من جهازك</p>
             <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل">
             <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @user)">
             <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور">
-            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="رابط صورة الـ Avatar (افتار)">
-            <input type="text" id="setupHeaderUrl" class="input-r" placeholder="رابط صورة الغلاف (هيدر)">
+            
+            <div class="file-upload-group">
+                <label>صورة الملف الشخصي (Avatar):</label>
+                <input type="file" id="setupAvatarFile" accept="image/*">
+            </div>
+            
+            <div class="file-upload-group">
+                <label>صورة الغلاف (Header):</label>
+                <input type="file" id="setupHeaderFile" accept="image/*">
+            </div>
+
             <button class="btn-r-primary" onclick="createNewAccount()">انضمام وتفعيل الحساب</button>
         </div>
 
         <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة (اختر للتنقل الفوري):</p>
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة:</p>
             <div id="savedAccountsList"></div>
         </div>
     </div>
@@ -720,7 +736,6 @@
     <!-- التطبيق الرئيسي -->
     <div class="app-shell" id="appShell">
         
-        <!-- القائمة الجانبية (Drawer) -->
         <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)">
             <div class="drawer-menu" onclick="event.stopPropagation()">
                 <div class="drawer-header">
@@ -733,13 +748,11 @@
                 <div class="drawer-item" onclick="openProfileFromHeader(); toggleDrawer(false);"><span>الملف الشخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="openEditProfileModal(); toggleDrawer(false);"><span>تعديل ملف شخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="alert('R Premium مفعل')"><span>Premium</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('الإعدادات والخصوصية')"><span>الإعدادات والخصوصية</span><span>›</span></div>
                 <hr style="border-color: var(--border-color); margin: 15px 0;">
                 <div class="drawer-item" onclick="logoutAccount()" style="color: #f91880;"><span>تسجيل خروج</span></div>
             </div>
         </div>
 
-        <!-- الهيدر العلوي -->
         <div class="app-header">
             <div class="header-left-area">
                 <span class="header-tab-top active">لك</span>
@@ -783,7 +796,7 @@
         <!-- 4. الخاص المفتوح -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
-                <div class="dm-contacts-sidebar">الرسائل الخاصة المباشرة (تواصل مع كافة المستخدمين بحرية)</div>
+                <div class="dm-contacts-sidebar">الرسائل الخاصة المباشرة</div>
                 <div class="dm-messages-list" id="dmMessagesList"></div>
                 <div class="dm-input-area">
                     <input type="text" id="dmInputText" placeholder="اكتب رسالة جديدة..." onkeypress="handleDmKeyPress(event)">
@@ -820,7 +833,6 @@
             <div id="userProfileContentContainer"></div>
         </div>
 
-        <!-- النافبار السفلي -->
         <div class="bottom-nav">
             <button class="nav-item active" id="navHome" onclick="switchPane('homePane', this)">
                 <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"></path></svg>
@@ -837,7 +849,7 @@
         </div>
     </div>
 
-    <!-- نافذة تعديل الملف الشخصي المماثلة للصورة المرفقة -->
+    <!-- نافذة تعديل الملف الشخصي -->
     <div class="edit-profile-modal" id="editProfileModal">
         <div class="edit-profile-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -853,13 +865,13 @@
                 <label style="font-size: 12px; color: var(--text-secondary);">النبذة التعريفية</label>
                 <input type="text" id="editBioInput" class="input-r" style="margin-top: 4px;">
             </div>
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 12px; color: var(--text-secondary);">رابط صورة الأفاتار (Avatar)</label>
-                <input type="text" id="editAvatarInput" class="input-r" style="margin-top: 4px;">
+            <div class="file-upload-group">
+                <label>تغيير صورة الملف الشخصي (Avatar):</label>
+                <input type="file" id="editAvatarFile" accept="image/*">
             </div>
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 12px; color: var(--text-secondary);">رابط صورة الغلاف (Header)</label>
-                <input type="text" id="editHeaderInput" class="input-r" style="margin-top: 4px;">
+            <div class="file-upload-group">
+                <label>تغيير صورة الغلاف (Header):</label>
+                <input type="file" id="editHeaderFile" accept="image/*">
             </div>
         </div>
     </div>
@@ -927,7 +939,7 @@
                         <span style="font-size: 12px; color: var(--accent-color);">دخول سريع ›</span>
                     `;
                     item.onclick = () => {
-                        loginIntoAccount(handle, acc.pass);
+                        loginIntoAccount(handle);
                     };
                     savedListContainer.appendChild(item);
                 });
@@ -938,24 +950,45 @@
             }
         }
 
-        function createNewAccount() {
+        // دالة قراءة الصورة المرفوعة من الجهاز وتحويلها إلى Base64 لتخزينها محلياً دون روابط
+        function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function createNewAccount() {
             const name = document.getElementById('setupName').value.trim();
             const handle = document.getElementById('setupHandle').value.trim();
             const pass = document.getElementById('setupPass').value.trim();
-            const avatar = document.getElementById('setupAvatarUrl').value.trim() || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
-            const header = document.getElementById('setupHeaderUrl').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop';
 
             if (!name || !handle || !pass) {
-                alert('يرجى ملء الحقول الأساسية.');
+                alert('يرجى ملء حقول الاسم واسم المستخدم وكلمة المرور.');
                 return;
             }
 
-            allAccounts[handle] = { name, handle, pass, avatar, header, bio: 'مرحباً بك في حسابي.' };
+            let avatarBase64 = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
+            let headerBase64 = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop';
+
+            const avatarFile = document.getElementById('setupAvatarFile').files[0];
+            const headerFile = document.getElementById('setupHeaderFile').files[0];
+
+            if (avatarFile) {
+                avatarBase64 = await convertFileToBase64(avatarFile);
+            }
+            if (headerFile) {
+                headerBase64 = await convertFileToBase64(headerFile);
+            }
+
+            allAccounts[handle] = { name, handle, pass, avatar: avatarBase64, header: headerBase64, bio: 'مرحباً بك في حسابي.' };
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
-            loginIntoAccount(handle, pass);
+            loginIntoAccount(handle);
         }
 
-        function loginIntoAccount(handle, enteredPass) {
+        function loginIntoAccount(handle) {
             const acc = allAccounts[handle];
             if (!acc) return;
             currentHandle = handle;
@@ -1005,8 +1038,8 @@
             const user = getCurrentUser();
             document.getElementById('editNameInput').value = user.name;
             document.getElementById('editBioInput').value = user.bio || '';
-            document.getElementById('editAvatarInput').value = user.avatar;
-            document.getElementById('editHeaderInput').value = user.header || '';
+            document.getElementById('editAvatarFile').value = '';
+            document.getElementById('editHeaderFile').value = '';
             document.getElementById('editProfileModal').style.display = 'flex';
         }
 
@@ -1014,12 +1047,20 @@
             document.getElementById('editProfileModal').style.display = 'none';
         }
 
-        function saveProfileChanges() {
+        async function saveProfileChanges() {
             const user = getCurrentUser();
             user.name = document.getElementById('editNameInput').value.trim() || user.name;
             user.bio = document.getElementById('editBioInput').value.trim();
-            user.avatar = document.getElementById('editAvatarInput').value.trim() || user.avatar;
-            user.header = document.getElementById('editHeaderInput').value.trim() || user.header;
+
+            const avatarFile = document.getElementById('editAvatarFile').files[0];
+            const headerFile = document.getElementById('editHeaderFile').files[0];
+
+            if (avatarFile) {
+                user.avatar = await convertFileToBase64(avatarFile);
+            }
+            if (headerFile) {
+                user.header = await convertFileToBase64(headerFile);
+            }
 
             allAccounts[currentHandle] = user;
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
