@@ -21,7 +21,6 @@
             --text-light: #f0f3f7;
             --border-gold: #8c6d1d;
             
-            /* ألوان المخطوطة والملفات */
             --book-bg: #101216;
             --book-border: #2a303d;
         }
@@ -52,7 +51,7 @@
             position: relative;
         }
 
-        /* ---------------- السراجان المنيران في الزوايا ---------------- */
+        /* السراجان المنيران */
         .lantern {
             position: fixed;
             top: 15px;
@@ -95,7 +94,6 @@
             pointer-events: none;
         }
 
-        /* ---------------- Header السينمائي مع البنر خلف الاسم ---------------- */
         header {
             text-align: center;
             position: relative;
@@ -138,7 +136,6 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.9);
         }
 
-        /* Navigation Bar / الأزرار التنقلية */
         .nav-menu {
             display: flex;
             justify-content: center;
@@ -181,8 +178,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- SECTION: الواجهة الرئيسية ---------------- */
-        
         .law-banner {
             position: relative;
             width: 100%;
@@ -220,7 +215,6 @@
             text-shadow: 0 2px 8px rgba(0,0,0,1);
         }
 
-        /* بطاقة الاقتباس القانوني الأجمل */
         .featured-quote-card {
             background: linear-gradient(145deg, #10131a, #07080a);
             border: 1px solid var(--gold-ancient);
@@ -267,8 +261,90 @@
             border-bottom: 1px dashed var(--gold-muted);
         }
 
-        /* ---------------- SECTION: أرشيف القضايا والمقولات ---------------- */
-        
+        /* مشغل الصوت المدمج */
+        .audio-player-wrapper {
+            background: linear-gradient(145deg, #0d1015, #060709);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-top: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.05);
+        }
+
+        .audio-player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed var(--gold-muted);
+            padding-bottom: 8px;
+        }
+
+        .audio-player-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            color: var(--gold-ancient);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .audio-play-btn {
+            background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
+            border: none;
+            color: #000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .audio-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(255, 200, 59, 0.7);
+        }
+
+        .audio-progress-container {
+            flex-grow: 1;
+            background: #181d26;
+            height: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            overflow: hidden;
+        }
+
+        .audio-progress-bar {
+            background: linear-gradient(90deg, var(--border-gold), var(--gold-glow));
+            width: 0%;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .audio-time {
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            color: var(--sand-text);
+            min-width: 80px;
+            text-align: center;
+            direction: ltr;
+        }
+
         .search-box input {
             width: 100%;
             background: #090b0e;
@@ -352,8 +428,6 @@
             justify-content: space-between;
         }
 
-        /* ---------------- Modal Window (عرض الملف والتفاصيل) ---------------- */
-        
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -445,8 +519,6 @@
             text-align: justify;
         }
 
-        /* ---------------- SECTION: محرر إضافة ملف ---------------- */
-        
         .editor-card {
             background: #0d1015;
             border: 1px solid var(--border-gold);
@@ -514,7 +586,6 @@
 </head>
 <body>
 
-    <!-- السراج المنير الأيمن -->
     <svg class="lantern lantern-right" viewBox="0 0 64 100">
         <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
         <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
@@ -524,7 +595,6 @@
         <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
     </svg>
 
-    <!-- السراج المنير الأيسر -->
     <svg class="lantern lantern-left" viewBox="0 0 64 100">
         <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
         <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
@@ -536,10 +606,8 @@
 
     <div class="diwan-container">
 
-        <!-- Header السينمائي المزود بالبنر الخلفي -->
         <header>
             <div class="header-overlay">
-                <!-- رسمة ميزان العدالة والسيف SVG -->
                 <svg class="scale-illustration" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="148" y="5" width="4" height="40" fill="#d4af37"/>
                     <path d="M140 45 L160 45 L150 40 Z" fill="#d4af37"/>
@@ -553,24 +621,21 @@
             </div>
         </header>
 
-        <!-- Navigation Buttons -->
         <div class="nav-menu">
             <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
             <button class="nav-btn" onclick="switchTab('casesTab', this)">أرشيف القضايا</button>
             <button class="nav-btn" onclick="switchTab('editorTab', this)">إضافة قضية/نص</button>
         </div>
 
-        <!-- TAB 1: الصفحة الرئيسية -->
         <div id="homeTab" class="tab-content active">
             
             <div class="law-banner">
-                <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop" alt="لقطة محاماة سينمائية">
+                <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop" alt="لقطة محاماة">
                 <div class="law-banner-overlay">
                     <div class="law-banner-title">العدالة هي الحقيقة في عملها</div>
                 </div>
             </div>
 
-            <!-- بطاقة الاقتباس القانوني الذهبي -->
             <div class="featured-quote-card" onclick="openFeaturedCase()">
                 <span class="featured-tag">⚖️ المبدأ القانوني الذهبي</span>
                 <div class="featured-quote-text" id="featuredQuoteText">
@@ -579,20 +644,43 @@
                 <span class="click-hint">📜 اضغط هنا لقراءة السجل والتقرير الكامل</span>
             </div>
 
+            <!-- مشغل الصوت مع بيانات مدمجة بـ Base64 -->
+            <div class="audio-player-wrapper">
+                <div class="audio-player-header">
+                    <div class="audio-player-title">🎙️ التسجيل الصوتي المباشر</div>
+                    <span style="font-size: 12px; color: var(--sand-text);">استماع للمقطع الصوتِي الجاهز</span>
+                </div>
+                
+                <audio id="mainAudioPlayer" preload="metadata">
+                    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav">
+                    متصفحك لا يدعم مشغل الصوت.
+                </audio>
+
+                <div class="audio-controls">
+                    <button class="audio-play-btn" id="audioPlayBtn" title="تشغيل / إيقاف">
+                        <span id="audioPlayIcon">▶</span>
+                    </button>
+
+                    <div class="audio-progress-container" id="audioProgressContainer">
+                        <div class="audio-progress-bar" id="audioProgressBar"></div>
+                    </div>
+
+                    <div class="audio-time">
+                        <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- TAB 2: أرشيف القضايا، الكلام الأيقوني، والقصة المختصرة -->
         <div id="casesTab" class="tab-content">
             <div class="search-box">
                 <input type="text" id="searchInput" onkeyup="searchCases()" placeholder="🔍 ابحث في العناوين، المقولات والأحكام...">
             </div>
 
-            <div class="cases-grid" id="casesGrid">
-                <!-- المربعات ستنزل تلقائياً من الجافاسكريبت -->
-            </div>
+            <div class="cases-grid" id="casesGrid"></div>
         </div>
 
-        <!-- TAB 3: محرر إضافة قضية أو نص جديد -->
         <div id="editorTab" class="tab-content">
             <div class="editor-card">
                 <div class="editor-title">تدوين قضية أو نص قانوني جديد</div>
@@ -617,7 +705,6 @@
 
     </div>
 
-    <!-- نافذة عرض القضية/النص بتصميم (المخطوطة والملف المفتوح) -->
     <div class="modal-overlay" id="caseModal" onclick="closeModalOnOverlay(event)">
         <div class="book-container">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -626,9 +713,7 @@
             <div class="modal-title" id="modalTitle">عنوان القضية</div>
             <div class="modal-subtitle" id="modalSubtitle">التصنيف | التاريخ</div>
             
-            <div id="modalBody">
-                <!-- تفاصيل النص والقضية ستظهر هنا -->
-            </div>
+            <div id="modalBody"></div>
 
             <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 12px;">
                 <button onclick="copyCurrentModalCase()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 15px;">📋 نسخ التقرير</button>
@@ -638,7 +723,6 @@
     </div>
 
     <script>
-        // البيانات الأولية متضمنة الكلام الأيقوني والقصة الجذابة المختصرة
         const defaultCases = [
             {
                 id: 1,
@@ -826,6 +910,64 @@
             );
             renderCasesGrid(filtered);
         }
+
+        /* برمجة وتشغيل الصوت من الكود المباشر */
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("mainAudioPlayer");
+            const playBtn = document.getElementById("audioPlayBtn");
+            const playIcon = document.getElementById("audioPlayIcon");
+            const progressBar = document.getElementById("audioProgressBar");
+            const progressContainer = document.getElementById("audioProgressContainer");
+            const currentTimeEl = document.getElementById("audioCurrentTime");
+            const durationEl = document.getElementById("audioDuration");
+
+            audio.currentTime = 0;
+
+            function formatAudioTime(seconds) {
+                if (isNaN(seconds)) return "00:00";
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            }
+
+            audio.addEventListener("loadedmetadata", function () {
+                durationEl.textContent = formatAudioTime(audio.duration);
+                currentTimeEl.textContent = "00:00";
+            });
+
+            playBtn.addEventListener("click", function () {
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.textContent = "❚❚";
+                } else {
+                    audio.pause();
+                    playIcon.textContent = "▶";
+                }
+            });
+
+            audio.addEventListener("timeupdate", function () {
+                if (audio.duration) {
+                    const progressPercent = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = `${progressPercent}%`;
+                    currentTimeEl.textContent = formatAudioTime(audio.currentTime);
+                }
+            });
+
+            progressContainer.addEventListener("click", function (e) {
+                const width = this.clientWidth;
+                const clickX = e.offsetX;
+                if (audio.duration) {
+                    audio.currentTime = (clickX / width) * audio.duration;
+                }
+            });
+
+            audio.addEventListener("ended", function () {
+                playIcon.textContent = "▶";
+                progressBar.style.width = "0%";
+                currentTimeEl.textContent = "00:00";
+                audio.currentTime = 0;
+            });
+        });
 
         renderCasesGrid();
         updateFeaturedQuote();
