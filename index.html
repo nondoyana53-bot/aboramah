@@ -11,14 +11,14 @@
     
     <style>
         :root {
-            --bg-dark: #0e0d0b;
-            --card-dark: #161412;
+            --bg-sand: #0f0c09;
+            --card-dark: #17130e;
             --gold-ancient: #c59b27;
-            --gold-muted: rgba(197, 155, 39, 0.35);
+            --gold-muted: rgba(197, 155, 39, 0.3);
             --burgundy-dark: #4a0e17;
-            --navy-dark: #0b131e;
-            --text-light: #e6dfd3;
-            --text-muted: #a39888;
+            --sand-dust: #2b1e17;
+            --sand-text: #d4c3b3;
+            --text-light: #f3ece4;
             --border-gold: #8c6d1d;
         }
 
@@ -30,11 +30,13 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            /* خلفية حقيقية لفرسان وخيول بتأثير داكن */
-            background-image: linear-gradient(rgba(14, 13, 11, 0.92), rgba(14, 13, 11, 0.92)), 
-                              url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1600&auto=format&fit=crop');
-            background-size: cover;
+            background-color: var(--bg-sand);
+            /* خلفية بتأثير ذرات التراب والصحراء العربية الداكنة */
+            background-image: 
+                radial-gradient(rgba(140, 109, 70, 0.15) 1px, transparent 0),
+                linear-gradient(rgba(15, 12, 9, 0.94), rgba(15, 12, 9, 0.94)), 
+                url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1600&auto=format&fit=crop');
+            background-size: 30px 30px, cover, cover;
             background-position: center;
             background-attachment: fixed;
             color: var(--text-light);
@@ -47,12 +49,12 @@
 
         .diwan-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             background: var(--card-dark);
             border: 2px solid var(--border-gold);
             border-radius: 8px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.9);
-            padding: 25px 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 35px rgba(43, 30, 23, 0.8);
+            padding: 22px 18px;
             position: relative;
             margin-bottom: 40px;
         }
@@ -69,46 +71,46 @@
         /* Header / العنوان الرئيسي */
         header {
             text-align: center;
-            padding: 10px 0 18px 0;
+            padding: 10px 0 16px 0;
             border-bottom: 2px double var(--border-gold);
             margin-bottom: 20px;
         }
 
         .ancient-symbol {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--gold-ancient);
             margin-bottom: 4px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         h1 {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 38px;
+            font-size: 36px;
             color: var(--gold-ancient);
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
         }
 
         .subtitle {
             font-family: 'Amiri', serif;
             font-size: 15px;
-            color: var(--text-muted);
+            color: var(--sand-text);
             margin-top: 2px;
             font-style: italic;
         }
 
-        /* Navigation Bar / القائمة الرئيسية للتحول بين الأبواب */
+        /* Navigation Bar / الأزرار التنقلية */
         .nav-menu {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
             border-bottom: 1px solid var(--gold-muted);
             padding-bottom: 12px;
         }
 
         .nav-btn {
-            background: #1f1b18;
+            background: #1f1913;
             border: 1px solid var(--border-gold);
             color: var(--text-light);
             padding: 8px 18px;
@@ -123,13 +125,12 @@
             background: var(--burgundy-dark);
             color: var(--gold-ancient);
             border-color: var(--gold-ancient);
-            box-shadow: 0 0 12px rgba(197, 155, 39, 0.25);
+            box-shadow: 0 0 12px rgba(197, 155, 39, 0.3);
         }
 
-        /* Tab Content Control */
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            animation: fadeIn 0.35s ease-in-out;
         }
 
         .tab-content.active {
@@ -137,210 +138,250 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---------------- SECTION: الصفحة الرئيسية ---------------- */
-        /* بنر حقيقي لفارس وحصان عربي */
-        .hero-banner {
-            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(74, 14, 23, 0.75)), 
-                        url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border: 1px solid var(--border-gold);
+        /* ---------------- SECTION: الواجهة الرئيسية ---------------- */
+        
+        /* بنر الخيل العربي الصريح والبارز */
+        .horse-banner {
+            position: relative;
+            width: 100%;
+            height: 220px;
             border-radius: 6px;
-            padding: 40px 20px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            overflow: hidden;
+            border: 1px solid var(--border-gold);
+            margin-bottom: 22px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
 
-        .hero-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 30px;
-            color: var(--gold-ancient);
-            margin-bottom: 10px;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+        .horse-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            filter: brightness(0.7) contract(1.1);
         }
 
-        .hero-desc {
-            font-size: 18px;
-            color: #f0e6d2;
-            line-height: 1.9;
-            max-width: 600px;
-            margin: 0 auto 20px;
-            font-family: 'Amiri', serif;
-        }
-
-        /* بطاقات فرسان وسيوف */
-        .knights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .knight-card {
-            background: #12100e;
-            border: 1px solid var(--gold-muted);
-            border-radius: 4px;
-            padding: 18px;
-            text-align: center;
-            transition: 0.3s;
-        }
-
-        .knight-card:hover {
-            border-color: var(--gold-ancient);
-            background: #1a1714;
-        }
-
-        .knight-card h3 {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 20px;
-            color: var(--gold-ancient);
-            margin-bottom: 6px;
-        }
-
-        .knight-card p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* قسم روائع ومقتطفات الديوان */
-        .featured-section {
-            background: #110f0d;
-            border-right: 4px solid var(--gold-ancient);
-            border-top: 1px solid var(--gold-muted);
-            border-bottom: 1px solid var(--gold-muted);
-            border-left: 1px solid var(--gold-muted);
+        .horse-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 12, 9, 0.95) 0%, rgba(15, 12, 9, 0.2) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .featured-header {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 22px;
-            color: var(--gold-ancient);
-            margin-bottom: 12px;
-        }
-
-        .featured-quote {
-            font-size: 22px;
-            line-height: 2.1;
             text-align: center;
-            color: #f7f0e3;
+        }
+
+        .horse-banner-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 28px;
+            color: var(--gold-ancient);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        }
+
+        /* اقتباس البيت الأجمل (قابليته للضغط) */
+        .featured-quote-card {
+            background: linear-gradient(145deg, #1f1913, #14100c);
+            border: 1px solid var(--gold-ancient);
+            border-radius: 6px;
+            padding: 25px 18px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .featured-quote-card:hover {
+            border-color: #e5b32a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(197, 155, 39, 0.2);
+        }
+
+        .featured-tag {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 13px;
+            color: var(--gold-ancient);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .featured-quote-text {
+            font-size: 22px;
+            line-height: 2;
+            color: #ffffff;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 10px 0;
             font-family: 'Amiri', serif;
         }
 
-        /* ---------------- SECTION: باب الأبيات والديوان ---------------- */
-        .search-box {
-            margin-bottom: 20px;
+        .click-hint {
+            font-size: 12px;
+            color: var(--sand-text);
+            margin-top: 8px;
+            display: inline-block;
+            border-bottom: 1px dashed var(--gold-muted);
         }
 
+        /* ---------------- SECTION: أرشيف الأبيات (مرتب ومختصر) ---------------- */
+        
         .search-box input {
             width: 100%;
-            background: #110f0d;
+            background: #120e0b;
             border: 1px solid var(--border-gold);
             border-radius: 4px;
-            padding: 10px 18px;
+            padding: 10px 16px;
             font-family: 'Amiri', serif;
             font-size: 16px;
             color: var(--text-light);
             outline: none;
+            margin-bottom: 18px;
         }
 
-        .search-box input:focus {
-            border-color: var(--gold-ancient);
+        /* شبكة الأرشيف (بطاقات ملمومة) */
+        .poems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
         }
 
-        .filter-bar {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--gold-muted);
-        }
-
-        .filter-chip {
-            background: #141210;
+        .poem-mini-card {
+            background: #14100c;
             border: 1px solid var(--gold-muted);
-            color: var(--text-muted);
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.2s;
-            font-family: 'Reem Kufi', sans-serif;
-        }
-
-        .filter-chip.active {
-            background: var(--burgundy-dark);
-            color: var(--gold-ancient);
-            border-color: var(--gold-ancient);
-        }
-
-        .poem-card {
-            background: #110f0d;
-            border: 1px solid var(--border-gold);
             border-radius: 6px;
-            padding: 22px 18px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .poem-header {
+        .poem-mini-card:hover {
+            border-color: var(--gold-ancient);
+            background: #1a1510;
+            transform: translateY(-3px);
+        }
+
+        .mini-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(197, 155, 39, 0.15);
+            padding-bottom: 6px;
+        }
+
+        .mini-card-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            color: var(--gold-ancient);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mini-card-badge {
+            font-size: 11px;
+            background: var(--burgundy-dark);
+            color: #fff;
+            padding: 2px 7px;
+            border-radius: 3px;
+        }
+
+        .mini-card-snippet {
+            font-size: 15px;
+            color: var(--sand-text);
+            line-height: 1.7;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mini-card-footer {
+            font-size: 12px;
+            color: var(--border-gold);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ---------------- Modal Window (صفحة عرض القصيدة كاملة) ---------------- */
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal-content {
+            background: var(--card-dark);
+            border: 2px solid var(--gold-ancient);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: var(--gold-ancient);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 28px;
+            color: var(--gold-ancient);
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: var(--sand-text);
+            margin-bottom: 20px;
             border-bottom: 1px double var(--gold-muted);
             padding-bottom: 10px;
-            margin-bottom: 16px;
-        }
-
-        .poem-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 24px;
-            color: var(--gold-ancient);
-            font-weight: 700;
-        }
-
-        .poem-category {
-            font-size: 12px;
-            color: #fff;
-            background: var(--burgundy-dark);
-            border: 1px solid var(--border-gold);
-            padding: 3px 10px;
-            border-radius: 3px;
-            font-weight: bold;
-            font-family: 'Reem Kufi', sans-serif;
-        }
-
-        .poem-content {
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
         .verse-line {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 20px;
+            font-size: 19px;
             line-height: 1.9;
-            color: var(--text-light);
-            font-weight: 700;
-            padding: 6px 8px;
-        }
-
-        .verse-line:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.02);
+            color: #ffffff;
+            font-weight: bold;
+            padding: 8px 5px;
+            border-bottom: 1px rgba(197, 155, 39, 0.08) solid;
         }
 
         .shatr {
@@ -350,43 +391,14 @@
 
         .separator {
             color: var(--gold-ancient);
-            padding: 0 10px;
-            font-size: 14px;
-        }
-
-        .poem-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0 8px;
             font-size: 13px;
-            color: var(--text-muted);
-            border-top: 1px dashed var(--gold-muted);
-            padding-top: 10px;
-            margin-top: 16px;
         }
 
-        .action-btns {
-            display: flex;
-            gap: 12px;
-        }
-
-        .action-icon {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.2s;
-            font-family: 'Amiri', serif;
-        }
-
-        .action-icon:hover {
-            color: var(--gold-ancient);
-        }
-
-        /* ---------------- SECTION: محرر تدوين الأبيات ---------------- */
+        /* ---------------- SECTION: محرر نقش جديد ---------------- */
+        
         .editor-card {
-            background: #110f0d;
+            background: #14100c;
             border: 1px solid var(--border-gold);
             border-radius: 6px;
             padding: 20px;
@@ -403,7 +415,7 @@
 
         input, select, textarea {
             width: 100%;
-            background: #181512;
+            background: #1a1510;
             border: 1px solid var(--gold-muted);
             border-radius: 4px;
             color: var(--text-light);
@@ -412,19 +424,17 @@
             font-size: 16px;
             margin-bottom: 12px;
             outline: none;
-            transition: 0.3s;
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--gold-ancient);
-            background: #1f1b17;
         }
 
         textarea {
             resize: vertical;
             min-height: 140px;
             line-height: 2;
-            font-size: 18px;
+            font-size: 17px;
         }
 
         .btn-feather {
@@ -435,30 +445,15 @@
             padding: 12px;
             border-radius: 4px;
             font-family: 'Aref Ruqaa', serif;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .btn-feather:hover {
-            opacity: 0.95;
-            background: var(--burgundy-dark);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 10px;
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 17px;
-        }
-
-        @media (max-width: 480px) {
+        @media (max-width: 500px) {
             .verse-line {
                 flex-direction: column;
                 gap: 4px;
-                padding: 8px 0;
             }
             .separator {
                 display: none;
@@ -484,66 +479,36 @@
             <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
         </div>
 
-        <!-- TAB 1: الصفحة الرئيسية (الداكنة والجاهلية) -->
+        <!-- TAB 1: الصفحة الرئيسية -->
         <div id="homeTab" class="tab-content active">
-            <!-- بنر الفارس والحصان العربي -->
-            <div class="hero-banner">
-                <div class="hero-title">ديوان الفخر والفروسية</div>
-                <div class="hero-desc">
-                    الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني ... وَالسَّيْفُ وَالرَّمْحُ وَالقِرْطاسُ وَالقَلَمُ
-                </div>
-                <button class="btn-feather" style="max-width: 250px; margin: 0 auto;" onclick="switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1])">
-                    تصفّح أبيات الديوان
-                </button>
-            </div>
-
-            <!-- بطاقات الرمزية العربية -->
-            <div class="knights-grid">
-                <div class="knight-card">
-                    <h3>الخيول الأصيلة</h3>
-                    <p>رمز العزة والأنفة والركض في ميادين القصيد الفصيح</p>
-                </div>
-                <div class="knight-card">
-                    <h3>السيوف الصارمة</h3>
-                    <p>قوة الحجة وصرامة المعنى والقصائد الخالدة</p>
-                </div>
-                <div class="knight-card">
-                    <h3>مجلس الشيوخ</h3>
-                    <p>ديوان جامع لأرفع ألوان الغزل والفخر والحكمة الجاهلية</p>
+            
+            <!-- بنر الخيل العربي الداكن والبارز -->
+            <div class="horse-banner">
+                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
+                <div class="horse-banner-overlay">
+                    <div class="horse-banner-title">الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني</div>
                 </div>
             </div>
 
-            <!-- قسم اقتباسات أجمل الأبيات -->
-            <div class="featured-section">
-                <div class="featured-header">
-                    <span>من أروع مقتطفات أبياتك:</span>
-                </div>
-                <div class="featured-quote" id="featuredQuote">
+            <!-- بطاقة الاقتباس الأجمل (تفتح القصيدة عند الضغط) -->
+            <div class="featured-quote-card" onclick="openFeaturedPoem()">
+                <span class="featured-tag">✨ درة الديوان والاقتباس الأجمل</span>
+                <div class="featured-quote-text" id="featuredQuoteText">
                     "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
                 </div>
-                <div style="text-align: center; color: var(--text-muted); font-size: 13px;">
-                    — معلقة الفخر والعزة
-                </div>
+                <span class="click-hint">👈 اضغط هنا لقراءة القصيدة كاملة</span>
             </div>
+
         </div>
 
-        <!-- TAB 2: باب الديوان (استعراض الأبيات فقط) -->
+        <!-- TAB 2: أرشيف الأبيات (مربعات ومختصرة) -->
         <div id="poemsTab" class="tab-content">
             <div class="search-box">
-                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في القصائد، الأبيات، أو البحور الشعريّة...">
+                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في العناوين أو الأبيات...">
             </div>
 
-            <div class="filter-bar">
-                <div class="filter-chip active" onclick="filterPoems('الكل', this)">الكل</div>
-                <div class="filter-chip" onclick="filterPoems('غزل', this)">غزل</div>
-                <div class="filter-chip" onclick="filterPoems('فخر', this)">فخر</div>
-                <div class="filter-chip" onclick="filterPoems('حكمة', this)">حكمة</div>
-                <div class="filter-chip" onclick="filterPoems('شوق', this)">شوق</div>
-                <div class="filter-chip" onclick="filterPoems('عام', this)">ملاحظات</div>
-            </div>
-
-            <div id="poemsList">
-                <!-- ستظهر القصائد المكتوبة هنا تلقائياً -->
+            <div class="poems-grid" id="poemsGrid">
+                <!-- ستظهر القصائد كمربعات هنا -->
             </div>
         </div>
 
@@ -559,7 +524,7 @@
                         <option value="فخر">فخر وحماسة</option>
                         <option value="حكمة">حكمة وموعظة</option>
                         <option value="شوق">شوق وعتاب</option>
-                        <option value="عام">ملاحظة عامة</option>
+                        <option value="عام">عام</option>
                     </select>
                     <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
                 </div>
@@ -572,6 +537,22 @@
 
     </div>
 
+    <!-- نافذة قراءة القصيدة كاملة Modal -->
+    <div class="modal-overlay" id="poemModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-title" id="modalTitle">عنوان القصيدة</div>
+            <div class="modal-subtitle" id="modalSubtitle">البحر | التابعي</div>
+            <div id="modalBody">
+                <!-- الأبيات الكاملة ستظهر هنا -->
+            </div>
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 10px;">
+                <button onclick="copyCurrentModalPoem()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri';">📋 نسخ القصيدة</button>
+                <button onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri';">🗑️ حذف القصيدة</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
             {
@@ -579,12 +560,12 @@
                 title: "معلقة الفخر",
                 category: "فخر",
                 meter: "البحر الطويل",
-                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
+                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ\nوَوَقْتٍ كَأَنَّ النَّجْمَ فيهِ مُعَلَّقٌ ... بِأَسْبابِ كَتَّانٍ إِلى صُمِّ جَنَّدَلِ",
                 date: "العصر الجاهلي"
             }
         ];
 
-        let currentFilter = 'الكل';
+        let activePoemId = null;
 
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -600,15 +581,65 @@
 
         function updateFeaturedQuote() {
             if(poems.length > 0) {
-                const randomPoem = poems[Math.floor(Math.random() * poems.length)];
+                const randomPoem = poems[0]; // تأخذ الأولى أو العشوائية
+                activePoemId = randomPoem.id;
                 const firstLine = randomPoem.text.split('\n')[0];
-                document.getElementById('featuredQuote').innerText = `"${firstLine}"`;
+                document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
             }
         }
 
-        function formatPoemText(text) {
-            const lines = text.split('\n');
-            return lines.map(line => {
+        function openFeaturedPoem() {
+            if(activePoemId) {
+                openPoemModal(activePoemId);
+            }
+        }
+
+        function renderPoemsGrid(filteredList = null) {
+            const grid = document.getElementById('poemsGrid');
+            grid.innerHTML = '';
+
+            const listToRender = filteredList || poems;
+
+            if (listToRender.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px;">لا توجد قصائد في الأرشيف حالياً...</div>`;
+                return;
+            }
+
+            listToRender.forEach(poem => {
+                const lines = poem.text.split('\n').filter(l => l.trim());
+                const firstLine = lines[0] || '';
+                const lineCount = lines.length;
+
+                const card = document.createElement('div');
+                card.className = 'poem-mini-card';
+                card.onclick = () => openPoemModal(poem.id);
+                card.innerHTML = `
+                    <div>
+                        <div class="mini-card-header">
+                            <div class="mini-card-title">${poem.title}</div>
+                            <span class="mini-card-badge">${poem.category}</span>
+                        </div>
+                        <div class="mini-card-snippet">${firstLine}</div>
+                    </div>
+                    <div class="mini-card-footer">
+                        <span>📜 ${lineCount} أبيات</span>
+                        <span>🗓️ ${poem.date}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openPoemModal(id) {
+            const poem = poems.find(p => p.id === id);
+            if (!poem) return;
+
+            activePoemId = id;
+            document.getElementById('modalTitle').innerText = poem.title;
+            document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
+
+            const lines = poem.text.split('\n');
+            const formatted = lines.map(line => {
                 if (!line.trim()) return '';
                 const parts = line.split(/\s*\.\.\.\s*|\s*\*\*\*\s*|\s*---\s*/);
                 if (parts.length > 1) {
@@ -627,47 +658,19 @@
                     `;
                 }
             }).join('');
+
+            document.getElementById('modalBody').innerHTML = formatted;
+            document.getElementById('poemModal').classList.add('active');
         }
 
-        function renderPoems(filteredList = null) {
-            const listContainer = document.getElementById('poemsList');
-            listContainer.innerHTML = '';
+        function closeModal() {
+            document.getElementById('poemModal').classList.remove('active');
+        }
 
-            let listToRender = filteredList;
-            if (!listToRender) {
-                listToRender = currentFilter === 'الكل' 
-                    ? poems 
-                    : poems.filter(p => p.category === currentFilter);
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'poemModal') {
+                closeModal();
             }
-
-            if (listToRender.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="empty-state">
-                        لا توجد قصائد محفوظة حتى الآن...<br>ابدأ بنقش أبياتك الأولى في خانة (نقش جديد)!
-                    </div>
-                `;
-                return;
-            }
-
-            listToRender.forEach(poem => {
-                const card = document.createElement('div');
-                card.className = 'poem-card';
-                card.innerHTML = `
-                    <div class="poem-header">
-                        <div class="poem-title">${poem.title}</div>
-                        <span class="poem-category">${poem.category}</span>
-                    </div>
-                    <div class="poem-content">${formatPoemText(poem.text)}</div>
-                    <div class="poem-footer">
-                        <span>${poem.meter ? '🏷️ ' + poem.meter : ''} | 🗓️ ${poem.date}</span>
-                        <div class="action-btns">
-                            <button class="action-icon" onclick="copyPoem(\`${poem.text.replace(/`/g, '\\`')}\`)">📋 نسخ</button>
-                            <button class="action-icon" onclick="deletePoem(${poem.id})" style="color: #b82525;">🗑️ حذف</button>
-                        </div>
-                    </div>
-                `;
-                listContainer.appendChild(card);
-            });
         }
 
         function savePoem() {
@@ -697,45 +700,39 @@
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
 
-            renderPoems();
-            alert('تم نقش القصيدة بنجاح في الديوان!');
-            
+            renderPoemsGrid();
+            alert('تم نقش القصيدة بنجاح!');
             switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
         }
 
-        function deletePoem(id) {
-            if (confirm('هل أنت متأكد من رغبتك في مسح هذه القصيدة من الديوان؟')) {
-                poems = poems.filter(p => p.id !== id);
+        function deleteCurrentModalPoem() {
+            if (confirm('هل أنت متأكد من مسح هذه القصيدة؟')) {
+                poems = poems.filter(p => p.id !== activePoemId);
                 localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
-                renderPoems();
+                closeModal();
+                renderPoemsGrid();
+                updateFeaturedQuote();
             }
         }
 
-        function copyPoem(text) {
-            navigator.clipboard.writeText(text);
-            alert('تم نسخ الأبيات بنجاح إلى الحافظة!');
-        }
-
-        function filterPoems(cat, element) {
-            currentFilter = cat;
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-            document.getElementById('searchInput').value = '';
-            renderPoems();
+        function copyCurrentModalPoem() {
+            const poem = poems.find(p => p.id === activePoemId);
+            if (poem) {
+                navigator.clipboard.writeText(poem.text);
+                alert('تم نسخ الأبيات بنجاح!');
+            }
         }
 
         function searchPoems() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const searchResults = poems.filter(poem => {
-                return poem.title.toLowerCase().includes(query) ||
-                       poem.text.toLowerCase().includes(query) ||
-                       (poem.meter && poem.meter.toLowerCase().includes(query));
-            });
-            renderPoems(searchResults);
+            const filtered = poems.filter(p => 
+                p.title.toLowerCase().includes(query) || 
+                p.text.toLowerCase().includes(query)
+            );
+            renderPoemsGrid(filtered);
         }
 
-        // Initialize display on load
-        renderPoems();
+        renderPoemsGrid();
         updateFeaturedQuote();
     </script>
 </body>
