@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ديوان أبو رماح وليان - المخطوطة الملكية</title>
+    <!-- خطوط عربية جاهلية وفصيحة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
@@ -15,13 +16,19 @@
             --gold-ancient: #d4af37;
             --gold-glow: #ffc83b;
             --gold-muted: rgba(212, 175, 55, 0.25);
+            --burgundy-dark: #3a0a11;
             --sand-text: #cbbba9;
             --text-light: #f5f0eb;
             --border-gold: #8c6d1d;
             --book-bg: #18130e;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             background-color: var(--bg-tent);
@@ -39,8 +46,10 @@
             display: flex;
             justify-content: center;
             padding: 15px 10px;
+            position: relative;
         }
 
+        /* السراجان المنيران في الزوايا */
         .lantern {
             position: fixed;
             top: 15px;
@@ -49,9 +58,17 @@
             z-index: 99;
             pointer-events: none;
             filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
+            animation: flicker 3s infinite alternate ease-in-out;
         }
+
         .lantern-right { right: 15px; }
         .lantern-left { left: 15px; transform: scaleX(-1); }
+
+        @keyframes flicker {
+            0% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(255, 200, 59, 0.5)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 22px rgba(255, 200, 59, 0.8)); }
+            100% { opacity: 0.9; filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6)); }
+        }
 
         .diwan-container {
             width: 100%;
@@ -66,20 +83,68 @@
             margin-top: 25px;
         }
 
+        .diwan-container::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
         header {
             text-align: center;
             padding: 25px 15px 20px 15px;
             border-bottom: 2px double var(--border-gold);
             margin-bottom: 20px;
+            position: relative;
             border-radius: 6px;
+            overflow: hidden;
             background: linear-gradient(rgba(10, 7, 5, 0.88), rgba(10, 7, 5, 0.92)), 
                         url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         }
 
-        h1 { font-family: 'Aref Ruqaa', serif; font-size: 36px; color: var(--gold-ancient); }
-        .subtitle { font-family: 'Amiri', serif; font-size: 15px; color: var(--sand-text); font-style: italic; }
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px dashed var(--gold-muted);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .sword-illustration {
+            width: 220px;
+            height: 35px;
+            margin: 0 auto 10px;
+            display: block;
+            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 36px;
+            color: var(--gold-ancient);
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            color: var(--sand-text);
+            margin-top: 2px;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
 
         .diwan-royal-banner {
             width: 100%;
@@ -94,9 +159,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7), inset 0 0 20px rgba(0,0,0,0.9);
         }
-        .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); }
-        .royal-banner-sub { font-family: 'Amiri', serif; font-size: 13px; color: var(--sand-text); }
+
+        .diwan-royal-banner::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px dashed var(--gold-muted);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .royal-banner-content { text-align: center; z-index: 2; }
+        .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); text-shadow: 0 2px 6px rgba(0,0,0,1); }
+        .royal-banner-sub { font-family: 'Amiri', serif; font-size: 13px; color: var(--sand-text); margin-top: 2px; }
 
         .nav-menu {
             display: flex;
@@ -116,15 +195,24 @@
             font-family: 'Aref Ruqaa', serif;
             font-size: 18px;
             cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
+
+        .nav-btn:hover { background: #140f0c; border-color: var(--border-gold); color: var(--text-light); }
         .nav-btn.active {
             background: #020101 !important;
             color: #d4af37 !important;
             border-color: #3b2810 !important;
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.95) !important;
         }
 
-        .tab-content { display: none; }
+        .tab-content { display: none; animation: fadeIn 0.35s ease-in-out; }
         .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .horse-banner {
             position: relative;
@@ -134,18 +222,34 @@
             overflow: hidden;
             border: 1px solid var(--border-gold);
             margin-bottom: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
         }
-        .horse-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65); }
+
+        .horse-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            filter: brightness(0.65) contrast(1.15);
+        }
+
         .horse-banner-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(8, 6, 5, 0.95), transparent);
+            background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, rgba(8, 6, 5, 0.3) 60%, transparent 100%);
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-end;
             padding: 20px;
+            text-align: center;
         }
-        .horse-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 26px; color: var(--gold-ancient); text-align: center; }
+
+        .horse-banner-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 28px;
+            color: var(--gold-ancient);
+            text-shadow: 0 2px 8px rgba(0,0,0,1);
+        }
 
         .featured-quote-card {
             background: linear-gradient(145deg, #140f0c, #0a0806);
@@ -154,18 +258,25 @@
             padding: 25px 18px;
             text-align: center;
             cursor: pointer;
+            position: relative;
             margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(212, 175, 55, 0.05);
         }
-        .featured-tag { font-size: 13px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
-        .featured-quote-text { font-size: 20px; line-height: 2; color: #ffffff; font-weight: bold; }
 
+        .featured-tag { font-family: 'Reem Kufi', sans-serif; font-size: 13px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
+        .featured-quote-text { font-size: 22px; line-height: 2; color: #ffffff; font-weight: bold; margin: 10px 0; font-family: 'Amiri', serif; }
+        .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
+
+        /* مشغل الصوت المحسّن */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--border-gold);
             border-radius: 8px;
             padding: 18px 20px;
             margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.05);
         }
+
         .audio-player-header {
             display: flex;
             align-items: center;
@@ -174,158 +285,410 @@
             border-bottom: 1px dashed var(--gold-muted);
             padding-bottom: 8px;
         }
+
         .audio-player-title { font-family: 'Aref Ruqaa', serif; font-size: 18px; color: var(--gold-ancient); }
         .audio-controls { display: flex; align-items: center; gap: 15px; }
+
         .audio-play-btn {
             background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
             border: none; color: #000; width: 44px; height: 44px; border-radius: 50%;
             cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4); flex-shrink: 0;
         }
-        .audio-progress-container {
-            flex-grow: 1; background: #1c1510; height: 8px; border-radius: 4px; cursor: pointer; position: relative;
-        }
-        .audio-progress-bar { background: var(--gold-glow); width: 0%; height: 100%; border-radius: 4px; }
-        .audio-time { font-size: 14px; color: var(--sand-text); min-width: 80px; text-align: center; direction: ltr; }
 
+        .audio-progress-container {
+            flex-grow: 1; background: #1c1510; height: 8px; border-radius: 4px; cursor: pointer; position: relative; border: 1px solid rgba(212, 175, 55, 0.2); overflow: hidden;
+        }
+
+        .audio-progress-bar { background: linear-gradient(90deg, var(--border-gold), var(--gold-glow)); width: 0%; height: 100%; border-radius: 4px; }
+        .audio-time { font-family: 'Amiri', serif; font-size: 14px; color: var(--sand-text); min-width: 80px; text-align: center; direction: ltr; }
+
+        /* الأرشيف ونقش القصائد */
+        .search-box input {
+            width: 100%; background: #090705; border: 1px solid var(--border-gold); border-radius: 4px; padding: 10px 16px; font-family: 'Amiri', serif; font-size: 16px; color: var(--text-light); outline: none; margin-bottom: 18px;
+        }
+
+        .poems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; }
+        .poem-mini-card {
+            background: #0d0a08; border: 1px solid var(--gold-muted); border-radius: 6px; padding: 16px; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .poem-mini-card:hover { border-color: var(--gold-ancient); background: #14100c; transform: translateY(-3px); }
+        .mini-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.15); padding-bottom: 6px; }
+        .mini-card-title { font-family: 'Aref Ruqaa', serif; font-size: 19px; color: var(--gold-ancient); }
+        .mini-card-badge { font-size: 11px; background: #1a1510; border: 1px solid #4a3822; color: var(--sand-text); padding: 2px 7px; border-radius: 3px; }
+        .mini-card-snippet { font-size: 15px; color: var(--sand-text); line-height: 1.7; margin-bottom: 12px; }
+        .mini-card-footer { font-size: 12px; color: var(--border-gold); display: flex; justify-content: space-between; }
+
+        /* النوافذ التفاعلية (Modal) */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.94);
-            display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px;
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px 10px;
         }
         .modal-overlay.active { display: flex; }
         .book-container {
-            background: var(--book-bg); border: 3px solid var(--gold-ancient); border-radius: 12px;
-            width: 100%; max-width: 720px; max-height: 88vh; overflow-y: auto; padding: 35px 30px; position: relative;
+            background: var(--book-bg); border: 3px solid var(--gold-ancient); border-radius: 12px; width: 100%; max-width: 720px; max-height: 88vh; overflow-y: auto; padding: 35px 30px; position: relative; box-shadow: 0 0 50px rgba(0,0,0,1);
         }
-        .modal-close { position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
-        .verse-line { display: flex; justify-content: space-between; font-size: 18px; line-height: 2; color: #ffffff; padding: 10px 0; border-bottom: 1px rgba(212, 175, 55, 0.1) solid; }
+        .modal-close { position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 10; }
+        .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
+        .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
+        .verse-line { display: flex; justify-content: space-between; align-items: center; font-size: 20px; line-height: 2; color: #ffffff; font-weight: bold; padding: 10px 8px; border-bottom: 1px rgba(212, 175, 55, 0.1) solid; }
         .shatr { flex: 1; text-align: center; }
-        .separator { color: var(--gold-ancient); padding: 0 10px; }
+        .separator { color: var(--gold-ancient); padding: 0 10px; font-size: 14px; }
+
+        .editor-card { background: #0d0a08; border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px; }
+        .editor-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); margin-bottom: 14px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
+        input, select, textarea { width: 100%; background: #14100c; border: 1px solid var(--gold-muted); border-radius: 4px; color: var(--text-light); padding: 10px 12px; font-family: 'Amiri', serif; font-size: 16px; margin-bottom: 12px; outline: none; }
+        textarea { resize: vertical; min-height: 140px; line-height: 2; font-size: 17px; }
+        .btn-feather { width: 100%; background: linear-gradient(135deg, #1b130a 0%, #0d0a08 100%); color: var(--gold-ancient); border: 1px solid var(--border-gold); padding: 12px; border-radius: 4px; font-family: 'Aref Ruqaa', serif; font-size: 19px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
+    <svg class="lantern lantern-right" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
+
+    <svg class="lantern lantern-left" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
+
     <div class="diwan-container">
+
         <header>
+            <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
+                <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
+                <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
+                <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
+                <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
+                <defs>
+                    <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#d4af37"/>
+                        <stop offset="50%" stop-color="#ffffff"/>
+                        <stop offset="100%" stop-color="#d4af37"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
             <h1>ديوان أبو رماح وليان</h1>
             <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
         </header>
 
         <div class="diwan-royal-banner">
-            <div style="text-align: center;">
+            <div class="royal-banner-content">
                 <div class="royal-banner-title">⚔️ ديوان أبو رماح وليان ⚔️</div>
-                <div class="royal-banner-sub">موطن البيان، وعز الفروسية</div>
+                <div class="royal-banner-sub">موطن البيان، وعز الفروسية، وذكر الأماجد</div>
             </div>
         </div>
 
         <div class="nav-menu">
             <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
+            <button class="nav-btn" onclick="switchTab('poemsTab', this)">أرشيف الأبيات</button>
+            <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
         </div>
 
+        <!-- TAB 1: الرئيسية -->
         <div id="homeTab" class="tab-content active">
             <div class="horse-banner">
-                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان">
+                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
                 <div class="horse-banner-overlay">
                     <div class="horse-banner-title">الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني</div>
                 </div>
             </div>
 
-            <div class="featured-quote-card" onclick="openPoemModal()">
+            <div class="featured-quote-card" onclick="openFeaturedPoem()">
                 <span class="featured-tag">✨ درة الديوان والاقتباس الأجمل</span>
-                <div class="featured-quote-text">"أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"</div>
+                <div class="featured-quote-text" id="featuredQuoteText">
+                    "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
+                </div>
+                <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
             </div>
 
-            <!-- مشغل الصوت (رابط مباشر خارجي مستقر) -->
+            <!-- مشغل الصوت المباشر -->
             <div class="audio-player-wrapper">
                 <div class="audio-player-header">
                     <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
-                    <span style="font-size: 12px; color: var(--sand-text);">يعمل الآن برابط سحابي مباشر</span>
+                    <span style="font-size: 12px; color: var(--sand-text);">المقطع الصوتي المرفق</span>
                 </div>
                 
-                <!-- ضع رابط ملفك الصوتي المباشر هنا بدل الرابط التجريبي -->
-                <audio id="mainAudioPlayer" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="metadata"></audio>
+                <!-- تم ضبط المسار ليدعم الملف المرفوع تلقائياً -->
+                <audio id="mainAudioPlayer" preload="metadata">
+                    <source src="./83E1307A-3918-406B-928A-DAAD779FEB15.MP3" type="audio/mpeg">
+                    <source src="./83E1307A-3918-406B-928A-DAAD779FEB15.mp3" type="audio/mpeg">
+                    متصفحك لا يدعم تشغيل الصوت.
+                </audio>
 
                 <div class="audio-controls">
-                    <button class="audio-play-btn" id="audioPlayBtn">
+                    <button class="audio-play-btn" id="audioPlayBtn" title="تشغيل / إيقاف">
                         <span id="audioPlayIcon">▶</span>
                     </button>
+
                     <div class="audio-progress-container" id="audioProgressContainer">
                         <div class="audio-progress-bar" id="audioProgressBar"></div>
                     </div>
+
                     <div class="audio-time">
                         <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- TAB 2: الأرشيف -->
+        <div id="poemsTab" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في العناوين أو الأبيات...">
+            </div>
+            <div class="poems-grid" id="poemsGrid"></div>
+        </div>
+
+        <!-- TAB 3: نقش جديد -->
+        <div id="editorTab" class="tab-content">
+            <div class="editor-card">
+                <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
+                <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
+                <div style="display: flex; gap: 8px;">
+                    <select id="poemCategory">
+                        <option value="غزل">غزل</option>
+                        <option value="فخر">فخر وحماسة</option>
+                        <option value="حكمة">حكمة وموعظة</option>
+                        <option value="شوق">شوق وعتاب</option>
+                        <option value="عام">عام</option>
+                    </select>
+                    <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
+                </div>
+                <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
+                <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="modal-overlay" id="poemModal" onclick="closeModal()">
-        <div class="book-container" onclick="event.stopPropagation()">
+    <!-- Modal نافذة قراءة القصيدة -->
+    <div class="modal-overlay" id="poemModal" onclick="closeModalOnOverlay(event)">
+        <div class="book-container">
             <button class="modal-close" onclick="closeModal()">✕</button>
-            <h2 style="font-family:'Aref Ruqaa'; color:var(--gold-ancient); text-align:center; margin-bottom:15px;">معلقة الفخر</h2>
-            <div class="verse-line"><span class="shatr">أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي</span><span class="separator">❖</span><span class="shatr">بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ</span></div>
-            <div class="verse-line"><span class="shatr">فَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ</span><span class="separator">❖</span><span class="shatr">بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ</span></div>
+            <div style="text-align: center; color: var(--gold-ancient); font-size: 18px; margin-bottom: 5px;">📖 كتاب الديوان</div>
+            <div class="modal-title" id="modalTitle">عنوان القصيدة</div>
+            <div class="modal-subtitle" id="modalSubtitle">البحر | التابعي</div>
+            <div id="modalBody"></div>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 12px;">
+                <button onclick="copyCurrentModalPoem()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 15px;">📋 نسخ القصيدة</button>
+                <button onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 15px;">🗑️ حذف القصيدة</button>
+            </div>
         </div>
     </div>
 
     <script>
-        function switchTab(id, btn) {
+        let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
+            {
+                id: 1,
+                title: "معلقة الفخر",
+                category: "فخر",
+                meter: "البحر الطويل",
+                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ\nوَوَقْتٍ كَأَنَّ النَّجْمَ فيهِ مُعَلَّقٌ ... بِأَسْبابِ كَتَّانٍ إِلى صُمِّ جَنَّدَلِ",
+                date: "العصر الجاهلي"
+            }
+        ];
+
+        let activePoemId = null;
+
+        function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
+            if(tabId === 'homeTab') updateFeaturedQuote();
         }
 
-        function openPoemModal() { document.getElementById('poemModal').classList.add('active'); }
+        function updateFeaturedQuote() {
+            if(poems.length > 0) {
+                const randomPoem = poems[0];
+                activePoemId = randomPoem.id;
+                const firstLine = randomPoem.text.split('\n')[0];
+                document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
+            }
+        }
+
+        function openFeaturedPoem() { if(activePoemId) openPoemModal(activePoemId); }
+
+        function renderPoemsGrid(filteredList = null) {
+            const grid = document.getElementById('poemsGrid');
+            grid.innerHTML = '';
+            const listToRender = filteredList || poems;
+
+            if (listToRender.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px;">لا توجد قصائد في الأرشيف حالياً...</div>`;
+                return;
+            }
+
+            listToRender.forEach(poem => {
+                const lines = poem.text.split('\n').filter(l => l.trim());
+                const firstLine = lines[0] || '';
+                const card = document.createElement('div');
+                card.className = 'poem-mini-card';
+                card.onclick = () => openPoemModal(poem.id);
+                card.innerHTML = `
+                    <div>
+                        <div class="mini-card-header">
+                            <div class="mini-card-title">${poem.title}</div>
+                            <span class="mini-card-badge">${poem.category}</span>
+                        </div>
+                        <div class="mini-card-snippet">${firstLine}</div>
+                    </div>
+                    <div class="mini-card-footer">
+                        <span>📖 فتح الكتاب (${lines.length} أبيات)</span>
+                        <span>🗓️ ${poem.date}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openPoemModal(id) {
+            const poem = poems.find(p => p.id === id);
+            if (!poem) return;
+            activePoemId = id;
+            document.getElementById('modalTitle').innerText = poem.title;
+            document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
+
+            const formatted = poem.text.split('\n').map(line => {
+                if (!line.trim()) return '';
+                const parts = line.split(/\s*\.\.\.\s*|\s*\*\*\*\s*|\s*---\s*/);
+                if (parts.length > 1) {
+                    return `<div class="verse-line"><span class="shatr">${parts[0]}</span><span class="separator">❖</span><span class="shatr">${parts[1]}</span></div>`;
+                } else {
+                    return `<div class="verse-line"><span class="shatr" style="width: 100%;">${line}</span></div>`;
+                }
+            }).join('');
+
+            document.getElementById('modalBody').innerHTML = formatted;
+            document.getElementById('poemModal').classList.add('active');
+        }
+
         function closeModal() { document.getElementById('poemModal').classList.remove('active'); }
+        function closeModalOnOverlay(e) { if (e.target.id === 'poemModal') closeModal(); }
 
-        const audio = document.getElementById("mainAudioPlayer");
-        const playBtn = document.getElementById("audioPlayBtn");
-        const playIcon = document.getElementById("audioPlayIcon");
-        const progressBar = document.getElementById("audioProgressBar");
-        const progressContainer = document.getElementById("audioProgressContainer");
-        const currentTimeEl = document.getElementById("audioCurrentTime");
-        const durationEl = document.getElementById("audioDuration");
+        function savePoem() {
+            const title = document.getElementById('poemTitle').value.trim();
+            const category = document.getElementById('poemCategory').value;
+            const meter = document.getElementById('poemMeter').value.trim();
+            const text = document.getElementById('poemText').value.trim();
 
-        function formatTime(s) {
-            if (isNaN(s)) return "00:00";
-            let m = Math.floor(s / 60);
-            let sec = Math.floor(s % 60);
-            return `${m < 10 ? '0' : ''}${m}:${sec < 10 ? '0' : ''}${sec}`;
+            if (!text) { alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً!'); return; }
+
+            const newPoem = {
+                id: Date.now(),
+                title: title || 'قصيدة بدون عنوان',
+                category: category,
+                meter: meter,
+                text: text,
+                date: new Date().toLocaleDateString('ar-SA')
+            };
+
+            poems.unshift(newPoem);
+            localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+            document.getElementById('poemTitle').value = '';
+            document.getElementById('poemMeter').value = '';
+            document.getElementById('poemText').value = '';
+            renderPoemsGrid();
+            alert('تم نقش القصيدة بنجاح!');
+            switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
         }
 
-        audio.addEventListener("loadedmetadata", () => { durationEl.textContent = formatTime(audio.duration); });
+        function deleteCurrentModalPoem() {
+            if (confirm('هل أنت متأكد من مسح هذه القصيدة؟')) {
+                poems = poems.filter(p => p.id !== activePoemId);
+                localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+                closeModal();
+                renderPoemsGrid();
+                updateFeaturedQuote();
+            }
+        }
 
-        playBtn.addEventListener("click", () => {
-            if (audio.paused) {
-                audio.play();
-                playIcon.textContent = "❚❚";
-            } else {
-                audio.pause();
-                playIcon.textContent = "▶";
+        function copyCurrentModalPoem() {
+            const poem = poems.find(p => p.id === activePoemId);
+            if (poem) { navigator.clipboard.writeText(poem.text); alert('تم نسخ الأبيات بنجاح!'); }
+        }
+
+        function searchPoems() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = poems.filter(p => p.title.toLowerCase().includes(query) || p.text.toLowerCase().includes(query));
+            renderPoemsGrid(filtered);
+        }
+
+        // تحسين تشغيل الصوت وتفادي الأخطاء
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("mainAudioPlayer");
+            const playBtn = document.getElementById("audioPlayBtn");
+            const playIcon = document.getElementById("audioPlayIcon");
+            const progressBar = document.getElementById("audioProgressBar");
+            const progressContainer = document.getElementById("audioProgressContainer");
+            const currentTimeEl = document.getElementById("audioCurrentTime");
+            const durationEl = document.getElementById("audioDuration");
+
+            if (audio) {
+                function formatAudioTime(seconds) {
+                    if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
+                    const mins = Math.floor(seconds / 60);
+                    const secs = Math.floor(seconds % 60);
+                    return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                }
+
+                audio.addEventListener("loadedmetadata", function () {
+                    durationEl.textContent = formatAudioTime(audio.duration);
+                });
+
+                playBtn.addEventListener("click", function () {
+                    if (audio.paused) {
+                        audio.play().then(() => {
+                            playIcon.textContent = "❚❚";
+                        }).catch(e => {
+                            console.log("تعذر التشغيل المباشر:", e);
+                            alert("تعذر تشغيل الملف الصوتي. تأكد من رفع الملف في المجلد الرئيسي بشكل صحيح.");
+                        });
+                    } else {
+                        audio.pause();
+                        playIcon.textContent = "▶";
+                    }
+                });
+
+                audio.addEventListener("timeupdate", function () {
+                    if (audio.duration) {
+                        const progressPercent = (audio.currentTime / audio.duration) * 100;
+                        progressBar.style.width = `${progressPercent}%`;
+                        currentTimeEl.textContent = formatAudioTime(audio.currentTime);
+                    }
+                });
+
+                progressContainer.addEventListener("click", function (e) {
+                    const width = this.clientWidth;
+                    const clickX = e.offsetX;
+                    if (audio.duration) {
+                        audio.currentTime = (clickX / width) * audio.duration;
+                    }
+                });
+
+                audio.addEventListener("ended", function () {
+                    playIcon.textContent = "▶";
+                    progressBar.style.width = "0%";
+                    currentTimeEl.textContent = "00:00";
+                    audio.currentTime = 0;
+                });
             }
         });
 
-        audio.addEventListener("timeupdate", () => {
-            if (audio.duration) {
-                progressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
-                currentTimeEl.textContent = formatTime(audio.currentTime);
-            }
-        });
-
-        progressContainer.addEventListener("click", (e) => {
-            let width = progressContainer.clientWidth;
-            let clickX = e.offsetX;
-            if (audio.duration) {
-                audio.currentTime = (clickX / width) * audio.duration;
-            }
-        });
-
-        audio.addEventListener("ended", () => {
-            playIcon.textContent = "▶";
-            progressBar.style.width = "0%";
-            currentTimeEl.textContent = "00:00";
-        });
+        renderPoemsGrid();
+        updateFeaturedQuote();
     </script>
 </body>
 </html>
