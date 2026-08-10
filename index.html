@@ -149,7 +149,7 @@
             z-index: 2;
         }
 
-        /* بنر ديوان أبو رماح وليان (رسمة جاهلية كشخة) */
+        /* بنر ديوان أبو رماح وليان */
         .diwan-royal-banner {
             width: 100%;
             height: 110px;
@@ -198,7 +198,7 @@
             text-shadow: 0 1px 4px rgba(0,0,0,1);
         }
 
-        /* Navigation Bar / الأزرار التنقلية (غامقة جداً عند الضغط وبدون أي إضاءات رصاصية) */
+        /* Navigation Bar */
         .nav-menu {
             display: flex;
             justify-content: center;
@@ -226,7 +226,6 @@
             color: var(--text-light);
         }
 
-        /* اللون الغامق جداً عند الضغط أو التنشيط */
         .nav-btn.active, .nav-btn:active {
             background: #020101 !important;
             color: #d4af37 !important;
@@ -325,7 +324,7 @@
             border-bottom: 1px dashed var(--gold-muted);
         }
 
-        /* مشغل الصوت المدمج بالمقطع الجديد MP3 */
+        /* مشغل الصوت المدمج */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--border-gold);
@@ -668,7 +667,6 @@
             <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
         </header>
 
-        <!-- بنر الرسمة الجاهلية لخلفية ديوان ابو رماح وليان -->
         <div class="diwan-royal-banner">
             <div class="royal-banner-content">
                 <div class="royal-banner-title">⚔️ ديوان أبو رماح وليان ⚔️</div>
@@ -700,14 +698,16 @@
                 <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
             </div>
 
-            <!-- مشغل الصوت مع المقطع الجديد المحدث -->
+            <!-- مشغل الصوت الذكي الذي يجرب الصيغتين تلقائياً -->
             <div class="audio-player-wrapper">
                 <div class="audio-player-header">
                     <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
                     <span style="font-size: 12px; color: var(--sand-text);">المقطع الصوتي المرفق</span>
                 </div>
                 
-                <audio id="mainAudioPlayer" src="83E1307A-3918-406B-928A-DAAD779FEB15.MP3" preload="metadata">
+                <audio id="mainAudioPlayer" preload="metadata">
+                    <source src="83E1307A-3918-406B-928A-DAAD779FEB15.MP3" type="audio/mpeg">
+                    <source src="83E1307A-3918-406B-928A-DAAD779FEB15.mp3" type="audio/mpeg">
                     متصفحك لا يدعم تشغيل الصوت.
                 </audio>
 
@@ -986,7 +986,7 @@
                     if (audio.paused) {
                         audio.play().catch(e => {
                             console.log("خطأ في تشغيل الصوت:", e);
-                            alert("تعذر تشغيل الملف، تأكد أن ملف MP3 الجديد موجود في نفس مجلد ملف HTML.");
+                            alert("تعذر تشغيل الملف الصوتي من سيرفر الموقع. تأكد أن الملف مرفوع في المجلد الرئيسي بنجاح.");
                         });
                         playIcon.textContent = "❚❚";
                     } else {
