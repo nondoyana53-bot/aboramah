@@ -3,877 +3,889 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>منصة الحرف والعدالة - بوابتان مستقلتان</title>
-    <!-- خطوط عربية فاخرة -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
-    
+    <title>X</title>
     <style>
         :root {
-            --bg-base: #060607;
-            --card-dark: #0b0c0e;
-            --gold-ancient: #d4af37;
-            --gold-glow: #ffc83b;
-            --gold-muted: rgba(212, 175, 55, 0.25);
-            --burgundy-dark: #121824;
-            --sand-text: #b8bec8;
-            --text-light: #f0f3f7;
-            --border-gold: #8c6d1d;
-        }
-
-        /* ثيم الشاعر */
-        body.theme-poet {
-            --bg-base: #08070b;
-            --card-dark: #100e14;
-            --gold-ancient: #d19a66;
-            --gold-glow: #e5c07b;
-            --gold-muted: rgba(209, 154, 102, 0.25);
-            --burgundy-dark: #221524;
-            --border-gold: #8c5d35;
-        }
-
-        /* ثيم المحامية */
-        body.theme-lawyer {
-            --bg-base: #060607;
-            --card-dark: #0b0c0e;
-            --gold-ancient: #d4af37;
-            --gold-glow: #ffc83b;
-            --gold-muted: rgba(212, 175, 55, 0.25);
-            --burgundy-dark: #121824;
-            --border-gold: #8c6d1d;
+            --bg-color: #000000;
+            --text-color: #e7e9ea;
+            --text-secondary: #71767b;
+            --border-color: #2f3336;
+            --hover-color: rgba(231, 233, 234, 0.1);
+            --accent-color: #1d9bf0;
+            --accent-hover: #1a8cd8;
+            --accent-bg-hover: rgba(29, 155, 240, 0.1);
+            --like-color: #f91880;
+            --like-bg-hover: rgba(249, 24, 128, 0.1);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-base);
-            color: var(--text-light);
-            font-family: 'Amiri', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 10px;
-            transition: background 0.4s ease;
         }
 
-        /* بوابات الاختيار المستقلة */
-        .portal-wrapper {
+        /* شاشة اختيار الحسابات / تسجيل الدخول بصورة خاصة */
+        .auth-container {
             width: 100%;
             max-width: 440px;
-            background: var(--card-dark);
-            border: 2px solid var(--border-gold);
-            border-radius: 12px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
-        }
-
-        .portal-title {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .portal-sub {
-            font-size: 14px;
-            color: var(--sand-text);
-            margin-bottom: 25px;
-        }
-
-        .portal-btn {
-            background: #131821;
-            border: 1px solid var(--border-gold);
-            color: var(--text-light);
-            width: 100%;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            text-align: right;
+            padding: 40px 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        .portal-btn:hover {
-            border-color: var(--gold-ancient);
-            background: var(--burgundy-dark);
-            transform: translateY(-2px);
+        .x-logo-large {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
         }
 
-        .portal-btn span {
-            font-family: 'Aref Ruqaa', serif;
+        .auth-card {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .auth-card h3 {
             font-size: 20px;
-            color: var(--gold-ancient);
+            font-weight: 700;
+            margin-bottom: 15px;
         }
 
-        /* واجهة التطبيق المستقلة لكل حساب */
+        .input-x {
+            width: 100%;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            padding: 12px;
+            font-size: 15px;
+            margin-bottom: 12px;
+            outline: none;
+            text-align: right;
+        }
+
+        .input-x:focus {
+            border-color: var(--accent-color);
+        }
+
+        .btn-x-primary {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50px;
+            padding: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-x-primary:hover {
+            background-color: #d7dbdc;
+        }
+
+        /* الهيكل الأساسي للتطبيق (طابق X تماماً) */
         .app-shell {
             display: none;
             width: 100%;
-            max-width: 480px;
-            height: 92vh;
-            max-height: 850px;
-            background: var(--card-dark);
-            border: 2px solid var(--border-gold);
-            border-radius: 14px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
-            position: relative;
+            max-width: 600px;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+            display: none;
             flex-direction: column;
-            overflow: hidden;
+            position: relative;
+            padding-bottom: 56px; /* مساحة النافبار السفلي */
         }
 
-        /* رأس الصفحة */
+        /* الهيدر العلوي */
         .app-header {
-            padding: 15px 20px;
-            background: rgba(18, 24, 36, 0.9);
-            border-bottom: 1px solid var(--gold-muted);
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 16px;
+            height: 53px;
+            z-index: 100;
         }
 
         .app-header-title {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 22px;
+            font-size: 19px;
+            font-weight: 700;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .icon-top-btn {
-            background: none;
-            border: 1px solid var(--gold-muted);
-            color: var(--gold-ancient);
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-            font-family: 'Amiri', serif;
-        }
-
-        /* شاشات المحتوى (Pages) */
-        .page-pane {
-            display: none;
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 15px;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .page-pane.active {
-            display: flex;
-        }
-
-        /* شريط البحث الطويل الفخم */
-        .search-bar-long {
-            width: 100%;
-            background: #131821;
-            border: 1px solid var(--border-gold);
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-family: 'Amiri', serif;
-            font-size: 15px;
-            color: var(--text-light);
-            outline: none;
-            margin-bottom: 5px;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
-        }
-
-        .search-bar-long:focus {
-            border-color: var(--gold-ancient);
-        }
-
-        /* بوكس النشر والتغريد */
-        .post-composer {
-            background: #0d1015;
-            border: 1px solid var(--gold-muted);
-            border-radius: 10px;
-            padding: 14px;
-        }
-
-        textarea, input[type="text"] {
-            width: 100%;
-            background: #131821;
-            border: 1px solid var(--gold-muted);
-            border-radius: 6px;
-            color: var(--text-light);
-            padding: 10px;
-            font-family: 'Amiri', serif;
-            font-size: 15px;
-            margin-bottom: 8px;
-            outline: none;
-        }
-
-        textarea:focus, input:focus {
-            border-color: var(--gold-ancient);
-        }
-
-        textarea { resize: vertical; min-height: 80px; }
-
-        .btn-gold {
-            background: linear-gradient(135deg, var(--burgundy-dark), #0c111a);
-            color: var(--gold-ancient);
-            border: 1px solid var(--gold-ancient);
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: bold;
-        }
-
-        .btn-gold:hover { background: var(--burgundy-dark); }
-
-        /* بطاقات المنشورات والتغريدات */
-        .card-item {
-            background: #0d1015;
-            border: 1px solid var(--gold-muted);
-            border-radius: 10px;
-            padding: 14px;
-        }
-
-        .card-top {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
-            padding-bottom: 8px;
-        }
-
-        .card-avatar-sm {
-            width: 36px;
-            height: 36px;
+        .header-avatar-btn {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid var(--gold-ancient);
-        }
-
-        .card-user-info h4 {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 16px;
-        }
-
-        .card-user-info span {
-            font-size: 11px;
-            color: var(--sand-text);
-        }
-
-        .card-body-text {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 12px;
-            white-space: pre-wrap;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-        }
-
-        .like-action-btn {
+            overflow: hidden;
+            border: none;
             background: none;
-            border: 1px solid var(--gold-muted);
-            color: var(--text-light);
-            padding: 4px 10px;
-            border-radius: 20px;
             cursor: pointer;
+        }
+
+        .header-avatar-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* الصفحات (Panes) */
+        .pane {
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .pane.active {
+            display: flex;
+        }
+
+        /* شريط البحث مثل انستغرام (تصميم علوي نظيف وبحث مطول) */
+        .instagram-search-header {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-color);
+            position: sticky;
+            top: 53px;
+            z-index: 90;
+        }
+
+        .instagram-search-input-wrapper {
+            background-color: #202327;
+            border-radius: 9999px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-family: 'Amiri', serif;
+            padding: 8px 14px;
+            border: 1px solid transparent;
         }
 
-        .like-action-btn.liked {
-            background: rgba(212, 175, 55, 0.2);
-            border-color: var(--gold-ancient);
-            color: var(--gold-glow);
+        .instagram-search-input-wrapper:focus-within {
+            border-color: var(--accent-color);
+            background-color: var(--bg-color);
         }
 
-        .delete-btn-sm {
+        .instagram-search-input-wrapper input {
             background: none;
             border: none;
-            color: #ff6b6b;
-            cursor: pointer;
-            font-size: 13px;
+            color: var(--text-color);
+            font-size: 14px;
+            width: 100%;
+            outline: none;
+            text-align: right;
+            padding-right: 8px;
         }
 
-        /* شاشة الدردشة الخاصة (تصميم راقي جداً يشبه تطبيقات الدردشة الفخمة) */
-        .chat-box-container {
-            flex-grow: 1;
-            background: #0d1015;
-            border: 1px solid var(--gold-muted);
-            border-radius: 10px;
+        /* مربع كتابة تغريدة (Post Composer) */
+        .composer-box {
             display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            height: 100%;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            gap: 12px;
         }
 
-        .chat-messages-area {
-            flex-grow: 1;
-            padding: 12px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .chat-bubble-ui {
-            max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 12px;
-            font-size: 15px;
-            line-height: 1.6;
-            position: relative;
-        }
-
-        .chat-bubble-ui.mine {
-            background: var(--burgundy-dark);
-            border: 1px solid var(--gold-ancient);
-            color: var(--text-light);
-            align-self: flex-start;
-            border-bottom-left-radius: 3px;
-        }
-
-        .chat-bubble-ui.theirs {
-            background: #151a24;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            color: var(--sand-text);
-            align-self: flex-end;
-            border-bottom-right-radius: 3px;
-        }
-
-        .chat-input-row {
-            padding: 10px;
-            background: #131821;
-            border-top: 1px solid var(--gold-muted);
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input-row input {
-            margin-bottom: 0;
-            border-radius: 20px;
-            padding: 8px 15px;
-        }
-
-        /* شاشة الملف الشخصي الفخمة */
-        .profile-card-box {
-            background: #0d1015;
-            border: 1px solid var(--gold-muted);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .profile-avatar-lg {
-            width: 80px;
-            height: 80px;
+        .composer-avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--gold-ancient);
-            margin: 0 auto 12px;
-            display: block;
+            flex-shrink: 0;
         }
 
-        .profile-name-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 22px;
-            color: var(--gold-ancient);
+        .composer-content {
+            flex-grow: 1;
+        }
+
+        .composer-textarea {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 18px;
+            resize: none;
+            outline: none;
+            min-height: 80px;
+            text-align: right;
+            margin-bottom: 8px;
+        }
+
+        .composer-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 10px;
+        }
+
+        .btn-tweet {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 18px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-tweet:hover {
+            background-color: var(--accent-hover);
+        }
+
+        /* شكل التغريدة (طابق X حرفياً) */
+        .tweet-card {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tweet-card:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .tweet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .tweet-body {
+            flex-grow: 1;
+        }
+
+        .tweet-header-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             margin-bottom: 2px;
         }
 
-        .profile-handle {
+        .tweet-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-color);
+        }
+
+        .tweet-handle-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .tweet-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            word-break: break-word;
+        }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            color: var(--text-secondary);
+        }
+
+        .tweet-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
             font-size: 13px;
-            color: var(--sand-text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .tweet-action-btn:hover {
+            color: var(--accent-color);
+            background-color: var(--accent-bg-hover);
+        }
+
+        .tweet-action-btn.liked {
+            color: var(--like-color);
+        }
+
+        .tweet-action-btn.liked:hover {
+            background-color: var(--like-bg-hover);
+        }
+
+        /* صفحة الرسائل الخاصة (Direct Messages) */
+        .dm-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 109px);
+        }
+
+        .dm-messages-list {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dm-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .dm-bubble.mine {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .dm-bubble.theirs {
+            background-color: #202327;
+            color: var(--text-color);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .dm-input-area {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            background: var(--bg-color);
+        }
+
+        .dm-input-area input {
+            flex-grow: 1;
+            background: #202327;
+            border: none;
+            border-radius: 9999px;
+            padding: 10px 16px;
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            text-align: right;
+        }
+
+        .dm-send-btn {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            padding: 0 16px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* صفحة الملف الشخصي (Profile) */
+        .profile-header-banner {
+            height: 150px;
+            background-color: #333639;
+        }
+
+        .profile-info-section {
+            padding: 12px 16px;
+            position: relative;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-avatar-wrapper {
+            width: 77px;
+            height: 77px;
+            border-radius: 50%;
+            border: 4px solid var(--bg-color);
+            position: absolute;
+            top: -38px;
+            right: 16px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .profile-avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-actions-row {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+            height: 35px;
+        }
+
+        .btn-edit-profile {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 50px;
+            padding: 0 16px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-edit-profile:hover {
+            background-color: var(--hover-color);
+        }
+
+        .profile-names {
             margin-bottom: 12px;
         }
 
-        .profile-bio-text {
-            font-size: 15px;
-            color: #d1d6e0;
-            background: #131821;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.15);
+        .profile-display-name {
+            font-size: 20px;
+            font-weight: 800;
         }
 
-        /* الشريط السفلي للتنقل (Bottom Nav Bar) */
+        .profile-user-handle {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .profile-bio {
+            font-size: 15px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .profile-edit-form {
+            background: #16181c;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .profile-edit-form h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* النافبار السفلي (Bottom Navigation) مثل X تماماً */
         .bottom-nav {
-            background: rgba(11, 12, 14, 0.95);
-            border-top: 1px solid var(--gold-muted);
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
-            position: sticky;
-            bottom: 0;
-            z-index: 20;
+            height: 56px;
+            z-index: 100;
         }
 
-        .nav-tab-btn {
+        .nav-item {
             background: none;
             border: none;
-            color: var(--sand-text);
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 14px;
-            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 24px;
+            flex-grow: 1;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 3px;
-            transition: all 0.2s;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .nav-tab-btn span.nav-icon {
-            font-size: 20px;
+        .nav-item:hover {
+            background-color: var(--hover-color);
         }
 
-        .nav-tab-btn.active {
-            color: var(--gold-ancient);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        .nav-item.active {
+            color: var(--text-color);
+        }
+
+        .nav-item svg {
+            width: 26px;
+            height: 26px;
+            fill: currentColor;
         }
     </style>
 </head>
-<body class="theme-poet" id="mainBody">
+<body>
 
-    <!-- بوابات الدخول المنفصلة -->
-    <div class="portal-wrapper" id="portalScreen">
-        <div class="portal-title">ديوان الحرف والعدالة</div>
-        <div class="portal-sub">اختر بوابتك المستقلة. كل حساب له عالمه الخاص، يوزره، وصوره، وصفحاته الكاملة دون تداخل.</div>
-        
-        <button class="portal-btn" onclick="openApp('poet')">
-            <div>
-                <h3 style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px;">بوابة الشاعر</h3>
-                <p style="font-size: 12px; color: var(--sand-text);">أبيات، خواطر، وحساب مستقل تماماً</p>
-            </div>
-            <span>🪶</span>
-        </button>
-
-        <button class="portal-btn" onclick="openApp('lawyer')">
-            <div>
-                <h3 style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px;">بوابة المحامية ليان العنزي</h3>
-                <p style="font-size: 12px; color: var(--sand-text);">قضايا، استشارات، وحساب مستقل تماماً</p>
-            </div>
-            <span>⚖️</span>
-        </button>
+    <!-- شاشة تسجيل الدخول والبدء بصورة شخصية مخصصة -->
+    <div class="auth-container" id="authScreen">
+        <div class="x-logo-large">𝕏</div>
+        <div class="auth-card">
+            <h3>تسجيل الدخول إلى حسابك</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">اختر هويتك وضع رابط صورتك الشخصية الخاصة</p>
+            
+            <input type="text" id="setupName" class="input-x" placeholder="الاسم الكامل (مثال: ليان العنزي)">
+            <input type="text" id="setupHandle" class="input-x" placeholder="اسم المستخدم (مثال: @Layan)">
+            <input type="text" id="setupAvatar" class="input-x" placeholder="رابط صورة الـ Avatar الشخصية (URL)">
+            
+            <button class="btn-x-primary" onclick="initApp()">التالي</button>
+        </div>
     </div>
 
-    <!-- غلاف التطبيق المستقل -->
+    <!-- الهيكل الرئيسي للتطبيق (مطابق لتطبيق X) -->
     <div class="app-shell" id="appShell">
         
-        <!-- رأس التطبيق الثابت -->
+        <!-- الهيدر العلوي -->
         <div class="app-header">
-            <div class="app-header-title" id="appHeaderTitle">بوابة الشاعر</div>
-            <div class="header-actions">
-                <button class="icon-top-btn" onclick="switchPortal()">تبديل الحساب ↩</button>
-                <button class="icon-top-btn" onclick="logoutApp()" style="color: #ff8b8b; border-color: rgba(201, 59, 59, 0.4);">خروج</button>
-            </div>
+            <button class="header-avatar-btn" onclick="switchPane('profilePane', document.getElementById('navProfile'))">
+                <img id="headerAvatarImg" src="" alt="Profile">
+            </button>
+            <div class="app-header-title" id="headerTitle">الصفحة الرئيسية</div>
+            <div style="width: 32px;"></div>
         </div>
 
-        <!-- 1. صفحة التغريدات والمنشورات (مع شريط بحث طويل فخم) -->
-        <div id="feedPane" class="page-pane active">
-            <input type="text" id="longSearchInput" class="search-bar-long" onkeyup="filterFeed()" placeholder="🔍 ابحث في التغريدات والمنشورات بحثاً مطولاً...">
-            
-            <div class="post-composer">
-                <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 17px; margin-bottom: 6px;" id="composerHeaderTitle">✍️ نشر خاطر جديد</div>
-                <input type="text" id="newPostTitle" placeholder="العنوان (اختياري)">
-                <textarea id="newPostText" placeholder="اكتب محتواك هنا..."></textarea>
-                <button class="btn-gold" onclick="submitPost()">نشر في السجل</button>
-            </div>
-
-            <div id="feedListContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
-        </div>
-
-        <!-- 2. صفحة الدردشة الخاصة الثنائية -->
-        <div id="chatPane" class="page-pane">
-            <div class="chat-box-container">
-                <div style="background: #131821; padding: 10px 15px; border-bottom: 1px solid var(--gold-muted); display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 16px;">المراسلة الخاصة الثنائية</span>
-                    <button class="icon-top-btn" onclick="clearPrivateChat()" style="font-size: 11px; color: #ff8b8b;">مسح المحادثة 🗑️</button>
-                </div>
-                <div class="chat-messages-area" id="chatMessagesArea"></div>
-                <div class="chat-input-row">
-                    <input type="text" id="chatMsgInput" placeholder="اكتب رسالة خاصة..." onkeypress="checkChatEnter(event)">
-                    <button class="btn-gold" style="width: auto; padding: 0 16px; border-radius: 20px;" onclick="sendPrivateMessage()">إرسال</button>
+        <!-- 1. صفحة الرئيسية (Home Feed) -->
+        <div id="homePane" class="pane active">
+            <!-- مربع التغريد -->
+            <div class="composer-box">
+                <img id="composerAvatarImg" src="" class="composer-avatar" alt="Avatar">
+                <div class="composer-content">
+                    <textarea id="tweetInputText" class="composer-textarea" placeholder="<div>!ما الذي تحدث</div>"></textarea>
+                    <div class="composer-footer">
+                        <button class="btn-tweet" onclick="publishTweet()">تغريد</button>
+                    </div>
                 </div>
             </div>
+            <!-- قائمة التغريدات -->
+            <div id="timelineContainer"></div>
         </div>
 
-        <!-- 3. صفحة الإعجابات -->
-        <div id="likesPane" class="page-pane">
-            <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 20px; text-align: center; margin-bottom: 5px;">❤ المنشورات المعجب بها</div>
-            <div id="likedListContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        <!-- 2. صفحة البحث (تليق بتصميم إنستغرام: بحث علوي طويل ونظيف) -->
+        <div id="searchPane" class="pane">
+            <div class="instagram-search-header">
+                <div class="instagram-search-input-wrapper">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--text-secondary)"><path d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.72 4.6-1.88l5.05 5.05 1.06-1.06-5.05-5.05c1.16-1.19 1.88-2.81 1.88-4.6 0-3.59-2.91-6.5-6.5-6.5zm0 1.5c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z"></path></svg>
+                    <input type="text" id="igSearchInput" onkeyup="performSearch()" placeholder="بحث في الحسابات والتغريدات...">
+                </div>
+            </div>
+            <div id="searchResultsContainer"></div>
         </div>
 
-        <!-- 4. صفحة الحساب الشخصي (يوزر، بايو، وصورة افتار مخصصة) -->
-        <div id="profilePane" class="page-pane">
-            <div class="profile-card-box">
-                <img id="profileAvatarDisplay" src="" alt="Avatar" class="profile-avatar-lg">
-                <div class="profile-name-title" id="profileDisplayName">اسم المستخدم</div>
-                <div class="profile-handle" id="profileHandleDisplay">@username</div>
-                
-                <div class="profile-bio-text" id="profileBioDisplay">النبذة الشخصية تظهر هنا...</div>
+        <!-- 3. صفحة الإعجابات (Likes) -->
+        <div id="likesPane" class="pane">
+            <div style="padding: 16px; border-bottom: 1px solid var(--border-color); font-weight: 700; font-size: 18px;">التغريدات المعجب بها</div>
+            <div id="likesContainer"></div>
+        </div>
 
-                <div style="text-align: right; background: #131821; padding: 15px; border-radius: 8px; border: 1px solid var(--gold-muted);">
-                    <div style="font-family: 'Aref Ruqaa'; color: var(--gold-ancient); font-size: 16px; margin-bottom: 10px;">تعديل ملفك الشخصي</div>
-                    <label style="font-size: 12px; color: var(--sand-text);">رابط صورة الـ Avatar (صورة شخصية):</label>
-                    <input type="text" id="editAvatarInput" placeholder="ضع رابط الصورة هنا">
-                    
-                    <label style="font-size: 12px; color: var(--sand-text);">اليوزر الخاص بك:</label>
-                    <input type="text" id="editHandleInput" placeholder="@username">
-                    
-                    <label style="font-size: 12px; color: var(--sand-text);">البايو (النبذة التعريفيّة):</label>
-                    <textarea id="editBioInput" placeholder="اكتب نبذة عنك..."></textarea>
-                    
-                    <button class="btn-gold" onclick="saveProfileChanges()">حفظ التعديلات</button>
+        <!-- 4. صفحة الرسائل الخاصة (Direct Messages - الخاص) -->
+        <div id="chatPane" class="pane">
+            <div class="dm-container">
+                <div class="dm-messages-list" id="dmMessagesList"></div>
+                <div class="dm-input-area">
+                    <input type="text" id="dmInputText" placeholder="ابدأ رسالة جديدة..." onkeypress="handleDmKeyPress(event)">
+                    <button class="dm-send-btn" onclick="sendDmMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- الشريط السفلي للتنقل الفخم (علامات واضحة وسلسة) -->
+        <!-- 5. صفحة الملف الشخصي (Profile) -->
+        <div id="profilePane" class="pane">
+            <div class="profile-header-banner"></div>
+            <div class="profile-info-section">
+                <div class="profile-avatar-wrapper">
+                    <img id="profilePageAvatar" src="" alt="Avatar">
+                </div>
+                <div class="profile-actions-row">
+                    <button class="btn-edit-profile" onclick="toggleEditProfileForm()">تعديل الملف الشخصي</button>
+                </div>
+                <div class="profile-names">
+                    <div class="profile-display-name" id="profileDisplayName">الاسم</div>
+                    <div class="profile-user-handle" id="profileUserHandle">@handle</div>
+                </div>
+                <div class="profile-bio" id="profileBioText">لم تتم إضافة نبذة بعد.</div>
+
+                <!-- نموذج التعديل المخفي -->
+                <div class="profile-edit-form" id="profileEditForm" style="display: none;">
+                    <h4>تعديل بيانات الحساب</h4>
+                    <input type="text" id="editNameInput" class="input-x" placeholder="الاسم الكامل">
+                    <input type="text" id="editHandleInput" class="input-x" placeholder="اسم المستخدم">
+                    <input type="text" id="editAvatarUrlInput" class="input-x" placeholder="رابط صورة الـ Avatar الجديدة">
+                    <textarea id="editBioInput" class="input-x" placeholder="اكتب نبذة شخصية (Bio)..." style="resize: vertical; min-height: 60px;"></textarea>
+                    <button class="btn-x-primary" onclick="saveProfileChanges()">حفظ التغييرات</button>
+                </div>
+            </div>
+            <div id="userTweetsContainer"></div>
+        </div>
+
+        <!-- النافبار السفلي (مطابق لرموز وشكل X) -->
         <div class="bottom-nav">
-            <button class="nav-tab-btn active" onclick="switchTab('feedPane', this)">
-                <span class="nav-icon">🏠</span>
-                <span>الرئيسية</span>
+            <button class="nav-item active" id="navHome" onclick="switchPane('homePane', this)">
+                <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"></path></svg>
             </button>
-            <button class="nav-tab-btn" onclick="switchTab('chatPane', this)">
-                <span class="nav-icon">💬</span>
-                <span>الخاص</span>
+            <button class="nav-item" id="navSearch" onclick="switchPane('searchPane', this)">
+                <svg viewBox="0 0 24 24"><path d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.72 4.6-1.88l5.05 5.05 1.06-1.06-5.05-5.05c1.16-1.19 1.88-2.81 1.88-4.6 0-3.59-2.91-6.5-6.5-6.5zm0 1.5c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z"></path></svg>
             </button>
-            <button class="nav-tab-btn" onclick="switchTab('likesPane', this)">
-                <span class="nav-icon">❤</span>
-                <span>الإعجابات</span>
+            <button class="nav-item" id="navLikes" onclick="switchPane('likesPane', this)">
+                <svg viewBox="0 0 24 24"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.1-.806-1.1C9.986 6.01 8.53 5.44 7.307 5.5c-1.23.012-2.374.55-3.13 1.45-1.025 1.22-1.18 2.84-.42 4.31.83 1.63 2.11 3.2 4.13 5.2 2.05 1.99 4.52 3.86 5.02 4.23.5-.37 2.97-2.24 5.02-4.23 2.02-2 3.3-3.57 4.13-5.2.76-1.47.605-3.09-.42-4.31-.756-.9-1.9-1.438-3.13-1.45zm-1.866 2.65c.78-.03 1.48.33 1.97.91.66.79.8 1.81.39 2.61-.64 1.25-1.76 2.76-3.7 4.66-1.94-1.9-3.06-3.41-3.7-4.66-.41-.8-.27-1.82.39-2.61.49-.58 1.19-.94 1.97-.91.73.03 1.41.42 1.85 1.05l.98 1.41.98-1.41c.44-.63 1.12-1.02 1.85-1.05z"></path></svg>
             </button>
-            <button class="nav-tab-btn" onclick="switchTab('profilePane', this)">
-                <span class="nav-icon">👤</span>
-                <span>حسابي</span>
+            <button class="nav-item" id="navChat" onclick="switchPane('chatPane', this)">
+                <svg viewBox="0 0 24 24"><path d="M1.998 5.5c0-1.38 1.12-2.5 2.5-2.5h15c1.38 0 2.5 1.12 2.5 2.5v13c0 1.38-1.12 2.5-2.5 2.5h-15c-1.38 0-2.5-1.12-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.81 8-3.81V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.81-8-3.81v8.037c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z"></path></svg>
+            </button>
+            <button class="nav-item" id="navProfile" onclick="switchPane('profilePane', this)">
+                <svg viewBox="0 0 24 24"><path d="M5.651 19.006c.883-1.927 2.827-3.277 5.099-3.277s4.216 1.35 5.099 3.277c-1.42 1.11-3.208 1.774-5.149 1.774s-3.729-.664-5.149-1.774zm6.049-7.527c-2.43 0-4.4-1.97-4.4-4.4s1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4-1.97 4.4-4.4 4.4z"></path></svg>
             </button>
         </div>
 
     </div>
 
     <script>
-        let activeRole = localStorage.getItem('sep_active_role') || null;
+        let currentUser = JSON.parse(localStorage.getItem('x_user')) || null;
 
-        // بيانات الحسابات مستقلة تماماً
-        let profilesData = JSON.parse(localStorage.getItem('sep_profiles')) || {
-            poet: {
-                name: 'الشاعر',
-                handle: '@poet_diwan',
-                bio: 'أهيم في عوالم الحرف والأبيات الأدبية العميقة.',
-                avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop'
-            },
-            lawyer: {
-                name: 'المحامية ليان العنزي',
-                handle: '@layan_law',
-                bio: 'محامية ومستشارة قانونية، أؤمن أن العدالة أساس الملك.',
-                avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300&auto=format&fit=crop'
-            }
-        };
-
-        let postsData = JSON.parse(localStorage.getItem('sep_posts')) || [
-            { id: 1, role: 'poet', title: 'نسيم الليل', text: 'ألا يا نَسيمَ الليلِ هل لَكَ عودةٌ ... تُعَرِّفُنا بالصَّبِّ كيفَ يَنامُ', date: 'منذ ساعة', likesCount: 1, likedBy: [] },
-            { id: 2, role: 'lawyer', title: 'سيادة القانون', text: 'أن يفرّ مائة مجرم من العدالة خيرٌ من أن يُدان شخص واحد بغير حق.', date: 'منذ ساعتين', likesCount: 0, likedBy: [] }
+        let tweetsData = JSON.parse(localStorage.getItem('x_tweets')) || [
+            { id: 1, name: 'إيلون ماسك', handle: '@elonmusk', avatar: 'https://pbs.twimg.com/profile_images/1683325380441128960/yRsRRjGO_400x400.jpg', text: 'المنصة تسير للأمام بسرعة فائقة.', time: 'ساعة واحدة', likesCount: 420, likedBy: [] },
+            { id: 2, name: 'تطبيق X', handle: '@X', avatar: 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png', text: 'أهلاً بك في التحديث الجديد المطابق لتطبيق X تماماً.', time: 'ساعتان', likesCount: 1337, likedBy: [] }
         ];
 
-        let privateChatData = JSON.parse(localStorage.getItem('sep_chat')) || [
-            { sender: 'poet', text: 'مرحباً بكِ في صفحة المراسلة الخاصة المستقلة.', time: '10:00 ص' },
-            { sender: 'lawyer', text: 'أهلاً بك، التواصل هنا سلس ومباشر بيننا.', time: '10:02 ص' }
+        let dmMessages = JSON.parse(localStorage.getItem('x_dm')) || [
+            { sender: 'other', text: 'أهلاً بك، هل وصلتك التحديثات الأخيرة؟' },
+            { sender: 'me', text: 'نعم، التطبيق صار مطابقاً لـ X وصوري الخاصة تعمل تماماً.' }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (activeRole) {
-                launchAppShell(activeRole);
+            if (currentUser) {
+                startAppSession();
             }
         });
 
-        function openApp(role) {
-            activeRole = role;
-            localStorage.setItem('sep_active_role', role);
-            launchAppShell(role);
-        }
+        function initApp() {
+            const name = document.getElementById('setupName').value.trim();
+            const handle = document.getElementById('setupHandle').value.trim();
+            const avatar = document.getElementById('setupAvatar').value.trim();
 
-        function switchPortal() {
-            localStorage.removeItem('sep_active_role');
-            activeRole = null;
-            document.getElementById('appShell').style.display = 'none';
-            document.getElementById('portalScreen').style.display = 'block';
-            document.body.className = 'theme-poet';
-        }
-
-        function logoutApp() {
-            switchPortal();
-        }
-
-        function launchAppShell(role) {
-            document.getElementById('portalScreen').style.display = 'none';
-            document.getElementById('appShell').style.display = 'flex';
-
-            const body = document.getElementById('mainBody');
-            const titleEl = document.getElementById('appHeaderTitle');
-            const composerTitle = document.getElementById('composerHeaderTitle');
-
-            if (role === 'poet') {
-                body.className = 'theme-poet';
-                titleEl.innerText = 'بوابة الشاعر';
-                composerTitle.innerText = '🪶 انشر بيتاً أو خاطرة';
-            } else {
-                body.className = 'theme-lawyer';
-                titleEl.innerText = 'بوابة المحامية ليان';
-                composerTitle.innerText = '⚖️ انشر قضية أو فكرة قانونية';
-            }
-
-            loadProfileInfo();
-            renderFeedList();
-            renderChatMessages();
-            renderLikedList();
-        }
-
-        function switchTab(paneId, btnEl) {
-            document.querySelectorAll('.page-pane').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-
-            document.getElementById(paneId).classList.add('active');
-            btnEl.classList.add('active');
-        }
-
-        // إدارة الملف الشخصي (أبتاور، بايو، يوزر)
-        function loadProfileInfo() {
-            const p = profilesData[activeRole];
-            document.getElementById('profileDisplayName').innerText = p.name;
-            document.getElementById('profileHandleDisplay').innerText = p.handle;
-            document.getElementById('profileBioDisplay').innerText = p.bio;
-            document.getElementById('profileAvatarDisplay').src = p.avatar;
-
-            document.getElementById('editAvatarInput').value = p.avatar;
-            document.getElementById('editHandleInput').value = p.handle;
-            document.getElementById('editBioInput').value = p.bio;
-        }
-
-        function saveProfileChanges() {
-            const avatar = document.getElementById('editAvatarInput').value.trim();
-            const handle = document.getElementById('editHandleInput').value.trim();
-            const bio = document.getElementById('editBioInput').value.trim();
-
-            if (avatar) profilesData[activeRole].avatar = avatar;
-            if (handle) profilesData[activeRole].handle = handle;
-            if (bio) profilesData[activeRole].bio = bio;
-
-            localStorage.setItem('sep_profiles', JSON.stringify(profilesData));
-            loadProfileInfo();
-            renderFeedList();
-            alert('تم حفظ تعديلات الملف الشخصي بنجاح!');
-        }
-
-        // إدارة النشر والتغريدات مع شريط البحث الطويل
-        function submitPost() {
-            const title = document.getElementById('newPostTitle').value.trim();
-            const text = document.getElementById('newPostText').value.trim();
-
-            if (!text) {
-                alert('يرجى كتابة محتوى النشر أولاً!');
+            if (!name || !handle || !avatar) {
+                alert('يرجى تعبئة جميع الحقول ووضع رابط صورتك الشخصية.');
                 return;
             }
 
-            postsData.unshift({
+            currentUser = { name, handle, avatar, bio: 'مهتم بالتقنية وتطوير المنصات.' };
+            localStorage.setItem('x_user', JSON.stringify(currentUser));
+            startAppSession();
+        }
+
+        function startAppSession() {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('appShell').style.display = 'flex';
+
+            document.getElementById('headerAvatarImg').src = currentUser.avatar;
+            document.getElementById('composerAvatarImg').src = currentUser.avatar;
+            document.getElementById('profilePageAvatar').src = currentUser.avatar;
+
+            document.getElementById('profileDisplayName').innerText = currentUser.name;
+            document.getElementById('profileUserHandle').innerText = currentUser.handle;
+            document.getElementById('profileBioText').innerText = currentUser.bio;
+
+            document.getElementById('editNameInput').value = currentUser.name;
+            document.getElementById('editHandleInput').value = currentUser.handle;
+            document.getElementById('editAvatarUrlInput').value = currentUser.avatar;
+            document.getElementById('editBioInput').value = currentUser.bio;
+
+            renderTimeline();
+            renderLikes();
+            renderDmMessages();
+            renderUserTweets();
+        }
+
+        function switchPane(paneId, btnEl) {
+            document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(paneId).classList.add('active');
+            if (btnEl) btnEl.classList.add('active');
+
+            const titleMap = {
+                'homePane': 'الصفحة الرئيسية',
+                'searchPane': 'استكشاف',
+                'likesPane': 'الإعجابات',
+                'chatPane': 'الرسائل',
+                'profilePane': currentUser.name
+            };
+            document.getElementById('headerTitle').innerText = titleMap[paneId] || 'X';
+        }
+
+        // نشر تغريدة جديدة
+        function publishTweet() {
+            const text = document.getElementById('tweetInputText').value.trim();
+            if (!text) return;
+
+            tweetsData.unshift({
                 id: Date.now(),
-                role: activeRole,
-                title: title,
+                name: currentUser.name,
+                handle: currentUser.handle,
+                avatar: currentUser.avatar,
                 text: text,
-                date: 'الآن',
+                time: 'الآن',
                 likesCount: 0,
                 likedBy: []
             });
 
-            localStorage.setItem('sep_posts', JSON.stringify(postsData));
-            document.getElementById('newPostTitle').value = '';
-            document.getElementById('newPostText').value = '';
-            renderFeedList();
+            localStorage.setItem('x_tweets', JSON.stringify(tweetsData));
+            document.getElementById('tweetInputText').value = '';
+            renderTimeline();
+            renderUserTweets();
         }
 
-        function renderFeedList(filteredPosts = null) {
-            const container = document.getElementById('feedListContainer');
+        // رسم التغريدات
+        function renderTimeline(list = tweetsData, containerId = 'timelineContainer') {
+            const container = document.getElementById(containerId);
             container.innerHTML = '';
-
-            const list = filteredPosts || postsData;
 
             if (list.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 20px;">لا توجد منشورات مطابقة...</div>`;
+                container.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 30px;">لا توجد تغريدات لعرضها</div>`;
                 return;
             }
 
-            list.forEach(p => {
-                const author = profilesData[p.role];
-                const isMine = (p.role === activeRole);
-                const hasLiked = p.likedBy && p.likedBy.includes(activeRole);
-
+            list.forEach(t => {
+                const isLiked = t.likedBy && t.likedBy.includes(currentUser.handle);
                 const card = document.createElement('div');
-                card.className = 'card-item';
+                card.className = 'tweet-card';
                 card.innerHTML = `
-                    <div class="card-top">
-                        <img src="${author.avatar}" class="card-avatar-sm" alt="avatar">
-                        <div class="card-user-info">
-                            <h4>${author.name}</h4>
-                            <span>${author.handle} • ${p.date}</span>
+                    <img src="${t.avatar}" class="tweet-avatar" alt="avatar">
+                    <div class="tweet-body">
+                        <div class="tweet-header-info">
+                            <span class="tweet-name">${t.name}</span>
+                            <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
                         </div>
-                    </div>
-                    ${p.title ? `<div style="font-family: 'Aref Ruqaa'; font-size: 18px; color: var(--gold-ancient); margin-bottom: 6px;">${p.title}</div>` : ''}
-                    <div class="card-body-text">${p.text}</div>
-                    <div class="card-footer">
-                        <button class="like-action-btn ${hasLiked ? 'liked' : ''}" onclick="toggleLikePost(${p.id})">
-                            ❤ ${p.likesCount} إعجاب
-                        </button>
-                        ${isMine ? `<button class="delete-btn-sm" onclick="deletePostItem(${p.id})">🗑️ حذف</button>` : '<span></span>'}
+                        <div class="tweet-text">${t.text}</div>
+                        <div class="tweet-actions">
+                            <button class="tweet-action-btn">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M1.5 4.5h21v15h-21v-15zm2 2v11h17v-11h-17zm3.5 3h10v1.5h-10v-1.5zm0 4h7v1.5h-7v-1.5z"></path></svg>
+                                <span>رد</span>
+                            </button>
+                            <button class="tweet-action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${t.id})">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.1-.806-1.1C9.986 6.01 8.53 5.44 7.307 5.5c-1.23.012-2.374.55-3.13 1.45-1.025 1.22-1.18 2.84-.42 4.31.83 1.63 2.11 3.2 4.13 5.2 2.05 1.99 4.52 3.86 5.02 4.23.5-.37 2.97-2.24 5.02-4.23 2.02-2 3.3-3.57 4.13-5.2.76-1.47.605-3.09-.42-4.31-.756-.9-1.9-1.438-3.13-1.45z"></path></svg>
+                                <span>${t.likesCount}</span>
+                            </button>
+                        </div>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function filterFeed() {
-            const query = document.getElementById('longSearchInput').value.toLowerCase();
-            const matched = postsData.filter(p => 
-                p.text.toLowerCase().includes(query) || 
-                (p.title && p.title.toLowerCase().includes(query)) ||
-                profilesData[p.role].name.toLowerCase().includes(query)
-            );
-            renderFeedList(matched);
-        }
+        function toggleLike(id) {
+            const tweet = tweetsData.find(t => t.id === id);
+            if (!tweet) return;
 
-        function toggleLikePost(id) {
-            const post = postsData.find(p => p.id === id);
-            if (!post) return;
+            if (!tweet.likedBy) tweet.likedBy = [];
+            const idx = tweet.likedBy.indexOf(currentUser.handle);
 
-            if (!post.likedBy) post.likedBy = [];
-
-            const idx = post.likedBy.indexOf(activeRole);
             if (idx > -1) {
-                post.likedBy.splice(idx, 1);
-                post.likesCount = Math.max(0, post.likesCount - 1);
+                tweet.likedBy.splice(idx, 1);
+                tweet.likesCount = Math.max(0, tweet.likesCount - 1);
             } else {
-                post.likedBy.push(activeRole);
-                post.likesCount += 1;
+                tweet.likedBy.push(currentUser.handle);
+                tweet.likesCount += 1;
             }
 
-            localStorage.setItem('sep_posts', JSON.stringify(postsData));
-            renderFeedList();
-            renderLikedList();
+            localStorage.setItem('x_tweets', JSON.stringify(tweetsData));
+            renderTimeline();
+            renderLikes();
+            renderUserTweets();
         }
 
-        function deletePostItem(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المنشور؟')) {
-                postsData = postsData.filter(p => p.id !== id);
-                localStorage.setItem('sep_posts', JSON.stringify(postsData));
-                renderFeedList();
-                renderLikedList();
-            }
+        // بحث انستغرامي نظيف
+        function performSearch() {
+            const query = document.getElementById('igSearchInput').value.toLowerCase();
+            const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.name.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query));
+            renderTimeline(results, 'searchResultsContainer');
         }
 
-        // عرض قائمة الإعجابات الخاصة بك
-        function renderLikedList() {
-            const container = document.getElementById('likedListContainer');
-            container.innerHTML = '';
-
-            const likedPosts = postsData.filter(p => p.likedBy && p.likedBy.includes(activeRole));
-
-            if (likedPosts.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">ليس لديك أي منشورات معجب بها حالياً.</div>`;
-                return;
-            }
-
-            likedPosts.forEach(p => {
-                const author = profilesData[p.role];
-                const card = document.createElement('div');
-                card.className = 'card-item';
-                card.innerHTML = `
-                    <div class="card-top">
-                        <img src="${author.avatar}" class="card-avatar-sm" alt="avatar">
-                        <div class="card-user-info">
-                            <h4>${author.name}</h4>
-                            <span>${author.handle}</span>
-                        </div>
-                    </div>
-                    <div class="card-body-text">${p.text}</div>
-                    <div style="font-size: 12px; color: var(--gold-ancient);">❤ معجب به</div>
-                `;
-                container.appendChild(card);
-            });
+        // إعجابات المستخدم
+        function renderLikes() {
+            const likedTweets = tweetsData.filter(t => t.likedBy && t.likedBy.includes(currentUser.handle));
+            renderTimeline(likedTweets, 'likesContainer');
         }
 
-        // نظام الدردشة الخاصة الثنائية والسلسة
-        function sendPrivateMessage() {
-            const input = document.getElementById('chatMsgInput');
+        // تغريدات المستخدم في ملفه الشخصي
+        function renderUserTweets() {
+            const myTweets = tweetsData.filter(t => t.handle === currentUser.handle);
+            renderTimeline(myTweets, 'userTweetsContainer');
+        }
+
+        // تعديل الملف الشخصي
+        function toggleEditProfileForm() {
+            const form = document.getElementById('profileEditForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function saveProfileChanges() {
+            const name = document.getElementById('editNameInput').value.trim();
+            const handle = document.getElementById('editHandleInput').value.trim();
+            const avatar = document.getElementById('editAvatarUrlInput').value.trim();
+            const bio = document.getElementById('editBioInput').value.trim();
+
+            if (name) currentUser.name = name;
+            if (handle) currentUser.handle = handle;
+            if (avatar) currentUser.avatar = avatar;
+            if (bio) currentUser.bio = bio;
+
+            localStorage.setItem('x_user', JSON.stringify(currentUser));
+            startAppSession();
+            toggleEditProfileForm();
+        }
+
+        // الرسائل الخاصة (DM)
+        function sendDmMessage() {
+            const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
             if (!txt) return;
 
-            const timeNow = new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-
-            privateChatData.push({
-                sender: activeRole,
-                text: txt,
-                time: timeNow
-            });
-
-            localStorage.setItem('sep_chat', JSON.stringify(privateChatData));
+            dmMessages.push({ sender: 'me', text: txt });
+            localStorage.setItem('x_dm', JSON.stringify(dmMessages));
             input.value = '';
-            renderChatMessages();
+            renderDmMessages();
         }
 
-        function checkChatEnter(e) {
-            if (e.key === 'Enter') {
-                sendPrivateMessage();
-            }
+        function handleDmKeyPress(e) {
+            if (e.key === 'Enter') sendDmMessage();
         }
 
-        function renderChatMessages() {
-            const area = document.getElementById('chatMessagesArea');
-            area.innerHTML = '';
-
-            if (privateChatData.length === 0) {
-                area.innerHTML = `<div style="text-align: center; color: var(--sand-text); margin: auto;">لا توجد رسائل خاصة. ابدأ بالحديث!</div>`;
-                return;
-            }
-
-            privateChatData.forEach(m => {
-                const isMine = (m.sender === activeRole);
+        function renderDmMessages() {
+            const list = document.getElementById('dmMessagesList');
+            list.innerHTML = '';
+            dmMessages.forEach(m => {
                 const bubble = document.createElement('div');
-                bubble.className = `chat-bubble-ui ${isMine ? 'mine' : 'theirs'}`;
-                bubble.innerHTML = `
-                    <div style="font-size: 11px; color: var(--gold-ancient); margin-bottom: 2px;">${profilesData[m.sender].name}</div>
-                    <div>${m.text}</div>
-                    <div style="font-size: 9px; color: var(--sand-text); text-align: left; margin-top: 3px;">${m.time}</div>
-                `;
-                area.appendChild(bubble);
+                bubble.className = `dm-bubble ${m.sender === 'me' ? 'mine' : 'theirs'}`;
+                bubble.innerText = m.text;
+                list.appendChild(bubble);
             });
-            area.scrollTop = area.scrollHeight;
-        }
-
-        function clearPrivateChat() {
-            if (confirm('هل أنت متأكد من مسح محادثة الخاص بالكامل؟')) {
-                privateChatData = [];
-                localStorage.removeItem('sep_chat');
-                renderChatMessages();
-            }
+            list.scrollTop = list.scrollHeight;
         }
     </script>
 </body>
