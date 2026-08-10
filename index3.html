@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>X</title>
+    <title>R</title>
     <style>
         :root {
             --bg-color: #000000;
@@ -34,11 +34,11 @@
             justify-content: center;
         }
 
-        /* شاشة اختيار الحسابات / تسجيل الدخول بصورة خاصة */
+        /* شاشة اختيار أو تسجيل الحسابات */
         .auth-container {
             width: 100%;
             max-width: 440px;
-            padding: 40px 20px;
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -46,11 +46,12 @@
             min-height: 100vh;
         }
 
-        .x-logo-large {
-            font-size: 48px;
+        .r-logo-large {
+            font-size: 52px;
             font-weight: 900;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             letter-spacing: -2px;
+            color: var(--text-color);
         }
 
         .auth-card {
@@ -69,7 +70,7 @@
             margin-bottom: 15px;
         }
 
-        .input-x {
+        .input-r {
             width: 100%;
             background: var(--bg-color);
             border: 1px solid var(--border-color);
@@ -82,11 +83,11 @@
             text-align: right;
         }
 
-        .input-x:focus {
+        .input-r:focus {
             border-color: var(--accent-color);
         }
 
-        .btn-x-primary {
+        .btn-r-primary {
             background-color: var(--text-color);
             color: var(--bg-color);
             border: none;
@@ -97,13 +98,44 @@
             width: 100%;
             cursor: pointer;
             transition: background 0.2s;
+            margin-top: 5px;
         }
 
-        .btn-x-primary:hover {
+        .btn-r-primary:hover {
             background-color: #d7dbdc;
         }
 
-        /* الهيكل الأساسي للتطبيق (طابق X تماماً) */
+        .accounts-list-box {
+            width: 100%;
+            margin-top: 15px;
+            text-align: right;
+        }
+
+        .account-item-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #16181c;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .account-item-select:hover {
+            background: var(--hover-color);
+        }
+
+        .account-item-select img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* الهيكل الأساسي للتطبيق */
         .app-shell {
             display: none;
             width: 100%;
@@ -111,17 +143,16 @@
             border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
             min-height: 100vh;
-            display: none;
             flex-direction: column;
             position: relative;
-            padding-bottom: 56px; /* مساحة النافبار السفلي */
+            padding-bottom: 56px;
         }
 
         /* الهيدر العلوي */
         .app-header {
             position: sticky;
             top: 0;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -153,7 +184,7 @@
             object-fit: cover;
         }
 
-        /* الصفحات (Panes) */
+        /* الصفحات */
         .pane {
             display: none;
             flex-direction: column;
@@ -164,7 +195,7 @@
             display: flex;
         }
 
-        /* شريط البحث مثل انستغرام (تصميم علوي نظيف وبحث مطول) */
+        /* شريط بحث انستغرامي سلس ونظيف */
         .instagram-search-header {
             padding: 10px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -199,7 +230,7 @@
             padding-right: 8px;
         }
 
-        /* مربع كتابة تغريدة (Post Composer) */
+        /* صندوق كتابة التغريدات */
         .composer-box {
             display: flex;
             padding: 12px 16px;
@@ -256,7 +287,7 @@
             background-color: var(--accent-hover);
         }
 
-        /* شكل التغريدة (طابق X حرفياً) */
+        /* شكل التغريدة المطابق تماماً */
         .tweet-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -342,7 +373,7 @@
             background-color: var(--like-bg-hover);
         }
 
-        /* صفحة الرسائل الخاصة (Direct Messages) */
+        /* صفحة الرسائل الخاصة (الخاص) */
         .dm-container {
             display: flex;
             flex-direction: column;
@@ -412,10 +443,12 @@
             cursor: pointer;
         }
 
-        /* صفحة الملف الشخصي (Profile) */
+        /* صفحة الملف الشخصي */
         .profile-header-banner {
             height: 150px;
-            background-color: #333639;
+            background-size: cover;
+            background-position: center;
+            transition: background 0.3s;
         }
 
         .profile-info-section {
@@ -445,22 +478,25 @@
         .profile-actions-row {
             display: flex;
             justify-content: flex-end;
+            gap: 8px;
             margin-bottom: 15px;
             height: 35px;
         }
 
-        .btn-edit-profile {
+        .btn-profile-action {
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-color);
             border-radius: 50px;
-            padding: 0 16px;
+            padding: 0 14px;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
         }
 
-        .btn-edit-profile:hover {
+        .btn-profile-action:hover {
             background-color: var(--hover-color);
         }
 
@@ -484,6 +520,7 @@
             line-height: 1.4;
         }
 
+        /* نموذج تعديل الملف الشخصي واختيار الهيدر الكوكبي */
         .profile-edit-form {
             background: #16181c;
             padding: 16px;
@@ -493,11 +530,54 @@
         }
 
         .profile-edit-form h4 {
-            font-size: 16px;
-            margin-bottom: 10px;
+            font-size: 15px;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
 
-        /* النافبار السفلي (Bottom Navigation) مثل X تماماً */
+        .planets-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .planet-thumb {
+            height: 45px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .planet-thumb.selected {
+            border-color: var(--accent-color);
+        }
+
+        /* زر رفع الصور الفعلي */
+        .file-upload-wrapper {
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        .file-upload-label {
+            display: inline-block;
+            background: #202327;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .file-upload-label:hover {
+            background: var(--hover-color);
+        }
+
+        /* النافبار السفلي */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -543,22 +623,34 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول والبدء بصورة شخصية مخصصة -->
+    <!-- شاشة تسجيل الدخول المتعدد وإدارة الحسابات المحفوظة -->
     <div class="auth-container" id="authScreen">
-        <div class="x-logo-large">𝕏</div>
+        <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
-            <h3>تسجيل الدخول إلى حسابك</h3>
-            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">اختر هويتك وضع رابط صورتك الشخصية الخاصة</p>
+            <h3>تسجيل دخول أو إنشاء حساب جديد</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">بياناتك وحساباتك محفوظة بالكامل للأبد</p>
             
-            <input type="text" id="setupName" class="input-x" placeholder="الاسم الكامل (مثال: ليان العنزي)">
-            <input type="text" id="setupHandle" class="input-x" placeholder="اسم المستخدم (مثال: @Layan)">
-            <input type="text" id="setupAvatar" class="input-x" placeholder="رابط صورة الـ Avatar الشخصية (URL)">
+            <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل (مثال: فيصل)">
+            <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @Faisal)">
             
-            <button class="btn-x-primary" onclick="initApp()">التالي</button>
+            <div class="file-upload-wrapper">
+                <label class="file-upload-label">
+                    📁 اختر صورة الـ Avatar من جهازك
+                    <input type="file" id="setupAvatarFile" accept="image/*" style="display: none;" onchange="previewAvatar(event)">
+                </label>
+            </div>
+            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="أو ضع رابط صورة مباشر (URL)">
+
+            <button class="btn-r-primary" onclick="createNewAccount()">تسجيل / دخول</button>
+        </div>
+
+        <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة سابقاً:</p>
+            <div id="savedAccountsList"></div>
         </div>
     </div>
 
-    <!-- الهيكل الرئيسي للتطبيق (مطابق لتطبيق X) -->
+    <!-- الهيكل الرئيسي لتطبيق R -->
     <div class="app-shell" id="appShell">
         
         <!-- الهيدر العلوي -->
@@ -566,27 +658,25 @@
             <button class="header-avatar-btn" onclick="switchPane('profilePane', document.getElementById('navProfile'))">
                 <img id="headerAvatarImg" src="" alt="Profile">
             </button>
-            <div class="app-header-title" id="headerTitle">الصفحة الرئيسية</div>
+            <div class="app-header-title" id="headerTitle">الرئيسية</div>
             <div style="width: 32px;"></div>
         </div>
 
-        <!-- 1. صفحة الرئيسية (Home Feed) -->
+        <!-- 1. الرئيسية -->
         <div id="homePane" class="pane active">
-            <!-- مربع التغريد -->
             <div class="composer-box">
                 <img id="composerAvatarImg" src="" class="composer-avatar" alt="Avatar">
                 <div class="composer-content">
-                    <textarea id="tweetInputText" class="composer-textarea" placeholder="<div>!ما الذي تحدث</div>"></textarea>
+                    <textarea id="tweetInputText" class="composer-textarea" placeholder="ما الذي يحدث؟!"></textarea>
                     <div class="composer-footer">
                         <button class="btn-tweet" onclick="publishTweet()">تغريد</button>
                     </div>
                 </div>
             </div>
-            <!-- قائمة التغريدات -->
             <div id="timelineContainer"></div>
         </div>
 
-        <!-- 2. صفحة البحث (تليق بتصميم إنستغرام: بحث علوي طويل ونظيف) -->
+        <!-- 2. الاستكشاف / البحث (مطابق لانستغرام وبحث سلس جداً) -->
         <div id="searchPane" class="pane">
             <div class="instagram-search-header">
                 <div class="instagram-search-input-wrapper">
@@ -597,32 +687,33 @@
             <div id="searchResultsContainer"></div>
         </div>
 
-        <!-- 3. صفحة الإعجابات (Likes) -->
+        <!-- 3. الإعجابات -->
         <div id="likesPane" class="pane">
             <div style="padding: 16px; border-bottom: 1px solid var(--border-color); font-weight: 700; font-size: 18px;">التغريدات المعجب بها</div>
             <div id="likesContainer"></div>
         </div>
 
-        <!-- 4. صفحة الرسائل الخاصة (Direct Messages - الخاص) -->
+        <!-- 4. الخاص -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
                 <div class="dm-messages-list" id="dmMessagesList"></div>
                 <div class="dm-input-area">
-                    <input type="text" id="dmInputText" placeholder="ابدأ رسالة جديدة..." onkeypress="handleDmKeyPress(event)">
+                    <input type="text" id="dmInputText" placeholder="اكتب رسالة خاصة..." onkeypress="handleDmKeyPress(event)">
                     <button class="dm-send-btn" onclick="sendDmMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- 5. صفحة الملف الشخصي (Profile) -->
+        <!-- 5. الحساب الشخصي (مع هيدرات 7 كواكب ومجرات ورفع الصور) -->
         <div id="profilePane" class="pane">
-            <div class="profile-header-banner"></div>
+            <div class="profile-header-banner" id="profileBannerDiv"></div>
             <div class="profile-info-section">
                 <div class="profile-avatar-wrapper">
                     <img id="profilePageAvatar" src="" alt="Avatar">
                 </div>
                 <div class="profile-actions-row">
-                    <button class="btn-edit-profile" onclick="toggleEditProfileForm()">تعديل الملف الشخصي</button>
+                    <button class="btn-profile-action" onclick="toggleEditProfileForm()">تعديل الملف</button>
+                    <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880; border-color: rgba(249, 24, 128, 0.4);">خروج</button>
                 </div>
                 <div class="profile-names">
                     <div class="profile-display-name" id="profileDisplayName">الاسم</div>
@@ -630,20 +721,40 @@
                 </div>
                 <div class="profile-bio" id="profileBioText">لم تتم إضافة نبذة بعد.</div>
 
-                <!-- نموذج التعديل المخفي -->
+                <!-- نموذج تعديل الملف الشخصي المطور -->
                 <div class="profile-edit-form" id="profileEditForm" style="display: none;">
-                    <h4>تعديل بيانات الحساب</h4>
-                    <input type="text" id="editNameInput" class="input-x" placeholder="الاسم الكامل">
-                    <input type="text" id="editHandleInput" class="input-x" placeholder="اسم المستخدم">
-                    <input type="text" id="editAvatarUrlInput" class="input-x" placeholder="رابط صورة الـ Avatar الجديدة">
-                    <textarea id="editBioInput" class="input-x" placeholder="اكتب نبذة شخصية (Bio)..." style="resize: vertical; min-height: 60px;"></textarea>
-                    <button class="btn-x-primary" onclick="saveProfileChanges()">حفظ التغييرات</button>
+                    <h4>اختر هيدر من الـ 7 كواكب والمجرات الفلكية الفخمة:</h4>
+                    <div class="planets-selector-grid" id="planetsGrid"></div>
+
+                    <h4>أو ارفع صورة هيدر خاصة من جهازك:</h4>
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload-label">
+                            🖼️ اختر صورة الهيدر
+                            <input type="file" id="editBannerFile" accept="image/*" style="display: none;" onchange="handleBannerFile(event)">
+                        </label>
+                    </div>
+
+                    <h4>تعديل بيانات الحساب والصورة الشخصية:</h4>
+                    <input type="text" id="editNameInput" class="input-r" placeholder="الاسم الكامل">
+                    <input type="text" id="editHandleInput" class="input-r" placeholder="اسم المستخدم">
+                    
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload-label">
+                            📁 تغيير صورة الـ Avatar من الجهاز
+                            <input type="file" id="editAvatarFile" accept="image/*" style="display: none;" onchange="handleNewAvatarFile(event)">
+                        </label>
+                    </div>
+                    <input type="text" id="editAvatarUrlInput" class="input-r" placeholder="أو رابط صورة الـ Avatar المباشر">
+                    
+                    <textarea id="editBioInput" class="input-r" placeholder="اكتب نبذة شخصية (Bio)..." style="resize: vertical; min-height: 60px;"></textarea>
+                    
+                    <button class="btn-r-primary" onclick="saveProfileChanges()">حفظ التغييرات</button>
                 </div>
             </div>
             <div id="userTweetsContainer"></div>
         </div>
 
-        <!-- النافبار السفلي (مطابق لرموز وشكل X) -->
+        <!-- النافبار السفلي -->
         <div class="bottom-nav">
             <button class="nav-item active" id="navHome" onclick="switchPane('homePane', this)">
                 <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"></path></svg>
@@ -658,62 +769,191 @@
                 <svg viewBox="0 0 24 24"><path d="M1.998 5.5c0-1.38 1.12-2.5 2.5-2.5h15c1.38 0 2.5 1.12 2.5 2.5v13c0 1.38-1.12 2.5-2.5 2.5h-15c-1.38 0-2.5-1.12-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.81 8-3.81V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.81-8-3.81v8.037c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z"></path></svg>
             </button>
             <button class="nav-item" id="navProfile" onclick="switchPane('profilePane', this)">
-                <svg viewBox="0 0 24 24"><path d="M5.651 19.006c.883-1.927 2.827-3.277 5.099-3.277s4.216 1.35 5.099 3.277c-1.42 1.11-3.208 1.774-5.149 1.774s-3.729-.664-5.149-1.774zm6.049-7.527c-2.43 0-4.4-1.97-4.4-4.4s1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4-1.97 4.4-4.4 4.4z"></path></svg>
+                <svg viewBox="0 0 24 24"><path d="M5.651 19.006c.883-1.927 2.827-3.277 5.099-3.277s4.216 1.35 5.099 3.277-1.42 1.11-3.208 1.774-5.149 1.774s-3.729-.664-5.149-1.774zm6.049-7.527c-2.43 0-4.4-1.97-4.4-4.4s1.97-4.4 4.4-4.4 4.4 1.97 4.4 4.4-1.97 4.4-4.4 4.4z"></path></svg>
             </button>
         </div>
 
     </div>
 
     <script>
-        let currentUser = JSON.parse(localStorage.getItem('x_user')) || null;
-
-        let tweetsData = JSON.parse(localStorage.getItem('x_tweets')) || [
-            { id: 1, name: 'إيلون ماسك', handle: '@elonmusk', avatar: 'https://pbs.twimg.com/profile_images/1683325380441128960/yRsRRjGO_400x400.jpg', text: 'المنصة تسير للأمام بسرعة فائقة.', time: 'ساعة واحدة', likesCount: 420, likedBy: [] },
-            { id: 2, name: 'تطبيق X', handle: '@X', avatar: 'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png', text: 'أهلاً بك في التحديث الجديد المطابق لتطبيق X تماماً.', time: 'ساعتان', likesCount: 1337, likedBy: [] }
+        // 7 كواكب ومجرات فخمة للهيدرات
+        const planetHeaders = [
+            'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop', // مجرة درب التبانة
+            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop', // الكون والأضواء
+            'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=1000&auto=format&fit=crop', // كوكب المشتري
+            'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop', // سديم فضائي
+            'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=1000&auto=format&fit=crop', // كوكب الأرض من الفضاء
+            'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000&auto=format&fit=crop', // مجرة حلزونية
+            'https://images.unsplash.com/photo-1538370965046-79c0d6907d47?q=80&w=1000&auto=format&fit=crop'  // المريخ الكوكب الأحمر
         ];
 
-        let dmMessages = JSON.parse(localStorage.getItem('x_dm')) || [
-            { sender: 'other', text: 'أهلاً بك، هل وصلتك التحديثات الأخيرة؟' },
-            { sender: 'me', text: 'نعم، التطبيق صار مطابقاً لـ X وصوري الخاصة تعمل تماماً.' }
+        let allAccounts = JSON.parse(localStorage.getItem('r_accounts')) || {};
+        let currentHandle = localStorage.getItem('r_current_handle') || null;
+
+        let tweetsData = JSON.parse(localStorage.getItem('r_tweets')) || [
+            { id: 1, name: 'رئيس المنصة', handle: '@R_Admin', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', banner: planetHeaders[0], text: 'أهلاً بك في منصة R الفاخرة والمستقلة بالكامل.', time: 'منذ ساعة', likesCount: 99, likedBy: [] }
         ];
+
+        let dmMessages = JSON.parse(localStorage.getItem('r_dm')) || [
+            { sender: 'system', text: 'مرحباً بك في قسم الخاص. محادثاتك محفوظة تماماً.' }
+        ];
+
+        let tempAvatarBase64 = '';
+        let tempBannerSelection = '';
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (currentUser) {
-                startAppSession();
-            }
+            renderPlanetsPicker();
+            checkAndLoadSession();
         });
 
-        function initApp() {
+        // قراءة صورة الأفاتار محلياً من جهاز المستخدم
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempAvatarBase64 = e.target.result;
+                    alert('تم تحميل صورة الـ Avatar بنجاح!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleNewAvatarFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('editAvatarUrlInput').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleBannerFile(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempBannerSelection = e.target.result;
+                    document.querySelectorAll('.planet-thumb').forEach(el => el.classList.remove('selected'));
+                    alert('تم اختيار هيدر خاص من جهازك بنجاح!');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function renderPlanetsPicker() {
+            const grid = document.getElementById('planetsGrid');
+            grid.innerHTML = '';
+            planetHeaders.forEach((url, idx) => {
+                const div = document.createElement('div');
+                div.className = 'planet-thumb';
+                div.style.backgroundImage = `url(${url})`;
+                div.onclick = () => {
+                    tempBannerSelection = url;
+                    document.querySelectorAll('.planet-thumb').forEach(el => el.classList.remove('selected'));
+                    div.classList.add('selected');
+                };
+                grid.appendChild(div);
+            });
+        }
+
+        function checkAndLoadSession() {
+            const savedKeys = Object.keys(allAccounts);
+            const savedListContainer = document.getElementById('savedAccountsList');
+            savedListContainer.innerHTML = '';
+
+            if (savedKeys.length > 0) {
+                document.getElementById('savedAccountsSection').style.display = 'block';
+                savedKeys.forEach(handle => {
+                    const acc = allAccounts[handle];
+                    const item = document.createElement('div');
+                    item.className = 'account-item-select';
+                    item.innerHTML = `
+                        <img src="${acc.avatar}" alt="avatar">
+                        <div>
+                            <div style="font-weight: 700; font-size: 14px;">${acc.name}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
+                        </div>
+                    `;
+                    item.onclick = () => loginIntoAccount(handle);
+                    savedListContainer.appendChild(item);
+                });
+            } else {
+                document.getElementById('savedAccountsSection').style.display = 'none';
+            }
+
+            if (currentHandle && allAccounts[currentHandle]) {
+                startAppShell();
+            }
+        }
+
+        function createNewAccount() {
             const name = document.getElementById('setupName').value.trim();
             const handle = document.getElementById('setupHandle').value.trim();
-            const avatar = document.getElementById('setupAvatar').value.trim();
+            const urlInput = document.getElementById('setupAvatarUrl').value.trim();
 
-            if (!name || !handle || !avatar) {
-                alert('يرجى تعبئة جميع الحقول ووضع رابط صورتك الشخصية.');
+            if (!name || !handle) {
+                alert('يرجى كتابة الاسم واسم المستخدم على الأقل.');
                 return;
             }
 
-            currentUser = { name, handle, avatar, bio: 'مهتم بالتقنية وتطوير المنصات.' };
-            localStorage.setItem('x_user', JSON.stringify(currentUser));
-            startAppSession();
+            const avatar = tempAvatarBase64 || urlInput || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
+            
+            allAccounts[handle] = {
+                name,
+                handle,
+                avatar,
+                banner: planetHeaders[0],
+                bio: 'مهتم بالتقنية والفضاء في منصة R.'
+            };
+
+            localStorage.setItem('r_accounts', JSON.stringify(allAccounts));
+            loginIntoAccount(handle);
         }
 
-        function startAppSession() {
+        function loginIntoAccount(handle) {
+            currentHandle = handle;
+            localStorage.setItem('r_current_handle', handle);
+            startAppShell();
+        }
+
+        function logoutAccount() {
+            localStorage.removeItem('r_current_handle');
+            currentHandle = null;
+            document.getElementById('appShell').style.display = 'none';
+            document.getElementById('authScreen').style.display = 'flex';
+            checkAndLoadSession();
+        }
+
+        function getCurrentUser() {
+            return allAccounts[currentHandle];
+        }
+
+        function startAppShell() {
+            const user = getCurrentUser();
+            if (!user) {
+                logoutAccount();
+                return;
+            }
+
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appShell').style.display = 'flex';
 
-            document.getElementById('headerAvatarImg').src = currentUser.avatar;
-            document.getElementById('composerAvatarImg').src = currentUser.avatar;
-            document.getElementById('profilePageAvatar').src = currentUser.avatar;
+            document.getElementById('headerAvatarImg').src = user.avatar;
+            document.getElementById('composerAvatarImg').src = user.avatar;
+            document.getElementById('profilePageAvatar').src = user.avatar;
+            document.getElementById('profileBannerDiv').style.backgroundImage = `url(${user.banner || planetHeaders[0]})`;
 
-            document.getElementById('profileDisplayName').innerText = currentUser.name;
-            document.getElementById('profileUserHandle').innerText = currentUser.handle;
-            document.getElementById('profileBioText').innerText = currentUser.bio;
+            document.getElementById('profileDisplayName').innerText = user.name;
+            document.getElementById('profileUserHandle').innerText = user.handle;
+            document.getElementById('profileBioText').innerText = user.bio;
 
-            document.getElementById('editNameInput').value = currentUser.name;
-            document.getElementById('editHandleInput').value = currentUser.handle;
-            document.getElementById('editAvatarUrlInput').value = currentUser.avatar;
-            document.getElementById('editBioInput').value = currentUser.bio;
+            document.getElementById('editNameInput').value = user.name;
+            document.getElementById('editHandleInput').value = user.handle;
+            document.getElementById('editAvatarUrlInput').value = user.avatar;
+            document.getElementById('editBioInput').value = user.bio;
 
             renderTimeline();
             renderLikes();
@@ -729,38 +969,38 @@
             if (btnEl) btnEl.classList.add('active');
 
             const titleMap = {
-                'homePane': 'الصفحة الرئيسية',
+                'homePane': 'الرئيسية',
                 'searchPane': 'استكشاف',
                 'likesPane': 'الإعجابات',
-                'chatPane': 'الرسائل',
-                'profilePane': currentUser.name
+                'chatPane': 'الرسائل الخاصة',
+                'profilePane': getCurrentUser().name
             };
-            document.getElementById('headerTitle').innerText = titleMap[paneId] || 'X';
+            document.getElementById('headerTitle').innerText = titleMap[paneId] || 'R';
         }
 
-        // نشر تغريدة جديدة
+        // نشر تغريدة
         function publishTweet() {
             const text = document.getElementById('tweetInputText').value.trim();
             if (!text) return;
 
+            const user = getCurrentUser();
             tweetsData.unshift({
                 id: Date.now(),
-                name: currentUser.name,
-                handle: currentUser.handle,
-                avatar: currentUser.avatar,
+                name: user.name,
+                handle: user.handle,
+                avatar: user.avatar,
                 text: text,
                 time: 'الآن',
                 likesCount: 0,
                 likedBy: []
             });
 
-            localStorage.setItem('x_tweets', JSON.stringify(tweetsData));
+            localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             document.getElementById('tweetInputText').value = '';
             renderTimeline();
             renderUserTweets();
         }
 
-        // رسم التغريدات
         function renderTimeline(list = tweetsData, containerId = 'timelineContainer') {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
@@ -770,8 +1010,9 @@
                 return;
             }
 
+            const user = getCurrentUser();
             list.forEach(t => {
-                const isLiked = t.likedBy && t.likedBy.includes(currentUser.handle);
+                const isLiked = t.likedBy && t.likedBy.includes(user.handle);
                 const card = document.createElement('div');
                 card.className = 'tweet-card';
                 card.innerHTML = `
@@ -802,72 +1043,83 @@
             const tweet = tweetsData.find(t => t.id === id);
             if (!tweet) return;
 
+            const user = getCurrentUser();
             if (!tweet.likedBy) tweet.likedBy = [];
-            const idx = tweet.likedBy.indexOf(currentUser.handle);
+            const idx = tweet.likedBy.indexOf(user.handle);
 
             if (idx > -1) {
                 tweet.likedBy.splice(idx, 1);
                 tweet.likesCount = Math.max(0, tweet.likesCount - 1);
             } else {
-                tweet.likedBy.push(currentUser.handle);
+                tweet.likedBy.push(user.handle);
                 tweet.likesCount += 1;
             }
 
-            localStorage.setItem('x_tweets', JSON.stringify(tweetsData));
+            localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             renderTimeline();
             renderLikes();
             renderUserTweets();
         }
 
-        // بحث انستغرامي نظيف
+        // بحث سلس
         function performSearch() {
             const query = document.getElementById('igSearchInput').value.toLowerCase();
             const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.name.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query));
             renderTimeline(results, 'searchResultsContainer');
         }
 
-        // إعجابات المستخدم
         function renderLikes() {
-            const likedTweets = tweetsData.filter(t => t.likedBy && t.likedBy.includes(currentUser.handle));
+            const user = getCurrentUser();
+            const likedTweets = tweetsData.filter(t => t.likedBy && t.likedBy.includes(user.handle));
             renderTimeline(likedTweets, 'likesContainer');
         }
 
-        // تغريدات المستخدم في ملفه الشخصي
         function renderUserTweets() {
-            const myTweets = tweetsData.filter(t => t.handle === currentUser.handle);
+            const user = getCurrentUser();
+            const myTweets = tweetsData.filter(t => t.handle === user.handle);
             renderTimeline(myTweets, 'userTweetsContainer');
         }
 
-        // تعديل الملف الشخصي
         function toggleEditProfileForm() {
             const form = document.getElementById('profileEditForm');
             form.style.display = form.style.display === 'none' ? 'block' : 'none';
         }
 
         function saveProfileChanges() {
+            const user = getCurrentUser();
             const name = document.getElementById('editNameInput').value.trim();
             const handle = document.getElementById('editHandleInput').value.trim();
-            const avatar = document.getElementById('editAvatarUrlInput').value.trim();
+            const avatarUrl = document.getElementById('editAvatarUrlInput').value.trim();
             const bio = document.getElementById('editBioInput').value.trim();
 
-            if (name) currentUser.name = name;
-            if (handle) currentUser.handle = handle;
-            if (avatar) currentUser.avatar = avatar;
-            if (bio) currentUser.bio = bio;
+            if (name) user.name = name;
+            if (avatarUrl) user.avatar = avatarUrl;
+            if (bio) user.bio = bio;
+            if (tempBannerSelection) user.banner = tempBannerSelection;
 
-            localStorage.setItem('x_user', JSON.stringify(currentUser));
-            startAppSession();
+            if (handle && handle !== user.handle) {
+                delete allAccounts[user.handle];
+                user.handle = handle;
+                currentHandle = handle;
+                localStorage.setItem('r_current_handle', handle);
+            }
+
+            allAccounts[user.handle] = user;
+            localStorage.setItem('r_accounts', JSON.stringify(allAccounts));
+
+            startAppShell();
             toggleEditProfileForm();
+            alert('تم حفظ الملف الشخصي وتحديث الهيدر الفلكي بنجاح!');
         }
 
-        // الرسائل الخاصة (DM)
+        // الرسائل الخاصة
         function sendDmMessage() {
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
             if (!txt) return;
 
             dmMessages.push({ sender: 'me', text: txt });
-            localStorage.setItem('x_dm', JSON.stringify(dmMessages));
+            localStorage.setItem('r_dm', JSON.stringify(dmMessages));
             input.value = '';
             renderDmMessages();
         }
