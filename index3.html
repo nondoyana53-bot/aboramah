@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ديوان الحرف والعدالة - المنصة المزدوجة</title>
+    <!-- خطوط عربية فاخرة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #060607;
+            --card-dark: #0b0c0e;
+            --gold-ancient: #d4af37;
+            --gold-glow: #ffc83b;
+            --gold-muted: rgba(212, 175, 55, 0.25);
+            --burgundy-dark: #121824;
+            --sand-text: #b8bec8;
+            --text-light: #f0f3f7;
+            --border-gold: #8c6d1d;
+        }
+
+        /* سمات موقع الشاعر (ثيم ليلي شاعري / كلاسيكي) */
+        body.theme-poet {
+            --bg-base: #08070b;
+            --card-dark: #100e14;
+            --gold-ancient: #d19a66;
+            --gold-glow: #e5c07b;
+            --gold-muted: rgba(209, 154, 102, 0.25);
+            --burgundy-dark: #221524;
+            --border-gold: #8c5d35;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(209, 154, 102, 0.07) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(198, 120, 221, 0.05) 0%, transparent 40%),
+                linear-gradient(rgba(8, 7, 11, 0.96), rgba(8, 7, 11, 0.96)),
+                url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600&auto=format&fit=crop');
+        }
+
+        /* سمات موقع المحامية (ثيم قانوني رسمي ملكي) */
+        body.theme-lawyer {
+            --bg-base: #060607;
+            --card-dark: #0b0c0e;
+            --gold-ancient: #d4af37;
+            --gold-glow: #ffc83b;
+            --gold-muted: rgba(212, 175, 55, 0.25);
+            --burgundy-dark: #121824;
+            --border-gold: #8c6d1d;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(6, 6, 7, 0.96), rgba(6, 6, 7, 0.96)),
+                url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1600&auto=format&fit=crop');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-light);
+            font-family: 'Amiri', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px 10px;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+
+        /* شاشة اختيار العالم أو تسجيل الدخول */
+        #portalScreen {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-dark);
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
+            padding: 35px 25px;
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        #portalScreen::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .portal-title {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.3);
+        }
+
+        .portal-subtitle {
+            font-size: 15px;
+            color: var(--sand-text);
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .portal-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .portal-card {
+            background: rgba(18, 24, 36, 0.6);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .portal-card:hover {
+            border-color: var(--gold-ancient);
+            background: var(--burgundy-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .portal-card-info h3 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+
+        .portal-card-info p {
+            font-size: 13px;
+            color: var(--sand-text);
+        }
+
+        /* الحاوية الرئيسية للتطبيق بعد الدخول */
+        .app-container {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-dark);
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
+            padding: 22px 18px;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .app-container::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-gold);
+            margin-bottom: 20px;
+            background: #121824;
+        }
+
+        .header-overlay {
+            background: linear-gradient(180deg, rgba(6, 6, 7, 0.8) 0%, rgba(6, 6, 7, 0.95) 100%);
+            padding: 25px 15px 20px 15px;
+            position: relative;
+        }
+
+        .top-action-btns {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-btn-sm {
+            background: rgba(201, 59, 59, 0.2);
+            border: 1px solid rgba(201, 59, 59, 0.5);
+            color: #ff8b8b;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'Amiri', serif;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn-sm:hover {
+            background: rgba(201, 59, 59, 0.4);
+        }
+
+        .switch-universe-btn {
+            background: var(--gold-muted);
+            border: 1px solid var(--gold-ancient);
+            color: var(--gold-ancient);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .switch-universe-btn:hover {
+            background: var(--burgundy-dark);
+        }
+
+        h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 34px;
+            color: var(--gold-ancient);
+            font-weight: 700;
+            text-shadow: 0 2px 12px rgba(255, 200, 59, 0.4);
+            margin-top: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            color: var(--sand-text);
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* القائمة العلوية للتنقل بين الأقسام (تغريدات ثنائية / دردشة خاصة / الأرشيف) */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--gold-muted);
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #10131a;
+            border: 1px solid var(--border-gold);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.active {
+            background: var(--burgundy-dark);
+            color: var(--gold-ancient);
+            border-color: var(--gold-ancient);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* صندوق إنشاء التغريدات والمنشورات */
+        .composer-box {
+            background: #0d1015;
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 22px;
+        }
+
+        .composer-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            color: var(--gold-ancient);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea, input {
+            width: 100%;
+            background: #131821;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            color: var(--text-light);
+            padding: 12px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            margin-bottom: 10px;
+            outline: none;
+        }
+
+        textarea:focus, input:focus {
+            border-color: var(--gold-ancient);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-feather {
+            background: linear-gradient(135deg, #182232 0%, #0c111a 100%);
+            color: var(--gold-ancient);
+            border: 1px solid var(--gold-ancient);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-feather:hover {
+            background: var(--burgundy-dark);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        /* قائمة التغريدات الثنائية والمنشورات */
+        .feed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feed-card {
+            background: #0d1015;
+            border: 1px solid var(--gold-muted);
+            border-radius: 8px;
+            padding: 18px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .feed-card:hover {
+            border-color: var(--border-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+            padding-bottom: 8px;
+        }
+
+        .feed-author {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            color: var(--gold-ancient);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feed-date {
+            font-size: 12px;
+            color: var(--sand-text);
+        }
+
+        .feed-text {
+            font-size: 18px;
+            line-height: 1.9;
+            color: #ffffff;
+            margin-bottom: 15px;
+            white-space: pre-wrap;
+            text-align: justify;
+        }
+
+        .feed-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .like-btn {
+            background: none;
+            border: 1px solid var(--gold-muted);
+            color: var(--text-light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-family: 'Amiri', serif;
+        }
+
+        .like-btn.liked {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold-ancient);
+            color: var(--gold-glow);
+        }
+
+        .delete-post-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Amiri', serif;
+        }
+
+        /* نظام الدردشة الخاصة الثنائية مع خيار المسح */
+        .chat-container {
+            background: #0d1015;
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #131821;
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--gold-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 18px;
+        }
+
+        .clear-chat-btn {
+            background: none;
+            border: 1px solid rgba(201, 59, 59, 0.4);
+            color: #ff8b8b;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Amiri', serif;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 1.7;
+            position: relative;
+            word-break: break-word;
+        }
+
+        .chat-bubble.mine {
+            background: var(--burgundy-dark);
+            border: 1px solid var(--gold-ancient);
+            color: var(--text-light);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-bubble.theirs {
+            background: #151a24;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--sand-text);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-bubble .msg-time {
+            font-size: 10px;
+            color: var(--sand-text);
+            display: block;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .chat-input-area {
+            padding: 12px;
+            background: #131821;
+            border-top: 1px solid var(--gold-muted);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-area input {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .app-container {
+                padding: 15px 10px;
+            }
+            h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body class="theme-poet" id="mainBody">
+
+    <!-- شاشة اختيار الحساب أو البوابة الثنائية -->
+    <div id="portalScreen">
+        <div class="portal-title">ديوان الحرف والعدالة</div>
+        <div class="portal-subtitle">اختر هويتك للدخول إلى مساحتك الخاصة، حيث يتقاطع الشعر مع القانون في عالم ثنائي سلس وعالي الأداء.</div>
+        
+        <div class="portal-cards">
+            <div class="portal-card" onclick="enterUniverse('poet')">
+                <div class="portal-card-info">
+                    <h3>حساب الشاعر (ديوان الحرف)</h3>
+                    <p>مساحة الأبيات، المشاعر، والخواطر الأدبية.</p>
+                </div>
+                <span style="font-size: 22px; color: var(--gold-ancient);">🪶</span>
+            </div>
+
+            <div class="portal-card" onclick="enterUniverse('lawyer')">
+                <div class="portal-card-info">
+                    <h3>حساب المحامية ليان العنزي</h3>
+                    <p>سجل القضايا، المبادئ القانونية، والاستشارات.</p>
+                </div>
+                <span style="font-size: 22px; color: var(--gold-ancient);">⚖️</span>
+            </div>
+        </div>
+        <div style="font-size: 11px; color: var(--sand-text); margin-top: 10px;">التطبيق يحفظ هويتك ويدعم التغريدات والمراسلة الخاصة المتبادلة بينكما فورياً.</div>
+    </div>
+
+    <!-- التطبيق الرئيسي المدمج -->
+    <div class="app-container" id="appContainer">
+
+        <header>
+            <div class="header-overlay">
+                <div class="top-action-btns">
+                    <button class="action-btn-sm" onclick="logoutPortal()">تسجيل الخروج ✕</button>
+                    <button class="switch-universe-btn" id="switchUniverseBtn" onclick="toggleUniverse()">تبديل الحساب</button>
+                </div>
+
+                <div id="headerIcon" style="font-size: 28px; margin-bottom: 4px;">🪶</div>
+                <h1 id="appTitle">ديوان الشاعر</h1>
+                <div class="subtitle" id="appSubtitle">مساحة التغريدات والأبيات الشعرية الخاصة</div>
+            </div>
+        </header>
+
+        <!-- الأقسام داخل التطبيق -->
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="switchTab('feedTab', this)">التغريدات الثنائية</button>
+            <button class="nav-btn" onclick="switchTab('chatTab', this)">الدردشة الخاصة 💬</button>
+            <button class="nav-btn" onclick="switchTab('archiveTab', this)" id="archiveTabBtn">أرشيف القضايا</button>
+        </div>
+
+        <!-- تبويب التغريدات الثنائية (تغريد لبعض فقط اثنين مع اللايكات ومسح) -->
+        <div id="feedTab" class="tab-content active">
+            <div class="composer-box">
+                <div class="composer-title" id="composerTitle">🪶 غرد ببيت أو خاطر جديد</div>
+                <input type="text" id="postTitle" placeholder="عنوان المنشور أو المبدأ (اختياري)">
+                <textarea id="postText" placeholder="اكتب ما يدور في خاطرك ليظهر في تغريداتكم الثنائية..."></textarea>
+                <button class="btn-feather" onclick="createPost()">نشر في التغريدات الثنائية</button>
+            </div>
+
+            <div class="feed-list" id="feedList"></div>
+        </div>
+
+        <!-- تبويب الدردشة الخاصة المباشرة (مع خيار المسح الفوري) -->
+        <div id="chatTab" class="tab-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <span>الرسائل الخاصة (بين الشاعر والمحامية)</span>
+                    <button class="clear-chat-btn" onclick="clearChat()">مسح المحادثة بالكامل 🗑️</button>
+                </div>
+                <div class="chat-messages" id="chatMessages"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="اكتب رسالة خاصة..." onkeypress="checkChatEnter(event)">
+                    <button class="btn-feather" style="padding: 0 16px;" onclick="sendChatMessage()">إرسال</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- تبويب أرشيف القضايا (يظهر خصيصاً في حساب المحامية أو متاح كأرشيف متكامل) -->
+        <div id="archiveTab" class="tab-content">
+            <div class="composer-box">
+                <div class="composer-title">⚖️ توثيق ملف أو مبدأ قانوني</div>
+                <input type="text" id="archiveTitle" placeholder="عنوان القضية أو المبدأ القانوني">
+                <textarea id="archiveText" placeholder="اكتب تفاصيل الحكم أو القصة القانونية..."></textarea>
+                <button class="btn-feather" onclick="createArchiveItem()">حفظ في السجل</button>
+            </div>
+            <div class="feed-list" id="archiveList"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // حالة الحساب الحالي: 'poet' أو 'lawyer'
+        let currentRole = localStorage.getItem('layal_active_role') || null;
+
+        // قاعدة البيانات الموحدة في التخزين المحلي
+        let postsData = JSON.parse(localStorage.getItem('layal_unified_posts')) || [
+            { id: 1, author: 'الشاعر', role: 'poet', title: 'نسيم الليل', text: 'ألا يا نَسيمَ الليلِ هل لَكَ عودةٌ ... تُعَرِّفُنا بالصَّبِّ كيفَ يَنامُ', date: 'منذ ساعة', likes: 2, likedBy: [] },
+            { id: 2, author: 'المحامية ليان', role: 'lawyer', title: 'مبدأ العدالة والأبرياء', text: 'أن يفرّ مائة مجرم من العدالة خيرٌ من أن يُدان شخص واحد بغير حق.\nسيادة القانون تُبنى على اليقين والبرهان.', date: 'منذ ساعتين', likes: 1, likedBy: [] }
+        ];
+
+        let chatData = JSON.parse(localStorage.getItem('layal_unified_chat')) || [
+            { sender: 'poet', name: 'الشاعر', text: 'أهلاً بكِ في مساحتنا المدمجة الجديدة.', time: '10:00 ص' },
+            { sender: 'lawyer', name: 'المحامية ليان', text: 'أهلاً بك، خطوة ذكية لتكون كل شؤوننا بسلاسة في منصة واحدة.', time: '10:02 ص' }
+        ];
+
+        let archiveData = JSON.parse(localStorage.getItem('layal_unified_archive')) || [
+            { id: 1, title: 'قصة الحطاب والقاضي إياس', text: 'تخاصم حطاب وزيّات في كيس دراهم... والدليل المادي الذكي يحسم النزاع.', date: 'سجل القضاء' }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (currentRole) {
+                applyThemeAndRole(currentRole);
+            }
+        });
+
+        function enterUniverse(role) {
+            currentRole = role;
+            localStorage.setItem('layal_active_role', role);
+            applyThemeAndRole(role);
+        }
+
+        function toggleUniverse() {
+            currentRole = (currentRole === 'poet') ? 'lawyer' : 'poet';
+            localStorage.setItem('layal_active_role', currentRole);
+            applyThemeAndRole(currentRole);
+        }
+
+        function logoutPortal() {
+            localStorage.removeItem('layal_active_role');
+            currentRole = null;
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('portalScreen').style.display = 'block';
+            document.body.className = 'theme-poet';
+        }
+
+        function applyThemeAndRole(role) {
+            document.getElementById('portalScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+
+            const body = document.getElementById('mainBody');
+            const appTitle = document.getElementById('appTitle');
+            const appSubtitle = document.getElementById('appSubtitle');
+            const headerIcon = document.getElementById('headerIcon');
+            const composerTitle = document.getElementById('composerTitle');
+            const postText = document.getElementById('postText');
+            const archiveTabBtn = document.getElementById('archiveTabBtn');
+            const switchBtn = document.getElementById('switchUniverseBtn');
+
+            if (role === 'poet') {
+                body.className = 'theme-poet';
+                appTitle.innerText = 'ديوان الحرف (حساب الشاعر)';
+                appSubtitle.innerText = 'مساحة التغريدات والأبيات الشعرية الثنائية';
+                headerIcon.innerText = '🪶';
+                composerTitle.innerHTML = '🪶 غرد ببيت أو خاطر جديد';
+                postText.placeholder = 'اكتب شعرك أو خاطرتك لتظهر هنا...';
+                archiveTabBtn.style.display = 'none'; // الشاعر يركز على الشعر والتغريدات
+                switchBtn.innerText = 'الانتقال لحساب ليان ⚖️';
+            } else {
+                body.className = 'theme-lawyer';
+                appTitle.innerText = 'مكتب المحامية ليان العنزي';
+                appSubtitle.innerText = 'سجل القضايا، التغريدات، والاستشارات القانونية';
+                headerIcon.innerText = '⚖️';
+                composerTitle.innerHTML = '⚖️ انشر فكرة قانونية أو تغريدة';
+                postText.placeholder = 'اكتب نصك القانوني أو تغريدتك الثنائية هنا...';
+                archiveTabBtn.style.display = 'inline-block'; // المحامية يظهر لها الأرشيف والقضايا
+                switchBtn.innerText = 'الانتقال لحساب الشاعر 🪶';
+            }
+
+            renderFeed();
+            renderChat();
+            renderArchive();
+        }
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // نظام التغريدات الثنائية
+        function createPost() {
+            const title = document.getElementById('postTitle').value.trim();
+            const text = document.getElementById('postText').value.trim();
+
+            if (!text) {
+                alert('يرجى كتابة محتوى النشر أولاً!');
+                return;
+            }
+
+            const authorName = (currentRole === 'poet') ? 'الشاعر' : 'المحامية ليان';
+
+            const newPost = {
+                id: Date.now(),
+                author: authorName,
+                role: currentRole,
+                title: title,
+                text: text,
+                date: 'الآن',
+                likes: 0,
+                likedBy: []
+            };
+
+            postsData.unshift(newPost);
+            localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
+
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postText').value = '';
+            renderFeed();
+        }
+
+        function renderFeed() {
+            const feedList = document.getElementById('feedList');
+            feedList.innerHTML = '';
+
+            if (postsData.length === 0) {
+                feedList.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">لا توجد تغريدات حالياً. ابدأ بالنشر لترى إبداعكما المشترك!</div>`;
+                return;
+            }
+
+            postsData.forEach(p => {
+                const isMyPost = (p.role === currentRole);
+                const hasLiked = p.likedBy && p.likedBy.includes(currentRole);
+
+                const card = document.createElement('div');
+                card.className = 'feed-card';
+                card.innerHTML = `
+                    <div class="feed-header">
+                        <div class="feed-author">${p.role === 'poet' ? '🪶' : '⚖️'} ${p.author}</div>
+                        <div class="feed-date">${p.date}</div>
+                    </div>
+                    ${p.title ? `<div style="font-family: 'Aref Ruqaa'; font-size: 20px; color: var(--gold-ancient); margin-bottom: 8px;">${p.title}</div>` : ''}
+                    <div class="feed-text">${p.text}</div>
+                    <div class="feed-footer">
+                        <button class="like-btn ${hasLiked ? 'liked' : ''}" onclick="toggleLike(${p.id})">
+                            ❤ ${p.likes} إعجاب
+                        </button>
+                        ${isMyPost ? `<button class="delete-post-btn" onclick="deletePost(${p.id})">🗑️ حذف المنشور</button>` : '<span></span>'}
+                    </div>
+                `;
+                feedList.appendChild(card);
+            });
+        }
+
+        function toggleLike(id) {
+            const post = postsData.find(p => p.id === id);
+            if (!post) return;
+
+            if (!post.likedBy) post.likedBy = [];
+
+            const index = post.likedBy.indexOf(currentRole);
+            if (index > -1) {
+                post.likedBy.splice(index, 1);
+                post.likes = Math.max(0, post.likes - 1);
+            } else {
+                post.likedBy.push(currentRole);
+                post.likes += 1;
+            }
+
+            localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
+            renderFeed();
+        }
+
+        function deletePost(id) {
+            if (confirm('هل تريد مسح هذا المنشور نهائياً؟')) {
+                postsData = postsData.filter(p => p.id !== id);
+                localStorage.setItem('layal_unified_posts', JSON.stringify(postsData));
+                renderFeed();
+            }
+        }
+
+        // نظام الدردشة الخاصة الثنائية مع خيار المسح والسلاسة
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const authorName = (currentRole === 'poet') ? 'الشاعر' : 'المحامية ليان';
+            const timeNow = new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+
+            chatData.push({
+                sender: currentRole,
+                name: authorName,
+                text: text,
+                time: timeNow
+            });
+
+            localStorage.setItem('layal_unified_chat', JSON.stringify(chatData));
+            input.value = '';
+            renderChat();
+        }
+
+        function checkChatEnter(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function renderChat() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+
+            if (chatData.length === 0) {
+                container.innerHTML = `<div style="text-align: center; color: var(--sand-text); margin: auto;">لا توجد رسائل خاصة. ابدأ بالحديث بحرية!</div>`;
+                return;
+            }
+
+            chatData.forEach(msg => {
+                const isMine = (msg.sender === currentRole);
+                const bubble = document.createElement('div');
+                bubble.className = `chat-bubble ${isMine ? 'mine' : 'theirs'}`;
+                bubble.innerHTML = `
+                    <div style="font-size: 12px; color: var(--gold-ancient); margin-bottom: 2px;">${msg.name}</div>
+                    <div>${msg.text}</div>
+                    <span class="msg-time">${msg.time}</span>
+                `;
+                container.appendChild(bubble);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearChat() {
+            if (confirm('هل أنت متأكد من مسح جميع رسائل الدردشة الخاصة بالكامل؟')) {
+                chatData = [];
+                localStorage.removeItem('layal_unified_chat');
+                renderChat();
+            }
+        }
+
+        // أرشيف القضايا الخاص بالمحامية
+        function createArchiveItem() {
+            const title = document.getElementById('archiveTitle').value.trim();
+            const text = document.getElementById('archiveText').value.trim();
+
+            if (!text) {
+                alert('يرجى كتابة تفاصيل الملف القانوني!');
+                return;
+            }
+
+            archiveData.unshift({
+                id: Date.now(),
+                title: title || 'ملف قانوني',
+                text: text,
+                date: new Date().toLocaleDateString('ar-SA')
+            });
+
+            localStorage.setItem('layal_unified_archive', JSON.stringify(archiveData));
+            document.getElementById('archiveTitle').value = '';
+            document.getElementById('archiveText').value = '';
+            renderArchive();
+            alert('تم حفظ الملف في السجل بنجاح!');
+        }
+
+        function renderArchive() {
+            const list = document.getElementById('archiveList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            if (archiveData.length === 0) {
+                list.innerHTML = `<div style="text-align: center; color: var(--sand-text); padding: 25px;">لا توجد قضايا موثقة في الأرشيف حالياً.</div>`;
+                return;
+            }
+
+            archiveData.forEach(a => {
+                const card = document.createElement('div');
+                card.className = 'feed-card';
+                card.innerHTML = `
+                    <div class="feed-header">
+                        <div class="feed-author">⚖️ ${a.title}</div>
+                        <div class="feed-date">${a.date}</div>
+                    </div>
+                    <div class="feed-text">${a.text}</div>
+                    <div style="text-align: left;">
+                        <button class="delete-post-btn" onclick="deleteArchive(${a.id})">🗑️ حذف الملف</button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function deleteArchive(id) {
+            if (confirm('هل تريد حذف هذا الملف القانوني من الأرشيف؟')) {
+                archiveData = archiveData.filter(item => item.id !== id);
+                localStorage.setItem('layal_unified_archive', JSON.stringify(archiveData));
+                renderArchive();
+            }
+        }
+    </script>
+</body>
+</html>
