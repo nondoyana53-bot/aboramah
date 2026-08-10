@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحامية ليان العنزي | المنصة القانونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #FAFAFA;
+            --white: #FFFFFF;
+            --gold: #C5A059;
+            --gold-hover: #A3803C;
+            --burgundy: #5B1E29;
+            --text-dark: #222222;
+            --text-muted: #666666;
+            --border: #E5E5E5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-light); color: var(--text-dark); font-family: 'Tajawal', sans-serif; line-height: 1.6; }
+
+        /* الهيدر العلوي */
+        header {
+            background-color: var(--white);
+            border-bottom: 2px solid var(--gold);
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; color: var(--burgundy); text-decoration: none; }
+        .logo span { font-size: 0.85rem; color: var(--gold); display: block; margin-top: -5px; font-family: 'Tajawal', sans-serif; }
+
+        /* منطقة البحث الرئيسية */
+        .hero-search {
+            background: linear-gradient(135deg, var(--white) 0%, #F4F1EA 100%);
+            padding: 4rem 10% 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-search h1 { font-family: 'Amiri', serif; font-size: 2.8rem; color: var(--burgundy); margin-bottom: 0.5rem; }
+        .hero-search p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
+
+        /* محرك البحث التفاعلي */
+        .search-box {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            font-size: 1.05rem;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            outline: none;
+            background: var(--white);
+            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.15);
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        /* شبكة الخيارات والمواضيع */
+        .main-container { padding: 3rem 10%; }
+        .section-title { font-family: 'Amiri', serif; font-size: 2rem; color: var(--burgundy); margin-bottom: 1.5rem; border-right: 4px solid var(--gold); padding-right: 12px; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .card h3 { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--burgundy); margin-bottom: 0.8rem; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* قسم الاقتباسات القانونية */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .quote-box {
+            background: var(--white);
+            border-right: 4px solid var(--burgundy);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .quote-box blockquote { font-family: 'Amiri', serif; font-size: 1.25rem; color: var(--text-dark); font-style: italic; margin-bottom: 0.5rem; }
+        .quote-box span { font-size: 0.85rem; color: var(--gold); font-weight: bold; }
+
+        footer { background: var(--burgundy); color: var(--white); text-align: center; padding: 1.5rem; margin-top: 4rem; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            المحامية ليان العنزي
+            <span>منصة الأنظمة والحقوق القانونية</span>
+        </a>
+    </header>
+
+    <div class="hero-search">
+        <h1>موسوعة الخدمات والفكر القانوني</h1>
+        <p>ابحث عن التخصصات والأحكام والمعلومات القانونية فوراً</p>
+        <div class="search-box">
+            <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="🔍 ابحث هنا عن القضايا، العقود، التركات، التحكيم...">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- الخيارات والخدمات -->
+        <h2 class="section-title">التخصصات والأنظمة</h2>
+        <div class="cards-grid" id="cardsGrid">
+            <div class="card" data-title="القضايا التجارية والشركات">
+                <h3>القضايا التجارية والشركات</h3>
+                <p>تأسيس الشركات، صياغة العقود التجارية الاستراتيجية، وحل نزاعات الشركاء والصفقات.</p>
+            </div>
+            <div class="card" data-title="الترافع والتقاضي">
+                <h3>الترافع والتقاضي المحترف</h3>
+                <p>صياغة المذكرات واللوائح الاعتراضية والترافع أمام المحاكم العامة والحقوقية والإدارية.</p>
+            </div>
+            <div class="card" data-title="التحكيم وتسوية النزاعات">
+                <h3>التحكيم وتسوية النزاعات</h3>
+                <p>إدارة جلسات التحكيم والوساطة للوصول لنتائج حاسمة دون الحاجة لنزاعات طويلة.</p>
+            </div>
+            <div class="card" data-title="الملكية الفكرية">
+                <h3>الملكية الفكرية والحماية</h3>
+                <p>تسجيل وحماية العلامات التجارية، براءات الاختراع، والتصدي للانتهاكات التجارية.</p>
+            </div>
+            <div class="card" data-title="قسمة التركات والعقارات">
+                <h3>قسمة التركات والعقارات</h3>
+                <p>تصفية الأصول العقارية وتنظيم التركات المعقدة وفق الأطر الشرعية والنظامية.</p>
+            </div>
+            <div class="card" data-title="الاستشارات الوقائية">
+                <h3>الاستشارات الوقائية</h3>
+                <p>تحليل المخاطر القانونية مسبقاً وتوفير المظلة النظامية لحماية الاستثمارات.</p>
+            </div>
+        </div>
+
+        <!-- الاقتباسات -->
+        <h2 class="section-title">اقتباسات وفلسفة قانونية</h2>
+        <div class="quotes-grid">
+            <div class="quote-box">
+                blockquote>"القانون هو الخيط الدقيق الذي يفصل بين النظام والفوضى."</blockquote>
+                <span>— المحامية ليان العنزي</span>
+            </div>
+            <div class="quote-box">
+                blockquote>"العدالة ليست حظاً يُمنح، بل حقٌ يُنتزع بقوة الحجة وصرامة الدليل."</blockquote>
+                <span>— حكم وأدبيات قانونية</span>
+            </div>
+            <div class="quote-box">
+                blockquote>"المحامي الناجح لا يقرأ النص فقط، بل يفهم الغاية الاستراتيجية خلفه."</blockquote>
+                <span>— ليان العنزي</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © 2026 - المحامية ليان العنزي
+    </footer>
+
+    <script>
+        function filterCards() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('#cardsGrid .card');
+            
+            cards.forEach(card => {
+                let title = card.getAttribute('data-title').toLowerCase();
+                let text = card.textContent.toLowerCase();
+                if (title.includes(input) || text.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
