@@ -215,7 +215,7 @@
             display: flex;
         }
 
-        /* القائمة الجانبية (Drawer) المطابقة تماماً للصورة المعروضة بدون إيموجيات ملحجة */
+        /* القائمة الجانبية (Drawer) */
         .drawer-overlay {
             display: none;
             position: fixed;
@@ -411,7 +411,7 @@
         .trend-name { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
         .trend-tweets-count { font-size: 12px; color: var(--text-secondary); }
 
-        /* تصميم التغريدات العالمية بـ 1M لايك و 500K ريتويت */
+        /* تصميم التغريدات مع زر إعجاب مطابق لـ X */
         .tweet-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -471,7 +471,14 @@
             transition: color 0.2s;
         }
 
+        .tweet-action-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
         .tweet-action-btn.liked { color: var(--like-color); }
+        .tweet-action-btn.liked svg { fill: var(--like-color); }
         .tweet-action-btn.retweeted { color: var(--retweet-color); }
 
         /* الشات المفتوح للتواصل العام وحذف الرسائل */
@@ -569,11 +576,12 @@
             cursor: pointer;
         }
 
-        /* الملف الشخصي */
+        /* الملف الشخصي وتعديل الحساب */
         .profile-header-banner {
             height: 160px;
             background-size: cover;
             background-position: center;
+            background-color: #333;
         }
 
         .profile-info-section {
@@ -618,6 +626,28 @@
         .profile-display-name { font-size: 20px; font-weight: 800; }
         .profile-user-handle { font-size: 15px; color: var(--text-secondary); }
         .profile-bio { font-size: 15px; margin-bottom: 12px; line-height: 1.4; }
+
+        /* نافذة تعديل الملف الشخصي المطابقة للصورة */
+        .edit-profile-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .edit-profile-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            padding: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
 
         .profile-tabs {
             display: flex;
@@ -672,16 +702,17 @@
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
             <h3>انضم إلى عالم R العالمي</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">أنشئ حسابك وتواصل مع الجميع فوراً</p>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">يمدي تفتح أكثر من حسابين والتنقل بسلاسه</p>
             <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل">
             <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @user)">
             <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور">
-            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="رابط صورة الـ Avatar (اختياري)">
+            <input type="text" id="setupAvatarUrl" class="input-r" placeholder="رابط صورة الـ Avatar (افتار)">
+            <input type="text" id="setupHeaderUrl" class="input-r" placeholder="رابط صورة الغلاف (هيدر)">
             <button class="btn-r-primary" onclick="createNewAccount()">انضمام وتفعيل الحساب</button>
         </div>
 
         <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حسابات مسجلة مسبقاً:</p>
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة (اختر للتنقل الفوري):</p>
             <div id="savedAccountsList"></div>
         </div>
     </div>
@@ -689,7 +720,7 @@
     <!-- التطبيق الرئيسي -->
     <div class="app-shell" id="appShell">
         
-        <!-- القائمة الجانبية (Drawer) المطابقة تماماً للصورة المعروضة -->
+        <!-- القائمة الجانبية (Drawer) -->
         <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)">
             <div class="drawer-menu" onclick="event.stopPropagation()">
                 <div class="drawer-header">
@@ -700,16 +731,10 @@
                 <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;" id="drawerHandle">@handle</div>
                 
                 <div class="drawer-item" onclick="openProfileFromHeader(); toggleDrawer(false);"><span>الملف الشخصي</span><span>›</span></div>
+                <div class="drawer-item" onclick="openEditProfileModal(); toggleDrawer(false);"><span>تعديل ملف شخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="alert('R Premium مفعل')"><span>Premium</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('السجل')"><span>السجل</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('المجتمعات')"><span>المجتمعات</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('القوائم')"><span>القوائم</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('المساحات')"><span>المساحات</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('أستوديو منشئ المحتوى')"><span>أستوديو منشئ المحتوى</span><span>›</span></div>
-                <hr style="border-color: var(--border-color); margin: 15px 0;">
-                <div class="drawer-item" onclick="alert('Grok جاهز')"><span>تنزيل Grok</span><span>›</span></div>
                 <div class="drawer-item" onclick="alert('الإعدادات والخصوصية')"><span>الإعدادات والخصوصية</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('مركز المساعدة')"><span>مركز المساعدة</span><span>›</span></div>
+                <hr style="border-color: var(--border-color); margin: 15px 0;">
                 <div class="drawer-item" onclick="logoutAccount()" style="color: #f91880;"><span>تسجيل خروج</span></div>
             </div>
         </div>
@@ -755,7 +780,7 @@
             <div id="notificationsContainer"></div>
         </div>
 
-        <!-- 4. الخاص المفتوح (محدث للتواصل العام مع إمكانية حذف الرسائل) -->
+        <!-- 4. الخاص المفتوح -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
                 <div class="dm-contacts-sidebar">الرسائل الخاصة المباشرة (تواصل مع كافة المستخدمين بحرية)</div>
@@ -769,12 +794,13 @@
 
         <!-- 5. الملف الشخصي -->
         <div id="profilePane" class="pane">
-            <div class="profile-header-banner" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop');"></div>
+            <div class="profile-header-banner" id="profilePageHeaderBanner"></div>
             <div class="profile-info-section">
                 <div class="profile-avatar-wrapper">
                     <img id="profilePageAvatar" src="" alt="Avatar">
                 </div>
                 <div class="profile-actions-row">
+                    <button class="btn-profile-action" onclick="openEditProfileModal()">تعديل ملف شخصي</button>
                     <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880;">تسجيل خروج</button>
                 </div>
                 <div class="profile-names">
@@ -784,7 +810,7 @@
                     </div>
                     <div class="profile-user-handle" id="profileUserHandle">@user</div>
                 </div>
-                <div class="profile-bio" id="profileBioText">مرحباً بك في حسابي العالمي على منصة R.</div>
+                <div class="profile-bio" id="profileBioText">مرحباً بك في حسابي على منصة R.</div>
             </div>
 
             <div class="profile-tabs">
@@ -811,6 +837,33 @@
         </div>
     </div>
 
+    <!-- نافذة تعديل الملف الشخصي المماثلة للصورة المرفقة -->
+    <div class="edit-profile-modal" id="editProfileModal">
+        <div class="edit-profile-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <button onclick="closeEditProfileModal()" style="background:none; border:none; color:#fff; font-size:16px; cursor:pointer;">إلغاء</button>
+                <span style="font-weight: 800; font-size: 16px;">تعديل ملف شخصي</span>
+                <button onclick="saveProfileChanges()" style="background:none; border:none; color:var(--accent-color); font-weight:700; font-size:16px; cursor:pointer;">حفظ</button>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 12px; color: var(--text-secondary);">الاسم</label>
+                <input type="text" id="editNameInput" class="input-r" style="margin-top: 4px;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 12px; color: var(--text-secondary);">النبذة التعريفية</label>
+                <input type="text" id="editBioInput" class="input-r" style="margin-top: 4px;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 12px; color: var(--text-secondary);">رابط صورة الأفاتار (Avatar)</label>
+                <input type="text" id="editAvatarInput" class="input-r" style="margin-top: 4px;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 12px; color: var(--text-secondary);">رابط صورة الغلاف (Header)</label>
+                <input type="text" id="editHeaderInput" class="input-r" style="margin-top: 4px;">
+            </div>
+        </div>
+    </div>
+
     <!-- نافذة كتابة التغريدة المنبثقة -->
     <div class="modal-overlay" id="tweetModalOverlay">
         <div class="modal-card">
@@ -826,13 +879,12 @@
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {};
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
 
-        // تعيين أرقام عالمية تلقائية (1M لايك و 500K ريتويت)
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
-            { id: 1, name: 'R Official', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'مرحباً بكم في منصة R العالمية المنافسة لأكبر المنصات.', time: 'الان', likes: '1M', retweets: '500K', liked: false, retweeted: false }
+            { id: 1, name: 'R Official', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'مرحباً بكم في منصة R العالمية.', time: 'الان', likes: '1M', retweets: '500K', liked: false, retweeted: false }
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm_global')) || [
-            { id: Date.now(), sender: 'فريق الدعم العالمي', text: 'أهلاً بك! تم فتح نظام الرسائل لتتواصل مع كافة المستخدمين وتحذف رسائلك بحرية.' }
+            { id: Date.now(), sender: 'فريق الدعم العالمي', text: 'أهلاً بك! تواصل مع الجميع بحرية.' }
         ];
 
         let currentProfileSubTab = 'tweets';
@@ -841,9 +893,7 @@
             { category: 'ترند عالمي رائج', name: 'عبس', tweets: '٢٥٫٤ ألف تغريدة' },
             { category: 'ترند عالمي رائج', name: 'عنزه', tweets: '١٨٫٢ ألف تغريدة' },
             { category: 'ترند عالمي رائج', name: 'حرب', tweets: '١٤٫٩ ألف تغريدة' },
-            { category: 'ترند عالمي رائج', name: 'بني رشيد', tweets: '١١٫١ ألف تغريدة' },
-            { category: 'ترند تقني عالمي', name: '404', tweets: '٨٫٣ ألف تغريدة' },
-            { category: 'ترند عام رائج', name: 'رامي وقفل', tweets: '٥٫٦ ألف تغريدة' }
+            { category: 'ترند عالمي رائج', name: 'بني رشيد', tweets: '١١٫١ ألف تغريدة' }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -874,13 +924,10 @@
                                 <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
                             </div>
                         </div>
-                        <input type="password" id="pass_${handle.replace('@','')}" placeholder="كلمة المرور" style="width: 100px; padding: 6px; background:#000; border:1px solid var(--border-color); color:#fff; border-radius:4px; font-size:12px;">
+                        <span style="font-size: 12px; color: var(--accent-color);">دخول سريع ›</span>
                     `;
-                    item.onclick = (e) => {
-                        if(e.target.tagName !== 'INPUT') {
-                            const pInput = document.getElementById(`pass_${handle.replace('@','')}`);
-                            loginIntoAccount(handle, pInput.value);
-                        }
+                    item.onclick = () => {
+                        loginIntoAccount(handle, acc.pass);
                     };
                     savedListContainer.appendChild(item);
                 });
@@ -895,15 +942,15 @@
             const name = document.getElementById('setupName').value.trim();
             const handle = document.getElementById('setupHandle').value.trim();
             const pass = document.getElementById('setupPass').value.trim();
-            const urlInput = document.getElementById('setupAvatarUrl').value.trim();
+            const avatar = document.getElementById('setupAvatarUrl').value.trim() || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
+            const header = document.getElementById('setupHeaderUrl').value.trim() || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop';
 
             if (!name || !handle || !pass) {
                 alert('يرجى ملء الحقول الأساسية.');
                 return;
             }
 
-            const avatar = urlInput || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop';
-            allAccounts[handle] = { name, handle, pass, avatar };
+            allAccounts[handle] = { name, handle, pass, avatar, header, bio: 'مرحباً بك في حسابي.' };
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
             loginIntoAccount(handle, pass);
         }
@@ -911,10 +958,6 @@
         function loginIntoAccount(handle, enteredPass) {
             const acc = allAccounts[handle];
             if (!acc) return;
-            if (acc.pass && acc.pass !== enteredPass) {
-                alert('كلمة المرور غير صحيحة!');
-                return;
-            }
             currentHandle = handle;
             localStorage.setItem('r_current_handle_global', handle);
             startAppShell();
@@ -942,12 +985,14 @@
 
             document.getElementById('headerAvatarImg').src = user.avatar;
             document.getElementById('profilePageAvatar').src = user.avatar;
+            document.getElementById('profilePageHeaderBanner').style.backgroundImage = `url('${user.header}')`;
             document.getElementById('drawerAvatar').src = user.avatar;
             document.getElementById('drawerName').innerText = user.name;
             document.getElementById('drawerHandle').innerText = user.handle;
 
             document.getElementById('profileDisplayName').innerText = user.name;
             document.getElementById('profileUserHandle').innerText = user.handle;
+            document.getElementById('profileBioText').innerText = user.bio || '';
 
             renderStoriesBar();
             renderTimeline();
@@ -956,14 +1001,39 @@
             renderProfileContent();
         }
 
+        function openEditProfileModal() {
+            const user = getCurrentUser();
+            document.getElementById('editNameInput').value = user.name;
+            document.getElementById('editBioInput').value = user.bio || '';
+            document.getElementById('editAvatarInput').value = user.avatar;
+            document.getElementById('editHeaderInput').value = user.header || '';
+            document.getElementById('editProfileModal').style.display = 'flex';
+        }
+
+        function closeEditProfileModal() {
+            document.getElementById('editProfileModal').style.display = 'none';
+        }
+
+        function saveProfileChanges() {
+            const user = getCurrentUser();
+            user.name = document.getElementById('editNameInput').value.trim() || user.name;
+            user.bio = document.getElementById('editBioInput').value.trim();
+            user.avatar = document.getElementById('editAvatarInput').value.trim() || user.avatar;
+            user.header = document.getElementById('editHeaderInput').value.trim() || user.header;
+
+            allAccounts[currentHandle] = user;
+            localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+            closeEditProfileModal();
+            startAppShell();
+        }
+
         function renderStoriesBar() {
             const bar = document.getElementById('storiesBarContainer');
             bar.innerHTML = '';
             const sampleSpeakers = [
                 { name: 'R Global', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop' },
                 { name: 'عبس', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
-                { name: 'عنزه', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' },
-                { name: 'حرب', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop' }
+                { name: 'عنزه', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' }
             ];
 
             sampleSpeakers.forEach(s => {
@@ -986,7 +1056,6 @@
             if (!text) return;
             const user = getCurrentUser();
             
-            // إضافة التغريدة مع 1M لايك و 500K ريتويت تلقائياً لكل تغريدة تكتبها
             tweetsData.unshift({
                 id: Date.now(),
                 name: user.name,
@@ -1059,9 +1128,17 @@
                         </div>
                         <div class="tweet-text">${t.text}</div>
                         <div class="tweet-actions">
-                            <button class="tweet-action-btn">رد</button>
-                            <button class="tweet-action-btn ${t.retweeted ? 'retweeted' : ''}" onclick="toggleRetweet(${t.id})">🔁 <span>${t.retweets}</span></button>
-                            <button class="tweet-action-btn ${t.liked ? 'liked' : ''}" onclick="toggleLike(${t.id})">❤ <span>${t.likes}</span></button>
+                            <button class="tweet-action-btn">
+                                <svg viewBox="0 0 24 24"><path d="M1.751 10c0-4.42 3.584-8 8-8s8 3.58 8 8c0 4.41-3.584 8-8 8h-3.39l-3.646 3.039-.906.756V18.15c-1.637-1.18-2.558-3.04-2.558-5.15zm8-6.5c-3.59 0-6.5 2.91-6.5 6.5 0 1.74.697 3.32 1.83 4.47l.55.56-.37 2.14 2.05-1.12.56-.31c1.1.58 2.37.91 3.73.91 3.59 0 6.5-2.91 6.5-6.5s-2.91-6.5-6.5-6.5z"></path></svg>
+                            </button>
+                            <button class="tweet-action-btn ${t.retweeted ? 'retweeted' : ''}" onclick="toggleRetweet(${t.id})">
+                                <svg viewBox="0 0 24 24"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.89 2 2 2H13v2H7.5c-2.21 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 20.12l-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.89-2-2-2H11V4h5.5c2.21 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14z"></path></svg>
+                                <span>${t.retweets}</span>
+                            </button>
+                            <button class="tweet-action-btn ${t.liked ? 'liked' : ''}" onclick="toggleLike(${t.id})">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.638h-.014C9.403 21.59 1.95 14.856 1.95 8.478c0-3.064 2.225-5.56 5.238-5.56 1.74 0 3.41.81 4.462 2.15 1.053-1.34 2.722-2.15 4.462-2.15 3.013 0 5.238 2.496 5.238 5.56 0 6.378-7.453 13.112-10.037 13.16H12z"></path></svg>
+                                <span>${t.likes}</span>
+                            </button>
                         </div>
                     </div>
                 `;
@@ -1121,7 +1198,6 @@
             }
         }
 
-        // إرسال وحذف رسائل الشات المفتوحة لكل المستخدمين
         function sendDmMessage() {
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
