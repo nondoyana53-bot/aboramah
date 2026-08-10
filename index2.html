@@ -51,7 +51,6 @@
             position: relative;
         }
 
-        /* السراجان المنيران */
         .lantern {
             position: fixed;
             top: 15px;
@@ -261,7 +260,6 @@
             border-bottom: 1px dashed var(--gold-muted);
         }
 
-        /* مشغل الصوت المدمج */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #0d1015, #060709);
             border: 1px solid var(--border-gold);
@@ -644,15 +642,16 @@
                 <span class="click-hint">📜 اضغط هنا لقراءة السجل والتقرير الكامل</span>
             </div>
 
-            <!-- مشغل الصوت مع بيانات مدمجة بـ Base64 -->
+            <!-- مشغل الصوت مع رابط مباشر للأغنية المرفقة -->
             <div class="audio-player-wrapper">
                 <div class="audio-player-header">
-                    <div class="audio-player-title">🎙️ التسجيل الصوتي المباشر</div>
-                    <span style="font-size: 12px; color: var(--sand-text);">استماع للمقطع الصوتِي الجاهز</span>
+                    <div class="audio-player-title">🎵 المشغل الصوتي</div>
+                    <span style="font-size: 12px; color: var(--sand-text);">استماع للمقطع الصوتي</span>
                 </div>
                 
                 <audio id="mainAudioPlayer" preload="metadata">
-                    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=" type="audio/wav">
+                    <source src="https://v.animethemes.moe/K-Web-ED1.ogg" type="audio/ogg">
+                    <source src="https://files.catbox.moe/8m8u8v.mp3" type="audio/mpeg">
                     متصفحك لا يدعم مشغل الصوت.
                 </audio>
 
@@ -911,7 +910,6 @@
             renderCasesGrid(filtered);
         }
 
-        /* برمجة وتشغيل الصوت من الكود المباشر */
         document.addEventListener("DOMContentLoaded", function () {
             const audio = document.getElementById("mainAudioPlayer");
             const playBtn = document.getElementById("audioPlayBtn");
@@ -937,7 +935,9 @@
 
             playBtn.addEventListener("click", function () {
                 if (audio.paused) {
-                    audio.play();
+                    audio.play().catch(e => {
+                        console.log("خطأ في تشغيل الصوت:", e);
+                    });
                     playIcon.textContent = "❚❚";
                 } else {
                     audio.pause();
