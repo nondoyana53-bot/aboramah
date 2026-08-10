@@ -48,18 +48,136 @@
             position: relative;
         }
 
+        /* زر تسجيل الدخول في الزاوية العليا اليمنى */
+        #auth-container {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1000;
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
+            color: #000;
+            border: 1px solid var(--gold-glow);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            background: var(--gold-glow);
+        }
+
+        /* شاشة القفل لحجب المحتوى بالكامل حتى يتم تسجيل الدخول */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(8, 6, 5, 0.96);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: var(--card-dark);
+            border: 2px solid var(--border-gold);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,1);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .login-box h2 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            margin-bottom: 15px;
+            font-size: 26px;
+        }
+
+        .login-box input {
+            width: 100%;
+            background: #14100c;
+            border: 1px solid var(--gold-muted);
+            border-radius: 4px;
+            color: var(--text-light);
+            padding: 10px 12px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .login-box input:focus {
+            border-color: var(--gold-ancient);
+        }
+
+        .login-box button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
+            color: #000;
+            border: 1px solid var(--gold-glow);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background: var(--gold-glow);
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 12px;
+            display: none;
+            font-family: 'Amiri', serif;
+        }
+
+        /* محتوى الموقع الأساسي (يُخفى تماماً حتى يسجل الدخول) */
+        #main-site-content {
+            display: none;
+            width: 100%;
+            max-width: 850px;
+        }
+
         /* السراجان المنيران في الزوايا */
         .lantern {
             position: fixed;
             top: 15px;
             width: 55px;
             height: 90px;
-            z-index: 99;
+            z-index: 98;
             pointer-events: none;
             filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
             animation: flicker 3s infinite alternate ease-in-out;
         }
-        .lantern-right { right: 15px; }
+        .lantern-right { right: 85px; } /* تم تعديل مكان السراج الأيمن قليلاً لعدم التداخل مع زر الدخول */
         .lantern-left { left: 15px; transform: scaleX(-1); }
 
         @keyframes flicker {
@@ -70,7 +188,6 @@
 
         .diwan-container {
             width: 100%;
-            max-width: 850px;
             background: var(--card-dark);
             border: 2px solid var(--border-gold);
             border-radius: 8px;
@@ -216,7 +333,6 @@
         .featured-quote-text { font-size: 22px; line-height: 2; color: #ffffff; font-weight: bold; margin: 10px 0; font-family: 'Amiri', serif; }
         .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
 
-        /* مشغل الصوت */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--border-gold); border-radius: 8px; padding: 18px 20px; margin-top: 20px;
@@ -239,7 +355,6 @@
         .audio-progress-bar { background: linear-gradient(90deg, var(--border-gold), var(--gold-glow)); width: 0%; height: 100%; border-radius: 4px; }
         .audio-time { font-family: 'Amiri', serif; font-size: 14px; color: var(--sand-text); min-width: 80px; text-align: center; direction: ltr; }
 
-        /* === أرشيف الأبيات الفخم والتراثي الجديد === */
         .archive-banner {
             width: 100%;
             height: 90px;
@@ -269,7 +384,6 @@
 
         .poems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
         
-        /* القالب الفخم لكل قصيدة في الأرشيف */
         .poem-mini-card {
             background: linear-gradient(145deg, #130f0c, #0a0806);
             border: 1px solid var(--border-gold);
@@ -341,7 +455,6 @@
             gap: 4px;
         }
 
-        /* النوافذ التفاعلية (Modal) */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px 10px;
         }
@@ -365,6 +478,24 @@
 </head>
 <body>
 
+    <!-- زر تسجيل الدخول في الزاوية العليا اليمنى -->
+    <div id="auth-container">
+        <button id="auth-action-btn" class="auth-btn" onclick="handleAuthAction()">تسجيل الدخول</button>
+    </div>
+
+    <!-- نافذة تسجيل الدخول الإجبارية (تحجب المحتوى) -->
+    <div id="lock-screen">
+        <div class="login-box">
+            <h2>مخطوطة أبو رماح</h2>
+            <p style="font-size: 13px; color: var(--sand-text); margin-bottom: 15px;">يجب تسجيل الدخول للولوج إلى الديوان والكتابة فيه.</p>
+            <input type="text" id="username" placeholder="اسم المستخدم">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <button onclick="login()">دخول</button>
+            <div id="error" class="error-msg">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+        </div>
+    </div>
+
+    <!-- السراجان المنيران في الزوايا -->
     <svg class="lantern lantern-right" viewBox="0 0 64 100">
         <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
         <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
@@ -383,123 +514,125 @@
         <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
     </svg>
 
-    <div class="diwan-container">
+    <!-- محتوى موقعك الأساسي -->
+    <div id="main-site-content">
+        <div class="diwan-container">
 
-        <header>
-            <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
-                <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
-                <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
-                <defs>
-                    <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stop-color="#d4af37"/>
-                        <stop offset="50%" stop-color="#ffffff"/>
-                        <stop offset="100%" stop-color="#d4af37"/>
-                    </linearGradient>
-                </defs>
-            </svg>
+            <header>
+                <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
+                    <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
+                    <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
+                    <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
+                    <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
+                    <defs>
+                        <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#d4af37"/>
+                            <stop offset="50%" stop-color="#ffffff"/>
+                            <stop offset="100%" stop-color="#d4af37"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
 
-            <h1>ديوان أبو رماح وليان</h1>
-            <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
-        </header>
+                <h1>ديوان أبو رماح وليان</h1>
+                <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
+            </header>
 
-        <div class="diwan-royal-banner">
-            <div class="royal-banner-content">
-                <div class="royal-banner-title">⚔️ ديوان أبو رماح وليان ⚔️</div>
-                <div class="royal-banner-sub">موطن البيان، وعز الفروسية، وذكر الأماجد</div>
-            </div>
-        </div>
-
-        <div class="nav-menu">
-            <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
-            <button class="nav-btn" onclick="switchTab('poemsTab', this)">أرشيف الأبيات</button>
-            <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
-        </div>
-
-        <!-- TAB 1: الرئيسية -->
-        <div id="homeTab" class="tab-content active">
-            <div class="horse-banner">
-                <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
-                <div class="horse-banner-overlay">
-                    <div class="horse-banner-title">الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني</div>
+            <div class="diwan-royal-banner">
+                <div class="royal-banner-content">
+                    <div class="royal-banner-title">⚔️ ديوان أبو رماح وليان ⚔️</div>
+                    <div class="royal-banner-sub">موطن البيان، وعز الفروسية، وذكر الأماجد</div>
                 </div>
             </div>
 
-            <div class="featured-quote-card" onclick="openFeaturedPoem()">
-                <span class="featured-tag">✨ درة الديوان والاقتباس الأجمل</span>
-                <div class="featured-quote-text" id="featuredQuoteText">
-                    "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
-                </div>
-                <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
+            <div class="nav-menu">
+                <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
+                <button class="nav-btn" onclick="switchTab('poemsTab', this)">أرشيف الأبيات</button>
+                <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
             </div>
 
-            <!-- مشغل الميديا المحدث DLVideo.mp4 -->
-            <div class="audio-player-wrapper">
-                <div class="audio-player-header">
-                    <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
-                    <span style="font-size: 12px; color: var(--sand-text);">المقطع المرفق (DLVideo.mp4)</span>
+            <!-- TAB 1: الرئيسية -->
+            <div id="homeTab" class="tab-content active">
+                <div class="horse-banner">
+                    <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
+                    <div class="horse-banner-overlay">
+                        <div class="horse-banner-title">الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني</div>
+                    </div>
+                </div>
+
+                <div class="featured-quote-card" onclick="openFeaturedPoem()">
+                    <span class="featured-tag">✨ درة الديوان والاقتباس الأجمل</span>
+                    <div class="featured-quote-text" id="featuredQuoteText">
+                        "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
+                    </div>
+                    <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
+                </div>
+
+                <div class="audio-player-wrapper">
+                    <div class="audio-player-header">
+                        <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
+                        <span style="font-size: 12px; color: var(--sand-text);">المقطع المرفق (DLVideo.mp4)</span>
+                    </div>
+                    
+                    <audio id="mainAudioPlayer" preload="metadata">
+                        <source src="./DLVideo.mp4" type="video/mp4">
+                        <source src="DLVideo.mp4" type="video/mp4">
+                        متصفحك لا يدعم تشغيل هذا المقطع.
+                    </audio>
+
+                    <div class="audio-controls">
+                        <button class="audio-play-btn" id="audioPlayBtn" title="تشغيل / إيقاف">
+                            <span id="audioPlayIcon">▶</span>
+                        </button>
+
+                        <div class="audio-progress-container" id="audioProgressContainer">
+                            <div class="audio-progress-bar" id="audioProgressBar"></div>
+                        </div>
+
+                        <div class="audio-time">
+                            <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: أرشيف الأبيات -->
+            <div id="poemsTab" class="tab-content">
+                <div class="archive-banner">
+                    <div class="archive-banner-text">📜 سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ 📜</div>
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في دواوين العز والعناوين والأبيات...">
                 </div>
                 
-                <audio id="mainAudioPlayer" preload="metadata">
-                    <source src="./DLVideo.mp4" type="video/mp4">
-                    <source src="DLVideo.mp4" type="video/mp4">
-                    متصفحك لا يدعم تشغيل هذا المقطع.
-                </audio>
+                <div class="poems-grid" id="poemsGrid"></div>
+            </div>
 
-                <div class="audio-controls">
-                    <button class="audio-play-btn" id="audioPlayBtn" title="تشغيل / إيقاف">
-                        <span id="audioPlayIcon">▶</span>
-                    </button>
-
-                    <div class="audio-progress-container" id="audioProgressContainer">
-                        <div class="audio-progress-bar" id="audioProgressBar"></div>
+            <!-- TAB 3: نقش جديد -->
+            <div id="editorTab" class="tab-content">
+                <div class="editor-card">
+                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
+                    <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
+                    <div style="display: flex; gap: 8px;">
+                        <select id="poemCategory">
+                            <option value="غزل">غزل</option>
+                            <option value="فخر">فخر وحماسة</option>
+                            <option value="حكمة">حكمة وموعظة</option>
+                            <option value="شوق">شوق وعتاب</option>
+                            <option value="عام">عام</option>
+                        </select>
+                        <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
                     </div>
-
-                    <div class="audio-time">
-                        <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
-                    </div>
+                    <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
+                    <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
                 </div>
             </div>
+
         </div>
-
-        <!-- TAB 2: أرشيف الأبيات (المحدث بتصميم فخم وتراثي) -->
-        <div id="poemsTab" class="tab-content">
-            <div class="archive-banner">
-                <div class="archive-banner-text">📜 سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ 📜</div>
-            </div>
-
-            <div class="search-box">
-                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في دواوين العز والعناوين والأبيات...">
-            </div>
-            
-            <div class="poems-grid" id="poemsGrid"></div>
-        </div>
-
-        <!-- TAB 3: نقش جديد -->
-        <div id="editorTab" class="tab-content">
-            <div class="editor-card">
-                <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
-                <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
-                <div style="display: flex; gap: 8px;">
-                    <select id="poemCategory">
-                        <option value="غزل">غزل</option>
-                        <option value="فخر">فخر وحماسة</option>
-                        <option value="حكمة">حكمة وموعظة</option>
-                        <option value="شوق">شوق وعتاب</option>
-                        <option value="عام">عام</option>
-                    </select>
-                    <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
-                </div>
-                <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
-                <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Modal نافذة قراءة القصيدة -->
+    <!-- Modal قراءة القصيدة -->
     <div class="modal-overlay" id="poemModal" onclick="closeModalOnOverlay(event)">
         <div class="book-container">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -515,6 +648,56 @@
     </div>
 
     <script>
+        // بيانات الاعتماد المطلوبة
+        const correctUser = "ابو رماح";
+        const correctPass = "Rr987321";
+
+        // التحقق عند فتح الصفحة إذا تم تسجيل الدخول مسبقاً (للابد عبر localStorage)
+        window.onload = function() {
+            const isLogged = localStorage.getItem("aburamah_isLoggedIn");
+            if (isLogged === "true") {
+                grantAccess();
+            }
+        };
+
+        // دالة إتمام تسجيل الدخول
+        function login() {
+            const userInput = document.getElementById("username").value;
+            const passInput = document.getElementById("password").value;
+            const errorDiv = document.getElementById("error");
+
+            if (userInput === correctUser && passInput === correctPass) {
+                localStorage.setItem("aburamah_isLoggedIn", "true");
+                grantAccess();
+            } else {
+                errorDiv.style.display = "block";
+            }
+        }
+
+        // منح الصلاحية وإظهار الموقع وإخفاء شاشة القفل
+        function grantAccess() {
+            document.getElementById("lock-screen").style.display = "none";
+            document.getElementById("main-site-content").style.display = "block";
+            
+            // تحويل زر الزاوية العليا إلى زر تسجيل خروج لمن يرغب بالخروج لاحقاً
+            const authBtn = document.getElementById("auth-action-btn");
+            authBtn.innerText = "خروج";
+            authBtn.style.background = "linear-gradient(135deg, #c0392b 0%, #78281f 100%)";
+            authBtn.style.color = "#fff";
+            authBtn.style.borderColor = "#e74c3c";
+        }
+
+        // التحكم في زر الزاوية العلوية (دخول أو خروج)
+        function handleAuthAction() {
+            const isLogged = localStorage.getItem("aburamah_isLoggedIn");
+            if (isLogged === "true") {
+                localStorage.removeItem("aburamah_isLoggedIn");
+                location.reload();
+            } else {
+                document.getElementById("lock-screen").style.display = "flex";
+            }
+        }
+
         let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
             {
                 id: 1,
