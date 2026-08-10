@@ -16,6 +16,7 @@
             --like-color: #f91880;
             --retweet-color: #00ba7c;
             --gold-color: #ffd700;
+            --fire-color: #ff3300;
         }
 
         * {
@@ -459,6 +460,16 @@
         }
         .gold-badge svg { width: 14px; height: 14px; fill: var(--gold-color); }
 
+        .fire-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px; height: 16px;
+            color: var(--fire-color);
+            vertical-align: middle;
+        }
+        .fire-badge svg { width: 16px; height: 16px; fill: var(--fire-color); filter: drop-shadow(0 0 4px #ff3300); }
+
         .admin-actions-dropdown {
             margin-right: auto;
             display: flex;
@@ -721,27 +732,27 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول وإنشاء حساب -->
+    <!-- شاشة تسجيل الدخول وإنشاء الحسابات -->
     <div class="auth-container" id="authScreen">
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
-            <h3>انضم إلى عالم R العالمي</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">ارفع صورك الشخصية مباشرة من جهازك</p>
+            <h3>تسجيل الدخول أو إنشاء حساب جديد</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">يوزر R مخصص لك بالباسورد: Rr987321</p>
             <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل">
             <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @user)">
             <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور">
             
             <div class="file-upload-group">
-                <label>صورة الملف الشخصي (Avatar):</label>
+                <label>صورة الملف الشخصي:</label>
                 <input type="file" id="setupAvatarFile" accept="image/*">
             </div>
             
             <div class="file-upload-group">
-                <label>صورة الغلاف (Header):</label>
+                <label>صورة الغلاف:</label>
                 <input type="file" id="setupHeaderFile" accept="image/*">
             </div>
 
-            <button class="btn-r-primary" onclick="createNewAccount()">انضمام وتفعيل الحساب</button>
+            <button class="btn-r-primary" onclick="createNewAccount()">إنشاء وتفعيل الحساب</button>
         </div>
 
         <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
@@ -764,9 +775,9 @@
                 
                 <div class="drawer-item" onclick="openProfileFromHeader(); toggleDrawer(false);"><span>الملف الشخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="openEditProfileModal(); toggleDrawer(false);"><span>تعديل ملف شخصي</span><span>›</span></div>
-                <div class="drawer-item" onclick="alert('R Premium مفعل')"><span>Premium</span><span>›</span></div>
+                <div class="drawer-item" onclick="switchPane('authScreenDrawer', document.getElementById('navHome')); toggleDrawer(false);"><span>إضافة حساب جديد / تبديل</span><span>›</span></div>
                 <hr style="border-color: var(--border-color); margin: 15px 0;">
-                <div class="drawer-item" onclick="logoutAccount()" style="color: #f91880;"><span>تسجيل خروج</span></div>
+                <div class="drawer-item" onclick="logoutAccount()" style="color: #f91880;"><span>تسجيل خروج من هذا الحساب</span></div>
             </div>
         </div>
 
@@ -800,7 +811,7 @@
                 </div>
             </div>
             <div id="searchMatchAccountsContainer"></div>
-            <div class="trends-section-title">الترندات الرائجة عالمياً ومحلياً</div>
+            <div class="trends-section-title">الترندات الرائجة</div>
             <div id="requiredTrendsContainer"></div>
             <div id="searchResultsContainer"></div>
         </div>
@@ -811,13 +822,13 @@
             <div id="notificationsContainer"></div>
         </div>
 
-        <!-- 4. الخاص المفتوح -->
+        <!-- 4. الخاص -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
-                <div class="dm-contacts-sidebar">الرسائل الخاصة المباشرة</div>
+                <div class="dm-contacts-sidebar">الدعم الفني والرسائل المباشرة</div>
                 <div class="dm-messages-list" id="dmMessagesList"></div>
                 <div class="dm-input-area">
-                    <input type="text" id="dmInputText" placeholder="اكتب رسالة جديدة..." onkeypress="handleDmKeyPress(event)">
+                    <input type="text" id="dmInputText" placeholder="اكتب رسالة للدعم أو للمنصة..." onkeypress="handleDmKeyPress(event)">
                     <button class="dm-send-btn" onclick="sendDmMessage()">إرسال</button>
                 </div>
             </div>
@@ -832,16 +843,17 @@
                 </div>
                 <div class="profile-actions-row">
                     <button class="btn-profile-action" onclick="openEditProfileModal()">تعديل ملف شخصي</button>
-                    <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880;">تسجيل خروج</button>
+                    <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880;">خروج</button>
                 </div>
                 <div class="profile-names">
                     <div class="profile-display-name-row">
                         <div class="profile-display-name" id="profileDisplayName">الاسم</div>
+                        <span class="fire-badge" id="profileFireBadge" style="display:none;"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>
                         <span class="gold-badge" id="profileGoldBadge" style="display:none;"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
                     </div>
                     <div class="profile-user-handle" id="profileUserHandle">@user</div>
                 </div>
-                <div class="profile-bio" id="profileBioText">مرحباً بك في حسابي على منصة R.</div>
+                <div class="profile-bio" id="profileBioText">مرحباً بك في حسابي.</div>
             </div>
 
             <div class="profile-tabs">
@@ -884,17 +896,17 @@
                 <input type="text" id="editBioInput" class="input-r" style="margin-top: 4px;">
             </div>
             <div class="file-upload-group">
-                <label>تغيير صورة الملف الشخصي (Avatar):</label>
+                <label>صورة الملف الشخصي:</label>
                 <input type="file" id="editAvatarFile" accept="image/*">
             </div>
             <div class="file-upload-group">
-                <label>تغيير صورة الغلاف (Header):</label>
+                <label>صورة الغلاف:</label>
                 <input type="file" id="editHeaderFile" accept="image/*">
             </div>
         </div>
     </div>
 
-    <!-- نافذة كتابة التغريدة المنبثقة -->
+    <!-- نافذة كتابة التغريدة -->
     <div class="modal-overlay" id="tweetModalOverlay">
         <div class="modal-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -906,26 +918,37 @@
     </div>
 
     <script>
+        // إعداد الحسابات: يوزر R الأساسي لك فقط بالباسورد المطلوب، وباقي الحسابات للمستخدمين الآخرين دون تكرار
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {
-            "@R": { name: "R Official", handle: "@R", pass: "admin", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop", header: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop", bio: "الأدمن الرئيسي للمنصة", verified: true }
+            "@R": { 
+                name: "R", 
+                handle: "@R", 
+                pass: "Rr987321", 
+                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop", 
+                header: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop", 
+                bio: "الحساب الرسمي والمالك للموقع R", 
+                verified: true,
+                fireVerified: true 
+            }
         };
+        
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
 
+        // التغريدات والرسائل مشتركة لتظهر لكل من يدخل الموقع فوراً
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
-            { id: 1, name: 'R Official', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'مرحباً بكم في منصة R العالمية.', time: 'الان', likes: '1M', retweets: '500K', liked: false, retweeted: false }
+            { id: 1, name: 'R', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بكم في منصة R المتزامنة للجميع.', time: 'الان', likes: '1', retweets: '0', liked: false, retweeted: false }
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm_global')) || [
-            { id: Date.now(), sender: 'فريق الدعم العالمي', text: 'أهلاً بك! تواصل مع الجميع بحرية عبر الخاص.' }
+            { id: Date.now(), sender: 'الدعم الفني', text: 'مرحباً بك! تواصل هنا مع الدعم الفني مباشرة.' }
         ];
 
         let currentProfileSubTab = 'tweets';
 
         const requiredTrends = [
-            { category: 'ترند عالمي رائج', name: 'عبس', tweets: '٢٥٫٤ ألف تغريدة' },
-            { category: 'ترند عالمي رائج', name: 'عنزه', tweets: '١٨٫٢ ألف تغريدة' },
-            { category: 'ترند عالمي رائج', name: 'حرب', tweets: '١٤٫٩ ألف تغريدة' },
-            { category: 'ترند عالمي رائج', name: 'بني رشيد', tweets: '١١٫١ ألف تغريدة' }
+            { category: 'ترند رائج', name: 'R', tweets: '٥٠ ألف تغريدة' },
+            { category: 'ترند رائج', name: 'تقنية', tweets: '٢٢ ألف تغريدة' },
+            { category: 'ترند رائج', name: 'برمجة', tweets: '١٥ ألف تغريدة' }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -956,7 +979,7 @@
                                 <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
                             </div>
                         </div>
-                        <span style="font-size: 12px; color: var(--accent-color);">دخول سريع ›</span>
+                        <span style="font-size: 12px; color: var(--accent-color);">دخول ›</span>
                     `;
                     item.onclick = () => loginIntoAccount(handle);
                     savedListContainer.appendChild(item);
@@ -965,6 +988,9 @@
 
             if (currentHandle && allAccounts[currentHandle]) {
                 startAppShell();
+            } else {
+                document.getElementById('authScreen').style.display = 'flex';
+                document.getElementById('appShell').style.display = 'none';
             }
         }
 
@@ -979,11 +1005,25 @@
 
         async function createNewAccount() {
             const name = document.getElementById('setupName').value.trim();
-            const handle = document.getElementById('setupHandle').value.trim();
+            let handle = document.getElementById('setupHandle').value.trim();
             const pass = document.getElementById('setupPass').value.trim();
 
             if (!name || !handle || !pass) {
-                alert('يرجى ملء حقول الاسم واسم المستخدم وكلمة المرور.');
+                alert('يرجى ملء جميع الحقول المطلوبة.');
+                return;
+            }
+
+            if (!handle.startsWith('@')) handle = '@' + handle;
+
+            // حماية يوزر R الأساسي وكلمة المرور الخاصة بك فقط
+            if (handle.toLowerCase() === '@r' && pass !== 'Rr987321') {
+                alert('عذراً، هذا اليوزر مخصص حصرياً لـ R وكلمة المرور غير صحيحة.');
+                return;
+            }
+
+            // منع تكرار اليوزرات المسجلة مسبقاً
+            if (allAccounts[handle] && handle.toLowerCase() !== '@r') {
+                alert('اسم المستخدم هذا مستخدم مسبقاً، يرجى اختيار اسم مستخدم آخر.');
                 return;
             }
 
@@ -996,23 +1036,18 @@
             if (avatarFile) avatarBase64 = await convertFileToBase64(avatarFile);
             if (headerFile) headerBase64 = await convertFileToBase64(headerFile);
 
-            // حفظ الحساب الجديد (التوثيق الذهبي حصري لـ R فقط افتراضياً)
             allAccounts[handle] = { 
                 name, 
                 handle, 
                 pass, 
                 avatar: avatarBase64, 
                 header: headerBase64, 
-                bio: 'مرحباً بك في حسابي.',
-                verified: (handle === '@R') 
+                bio: 'مرحباً، أنا استخدم منصة R.',
+                verified: false,
+                fireVerified: (handle.toLowerCase() === '@r') 
             };
             
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
-
-            // إرسال ترحيب تلقائي في الخاص عند إنشاء الحساب لأول مرة
-            dmMessages.push({ id: Date.now(), sender: name, text: `مرحباً، تم إنشاء حسابي الجديد ${handle} وانضممت للمنصة!` });
-            localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
-
             loginIntoAccount(handle);
         }
 
@@ -1055,9 +1090,11 @@
             document.getElementById('profileUserHandle').innerText = user.handle;
             document.getElementById('profileBioText').innerText = user.bio || '';
 
-            // إظهار التوثيق الذهبي في الملف الشخصي إذا كان موثقاً أو الأدمن R
-            const badgeEl = document.getElementById('profileGoldBadge');
-            badgeEl.style.display = (user.verified || user.handle === '@R') ? 'inline-flex' : 'none';
+            const goldEl = document.getElementById('profileGoldBadge');
+            const fireEl = document.getElementById('profileFireBadge');
+            
+            fireEl.style.display = (user.fireVerified || user.handle.toLowerCase() === '@r') ? 'inline-flex' : 'none';
+            goldEl.style.display = (!user.fireVerified && user.verified) ? 'inline-flex' : 'none';
 
             renderStoriesBar();
             renderTimeline();
@@ -1096,7 +1133,6 @@
             startAppShell();
         }
 
-        // عرض الحسابات الجديدة تلقائياً كقصص (Stories) فوق
         function renderStoriesBar() {
             const bar = document.getElementById('storiesBarContainer');
             bar.innerHTML = '';
@@ -1111,7 +1147,6 @@
                     <div class="story-name">${acc.name}</div>
                 `;
                 item.onclick = () => {
-                    // الانتقال للخاص مباشرة للتواصل معه عند النقص على الستوري
                     switchPane('chatPane', document.getElementById('navChat'));
                 };
                 bar.appendChild(item);
@@ -1121,7 +1156,6 @@
         function openTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'flex'; }
         function closeTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'none'; }
 
-        // نشر التغريدة لتظهر بالرئيسية للجميع فوراً مع ربطها بالخاص تلقائياً
         function publishTweetFromModal() {
             const text = document.getElementById('modalTweetText').value.trim();
             if (!text) return;
@@ -1143,18 +1177,19 @@
             tweetsData.unshift(newTweet);
             localStorage.setItem('r_tweets_global', JSON.stringify(tweetsData));
 
-            // ربط التغريدة تلقائياً لتظهر في الخاص أيضاً كرسالة تفاعلية
-            dmMessages.push({ id: Date.now(), sender: user.name, text: `غردت قائلاً: ${text}` });
-            localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
-
             document.getElementById('modalTweetText').value = '';
             closeTweetModal();
             renderTimeline();
-            renderDmMessages();
             renderProfileContent();
         }
 
         function switchPane(paneId, btnEl) {
+            if(paneId === 'authScreenDrawer') {
+                document.getElementById('appShell').style.display = 'none';
+                document.getElementById('authScreen').style.display = 'flex';
+                checkAndLoadSession();
+                return;
+            }
             document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
             document.getElementById(paneId).classList.add('active');
@@ -1222,31 +1257,41 @@
             renderTimeline(results, 'searchResultsContainer');
         }
 
-        // صلاحيات الأدمن (R) المتقدمة: توثيق الحسابات أو تبنيدها وحذفها
-        function toggleVerifyAccount(handle) {
+        function toggleFireVerifyAccount(handle) {
+            if (currentHandle !== '@R') return;
+            if (allAccounts[handle]) {
+                allAccounts[handle].fireVerified = !allAccounts[handle].fireVerified;
+                if(allAccounts[handle].fireVerified) allAccounts[handle].verified = false;
+                localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+                renderTimeline();
+                startAppShell();
+            }
+        }
+
+        function toggleGoldVerifyAccount(handle) {
             if (currentHandle !== '@R') return;
             if (allAccounts[handle]) {
                 allAccounts[handle].verified = !allAccounts[handle].verified;
+                if(allAccounts[handle].verified) allAccounts[handle].fireVerified = false;
                 localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
                 renderTimeline();
-                alert(`تم تحديث حالة التوثيق للحساب ${handle}`);
+                startAppShell();
             }
         }
 
         function banAccount(handle) {
             if (currentHandle !== '@R') return;
-            if (handle === '@R') {
-                alert('لا يمكنك تبنيد حساب الأدمن الرئيسي!');
+            if (handle.toLowerCase() === '@r') {
+                alert('لا يمكن حذف أو حظر الحساب الأساسي R!');
                 return;
             }
-            if (confirm(`هل أنت متأكد من تبنيد وحذف الحساب ${handle} نهائياً؟`)) {
+            if (confirm(`هل أنت متأكد من حذف الحساب ${handle} نهائياً؟`)) {
                 delete allAccounts[handle];
                 tweetsData = tweetsData.filter(t => t.handle !== handle);
                 localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
                 localStorage.setItem('r_tweets_global', JSON.stringify(tweetsData));
                 renderStoriesBar();
                 renderTimeline();
-                alert('تم الحظر بنجاح.');
             }
         }
 
@@ -1257,7 +1302,8 @@
 
             list.forEach(t => {
                 const accObj = allAccounts[t.handle];
-                const isVerified = accObj && accObj.verified;
+                const isFire = accObj && accObj.fireVerified;
+                const isGold = accObj && accObj.verified;
                 const isAdmin = currentHandle === '@R';
 
                 const card = document.createElement('div');
@@ -1267,13 +1313,15 @@
                     <div class="tweet-body">
                         <div class="tweet-header-info">
                             <span class="tweet-name">${t.name}</span>
-                            ${isVerified ? '<span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>' : ''}
+                            ${isFire ? '<span class="fire-badge"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>' : ''}
+                            ${isGold ? '<span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>' : ''}
                             <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
                             
                             ${isAdmin ? `
                                 <div class="admin-actions-dropdown">
-                                    <button class="admin-action-btn" onclick="toggleVerifyAccount('${t.handle}')">${isVerified ? 'إلغاء التوثيق' : 'توثيق ذهبي'}</button>
-                                    <button class="admin-action-btn danger" onclick="banAccount('${t.handle}')">تبنيد</button>
+                                    <button class="admin-action-btn" onclick="toggleFireVerifyAccount('${t.handle}')" style="color: #ff3300; border-color: rgba(255,51,0,0.3);">${isFire ? 'إلغاء الناري' : 'توثيق ناري'}</button>
+                                    <button class="admin-action-btn" onclick="toggleGoldVerifyAccount('${t.handle}')">${isGold ? 'إلغاء الذهبي' : 'توثيق ذهبي'}</button>
+                                    ${t.handle.toLowerCase() !== '@r' ? `<button class="admin-action-btn danger" onclick="banAccount('${t.handle}')">حذف</button>` : ''}
                                 </div>
                             ` : ''}
                         </div>
@@ -1322,8 +1370,8 @@
                 <div style="display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border-color);">
                     <div style="font-weight: 700; color: var(--accent-color);">R</div>
                     <div>
-                        <div style="font-weight: 700; font-size: 15px;">تم ربط التغريدات والقصص بنجاح تام!</div>
-                        <div style="font-size: 13px; color: var(--text-secondary);">الآن كل شيء متزامن ومفتوح للجميع.</div>
+                        <div style="font-weight: 700; font-size: 15px;">صلاحيات الأدمن والتوثيق الناري مفعلة!</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">يمكنك التحكم بالكامل وتوثيق الحسابات مباشرة من واجهة الموقع.</div>
                     </div>
                 </div>
             `;
@@ -1353,7 +1401,7 @@
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
             if (!txt) return;
-            dmMessages.push({ id: Date.now(), sender: getCurrentUser().name, text: txt });
+            dmMessages.push({ id: Date.now(), sender: `${getCurrentUser().name} (الدعم الفني)`, text: txt });
             localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
             input.value = '';
             renderDmMessages();
@@ -1371,6 +1419,7 @@
             const list = document.getElementById('dmMessagesList');
             if(!list) return;
             list.innerHTML = '';
+            dmMessages.push(); // Fix empty state guard
             dmMessages.forEach(m => {
                 const wrapper = document.createElement('div');
                 wrapper.className = `dm-bubble-wrapper theirs`;
