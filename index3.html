@@ -16,6 +16,7 @@
             --accent-bg-hover: rgba(29, 155, 240, 0.1);
             --like-color: #f91880;
             --like-bg-hover: rgba(249, 24, 128, 0.1);
+            --gold-color: #ffd700;
         }
 
         * {
@@ -34,7 +35,7 @@
             justify-content: center;
         }
 
-        /* شاشة اختيار أو تسجيل الحسابات */
+        /* شاشة تسجيل الدخول أو إنشاء الحسابات */
         .auth-container {
             width: 100%;
             max-width: 440px;
@@ -135,7 +136,7 @@
             object-fit: cover;
         }
 
-        /* الهيكل الأساسي للتطبيق */
+        /* الهيكل الأساسي لتطبيق R */
         .app-shell {
             display: none;
             width: 100%;
@@ -168,6 +169,7 @@
             font-weight: 700;
         }
 
+        /* الأفاتار في الزاوية اليمنى تماماً كما طلب */
         .header-avatar-btn {
             width: 32px;
             height: 32px;
@@ -176,6 +178,7 @@
             border: none;
             background: none;
             cursor: pointer;
+            order: -1; /* وضعه في أقصى اليمين في الاتجاه المعاكس RTL */
         }
 
         .header-avatar-btn img {
@@ -287,7 +290,7 @@
             background-color: var(--accent-hover);
         }
 
-        /* شكل التغريدة المطابق تماماً */
+        /* شكل التغريدة المطابق لتطبيق X تماماً */
         .tweet-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
@@ -316,7 +319,7 @@
         .tweet-header-info {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             margin-bottom: 2px;
         }
 
@@ -329,6 +332,25 @@
         .tweet-handle-time {
             font-size: 14px;
             color: var(--text-secondary);
+            margin-right: 4px;
+        }
+
+        /* شارة التوثيق الذهبية */
+        .gold-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 15px;
+            height: 15px;
+            color: var(--gold-color);
+            vertical-align: middle;
+            margin-right: 2px;
+        }
+
+        .gold-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--gold-color);
         }
 
         .tweet-text {
@@ -339,6 +361,7 @@
             word-break: break-word;
         }
 
+        /* أزرار التفاعل تحت التغريدة مطابقة لـ X (رد، إعادة نشر، إعجاب، إحصائيات) */
         .tweet-actions {
             display: flex;
             justify-content: space-between;
@@ -365,6 +388,11 @@
             background-color: var(--accent-bg-hover);
         }
 
+        .tweet-action-btn.repost-btn:hover {
+            color: #00ba7c;
+            background-color: rgba(0, 186, 124, 0.1);
+        }
+
         .tweet-action-btn.liked {
             color: var(--like-color);
         }
@@ -373,7 +401,7 @@
             background-color: var(--like-bg-hover);
         }
 
-        /* صفحة الرسائل الخاصة (الخاص) */
+        /* صفحة الرسائل الخاصة */
         .dm-container {
             display: flex;
             flex-direction: column;
@@ -443,7 +471,7 @@
             cursor: pointer;
         }
 
-        /* صفحة الملف الشخصي */
+        /* صفحة الملف الشخصي مطابق لتطبيق X تماماً */
         .profile-header-banner {
             height: 150px;
             background-size: cover;
@@ -504,6 +532,12 @@
             margin-bottom: 12px;
         }
 
+        .profile-display-name-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         .profile-display-name {
             font-size: 20px;
             font-weight: 800;
@@ -520,7 +554,6 @@
             line-height: 1.4;
         }
 
-        /* نموذج تعديل الملف الشخصي واختيار الهيدر الكوكبي */
         .profile-edit-form {
             background: #16181c;
             padding: 16px;
@@ -555,7 +588,6 @@
             border-color: var(--accent-color);
         }
 
-        /* زر رفع الصور الفعلي */
         .file-upload-wrapper {
             margin-bottom: 10px;
             text-align: right;
@@ -575,6 +607,46 @@
 
         .file-upload-label:hover {
             background: var(--hover-color);
+        }
+
+        /* التبويبات الفئوية داخل صفحة البروفايل مثل X (تغريدات، ردود، إعجابات) */
+        .profile-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-tab {
+            flex-grow: 1;
+            text-align: center;
+            padding: 16px 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .profile-tab:hover {
+            background-color: var(--hover-color);
+            color: var(--text-color);
+        }
+
+        .profile-tab.active {
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .profile-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
         }
 
         /* النافبار السفلي */
@@ -623,15 +695,15 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول المتعدد وإدارة الحسابات المحفوظة -->
+    <!-- شاشة تسجيل الدخول المتعدد وإدارة الحسابات المحفوظة للأبد -->
     <div class="auth-container" id="authScreen">
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
-            <h3>تسجيل دخول أو إنشاء حساب جديد</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">بياناتك وحساباتك محفوظة بالكامل للأبد</p>
+            <h3>تسجيل دخول أو حساب جديد في R</h3>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">جميع بياناتك وحساباتك محفوظة بدقة</p>
             
-            <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل (مثال: فيصل)">
-            <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @Faisal)">
+            <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل (مثال: ناصر)">
+            <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @Nasser)">
             
             <div class="file-upload-wrapper">
                 <label class="file-upload-label">
@@ -641,11 +713,11 @@
             </div>
             <input type="text" id="setupAvatarUrl" class="input-r" placeholder="أو ضع رابط صورة مباشر (URL)">
 
-            <button class="btn-r-primary" onclick="createNewAccount()">تسجيل / دخول</button>
+            <button class="btn-r-primary" onclick="createNewAccount()">دخول / تسجيل</button>
         </div>
 
         <div class="accounts-list-box" id="savedAccountsSection" style="display: none;">
-            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة سابقاً:</p>
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px;">حساباتك المحفوظة:</p>
             <div id="savedAccountsList"></div>
         </div>
     </div>
@@ -653,13 +725,12 @@
     <!-- الهيكل الرئيسي لتطبيق R -->
     <div class="app-shell" id="appShell">
         
-        <!-- الهيدر العلوي -->
+        <!-- الهيدر العلوي (مع الأفاتار في أقصى اليمين تماماً) -->
         <div class="app-header">
-            <button class="header-avatar-btn" onclick="switchPane('profilePane', document.getElementById('navProfile'))">
+            <div class="app-header-title" id="headerTitle">الرئيسية</div>
+            <button class="header-avatar-btn" onclick="switchPane('profilePane', document.getElementById('navProfile'))" title="حسابي الشخصي">
                 <img id="headerAvatarImg" src="" alt="Profile">
             </button>
-            <div class="app-header-title" id="headerTitle">الرئيسية</div>
-            <div style="width: 32px;"></div>
         </div>
 
         <!-- 1. الرئيسية -->
@@ -676,7 +747,7 @@
             <div id="timelineContainer"></div>
         </div>
 
-        <!-- 2. الاستكشاف / البحث (مطابق لانستغرام وبحث سلس جداً) -->
+        <!-- 2. الاستكشاف / البحث (بأسلوب إنستغرام النظيف والسلس) -->
         <div id="searchPane" class="pane">
             <div class="instagram-search-header">
                 <div class="instagram-search-input-wrapper">
@@ -704,7 +775,7 @@
             </div>
         </div>
 
-        <!-- 5. الحساب الشخصي (مع هيدرات 7 كواكب ومجرات ورفع الصور) -->
+        <!-- 5. الحساب الشخصي (مطابق لـ X تماماً مع الهيدرات الكوكبية وتصميم البروفايل) -->
         <div id="profilePane" class="pane">
             <div class="profile-header-banner" id="profileBannerDiv"></div>
             <div class="profile-info-section">
@@ -716,12 +787,17 @@
                     <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880; border-color: rgba(249, 24, 128, 0.4);">خروج</button>
                 </div>
                 <div class="profile-names">
-                    <div class="profile-display-name" id="profileDisplayName">الاسم</div>
+                    <div class="profile-display-name-row">
+                        <div class="profile-display-name" id="profileDisplayName">الاسم</div>
+                        <span class="gold-badge" title="موثق ذهبي">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 s-3.92 3.1-4.22 7.15l-1.07.72c-.41.28-.53.83-.25 1.24.28.41.83.53 1.24.25l1.63-1.1c.54-.36.88-.97.88-1.63V8.85c1.39-.55 2.9-.55 4.29 0v1.18c0 .66.34 1.27.88 1.63l1.63 1.1c.41.28.96.16 1.24-.25.28-.41.16-.96-.25-1.24l-1.07-.72C15.92 5.1 14.12 2 12 2z"></path></svg>
+                        </span>
+                    </div>
                     <div class="profile-user-handle" id="profileUserHandle">@handle</div>
                 </div>
                 <div class="profile-bio" id="profileBioText">لم تتم إضافة نبذة بعد.</div>
 
-                <!-- نموذج تعديل الملف الشخصي المطور -->
+                <!-- نموذج تعديل الملف الشخصي -->
                 <div class="profile-edit-form" id="profileEditForm" style="display: none;">
                     <h4>اختر هيدر من الـ 7 كواكب والمجرات الفلكية الفخمة:</h4>
                     <div class="planets-selector-grid" id="planetsGrid"></div>
@@ -734,7 +810,7 @@
                         </label>
                     </div>
 
-                    <h4>تعديل بيانات الحساب والصورة الشخصية:</h4>
+                    <h4>تعديل بيانات الحساب والأفاتار:</h4>
                     <input type="text" id="editNameInput" class="input-r" placeholder="الاسم الكامل">
                     <input type="text" id="editHandleInput" class="input-r" placeholder="اسم المستخدم">
                     
@@ -751,7 +827,15 @@
                     <button class="btn-r-primary" onclick="saveProfileChanges()">حفظ التغييرات</button>
                 </div>
             </div>
-            <div id="userTweetsContainer"></div>
+
+            <!-- تبويبات الملف الشخصي مثل X تماماً -->
+            <div class="profile-tabs">
+                <div class="profile-tab active" id="tabMyTweets" onclick="switchProfileTab('tweets')">التغريدات</div>
+                <div class="profile-tab" id="tabMyReplies" onclick="switchProfileTab('replies')">الردود</div>
+                <div class="profile-tab" id="tabMyLikes" onclick="switchProfileTab('likes')">الإعجابات</div>
+            </div>
+            
+            <div id="userProfileContentContainer"></div>
         </div>
 
         <!-- النافبار السفلي -->
@@ -776,15 +860,15 @@
     </div>
 
     <script>
-        // 7 كواكب ومجرات فخمة للهيدرات
+        // 7 كواكب ومجرات للهيدرات الفاخرة
         const planetHeaders = [
-            'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop', // مجرة درب التبانة
-            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop', // الكون والأضواء
-            'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=1000&auto=format&fit=crop', // كوكب المشتري
-            'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop', // سديم فضائي
-            'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=1000&auto=format&fit=crop', // كوكب الأرض من الفضاء
-            'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000&auto=format&fit=crop', // مجرة حلزونية
-            'https://images.unsplash.com/photo-1538370965046-79c0d6907d47?q=80&w=1000&auto=format&fit=crop'  // المريخ الكوكب الأحمر
+            'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=1000&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1538370965046-79c0d6907d47?q=80&w=1000&auto=format&fit=crop'
         ];
 
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts')) || {};
@@ -800,13 +884,13 @@
 
         let tempAvatarBase64 = '';
         let tempBannerSelection = '';
+        let currentProfileSubTab = 'tweets';
 
         window.addEventListener('DOMContentLoaded', () => {
             renderPlanetsPicker();
             checkAndLoadSession();
         });
 
-        // قراءة صورة الأفاتار محلياً من جهاز المستخدم
         function previewAvatar(event) {
             const file = event.target.files[0];
             if (file) {
@@ -846,7 +930,7 @@
         function renderPlanetsPicker() {
             const grid = document.getElementById('planetsGrid');
             grid.innerHTML = '';
-            planetHeaders.forEach((url, idx) => {
+            planetHeaders.forEach((url) => {
                 const div = document.createElement('div');
                 div.className = 'planet-thumb';
                 div.style.backgroundImage = `url(${url})`;
@@ -958,7 +1042,7 @@
             renderTimeline();
             renderLikes();
             renderDmMessages();
-            renderUserTweets();
+            renderProfileContent();
         }
 
         function switchPane(paneId, btnEl) {
@@ -978,7 +1062,6 @@
             document.getElementById('headerTitle').innerText = titleMap[paneId] || 'R';
         }
 
-        // نشر تغريدة
         function publishTweet() {
             const text = document.getElementById('tweetInputText').value.trim();
             if (!text) return;
@@ -998,15 +1081,16 @@
             localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             document.getElementById('tweetInputText').value = '';
             renderTimeline();
-            renderUserTweets();
+            renderProfileContent();
         }
 
+        // دالة رسم التغريدات مع توثيق ذهبي مطابق لطلبك
         function renderTimeline(list = tweetsData, containerId = 'timelineContainer') {
             const container = document.getElementById(containerId);
             container.innerHTML = '';
 
             if (list.length === 0) {
-                container.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 30px;">لا توجد تغريدات لعرضها</div>`;
+                container.innerHTML = `<div style="text-align: center; color: var(--text-secondary); padding: 30px;">لا توجد عناصر لعرضها</div>`;
                 return;
             }
 
@@ -1020,6 +1104,9 @@
                     <div class="tweet-body">
                         <div class="tweet-header-info">
                             <span class="tweet-name">${t.name}</span>
+                            <span class="gold-badge" title="موثق ذهبي">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg>
+                            </span>
                             <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
                         </div>
                         <div class="tweet-text">${t.text}</div>
@@ -1027,6 +1114,10 @@
                             <button class="tweet-action-btn">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M1.5 4.5h21v15h-21v-15zm2 2v11h17v-11h-17zm3.5 3h10v1.5h-10v-1.5zm0 4h7v1.5h-7v-1.5z"></path></svg>
                                 <span>رد</span>
+                            </button>
+                            <button class="tweet-action-btn repost-btn">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.5 3.88l4.43 4.43-1.06 1.06-2.62-2.62V13c0 2.76 2.24 5 5 5h1v1.5h-1c-3.59 0-6.5-2.91-6.5-6.5V6.75L3.44 7.94 2.38 6.88 4.5 3.88zm15 16.24l-4.43-4.43 1.06-1.06 2.62 2.62V11c0-2.76-2.24-5-5-5h-1V4.5h1c3.59 0 6.5 2.91 6.5 6.5v5.75l2.06-2.06 1.06 1.06-2.12 3.12z"></path></svg>
+                                <span>0</span>
                             </button>
                             <button class="tweet-action-btn ${isLiked ? 'liked' : ''}" onclick="toggleLike(${t.id})">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.1-.806-1.1C9.986 6.01 8.53 5.44 7.307 5.5c-1.23.012-2.374.55-3.13 1.45-1.025 1.22-1.18 2.84-.42 4.31.83 1.63 2.11 3.2 4.13 5.2 2.05 1.99 4.52 3.86 5.02 4.23.5-.37 2.97-2.24 5.02-4.23 2.02-2 3.3-3.57 4.13-5.2.76-1.47.605-3.09-.42-4.31-.756-.9-1.9-1.438-3.13-1.45z"></path></svg>
@@ -1058,10 +1149,9 @@
             localStorage.setItem('r_tweets', JSON.stringify(tweetsData));
             renderTimeline();
             renderLikes();
-            renderUserTweets();
+            renderProfileContent();
         }
 
-        // بحث سلس
         function performSearch() {
             const query = document.getElementById('igSearchInput').value.toLowerCase();
             const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.name.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query));
@@ -1074,10 +1164,27 @@
             renderTimeline(likedTweets, 'likesContainer');
         }
 
-        function renderUserTweets() {
+        // التبديل بين تبويبات البروفايل (تغريدات، ردود، إعجابات)
+        function switchProfileTab(tabName) {
+            currentProfileSubTab = tabName;
+            document.querySelectorAll('.profile-tab').forEach(el => el.classList.remove('active'));
+            if (tabName === 'tweets') document.getElementById('tabMyTweets').classList.add('active');
+            if (tabName === 'replies') document.getElementById('tabMyReplies').classList.add('active');
+            if (tabName === 'likes') document.getElementById('tabMyLikes').classList.add('active');
+            renderProfileContent();
+        }
+
+        function renderProfileContent() {
             const user = getCurrentUser();
-            const myTweets = tweetsData.filter(t => t.handle === user.handle);
-            renderTimeline(myTweets, 'userTweetsContainer');
+            if (currentProfileSubTab === 'tweets') {
+                const myTweets = tweetsData.filter(t => t.handle === user.handle);
+                renderTimeline(myTweets, 'userProfileContentContainer');
+            } else if (currentProfileSubTab === 'replies') {
+                renderTimeline([], 'userProfileContentContainer');
+            } else if (currentProfileSubTab === 'likes') {
+                const myLiked = tweetsData.filter(t => t.likedBy && t.likedBy.includes(user.handle));
+                renderTimeline(myLiked, 'userProfileContentContainer');
+            }
         }
 
         function toggleEditProfileForm() {
@@ -1112,7 +1219,6 @@
             alert('تم حفظ الملف الشخصي وتحديث الهيدر الفلكي بنجاح!');
         }
 
-        // الرسائل الخاصة
         function sendDmMessage() {
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
