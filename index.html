@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Striker | المنصة العالمية الرسمية</title>
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --bg-card: rgba(18, 22, 32, 0.75);
+            --bg-card-hover: rgba(28, 35, 50, 0.85);
+            --gold-main: #f5d166;
+            --gold-gradient: linear-gradient(135deg, #f5d166 0%, #b8860b 100%);
+            --accent-glow: rgba(245, 209, 102, 0.25);
+            --border-glow: rgba(245, 209, 102, 0.3);
+            --text-white: #ffffff;
+            --text-dim: #9aa0a6;
+            --radius-main: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: radial-gradient(circle at top center, #111726 0%, var(--bg-dark) 70%);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            padding: 16px 14px 180px 14px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Top Bar */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-main);
+            border: 1px solid var(--border-glow);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-main);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .brand-title {
+            font-size: 20px;
+            font-weight: 900;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        /* Page Container */
+        .page-content {
+            display: none;
+            animation: slideUp 0.35s ease-out forwards;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(180deg, rgba(245, 209, 102, 0.1) 0%, rgba(0,0,0,0) 100%), var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-main);
+            padding: 24px 18px;
+            text-align: center;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-banner h1 {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--gold-main);
+            margin-bottom: 6px;
+            text-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .hero-banner p {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        /* Section Cards & Buttons */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-main);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-header {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--gold-main);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-card-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .nav-card-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-main);
+            transform: translateX(-3px);
+        }
+
+        .avatar-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-main);
+            object-fit: cover;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* Tabs Filter */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glow);
+            color: var(--text-dim);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--gold-gradient);
+            color: #000;
+            border-color: transparent;
+            font-weight: 900;
+        }
+
+        /* Inputs & Buttons */
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glow);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 12px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--gold-main);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: 0.2s;
+        }
+
+        .btn-gold:active { transform: scale(0.98); }
+
+        /* Poem Container */
+        .verse-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 3px solid var(--gold-main);
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            font-style: italic;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+
+        /* Fixed Audio Player */
+        .fixed-player {
+            position: fixed;
+            bottom: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(10, 12, 18, 0.95);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--border-glow);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 900;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .song-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--gold-main);
+        }
+
+        .song-sub {
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+
+        .play-btn-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Bottom Menu Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: #050609;
+            border-top: 1px solid var(--border-glow);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 14px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 20%;
+            transition: 0.2s;
+        }
+
+        .nav-item svg { width: 22px; height: 22px; fill: currentColor; margin-bottom: 2px; }
+        .nav-item.active { color: var(--gold-main); }
+
+        #toast {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #121620;
+            border: 1px solid var(--gold-main);
+            color: var(--gold-main);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #toast.show { top: 20px; opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div id="toast">تم الإجراء بنجاح</div>
+
+    <div class="app-shell">
+        <!-- Top Header Navigation -->
+        <div class="top-header">
+            <div class="header-actions">
+                <div class="icon-btn" onclick="openPage('music-page')">🎵</div>
+                <div class="icon-btn" onclick="openPage('poem-page')">📜</div>
+                <div class="icon-btn" onclick="openPage('options-page')">⚙️</div>
+            </div>
+            <div class="brand-title">STRIKER</div>
+        </div>
+
+        <!-- الصفحة 1: الرئيسية -->
+        <div id="home-page" class="page-content active">
+            <div class="hero-banner">
+                <h1>STRIKER PLATFORM</h1>
+                <p>المنصة الرسمية المعتمدة للبطولات والتحديات الكبرى</p>
+            </div>
+
+            <div class="nav-card-btn" onclick="openPage('tournaments-page')">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="font-size:22px;">🏆</span>
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:#fff;">جدول البطولات والتحديات</div>
+                        <div style="font-size:10px; color:var(--text-dim);">استعراض ومتابعة البطولات النشطة</div>
+                    </div>
+                </div>
+                <span style="color:var(--gold-main);">←</span>
+            </div>
+
+            <div class="nav-card-btn" onclick="openPage('music-page')">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="font-size:22px;">🎧</span>
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:#fff;">المكتبة الصوتية الشاملة</div>
+                        <div style="font-size:10px; color:var(--text-dim);">18 مقطع صليبي (شيلات - أجنبي - ترند)</div>
+                    </div>
+                </div>
+                <span style="color:var(--gold-main);">←</span>
+            </div>
+
+            <div class="nav-card-btn" onclick="openPage('poem-page')">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="font-size:22px;">👑</span>
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:#fff;">ديوان مساعد الرشيدي</div>
+                        <div style="font-size:10px; color:var(--text-dim);">صفحة خاصة بجميع قصائد وأبيات الشاعر</div>
+                    </div>
+                </div>
+                <span style="color:var(--gold-main);">←</span>
+            </div>
+        </div>
+
+        <!-- الصفحة 2: البطولات -->
+        <div id="tournaments-page" class="page-content">
+            <div class="card">
+                <div class="card-header">🏆 البطولات المتاحة</div>
+                <div id="tournaments-list">
+                    <p style="font-size:12px; color:var(--text-dim);">لا توجد بطولات قائمة حالياً، تابع الإعلانات القادمة.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة 3: الأدمنية والأعضاء -->
+        <div id="admins-page" class="page-content">
+            <div class="card">
+                <div class="card-header">🛡️ إدارة منصة سترايكر</div>
+                
+                <!-- أبو رماح -->
+                <div class="nav-card-btn" style="cursor:default;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="image_9.png" class="avatar-img" alt="أبو رماح">
+                        <div>
+                            <div style="font-weight:800; font-size:14px; color:#fff;">أبو رماح</div>
+                            <div style="font-size:10px; color:var(--gold-main); font-weight:700;">OWNER / مؤسس القروب</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ليان -->
+                <div class="nav-card-btn" style="cursor:default;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="image_8.png" class="avatar-img" alt="ليان">
+                        <div>
+                            <div style="font-weight:800; font-size:14px; color:#fff;">ليان</div>
+                            <div style="font-size:10px; color:var(--gold-main); font-weight:700;">ADMIN / المشرفة العامة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة 4: التصويت -->
+        <div id="polls-page" class="page-content">
+            <div class="card">
+                <div class="card-header">📊 التصويت التفاعلي (مفتوح للتكرار)</div>
+                <div id="poll-box">
+                    <p style="font-size:12px; color:var(--text-dim);">لا يوجد تصويت نشط حالياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة 5: ديوان مساعد الرشيدي (صفحة مستقلة) -->
+        <div id="poem-page" class="page-content">
+            <div class="card">
+                <div class="card-header">👑 ديوان الشاعر مساعد الرشيدي</div>
+                
+                <div class="verse-box">
+                    "على ذاك الطريق اللي يودي لك بدون شعور<br>
+                    أجيك أسبق خطاي الشوق وأرجع والأمل مكسور"
+                </div>
+
+                <div class="verse-box">
+                    "أحدن على راسي وأحدن تحت رجلي<br>
+                    واللي ينافسني على العز يخسى!"
+                </div>
+
+                <div class="verse-box">
+                    "ماني على كثر الخطا فيك ندمان<br>
+                    ندمان ليشتي معك كنت صادق"
+                </div>
+
+                <button class="btn-gold" onclick="showToast('تم حفظ ألكل بالمفضلة!')">حفظ الأبيات بالمفضلة</button>
+            </div>
+        </div>
+
+        <!-- الصفحة 6: المكتبة الموسيقية الشاملة (18 مقطع) -->
+        <div id="music-page" class="page-content">
+            <div class="card">
+                <div class="card-header">🎧 المكتبة الصوتية الشاملة</div>
+                
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="renderMusic('sheilat', this)">🔥 6 شيلات بدوية</button>
+                    <button class="filter-btn" onclick="renderMusic('foreign', this)">🎶 6 أجنبي مشهور</button>
+                    <button class="filter-btn" onclick="renderMusic('trend', this)">✨ 6 أجنبي ترند</button>
+                </div>
+
+                <div id="music-list"></div>
+            </div>
+        </div>
+
+        <!-- الصفحة 7: خيارات الحساب والتحكم -->
+        <div id="options-page" class="page-content">
+            <div class="card">
+                <div class="card-header">⚙️ خيارات الحساب والإدارة</div>
+                <input type="text" id="user-name-input" placeholder="اسمك / يوزرك بالموقع...">
+                <input type="password" id="admin-pass-input" placeholder="كلمة مرور الإدارة...">
+                <button class="btn-gold" onclick="loginUser()">تأكيد وتسجيل</button>
+            </div>
+
+            <!-- لوحة التحكم الإدارية المحمية -->
+            <div class="card" id="admin-dashboard" style="display:none; border-color:var(--gold-main);">
+                <div class="card-header">👑 لوحة التحكم بالنظام</div>
+                
+                <p style="font-size:11px; color:var(--gold-main); font-weight:700; margin-bottom:4px;">إعلان بطولة جديدة:</p>
+                <input type="text" id="t-title" placeholder="عنوان البطولة">
+                <input type="text" id="t-desc" placeholder="التفاصيل">
+                <button class="btn-gold" style="margin-bottom:12px;" onclick="addTournament()">نشر البطولة</button>
+
+                <p style="font-size:11px; color:var(--gold-main); font-weight:700; margin-bottom:4px;">إنشاء تصويت تفاعلي:</p>
+                <input type="text" id="p-title" placeholder="سؤال التصويت">
+                <input type="text" id="p-opts" placeholder="الخيارات تفصلها فاصلة (مثال: خيار1, خيار2)">
+                <button class="btn-gold" onclick="createPoll()">طرح التصويت</button>
+            </div>
+
+            <!-- قسم المشاركات والردود -->
+            <div class="card">
+                <div class="card-header">💬 مجتمع سترايكر</div>
+                <textarea id="post-text" rows="2" placeholder="اكتب تعليقك هنا..."></textarea>
+                <button class="btn-gold" onclick="addPost()">نشر المنشور</button>
+            </div>
+            <div id="posts-list"></div>
+        </div>
+
+        <!-- Fixed Music Bar Player -->
+        <div class="fixed-player">
+            <div class="song-details">
+                <div class="song-title" id="player-title">اختر مقطعاً للتشغيل</div>
+                <div class="song-sub" id="player-cat">Striker Audio Player</div>
+            </div>
+            <button class="play-btn-circle" onclick="togglePlay()">▶</button>
+        </div>
+        <audio id="audio-elem" loop></audio>
+
+        <!-- Bottom Navigation Bar (5 Main Navigation Routes) -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="openPage('home-page', this)">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="openPage('tournaments-page', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V18H8v2h8v-2h-3v-2.1c2.28-.46 4-2.48 4-4.9V7c0-1.1-.9-2-2-2z"/></svg>
+                <span>البطولات</span>
+            </div>
+            <div class="nav-item" onclick="openPage('admins-page', this)">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span>الإدارة</span>
+            </div>
+            <div class="nav-item" onclick="openPage('polls-page', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm0-4H7v-2h5v2zm5 4h-3V7h3v10z"/></svg>
+                <span>التصويت</span>
+            </div>
+            <div class="nav-item" onclick="openPage('options-page', this)">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                <span>حسابي</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database Audio Library (18 Tracks)
+        const musicData = [
+            // 6 شيلات بدوية
+            { cat: 'sheilat', title: 'شيلة شاش راسي واستطاش', src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792e3.mp3' },
+            { cat: 'sheilat', title: 'شيلة الفوز والنواميس', src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321f.mp3' },
+            { cat: 'sheilat', title: 'شيلة حنا الهواشم', src: 'https://cdn.pixabay.com/download/audio/2021/08/09/audio_a1639d48b7.mp3' },
+            { cat: 'sheilat', title: 'شيلة العز والخوّة', src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf0dd.mp3' },
+            { cat: 'sheilat', title: 'شيلة يا راعي الشاص', src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3' },
+            { cat: 'sheilat', title: 'شيلة الصناديد البدو', src: 'https://cdn.pixabay.com/download/audio/2021/09/06/audio_8b2111eb0b.mp3' },
+
+            // 6 أجنبي مشهور
+            { cat: 'foreign', title: 'Legendary Gaming Beat', src: 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a7321f.mp3' },
+            { cat: 'foreign', title: 'Cyberpunk Electro Vibe', src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3' },
+            { cat: 'foreign', title: 'Phonk Speed Drift', src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792e3.mp3' },
+            { cat: 'foreign', title: 'Rockstar Action Track', src: 'https://cdn.pixabay.com/download/audio/2021/08/09/audio_a1639d48b7.mp3' },
+            { cat: 'foreign', title: 'Epic Victory Theme', src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf0dd.mp3' },
+            { cat: 'foreign', title: 'Night Club Mix', src: 'https://cdn.pixabay.com/download/audio/2021/09/06/audio_8b2111eb0b.mp3' },
+
+            // 6 أجنبي ترند
+            { cat: 'trend', title: 'TikTok viral Bass Boosted', src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3' },
+            { cat: 'trend', title: 'Trend Chill Slowed', src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321f.mp3' },
+            { cat: 'trend', title: 'Top Hits EDM Remix', src: 'https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792e3.mp3' },
+            { cat: 'trend', title: 'Aesthetic Chill Beat', src: 'https://cdn.pixabay.com/download/audio/2021/08/09/audio_a1639d48b7.mp3' },
+            { cat: 'trend', title: 'Trap Future Bass', src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf0dd.mp3' },
+            { cat: 'trend', title: 'Gaming Synthwave 2026', src: 'https://cdn.pixabay.com/download/audio/2021/09/06/audio_8b2111eb0b.mp3' }
+        ];
+
+        let currentUser = localStorage.getItem('st_username') || '';
+        let isPlaying = false;
+        const audio = document.getElementById('audio-elem');
+
+        window.onload = function() {
+            if(currentUser) document.getElementById('user-name-input').value = currentUser;
+            if(localStorage.getItem('st_admin_active') === 'true') {
+                document.getElementById('admin-dashboard').style.display = 'block';
+            }
+            renderMusic('sheilat', document.querySelectorAll('.filter-btn')[0]);
+            renderPosts();
+            renderTournaments();
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2000);
+        }
+
+        function openPage(pageId, navEl) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+            if(navEl) navEl.classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function renderMusic(cat, btnEl) {
+            if(btnEl) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btnEl.classList.add('active');
+            }
+
+            const listCont = document.getElementById('music-list');
+            listCont.innerHTML = '';
+
+            const items = musicData.filter(m => m.cat === cat);
+            items.forEach((m, idx) => {
+                const row = document.createElement('div');
+                row.className = 'nav-card-btn';
+                row.innerHTML = `
+                    <div>
+                        <div style="font-size:12px; font-weight:800; color:var(--gold-main);">${m.title}</div>
+                        <div style="font-size:10px; color:var(--text-dim);">مقطع جاهز للتشغيل المباشر</div>
+                    </div>
+                    <button class="btn-gold" style="width:auto; padding:6px 14px; font-size:10px;" onclick="playAudio('${m.title}', '${m.src}')">تشغيل ▶</button>
+                `;
+                listCont.appendChild(row);
+            });
+        }
+
+        function playAudio(title, src) {
+            audio.src = src;
+            audio.play();
+            isPlaying = true;
+            document.getElementById('player-title').innerText = title;
+            document.querySelector('.play-btn-circle').innerText = '❚❚';
+            showToast('جاري التشغيل...');
+        }
+
+        function togglePlay() {
+            if(!audio.src) return;
+            if(isPlaying) {
+                audio.pause();
+                document.querySelector('.play-btn-circle').innerText = '▶';
+            } else {
+                audio.play();
+                document.querySelector('.play-btn-circle').innerText = '❚❚';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function loginUser() {
+            const name = document.getElementById('user-name-input').value.trim();
+            const pass = document.getElementById('admin-pass-input').value.trim();
+
+            if(!name) return showToast('الرجاء إدخال الاسم أولاً!');
+            currentUser = name;
+            localStorage.setItem('st_username', currentUser);
+
+            if(pass === 'Rr123456') {
+                localStorage.setItem('st_admin_active', 'true');
+                document.getElementById('admin-dashboard').style.display = 'block';
+                showToast('تم دخول لوحة الإدارة! 👑');
+            } else if(pass !== '') {
+                showToast('رمز المرور غير صحيح!');
+            } else {
+                showToast('تم حفظ الاسم بنجاح!');
+            }
+        }
+
+        function addTournament() {
+            const name = document.getElementById('t-title').value.trim();
+            const desc = document.getElementById('t-desc').value.trim();
+            if(!name) return;
+
+            const tList = JSON.parse(localStorage.getItem('st_tournaments') || '[]');
+            tList.push({ name, desc });
+            localStorage.setItem('st_tournaments', JSON.stringify(tList));
+
+            renderTournaments();
+            showToast('تم إعلان البطولة!');
+        }
+
+        function renderTournaments() {
+            const tList = JSON.parse(localStorage.getItem('st_tournaments') || '[]');
+            const cont = document.getElementById('tournaments-list');
+            if(tList.length === 0) return;
+
+            cont.innerHTML = '';
+            tList.forEach(t => {
+                const el = document.createElement('div');
+                el.className = 'nav-card-btn';
+                el.style.cursor = 'default';
+                el.innerHTML = `
+                    <div>
+                        <div style="font-weight:800; font-size:13px; color:var(--gold-main);">${t.name}</div>
+                        <div style="font-size:10px; color:var(--text-dim);">${t.desc}</div>
+                    </div>
+                    <button class="btn-gold" style="width:auto; padding:6px 12px; font-size:10px;" onclick="this.innerText='تم التسجيل ✓'">انضمام</button>
+                `;
+                cont.appendChild(el);
+            });
+        }
+
+        function createPoll() {
+            const title = document.getElementById('p-title').value.trim();
+            const opts = document.getElementById('p-opts').value.trim();
+            if(!title || !opts) return;
+
+            const box = document.getElementById('poll-box');
+            box.innerHTML = `<div style="font-weight:800; color:var(--gold-main); margin-bottom:10px;">${title}</div>`;
+
+            opts.split(',').forEach((opt, idx) => {
+                const item = document.createElement('div');
+                item.className = 'nav-card-btn';
+                item.innerHTML = `<span>${opt.trim()}</span><span id="v-${idx}" style="color:var(--gold-main); font-weight:bold;">0 أصوات</span>`;
+                item.onclick = function() {
+                    const vEl = document.getElementById(`v-${idx}`);
+                    let val = parseInt(vEl.innerText) || 0;
+                    vEl.innerText = (val + 1) + ' أصوات';
+                    showToast('تم التصويت!');
+                };
+                box.appendChild(item);
+            });
+            showToast('تم إنشاء التصويت!');
+        }
+
+        function addPost() {
+            if(!currentUser) return showToast('ادخل اسمك من الحساب أولاً!');
+            const txt = document.getElementById('post-text').value.trim();
+            if(!txt) return;
+
+            const posts = JSON.parse(localStorage.getItem('st_posts') || '[]');
+            posts.unshift({ id: Date.now(), user: currentUser, text: txt });
+            localStorage.setItem('st_posts', JSON.stringify(posts));
+
+            renderPosts();
+            document.getElementById('post-text').value = '';
+            showToast('تم النشر!');
+        }
+
+        function renderPosts() {
+            const posts = JSON.parse(localStorage.getItem('st_posts') || '[]');
+            const cont = document.getElementById('posts-list');
+            cont.innerHTML = '';
+
+            posts.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div style="font-weight:800; color:var(--gold-main); font-size:12px; margin-bottom:4px;">${p.user}</div>
+                    <div style="font-size:12px; color:#fff;">${p.text}</div>
+                `;
+                cont.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
