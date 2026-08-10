@@ -47,6 +47,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
+            align-items: center;
             padding: 15px 10px;
             position: relative;
         }
@@ -71,7 +72,31 @@
             100% { opacity: 0.9; filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6)); }
         }
 
+        /* شاشة تسجيل الدخول */
+        #loginScreen {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card-dark);
+            border: 2px solid var(--border-gold);
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
+            padding: 30px 20px;
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        #loginScreen::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
         .diwan-container {
+            display: none;
             width: 100%;
             max-width: 850px;
             background: var(--card-dark);
@@ -570,6 +595,13 @@
             cursor: pointer;
         }
 
+        .login-error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
         @media (max-width: 500px) {
             .lantern {
                 width: 40px;
@@ -602,7 +634,27 @@
         <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
     </svg>
 
-    <div class="diwan-container">
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen">
+        <svg class="scale-illustration" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 15px;">
+            <rect x="148" y="5" width="4" height="40" fill="#d4af37"/>
+            <path d="M140 45 L160 45 L150 40 Z" fill="#d4af37"/>
+            <path d="M90 15 L210 15" stroke="#d4af37" stroke-width="3"/>
+            <path d="M90 15 L75 35 L105 35 Z" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+            <path d="M210 15 L195 35 L225 35 Z" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+        </svg>
+        <h2 style="font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 26px; margin-bottom: 5px;">بوابة الدخول القانونية</h2>
+        <p style="font-size: 14px; color: var(--sand-text); margin-bottom: 20px;">مكتب المحامية ليان العنزي</p>
+        
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <input type="text" id="usernameInput" placeholder="اسم المستخدم" required>
+            <input type="password" id="passwordInput" placeholder="كلمة المرور" required>
+            <button type="submit" class="btn-feather" style="margin-top: 5px;">دخول السجل</button>
+            <div id="loginError" class="login-error">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+        </form>
+    </div>
+
+    <div class="diwan-container" id="mainAppContent">
 
         <header>
             <div class="header-overlay">
@@ -720,6 +772,24 @@
     </div>
 
     <script>
+        // دالة التحقق من تسجيل الدخول
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('usernameInput').value.trim();
+            const pass = document.getElementById('passwordInput').value.trim();
+            const errorDiv = document.getElementById('loginError');
+
+            if (user === 'ليان' && pass === 'Rr987321') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainAppContent').style.display = 'block';
+                document.body.style.alignItems = 'flex-start';
+                renderCasesGrid();
+                updateFeaturedQuote();
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+
         const defaultCases = [
             {
                 id: 1,
@@ -964,9 +1034,6 @@
                 audio.currentTime = 0;
             });
         });
-
-        renderCasesGrid();
-        updateFeaturedQuote();
     </script>
 </body>
 </html>
