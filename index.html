@@ -103,7 +103,7 @@
             margin-bottom: 20px;
         }
 
-        /* رسمة السيف العربي SVG بدلاً من الصورة التي لا تظهر */
+        /* رسمة السيف العربي SVG */
         .sword-illustration {
             width: 220px;
             height: 35px;
@@ -128,6 +128,51 @@
             font-style: italic;
         }
 
+        /* ---------------- بنر الكشخة والهيبة تحت ديوان أبو رماح ---------------- */
+        .diwan-royal-banner {
+            width: 100%;
+            height: 90px;
+            background: linear-gradient(135deg, #18110b 0%, #2b1f13 50%, #18110b 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7), inset 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .diwan-royal-banner::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px dashed var(--gold-muted);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .royal-banner-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .royal-banner-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            color: var(--gold-ancient);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+            letter-spacing: 1px;
+        }
+
+        .royal-banner-sub {
+            font-family: 'Amiri', serif;
+            font-size: 13px;
+            color: var(--sand-text);
+            margin-top: 2px;
+        }
+
         /* Navigation Bar / الأزرار التنقلية */
         .nav-menu {
             display: flex;
@@ -148,13 +193,31 @@
             font-size: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nav-btn.active {
-            background: var(--burgundy-dark);
-            color: var(--gold-ancient);
-            border-color: var(--gold-ancient);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        .nav-btn.active, .nav-btn:active {
+            background: #4a4f59 !important;
+            color: #ffffff !important;
+            border-color: #a3abb8 !important;
+            box-shadow: 0 0 15px rgba(163, 171, 184, 0.5), 0 0 25px rgba(255, 255, 255, 0.3);
+        }
+
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px #ffc83b, 0 0 20px #fff;
+            animation: sparkAnim 0.4s linear forwards;
+        }
+
+        @keyframes sparkAnim {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5) translate(var(--dx), var(--dy)); opacity: 0; }
         }
 
         .tab-content {
@@ -210,7 +273,6 @@
             text-shadow: 0 2px 8px rgba(0,0,0,1);
         }
 
-        /* بطاقة الاقتباس الأجمل */
         .featured-quote-card {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--gold-ancient);
@@ -257,7 +319,91 @@
             border-bottom: 1px dashed var(--gold-muted);
         }
 
-        /* ---------------- SECTION: أرشيف الأبيات (مربعات ومختصرة) ---------------- */
+        /* ---------------- مشغل الصوت بالمقطع الجديد ---------------- */
+        .audio-player-wrapper {
+            background: linear-gradient(145deg, #140f0c, #0a0806);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(212, 175, 55, 0.05);
+        }
+
+        .audio-player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            border-bottom: 1px dashed var(--gold-muted);
+            padding-bottom: 8px;
+        }
+
+        .audio-player-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            color: var(--gold-ancient);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .audio-play-btn {
+            background: linear-gradient(135deg, var(--gold-ancient) 0%, #8c6d1d 100%);
+            border: none;
+            color: #000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .audio-play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 18px rgba(255, 200, 59, 0.7);
+        }
+
+        .audio-progress-container {
+            flex-grow: 1;
+            background: #1c1510;
+            height: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            overflow: hidden;
+        }
+
+        .audio-progress-bar {
+            background: linear-gradient(90deg, var(--border-gold), var(--gold-glow));
+            width: 0%;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+
+        .audio-time {
+            font-family: 'Amiri', serif;
+            font-size: 14px;
+            color: var(--sand-text);
+            min-width: 80px;
+            text-align: center;
+            direction: ltr;
+        }
+
+        /* ---------------- SECTION: أرشيف الأبيات ---------------- */
         
         .search-box input {
             width: 100%;
@@ -317,7 +463,7 @@
 
         .mini-card-badge {
             font-size: 11px;
-            background: var(--burgundy-dark);
+            background: #4a4f59;
             color: #fff;
             padding: 2px 7px;
             border-radius: 3px;
@@ -341,7 +487,7 @@
             justify-content: space-between;
         }
 
-        /* ---------------- Modal Window (تصميم كتاب قديم مفتوح) ---------------- */
+        /* ---------------- Modal Window ---------------- */
         
         .modal-overlay {
             position: fixed;
@@ -360,7 +506,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* هيكل الكتاب المفتوح */
         .book-container {
             background: var(--book-bg);
             border: 3px solid var(--gold-ancient);
@@ -375,7 +520,6 @@
                 0 0 50px rgba(0,0,0,1),
                 inset 0 0 60px rgba(0,0,0,0.8),
                 inset 0 0 15px rgba(212, 175, 55, 0.3);
-            /* تأثير طية منتصف الكتاب */
             background-image: linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%, rgba(0,0,0,0.4) 100%);
         }
 
@@ -405,7 +549,7 @@
         }
 
         .modal-close:hover {
-            background: var(--burgundy-dark);
+            background: #4a4f59;
             border-color: var(--gold-ancient);
         }
 
@@ -494,7 +638,7 @@
 
         .btn-feather {
             width: 100%;
-            background: linear-gradient(135deg, var(--burgundy-dark) 0%, #1d0307 100%);
+            background: linear-gradient(135deg, #4a4f59 0%, #292d36 100%);
             color: var(--gold-ancient);
             border: 1px solid var(--gold-ancient);
             padding: 12px;
@@ -549,15 +693,11 @@
 
         <!-- Header -->
         <header>
-            <!-- رسمة سيف عربي مزخرفة وأصيلة (SVG) -->
             <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- شفرة السيف -->
                 <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
-                <!-- المقبض والواقي -->
                 <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
                 <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
                 <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                <!-- زخرفة غمد/شفرة -->
                 <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
                 <defs>
                     <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
@@ -572,6 +712,14 @@
             <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
         </header>
 
+        <!-- بنر كشخة وهيبة -->
+        <div class="diwan-royal-banner">
+            <div class="royal-banner-content">
+                <div class="royal-banner-title">✨ معاقل العز ومجالس الكرام ✨</div>
+                <div class="royal-banner-sub">أصالة البيان وحفظ الموروث العربي الأصيل</div>
+            </div>
+        </div>
+
         <!-- Navigation Buttons -->
         <div class="nav-menu">
             <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
@@ -582,7 +730,6 @@
         <!-- TAB 1: الصفحة الرئيسية -->
         <div id="homeTab" class="tab-content active">
             
-            <!-- بنر الخيل العربي الداكن والبارز -->
             <div class="horse-banner">
                 <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
                 <div class="horse-banner-overlay">
@@ -590,7 +737,6 @@
                 </div>
             </div>
 
-            <!-- بطاقة الاقتباس الأجمل (تفتح الكتاب عند الضغط) -->
             <div class="featured-quote-card" onclick="openFeaturedPoem()">
                 <span class="featured-tag">✨ درة الديوان والاقتباس الأجمل</span>
                 <div class="featured-quote-text" id="featuredQuoteText">
@@ -599,16 +745,41 @@
                 <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
             </div>
 
+            <!-- مشغل الصوت مع المقطع الجديد B9E3A4CD-FE2C-42E9-AF88-EBEDDBA5F74F.MP4 -->
+            <div class="audio-player-wrapper">
+                <div class="audio-player-header">
+                    <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
+                    <span style="font-size: 12px; color: var(--sand-text);">استماع للمقطع المرفق</span>
+                </div>
+                
+                <audio id="mainAudioPlayer" src="B9E3A4CD-FE2C-42E9-AF88-EBEDDBA5F74F.MP4" preload="metadata">
+                    متصفحك لا يدعم تشغيل الصوت.
+                </audio>
+
+                <div class="audio-controls">
+                    <button class="audio-play-btn" id="audioPlayBtn" title="تشغيل / إيقاف">
+                        <span id="audioPlayIcon">▶</span>
+                    </button>
+
+                    <div class="audio-progress-container" id="audioProgressContainer">
+                        <div class="audio-progress-bar" id="audioProgressBar"></div>
+                    </div>
+
+                    <div class="audio-time">
+                        <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- TAB 2: أرشيف الأبيات (مربعات ومختصرة) -->
+        <!-- TAB 2: أرشيف الأبيات -->
         <div id="poemsTab" class="tab-content">
             <div class="search-box">
                 <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في العناوين أو الأبيات...">
             </div>
 
             <div class="poems-grid" id="poemsGrid">
-                <!-- ستظهر القصائد كمربعات هنا -->
             </div>
         </div>
 
@@ -637,7 +808,7 @@
 
     </div>
 
-    <!-- نافذة قراءة القصيدة كاملة بتصميم (الكتاب المفتوح) -->
+    <!-- نافذة قراءة القصيدة كاملة -->
     <div class="modal-overlay" id="poemModal" onclick="closeModalOnOverlay(event)">
         <div class="book-container">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -647,7 +818,6 @@
             <div class="modal-subtitle" id="modalSubtitle">البحر | التابعي</div>
             
             <div id="modalBody">
-                <!-- الأبيات الكاملة ستظهر هنا داخل صفحات الكتاب -->
             </div>
 
             <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 12px;">
@@ -670,6 +840,37 @@
         ];
 
         let activePoemId = null;
+
+        function createSparks(e) {
+            const btn = e.currentTarget;
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            for (let i = 0; i < 6; i++) {
+                const spark = document.createElement('span');
+                spark.className = 'spark';
+                spark.style.left = `${x}px`;
+                spark.style.top = `${y}px`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 20 + Math.random() * 30;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                
+                spark.style.setProperty('--dx', `${dx}px`);
+                spark.style.setProperty('--dy', `${dy}px`);
+                
+                btn.appendChild(spark);
+                setTimeout(() => spark.remove(), 400);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', createSparks);
+            });
+        });
 
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -835,6 +1036,65 @@
             );
             renderPoemsGrid(filtered);
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("mainAudioPlayer");
+            const playBtn = document.getElementById("audioPlayBtn");
+            const playIcon = document.getElementById("audioPlayIcon");
+            const progressBar = document.getElementById("audioProgressBar");
+            const progressContainer = document.getElementById("audioProgressContainer");
+            const currentTimeEl = document.getElementById("audioCurrentTime");
+            const durationEl = document.getElementById("audioDuration");
+
+            if (audio) {
+                function formatAudioTime(seconds) {
+                    if (isNaN(seconds) || !isFinite(seconds)) return "00:00";
+                    const mins = Math.floor(seconds / 60);
+                    const secs = Math.floor(seconds % 60);
+                    return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                }
+
+                audio.addEventListener("loadedmetadata", function () {
+                    durationEl.textContent = formatAudioTime(audio.duration);
+                    currentTimeEl.textContent = "00:00";
+                });
+
+                playBtn.addEventListener("click", function () {
+                    if (audio.paused) {
+                        audio.play().catch(e => {
+                            console.log("خطأ في تشغيل الصوت:", e);
+                        });
+                        playIcon.textContent = "❚❚";
+                    } else {
+                        audio.pause();
+                        playIcon.textContent = "▶";
+                    }
+                });
+
+                audio.addEventListener("timeupdate", function () {
+                    if (audio.duration) {
+                        const progressPercent = (audio.currentTime / audio.duration) * 100;
+                        progressBar.style.width = `${progressPercent}%`;
+                        currentTimeEl.textContent = formatAudioTime(audio.currentTime);
+                    }
+                });
+
+                progressContainer.addEventListener("click", function (e) {
+                    const width = this.clientWidth;
+                    const clickX = e.offsetX;
+                    if (audio.duration) {
+                        audio.currentTime = (clickX / width) * audio.duration;
+                    }
+                });
+
+                audio.addEventListener("ended", function () {
+                    playIcon.textContent = "▶";
+                    progressBar.style.width = "0%";
+                    currentTimeEl.textContent = "00:00";
+                    audio.currentTime = 0;
+                });
+            }
+        });
 
         renderPoemsGrid();
         updateFeaturedQuote();
