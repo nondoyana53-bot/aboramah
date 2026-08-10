@@ -434,6 +434,7 @@
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
+            cursor: pointer;
         }
 
         .tweet-body { flex-grow: 1; }
@@ -445,7 +446,7 @@
             margin-bottom: 2px;
         }
 
-        .tweet-name { font-weight: 700; font-size: 15px; }
+        .tweet-name { font-weight: 700; font-size: 15px; cursor: pointer; }
         .tweet-handle-time { font-size: 14px; color: var(--text-secondary); margin-right: 4px; }
 
         .gold-badge {
@@ -457,6 +458,22 @@
             vertical-align: middle;
         }
         .gold-badge svg { width: 14px; height: 14px; fill: var(--gold-color); }
+
+        .admin-actions-dropdown {
+            margin-right: auto;
+            display: flex;
+            gap: 6px;
+        }
+        .admin-action-btn {
+            background: #202327;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .admin-action-btn.danger { color: #f91880; border-color: rgba(249,24,128,0.3); }
 
         .tweet-text { font-size: 15px; line-height: 1.5; margin-bottom: 12px; word-break: break-word; }
 
@@ -820,7 +837,7 @@
                 <div class="profile-names">
                     <div class="profile-display-name-row">
                         <div class="profile-display-name" id="profileDisplayName">الاسم</div>
-                        <span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
+                        <span class="gold-badge" id="profileGoldBadge" style="display:none;"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
                     </div>
                     <div class="profile-user-handle" id="profileUserHandle">@user</div>
                 </div>
@@ -889,7 +906,9 @@
     </div>
 
     <script>
-        let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {};
+        let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {
+            "@R": { name: "R Official", handle: "@R", pass: "admin", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop", header: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop", bio: "الأدمن الرئيسي للمنصة", verified: true }
+        };
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
 
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
@@ -897,7 +916,7 @@
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm_global')) || [
-            { id: Date.now(), sender: 'فريق الدعم العالمي', text: 'أهلاً بك! تواصل مع الجميع بحرية.' }
+            { id: Date.now(), sender: 'فريق الدعم العالمي', text: 'أهلاً بك! تواصل مع الجميع بحرية عبر الخاص.' }
         ];
 
         let currentProfileSubTab = 'tweets';
@@ -939,9 +958,7 @@
                         </div>
                         <span style="font-size: 12px; color: var(--accent-color);">دخول سريع ›</span>
                     `;
-                    item.onclick = () => {
-                        loginIntoAccount(handle);
-                    };
+                    item.onclick = () => loginIntoAccount(handle);
                     savedListContainer.appendChild(item);
                 });
             }
@@ -976,15 +993,26 @@
             const avatarFile = document.getElementById('setupAvatarFile').files[0];
             const headerFile = document.getElementById('setupHeaderFile').files[0];
 
-            if (avatarFile) {
-                avatarBase64 = await convertFileToBase64(avatarFile);
-            }
-            if (headerFile) {
-                headerBase64 = await convertFileToBase64(headerFile);
-            }
+            if (avatarFile) avatarBase64 = await convertFileToBase64(avatarFile);
+            if (headerFile) headerBase64 = await convertFileToBase64(headerFile);
 
-            allAccounts[handle] = { name, handle, pass, avatar: avatarBase64, header: headerBase64, bio: 'مرحباً بك في حسابي.' };
+            // حفظ الحساب الجديد (التوثيق الذهبي حصري لـ R فقط افتراضياً)
+            allAccounts[handle] = { 
+                name, 
+                handle, 
+                pass, 
+                avatar: avatarBase64, 
+                header: headerBase64, 
+                bio: 'مرحباً بك في حسابي.',
+                verified: (handle === '@R') 
+            };
+            
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+
+            // إرسال ترحيب تلقائي في الخاص عند إنشاء الحساب لأول مرة
+            dmMessages.push({ id: Date.now(), sender: name, text: `مرحباً، تم إنشاء حسابي الجديد ${handle} وانضممت للمنصة!` });
+            localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
+
             loginIntoAccount(handle);
         }
 
@@ -1027,6 +1055,10 @@
             document.getElementById('profileUserHandle').innerText = user.handle;
             document.getElementById('profileBioText').innerText = user.bio || '';
 
+            // إظهار التوثيق الذهبي في الملف الشخصي إذا كان موثقاً أو الأدمن R
+            const badgeEl = document.getElementById('profileGoldBadge');
+            badgeEl.style.display = (user.verified || user.handle === '@R') ? 'inline-flex' : 'none';
+
             renderStoriesBar();
             renderTimeline();
             renderNotifications();
@@ -1055,12 +1087,8 @@
             const avatarFile = document.getElementById('editAvatarFile').files[0];
             const headerFile = document.getElementById('editHeaderFile').files[0];
 
-            if (avatarFile) {
-                user.avatar = await convertFileToBase64(avatarFile);
-            }
-            if (headerFile) {
-                user.header = await convertFileToBase64(headerFile);
-            }
+            if (avatarFile) user.avatar = await convertFileToBase64(avatarFile);
+            if (headerFile) user.header = await convertFileToBase64(headerFile);
 
             allAccounts[currentHandle] = user;
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
@@ -1068,23 +1096,24 @@
             startAppShell();
         }
 
+        // عرض الحسابات الجديدة تلقائياً كقصص (Stories) فوق
         function renderStoriesBar() {
             const bar = document.getElementById('storiesBarContainer');
             bar.innerHTML = '';
-            const sampleSpeakers = [
-                { name: 'R Global', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop' },
-                { name: 'عبس', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
-                { name: 'عنزه', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' }
-            ];
-
-            sampleSpeakers.forEach(s => {
+            
+            const handles = Object.keys(allAccounts);
+            handles.forEach(handle => {
+                const acc = allAccounts[handle];
                 const item = document.createElement('div');
                 item.className = 'story-item';
                 item.innerHTML = `
-                    <div class="story-ring"><img src="${s.avatar}" class="story-avatar"></div>
-                    <div class="story-name">${s.name}</div>
+                    <div class="story-ring"><img src="${acc.avatar}" class="story-avatar"></div>
+                    <div class="story-name">${acc.name}</div>
                 `;
-                item.onclick = () => openTweetModal();
+                item.onclick = () => {
+                    // الانتقال للخاص مباشرة للتواصل معه عند النقص على الستوري
+                    switchPane('chatPane', document.getElementById('navChat'));
+                };
                 bar.appendChild(item);
             });
         }
@@ -1092,6 +1121,7 @@
         function openTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'flex'; }
         function closeTweetModal() { document.getElementById('tweetModalOverlay').style.display = 'none'; }
 
+        // نشر التغريدة لتظهر بالرئيسية للجميع فوراً مع ربطها بالخاص تلقائياً
         function publishTweetFromModal() {
             const text = document.getElementById('modalTweetText').value.trim();
             if (!text) return;
@@ -1112,9 +1142,15 @@
 
             tweetsData.unshift(newTweet);
             localStorage.setItem('r_tweets_global', JSON.stringify(tweetsData));
+
+            // ربط التغريدة تلقائياً لتظهر في الخاص أيضاً كرسالة تفاعلية
+            dmMessages.push({ id: Date.now(), sender: user.name, text: `غردت قائلاً: ${text}` });
+            localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
+
             document.getElementById('modalTweetText').value = '';
             closeTweetModal();
             renderTimeline();
+            renderDmMessages();
             renderProfileContent();
         }
 
@@ -1160,7 +1196,6 @@
 
             document.getElementById('requiredTrendsContainer').style.display = 'none';
 
-            // البحث عن اليوزرات أو الحسابات المطابقة
             const matchingHandles = Object.values(allAccounts).filter(acc => 
                 acc.handle.toLowerCase().includes(query) || acc.name.toLowerCase().includes(query)
             );
@@ -1169,7 +1204,7 @@
                 let accHtml = '<div style="padding: 10px 16px; font-weight: 700; font-size: 14px; color: var(--text-secondary);">الحسابات المطابقة:</div>';
                 matchingHandles.forEach(acc => {
                     accHtml += `
-                        <div class="account-item-select" style="margin: 0 16px 8px 16px;">
+                        <div class="account-item-select" style="margin: 0 16px 8px 16px;" onclick="loginIntoAccount('${acc.handle}')">
                             <div class="account-item-left">
                                 <img src="${acc.avatar}" alt="avatar">
                                 <div>
@@ -1183,9 +1218,36 @@
                 matchAccountsContainer.innerHTML = accHtml;
             }
 
-            // البحث في التغريدات
             const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query) || t.name.toLowerCase().includes(query));
             renderTimeline(results, 'searchResultsContainer');
+        }
+
+        // صلاحيات الأدمن (R) المتقدمة: توثيق الحسابات أو تبنيدها وحذفها
+        function toggleVerifyAccount(handle) {
+            if (currentHandle !== '@R') return;
+            if (allAccounts[handle]) {
+                allAccounts[handle].verified = !allAccounts[handle].verified;
+                localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+                renderTimeline();
+                alert(`تم تحديث حالة التوثيق للحساب ${handle}`);
+            }
+        }
+
+        function banAccount(handle) {
+            if (currentHandle !== '@R') return;
+            if (handle === '@R') {
+                alert('لا يمكنك تبنيد حساب الأدمن الرئيسي!');
+                return;
+            }
+            if (confirm(`هل أنت متأكد من تبنيد وحذف الحساب ${handle} نهائياً؟`)) {
+                delete allAccounts[handle];
+                tweetsData = tweetsData.filter(t => t.handle !== handle);
+                localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+                localStorage.setItem('r_tweets_global', JSON.stringify(tweetsData));
+                renderStoriesBar();
+                renderTimeline();
+                alert('تم الحظر بنجاح.');
+            }
         }
 
         function renderTimeline(list = tweetsData, containerId = 'timelineContainer') {
@@ -1194,6 +1256,10 @@
             container.innerHTML = '';
 
             list.forEach(t => {
+                const accObj = allAccounts[t.handle];
+                const isVerified = accObj && accObj.verified;
+                const isAdmin = currentHandle === '@R';
+
                 const card = document.createElement('div');
                 card.className = 'tweet-card';
                 card.innerHTML = `
@@ -1201,8 +1267,15 @@
                     <div class="tweet-body">
                         <div class="tweet-header-info">
                             <span class="tweet-name">${t.name}</span>
-                            <span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>
+                            ${isVerified ? '<span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>' : ''}
                             <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
+                            
+                            ${isAdmin ? `
+                                <div class="admin-actions-dropdown">
+                                    <button class="admin-action-btn" onclick="toggleVerifyAccount('${t.handle}')">${isVerified ? 'إلغاء التوثيق' : 'توثيق ذهبي'}</button>
+                                    <button class="admin-action-btn danger" onclick="banAccount('${t.handle}')">تبنيد</button>
+                                </div>
+                            ` : ''}
                         </div>
                         <div class="tweet-text">${t.text}</div>
                         <div class="tweet-actions">
@@ -1249,8 +1322,8 @@
                 <div style="display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border-color);">
                     <div style="font-weight: 700; color: var(--accent-color);">R</div>
                     <div>
-                        <div style="font-weight: 700; font-size: 15px;">تم تفعيل حفظ التغريدات والحسابات بنجاح!</div>
-                        <div style="font-size: 13px; color: var(--text-secondary);">منذ لحظات</div>
+                        <div style="font-weight: 700; font-size: 15px;">تم ربط التغريدات والقصص بنجاح تام!</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">الآن كل شيء متزامن ومفتوح للجميع.</div>
                     </div>
                 </div>
             `;
