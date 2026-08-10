@@ -445,6 +445,7 @@
             align-items: center;
             gap: 4px;
             margin-bottom: 2px;
+            flex-wrap: wrap;
         }
 
         .tweet-name { font-weight: 700; font-size: 15px; cursor: pointer; }
@@ -918,7 +919,7 @@
     </div>
 
     <script>
-        // إعداد الحسابات: يوزر R الأساسي لك فقط بالباسورد المطلوب، وباقي الحسابات للمستخدمين الآخرين دون تكرار
+        // نظام التخزين والمزامنة المحدث لمنع أي تعليق أو توقف
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {
             "@R": { 
                 name: "R", 
@@ -934,13 +935,12 @@
         
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
 
-        // التغريدات والرسائل مشتركة لتظهر لكل من يدخل الموقع فوراً
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
             { id: 1, name: 'R', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بكم في منصة R المتزامنة للجميع.', time: 'الان', likes: '1', retweets: '0', liked: false, retweeted: false }
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm_global')) || [
-            { id: Date.now(), sender: 'الدعم الفني', text: 'مرحباً بك! تواصل هنا مع الدعم الفني مباشرة.' }
+            { id: 1, sender: 'الدعم الفني', text: 'مرحباً بك! تواصل هنا مع الدعم الفني مباشرة.' }
         ];
 
         let currentProfileSubTab = 'tweets';
@@ -950,6 +950,25 @@
             { category: 'ترند رائج', name: 'تقنية', tweets: '٢٢ ألف تغريدة' },
             { category: 'ترند رائج', name: 'برمجة', tweets: '١٥ ألف تغريدة' }
         ];
+
+        // الاستماع للتحديثات الفورية في التخزين المحلي لضمان المزامنة الحية بدون مشاكل
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'r_accounts_global' && event.newValue) {
+                allAccounts = JSON.parse(event.newValue);
+                if (currentHandle && allAccounts[currentHandle]) startAppShell();
+            }
+            if (event.key === 'r_tweets_global' && event.newValue) {
+                tweetsData = JSON.parse(event.newValue);
+                if (currentHandle) {
+                    renderTimeline();
+                    renderProfileContent();
+                }
+            }
+            if (event.key === 'r_dm_global' && event.newValue) {
+                dmMessages = JSON.parse(event.newValue);
+                if (currentHandle) renderDmMessages();
+            }
+        });
 
         window.addEventListener('DOMContentLoaded', () => {
             renderRequiredTrends();
@@ -1015,13 +1034,11 @@
 
             if (!handle.startsWith('@')) handle = '@' + handle;
 
-            // حماية يوزر R الأساسي وكلمة المرور الخاصة بك فقط
             if (handle.toLowerCase() === '@r' && pass !== 'Rr987321') {
                 alert('عذراً، هذا اليوزر مخصص حصرياً لـ R وكلمة المرور غير صحيحة.');
                 return;
             }
 
-            // منع تكرار اليوزرات المسجلة مسبقاً
             if (allAccounts[handle] && handle.toLowerCase() !== '@r') {
                 alert('اسم المستخدم هذا مستخدم مسبقاً، يرجى اختيار اسم مستخدم آخر.');
                 return;
@@ -1419,7 +1436,6 @@
             const list = document.getElementById('dmMessagesList');
             if(!list) return;
             list.innerHTML = '';
-            dmMessages.push(); // Fix empty state guard
             dmMessages.forEach(m => {
                 const wrapper = document.createElement('div');
                 wrapper.className = `dm-bubble-wrapper theirs`;
