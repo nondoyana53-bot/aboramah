@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Striker | بطولات قروب سترايكر</title>
+
+    <meta name="theme-color" content="#0a0b0d">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        :root {
+            --bg-black: #0a0b0d;
+            --bg-card: #12141a;
+            --bg-card-hover: #1a1d26;
+            --bg-input: #0a0b0e;
+            --border-color: #1e222e;
+            --gold-primary: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.25);
+            --text-main: #f3f4f6;
+            --text-sub: #8b92a1;
+            --radius-btn: 30px;
+            --radius-card: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-shell {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-black);
+            min-height: 100vh;
+            padding: 12px 14px 170px 14px;
+            position: relative;
+        }
+
+        /* نظام الإشعارات الناعم (بديل alert) */
+        #toast {
+            position: fixed;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #181b24;
+            color: var(--gold-primary);
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 1px solid var(--gold-primary);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 9999;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #toast.show {
+            top: 18px;
+            opacity: 1;
+        }
+
+        /* Header المطابق للصور */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 4px 16px 4px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 16px;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .icon-circle .badge-num {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            background: var(--gold-primary);
+            color: #000;
+            font-size: 9px;
+            font-weight: 900;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-text {
+            text-align: left;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--gold-primary);
+            line-height: 1.1;
+        }
+
+        .brand-sub {
+            font-size: 10px;
+            color: var(--text-sub);
+        }
+
+        .header-avatar-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--gold-primary);
+        }
+
+        /* Hero Banner المطابق لصور المعاينة */
+        .hero-card {
+            background: linear-gradient(180deg, #161822 0%, #0d0e14 100%);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-color);
+            padding: 20px 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title-en {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gold-primary);
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .hero-title-ar {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
+        }
+
+        .hero-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-gold-main {
+            background: linear-gradient(135deg, #d4af37, #aa820a);
+            color: #000;
+            font-weight: 900;
+            padding: 10px 22px;
+            border-radius: var(--radius-btn);
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-outline-main {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+            padding: 10px 22px;
+            border-radius: var(--radius-btn);
+            font-size: 13px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* القوائم الطولية المطابقة لللقطة الأولى */
+        .menu-list-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu-list-btn:active {
+            background-color: var(--bg-card-hover);
+        }
+
+        .menu-btn-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .menu-btn-icon {
+            color: var(--gold-primary);
+            font-size: 16px;
+        }
+
+        /* Tabs Panes */
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* General Inputs & Cards */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-card);
+            padding: 16px;
+            margin-bottom: 14px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: var(--gold-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-input);
+            color: #fff;
+            font-size: 12px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        input:focus, textarea:focus { border-color: var(--gold-primary); }
+
+        .avatar-selector {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .avatar-selector img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .avatar-selector img.selected {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* Posts & Comments */
+        .post-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-card);
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .post-top img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold-primary);
+        }
+
+        .comments-box {
+            background: rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 8px 10px;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+
+        .comment-row {
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Music Player Bar (6 أغاني أجنبية) */
+        .music-bar {
+            position: fixed;
+            bottom: 58px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: #08090c;
+            border-top: 1px solid var(--border-color);
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 998;
+        }
+
+        .music-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .music-info img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .music-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
+            max-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-ctrls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-play {
+            background: var(--gold-primary);
+            color: #000;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        /* Bottom Nav Bar المطابق لللقطات */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: #050608;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 14px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-sub);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 20%;
+        }
+
+        .nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
+        .nav-item.active { color: var(--gold-primary); }
+    </style>
+</head>
+<body>
+
+    <!-- التنبيه الخاص الخالي من الأجليرت المزعج -->
+    <div id="toast">تم الإجراء بنجاح</div>
+
+    <div class="app-shell">
+        <!-- Top Header -->
+        <div class="top-header">
+            <div class="header-icons">
+                <div class="icon-circle" onclick="switchTab('more', document.querySelectorAll('.nav-item')[4])">
+                    <span>☰</span>
+                </div>
+                <div class="icon-circle">
+                    <span>🔔</span>
+                    <span class="badge-num">1</span>
+                </div>
+                <div class="icon-circle">
+                    <span>🔍</span>
+                </div>
+            </div>
+
+            <div class="brand-box">
+                <div class="brand-text">
+                    <div class="brand-name">Striker</div>
+                    <div class="brand-sub">بطولات قروب سترايكر</div>
+                </div>
+                <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=150" id="header-user-img" class="header-avatar-img">
+            </div>
+        </div>
+
+        <!-- TAB 1: الرئيسية (مطابقة لللقطات) -->
+        <div id="tab-home" class="tab-pane active">
+            <!-- Hero Banner -->
+            <div class="hero-card">
+                <div class="hero-title-en">OFFICIAL PLATFORM</div>
+                <div class="hero-title-ar">Striker</div>
+                <div class="hero-desc">
+                    المرجع الرسمي لبطولات قروب سترايكر في Plato — سجّل بيوزرك، انضم للبطولات، وتابع النتائج والإحصائيات.
+                </div>
+                <div class="hero-buttons">
+                    <button class="btn-gold-main" onclick="switchTab('more', document.querySelectorAll('.nav-item')[4])">إنشاء حساب</button>
+                    <button class="btn-outline-main" onclick="switchTab('tournaments', document.querySelectorAll('.nav-item')[1])">البطولات</button>
+                </div>
+            </div>
+
+            <!-- قائمة الخيارات المطابقة لصور المعاينة -->
+            <div class="menu-list-btn" onclick="switchTab('more', document.querySelectorAll('.nav-item')[4])">
+                <div class="menu-btn-left"><span class="menu-btn-icon">👤</span> إنشاء حساب</div>
+            </div>
+            <div class="menu-list-btn" onclick="switchTab('tournaments', document.querySelectorAll('.nav-item')[1])">
+                <div class="menu-btn-left"><span class="menu-btn-icon">📋</span> تسجيل الأسامي</div>
+            </div>
+            <div class="menu-list-btn" onclick="showToast('المتجر يفتح قريباً!')">
+                <div class="menu-btn-left"><span class="menu-btn-icon">🎁</span> المتجر</div>
+            </div>
+            <div class="menu-list-btn" onclick="switchTab('players', document.querySelectorAll('.nav-item')[2])">
+                <div class="menu-btn-left"><span class="menu-btn-icon">🏆</span> الترتيب</div>
+            </div>
+            <div class="menu-list-btn" onclick="switchTab('players', document.querySelectorAll('.nav-item')[2])">
+                <div class="menu-btn-left"><span class="menu-btn-icon">👑</span> لوحة الشرف</div>
+            </div>
+            <div class="menu-list-btn" onclick="switchTab('feed', document.querySelectorAll('.nav-item')[3])">
+                <div class="menu-btn-left"><span class="menu-btn-icon">📰</span> الأخبار والتفاعلات</div>
+            </div>
+        </div>
+
+        <!-- TAB 2: البطولات -->
+        <div id="tab-tournaments" class="tab-pane">
+            <div class="card">
+                <div class="card-header">🏆 البطولات النشطة والقادمة</div>
+                <div id="tournaments-container">
+                    <p style="font-size:12px; color:var(--text-sub);">لا توجد بطولة قادمة بعد — الإدارة ستعلن أول بطولة قريباً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: المشتركين / الأسامي -->
+        <div id="tab-players" class="tab-pane">
+            <div class="card">
+                <div class="card-header">👥 قادة وأعضاء القروب</div>
+                <div id="players-container">
+                    <div class="menu-list-btn" style="border-radius:12px;">
+                        <div class="menu-btn-left">
+                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100" style="width:32px; height:32px; border-radius:50%;">
+                            <span>أبو رماح (Owner / Admin)</span>
+                        </div>
+                    </div>
+                    <div class="menu-list-btn" style="border-radius:12px;">
+                        <div class="menu-btn-left">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100" style="width:32px; height:32px; border-radius:50%;">
+                            <span>ليان (Co-Founder / Admin)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: التفاعلات والمنشورات -->
+        <div id="tab-feed" class="tab-pane">
+            <div class="card">
+                <div class="card-header">✍️ مشاركة خبر أو تحدي</div>
+                <textarea id="post-input" rows="2" placeholder="اكتب شيئاً..."></textarea>
+                <button class="btn-gold-main" style="width:100%; border-radius:12px;" onclick="publishPost()">نشر</button>
+            </div>
+            <div id="posts-container"></div>
+        </div>
+
+        <!-- TAB 5: التصويت -->
+        <div id="tab-polls" class="tab-pane">
+            <div class="card">
+                <div class="card-header" id="poll-title-heading">📊 تصويت الموسم</div>
+                <div id="poll-options-box">
+                    <p style="font-size:12px; color:var(--text-sub);">لا يوجد تصويت نشط حالياً.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: المزيد والحساب الشخصي والإدارة -->
+        <div id="tab-more" class="tab-pane">
+            <div class="card">
+                <div class="card-header">👤 حسابك في Striker</div>
+                <input type="text" id="username-input" placeholder="اسمك أو يوزرك في Plato...">
+                
+                <p style="font-size:11px; color:var(--text-sub); margin-bottom:6px;">اختر أفتار لك:</p>
+                <div class="avatar-selector">
+                    <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=150" class="selected" onclick="pickAvatar(this)">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150" onclick="pickAvatar(this)">
+                    <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=150" onclick="pickAvatar(this)">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150" onclick="pickAvatar(this)">
+                    <img src="https://images.unsplash.com/photo-1628157582853-a796fa650a6a?w=150" onclick="pickAvatar(this)">
+                </div>
+
+                <input type="text" id="custom-avatar-input" placeholder="أو ضع رابط صورتك الخاص هنا...">
+                <button class="btn-gold-main" style="width:100%; border-radius:12px;" onclick="saveProfile()">حفظ الحساب</button>
+            </div>
+
+            <!-- لوحة التحكم الإدارية الخاصة بـ أبو رماح وليان فقط -->
+            <div class="card" id="admin-panel" style="display:none; border-color:var(--gold-primary);">
+                <div class="card-header">👑 لوحة الإدارة (أبو رماح & ليان)</div>
+                
+                <p style="font-size:11px; font-weight:700; margin-bottom:4px; color:var(--gold-primary);">إضافة بطولة جديدة:</p>
+                <input type="text" id="adm-t-name" placeholder="اسم البطولة">
+                <input type="text" id="adm-t-desc" placeholder="التفاصيل أو الجائزة">
+                <button class="btn-gold-main" style="width:100%; border-radius:10px; margin-bottom:12px;" onclick="admAddTournament()">نشر البطولة</button>
+
+                <p style="font-size:11px; font-weight:700; margin-bottom:4px; color:var(--gold-primary);">طرح تصويت جديد (أسماء/خيارات):</p>
+                <input type="text" id="adm-poll-q" placeholder="عنوان التصويت">
+                <input type="text" id="adm-poll-opts" placeholder="الخيارات تفصل بينها فاصلة (مثال: أحمد, بدر, خالد)">
+                <button class="btn-gold-main" style="width:100%; border-radius:10px; margin-bottom:12px;" onclick="admCreatePoll()">طرح التصويت</button>
+
+                <p style="font-size:11px; font-weight:700; margin-bottom:4px; color:var(--gold-primary);">إضافة يوزر للقائمة:</p>
+                <input type="text" id="adm-p-name" placeholder="يوزر اللاعب">
+                <input type="text" id="adm-p-avatar" placeholder="رابط الأفتار الخاص به">
+                <button class="btn-gold-main" style="width:100%; border-radius:10px;" onclick="admAddPlayer()">إضافة المشترك</button>
+            </div>
+        </div>
+
+        <!-- مشغل الأغاني الأجنبية المدمج -->
+        <div class="music-bar">
+            <div class="music-info">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=100">
+                <div>
+                    <div class="music-title" id="song-name">Lofi Chill Beats</div>
+                    <div style="font-size:9px; color:var(--text-sub);" id="song-artist">Striker Vibes</div>
+                </div>
+            </div>
+            <div class="music-ctrls">
+                <span onclick="prevSong()" style="cursor:pointer; font-size:12px;">⏮</span>
+                <button class="btn-play" id="play-btn" onclick="togglePlay()">▶</button>
+                <span onclick="nextSong()" style="cursor:pointer; font-size:12px;">⏭</span>
+            </div>
+        </div>
+        <audio id="audio-player" loop></audio>
+
+        <!-- Bottom Navbar المطابق لللقطات -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home', this)">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('tournaments', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V18H8v2h8v-2h-3v-2.1c2.28-.46 4-2.48 4-4.9V7c0-1.1-.9-2-2-2z"/></svg>
+                <span>البطولات</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('players', this)">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span>اللاعبون</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('polls', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14I7 12h2v5h3zm0-4H7v-2h5v2zm5 4h-3V7h3v10z"/></svg>
+                <span>التصويت</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('more', this)">
+                <svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <span>المزيد</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = localStorage.getItem('st_user') || "";
+        let currentAvatar = localStorage.getItem('st_avatar') || "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=150";
+        const admins = ["أبو رماح", "ليان", "ابو رماح"];
+
+        const playlist = [
+            { title: "Midnight Lofi Lounge", artist: "Chillout Beats", src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" },
+            { title: "Cyberpunk Night Drive", artist: "Synthwave Pro", src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3" },
+            { title: "Urban HipHop Vibe", artist: "Striker Beats", src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7321f.mp3" },
+            { title: "Dark Electronic Trax", artist: "Bass Gaming", src: "https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792e3.mp3" },
+            { title: "Deep House Groove", artist: "Night Lounge", src: "https://cdn.pixabay.com/download/audio/2021/09/06/audio_8b2111eb0b.mp3" },
+            { title: "Focus Stream Beats", artist: "Lofi Gaming", src: "https://cdn.pixabay.com/download/audio/2022/02/07/audio_bf0d7d9a17.mp3" }
+        ];
+
+        let currentTrackIdx = 0;
+        let isPlaying = false;
+        const audio = document.getElementById('audio-player');
+
+        window.onload = function() {
+            if(currentUser) {
+                document.getElementById('username-input').value = currentUser;
+                document.getElementById('header-user-img').src = currentAvatar;
+                checkAdmin();
+            }
+            loadTrack(0);
+            renderTournaments();
+            renderPosts();
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 2200);
+        }
+
+        function switchTab(tabId, el) {
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.getElementById('tab-' + tabId).classList.add('active');
+            if(el) el.classList.add('active');
+        }
+
+        function pickAvatar(img) {
+            document.querySelectorAll('.avatar-selector img').forEach(i => i.classList.remove('selected'));
+            img.classList.add('selected');
+            currentAvatar = img.src;
+            document.getElementById('custom-avatar-input').value = "";
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('username-input').value.trim();
+            const customAvatar = document.getElementById('custom-avatar-input').value.trim();
+
+            if(!name) return showToast("يرجى إدخال اسم المستخدم!");
+
+            currentUser = name;
+            if(customAvatar) currentAvatar = customAvatar;
+
+            localStorage.setItem('st_user', currentUser);
+            localStorage.setItem('st_avatar', currentAvatar);
+
+            document.getElementById('header-user-img').src = currentAvatar;
+            checkAdmin();
+            showToast("تم حفظ بياناتك بنجاح!");
+        }
+
+        function checkAdmin() {
+            if(admins.includes(currentUser)) {
+                document.getElementById('admin-panel').style.display = 'block';
+                showToast(`مرحباً بالأدمن ${currentUser}`);
+            } else {
+                document.getElementById('admin-panel').style.display = 'none';
+            }
+        }
+
+        /* البطولات المحفوظة */
+        function renderTournaments() {
+            const list = JSON.parse(localStorage.getItem('st_tournaments') || '[]');
+            const cont = document.getElementById('tournaments-container');
+            if(list.length === 0) return;
+
+            cont.innerHTML = "";
+            list.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'menu-list-btn';
+                item.style.borderRadius = '14px';
+                item.innerHTML = `
+                    <div>
+                        <div style="font-weight:bold; font-size:13px;">${t.name}</div>
+                        <div style="font-size:10px; color:var(--text-sub);">${t.desc}</div>
+                    </div>
+                    <button class="btn-gold-main" style="padding:6px 14px; font-size:11px;" onclick="this.innerText='تم التسجيل ✓'; this.disabled=true;">انضمام</button>
+                `;
+                cont.appendChild(item);
+            });
+        }
+
+        function admAddTournament() {
+            const name = document.getElementById('adm-t-name').value.trim();
+            const desc = document.getElementById('adm-t-desc').value.trim();
+            if(!name) return showToast("اكتب اسم البطولة!");
+
+            const list = JSON.parse(localStorage.getItem('st_tournaments') || '[]');
+            list.push({ name, desc });
+            localStorage.setItem('st_tournaments', JSON.stringify(list));
+
+            renderTournaments();
+            showToast("تم إعلان البطولة بنجاح!");
+            document.getElementById('adm-t-name').value = "";
+            document.getElementById('adm-t-desc').value = "";
+        }
+
+        /* المنشورات والتعليقات المحفوظة */
+        function renderPosts() {
+            const posts = JSON.parse(localStorage.getItem('st_posts') || '[]');
+            const cont = document.getElementById('posts-container');
+            cont.innerHTML = "";
+
+            posts.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.innerHTML = `
+                    <div class="post-top">
+                        <img src="${p.avatar}">
+                        <div>
+                            <div style="font-weight:700; font-size:12px;">${p.user}</div>
+                            <div style="font-size:9px; color:var(--text-sub);">${p.time}</div>
+                        </div>
+                    </div>
+                    <div style="font-size:12px; line-height:1.5;">${p.text}</div>
+                    <div class="comments-box">
+                        ${p.comments.map(c => `<div class="comment-row"><strong style="color:var(--gold-primary);">${c.user}:</strong> ${c.text}</div>`).join('')}
+                    </div>
+                    <div style="display:flex; gap:6px; margin-top:8px;">
+                        <input type="text" id="cin-${p.id}" placeholder="اكتب تعليق..." style="margin:0; padding:6px 10px; font-size:11px;">
+                        <button class="btn-gold-main" style="padding:4px 12px; font-size:11px; border-radius:8px;" onclick="addComment(${p.id})">رد</button>
+                    </div>
+                `;
+                cont.appendChild(card);
+            });
+        }
+
+        function publishPost() {
+            if(!currentUser) return showToast("احفظ حسابك من صفحة المزيد أولاً!");
+            const txt = document.getElementById('post-input').value.trim();
+            if(!txt) return;
+
+            const posts = JSON.parse(localStorage.getItem('st_posts') || '[]');
+            posts.unshift({
+                id: Date.now(),
+                user: currentUser,
+                avatar: currentAvatar,
+                text: txt,
+                time: "الآن",
+                comments: []
+            });
+
+            localStorage.setItem('st_posts', JSON.stringify(posts));
+            renderPosts();
+            document.getElementById('post-input').value = "";
+            showToast("تم نشر المشاركة!");
+        }
+
+        function addComment(pId) {
+            if(!currentUser) return showToast("احفظ حسابك أولاً!");
+            const input = document.getElementById(`cin-${pId}`);
+            const val = input.value.trim();
+            if(!val) return;
+
+            const posts = JSON.parse(localStorage.getItem('st_posts') || '[]');
+            const post = posts.find(p => p.id === pId);
+            if(post) {
+                post.comments.push({ user: currentUser, text: val });
+                localStorage.setItem('st_posts', JSON.stringify(posts));
+                renderPosts();
+                showToast("تمت إضافة التعليق!");
+            }
+        }
+
+        /* الأغاني الأجنبية */
+        function loadTrack(idx) {
+            currentTrackIdx = idx;
+            audio.src = playlist[idx].src;
+            document.getElementById('song-name').innerText = playlist[idx].title;
+            document.getElementById('song-artist').innerText = playlist[idx].artist;
+        }
+
+        function togglePlay() {
+            if(isPlaying) {
+                audio.pause();
+                document.getElementById('play-btn').innerText = "▶";
+            } else {
+                audio.play();
+                document.getElementById('play-btn').innerText = "⏸";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function nextSong() {
+            currentTrackIdx = (currentTrackIdx + 1) % playlist.length;
+            loadTrack(currentTrackIdx);
+            if(isPlaying) audio.play();
+        }
+
+        function prevSong() {
+            currentTrackIdx = (currentTrackIdx - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIdx);
+            if(isPlaying) audio.play();
+        }
+
+        /* أدمن التصويت والأعضاء */
+        function admCreatePoll() {
+            const q = document.getElementById('adm-poll-q').value.trim();
+            const opts = document.getElementById('adm-poll-opts').value.trim();
+            if(!q || !opts) return showToast("أدخل بيانات التصويت!");
+
+            document.getElementById('poll-title-heading').innerText = "📊 " + q;
+            const box = document.getElementById('poll-options-box');
+            box.innerHTML = "";
+
+            opts.split(',').forEach((opt, i) => {
+                const item = document.createElement('div');
+                item.className = 'menu-list-btn';
+                item.style.borderRadius = '12px';
+                item.innerHTML = `<span>${opt.trim()}</span><span id="vc-${i}" style="color:var(--gold-primary); font-weight:bold;">0 أصوات</span>`;
+                item.onclick = () => {
+                    const el = document.getElementById(`vc-${i}`);
+                    let cnt = parseInt(el.innerText) || 0;
+                    el.innerText = (cnt + 1) + " أصوات";
+                    showToast("تم تسجيل صوتك!");
+                };
+                box.appendChild(item);
+            });
+            showToast("تم طرح التصويت!");
+        }
+
+        function admAddPlayer() {
+            const name = document.getElementById('adm-p-name').value.trim();
+            const avatar = document.getElementById('adm-p-avatar').value.trim() || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100";
+            if(!name) return showToast("اكتب اسم اللاعب!");
+
+            const cont = document.getElementById('players-container');
+            const item = document.createElement('div');
+            item.className = 'menu-list-btn';
+            item.style.borderRadius = '12px';
+            item.innerHTML = `
+                <div class="menu-btn-left">
+                    <img src="${avatar}" style="width:32px; height:32px; border-radius:50%;">
+                    <span>${name}</span>
+                </div>
+            `;
+            cont.appendChild(item);
+            showToast("تمت إضافة اللاعب للترتيب!");
+        }
+    </script>
+</body>
+</html>
