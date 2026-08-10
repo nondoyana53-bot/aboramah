@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>سترايكر | Striker</title>
+    
+    <!-- إعدادات التثبيت كتطبيق للجوال PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Striker">
+    <meta name="theme-color" content="#111827">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #111827;
+            color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-bottom: 80px; /* مسافة للبار السفلي */
+        }
+
+        .app-viewport {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background-color: #1f2937; /* لون رصاصي غامق */
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            position: relative;
+            padding: 20px 16px 90px 16px;
+        }
+
+        /* الهيدر العلوي */
+        .app-header {
+            text-align: center;
+            padding: 15px 0 20px 0;
+            border-bottom: 1px solid #374151;
+            margin-bottom: 20px;
+        }
+
+        .chess-avatar {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #6b7280;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+        }
+
+        .app-brand {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        /* الأقسام (تظهر وتختفي) */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* الكروت والتنسيق الداخلي */
+        .card {
+            background-color: #374151;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #4b5563;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #f9fafb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* المدخلات والأزرار */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #4b5563;
+            background-color: #1f2937;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4b5563;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary { background-color: #3b82f6; }
+        .btn-success { background-color: #10b981; }
+        .btn-danger { background-color: #ef4444; }
+
+        /* العناصر والتصويت */
+        .item-row {
+            background-color: #1f2937;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #4b5563;
+        }
+
+        /* الشريط السفلي (Navigation Bar) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background-color: #111827;
+            border-top: 1px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0 15px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 20%;
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            margin-bottom: 4px;
+            fill: currentColor;
+        }
+
+        .nav-item.active {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .user-tag {
+            display: inline-block;
+            background-color: #1f2937;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-viewport">
+        <!-- الهيدر الرئيسي -->
+        <div class="app-header">
+            <img src="https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=400&auto=format&fit=crop" alt="Chess" class="chess-avatar">
+            <div class="app-brand">سترايكر | STRIKER</div>
+            <div id="user-display" style="margin-top: 8px;"></div>
+        </div>
+
+        <!-- 1. قسم بيت (الرئيسية) -->
+        <div id="tab-home" class="tab-content active">
+            <div class="card">
+                <div class="card-title">👤 حسابك الشخصي</div>
+                <input type="text" id="username-input" placeholder="ادخل اسمك (اليوزر)...">
+                <button class="btn btn-primary" onclick="setUser()">حفظ اليوزر</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📢 أحدث الأخبار والعلانات</div>
+                <p style="font-size: 14px; color: #d1d5db; line-line: 1.5;" id="announcement-text">
+                    أهلاً بك في تطبيق سترايكر الرسمي! يمكنك المشاركة في البطولات والتصويتات اليومية.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. قسم بطولات -->
+        <div id="tab-tournaments" class="tab-content">
+            <div class="card">
+                <div class="card-title">🏆 البطولات القادمة</div>
+                <div id="tournaments-list">
+                    <div class="item-row">
+                        <div>
+                            <div style="font-weight: bold;">بطولة الشطرنج الخاطف</div>
+                            <div style="font-size: 12px; color: #9ca3af;">الجائزة: 500 ريال</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="joinItem(this)">انضمام</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. قسم لاعبون -->
+        <div id="tab-players" class="tab-content">
+            <div class="card">
+                <div class="card-title">👥 قائمة اللاعبين المسجلين</div>
+                <div id="players-list">
+                    <div class="item-row">
+                        <span>أبو رماح (المدير)</span>
+                        <span class="user-tag">أدمن</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. قسم تصويت -->
+        <div id="tab-polls" class="tab-content">
+            <div class="card">
+                <div class="card-title" id="poll-question">📊 تصويت: أفضل وقت للبطولة؟</div>
+                <div id="poll-options">
+                    <div class="item-row" onclick="vote(1)" style="cursor: pointer;">
+                        <span>8:00 مساءً</span>
+                        <span id="v1" style="color: #9ca3af;">0 أصوات</span>
+                    </div>
+                    <div class="item-row" onclick="vote(2)" style="cursor: pointer;">
+                        <span>10:00 مساءً</span>
+                        <span id="v2" style="color: #9ca3af;">0 أصوات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. قسم المزيد (لوحة التحكم للتحكم والإضافة) -->
+        <div id="tab-more" class="tab-content">
+            <div class="card">
+                <div class="card-title">⚙️ لوحة التحكم والإدارة</div>
+                <p style="font-size: 12px; color: #9ca3af; margin-bottom: 12px;">أضف بطولات جديدة مباشرة للموقع:</p>
+                <input type="text" id="new-t-title" placeholder="اسم البطولة الجديدة...">
+                <input type="text" id="new-t-prize" placeholder="الجائزة أو التفاصيل...">
+                <button class="btn btn-success" onclick="addTournament()">إضافة البطولة الآن</button>
+            </div>
+        </div>
+
+        <!-- الشريط السفلي للتنقل بنفس فكرة التطبيق -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home', this)">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>بيت</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('tournaments', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0 0 11 15.9V18H8v2h8v-2h-3v-2.1c2.28-.46 4-2.48 4-4.9V7c0-1.1-.9-2-2-2z"/></svg>
+                <span>بطولات</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('players', this)">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span>لاعبون</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('polls', this)">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14I7 12h2v5h3zm0-4H7v-2h5v2zm5 4h-3V7h3v10z"/></svg>
+                <span>تصويت</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('more', this)">
+                <svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <span>المزيد</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- برمجة التنقل والتفاعل -->
+    <script>
+        let currentUser = "";
+        let v1Count = 0;
+        let v2Count = 0;
+
+        // التنقل بين الشاشات
+        function switchTab(tabName, element) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabName).classList.add('active');
+            element.classList.add('active');
+        }
+
+        // حفظ اسم المستخدم وإضافته للاعبين
+        function setUser() {
+            const input = document.getElementById('username-input');
+            if (input.value.trim() !== "") {
+                currentUser = input.value.trim();
+                document.getElementById('user-display').innerHTML = `<span class="user-tag">مرحباً ${currentUser}</span>`;
+                
+                // إضافة اللاعب إلى قائمة اللاعبين
+                const playersList = document.getElementById('players-list');
+                const newPlayer = document.createElement('div');
+                newPlayer.className = 'item-row';
+                newPlayer.innerHTML = `<span>${currentUser}</span><span style="font-size:12px; color:#9ca3af;">لاعب جديد</span>`;
+                playersList.appendChild(newPlayer);
+
+                alert("تم تسجيل اليوزر بنجاح!");
+                input.value = "";
+            }
+        }
+
+        // الانضمام للبطولات
+        function joinItem(btn) {
+            if (!currentUser) {
+                alert("يرجى إدخال اسمك أولاً من قسم (بيت)!");
+                return;
+            }
+            btn.innerText = "تم الانضمام ✓";
+            btn.style.backgroundColor = "#10b981";
+            btn.disabled = true;
+        }
+
+        // التصويت
+        function vote(num) {
+            if (!currentUser) {
+                alert("يرجى إدخال اسمك أولاً من قسم (بيت)!");
+                return;
+            }
+            if (num === 1) { v1Count++; document.getElementById('v1').innerText = v1Count + " أصوات"; }
+            if (num === 2) { v2Count++; document.getElementById('v2').innerText = v2Count + " أصوات"; }
+            alert("تم تسجيل تصويتك!");
+        }
+
+        // إضافة بطولة جديدة من لوحة التحكم (قسم المزيد)
+        function addTournament() {
+            const title = document.getElementById('new-t-title').value;
+            const prize = document.getElementById('new-t-prize').value;
+
+            if (title && prize) {
+                const list = document.getElementById('tournaments-list');
+                const item = document.createElement('div');
+                item.className = 'item-row';
+                item.innerHTML = `
+                    <div>
+                        <div style="font-weight: bold;">${title}</div>
+                        <div style="font-size: 12px; color: #9ca3af;">${prize}</div>
+                    </div>
+                    <button class="btn btn-primary" style="width: auto; padding: 6px 14px; font-size: 12px;" onclick="joinItem(this)">انضمام</button>
+                `;
+                list.appendChild(item);
+                alert("تمت إضافة البطولة بنجاح! انتقل لقسم البطولات لرؤيتها.");
+                document.getElementById('new-t-title').value = "";
+                document.getElementById('new-t-prize').value = "";
+            } else {
+                alert("يرجى تعبئة جميع الحقول!");
+            }
+        }
+    </script>
+</body>
+</html>
