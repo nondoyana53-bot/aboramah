@@ -472,15 +472,39 @@
         }
         .fire-badge svg { width: 16px; height: 16px; fill: var(--fire-color); filter: drop-shadow(0 0 4px #ff3300); }
 
-        .hype-active-shell {
-            border: 2px solid #ff3300 !important;
-            box-shadow: 0 0 25px rgba(255, 51, 0, 0.4), inset 0 0 15px rgba(255, 51, 0, 0.2);
-            animation: hypePulse 2s infinite alternate;
+        /* ========================================== */
+        /* تأثير الحرق بـ 6 ألوان متحركة (متطلبات الهايب) */
+        /* ========================================== */
+        @keyframes multiColorFireAnimation {
+            0% {
+                border-color: #ff3300;
+                box-shadow: 0 0 25px rgba(255, 51, 0, 0.5), inset 0 0 15px rgba(255, 51, 0, 0.2);
+            }
+            20% {
+                border-color: #ff9900;
+                box-shadow: 0 0 25px rgba(255, 153, 0, 0.5), inset 0 0 15px rgba(255, 153, 0, 0.2);
+            }
+            40% {
+                border-color: #ffff00;
+                box-shadow: 0 0 25px rgba(255, 255, 0, 0.5), inset 0 0 15px rgba(255, 255, 0, 0.2);
+            }
+            60% {
+                border-color: #ff00ff;
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.5), inset 0 0 15px rgba(255, 0, 255, 0.2);
+            }
+            80% {
+                border-color: #00ffff;
+                box-shadow: 0 0 25px rgba(0, 255, 255, 0.5), inset 0 0 15px rgba(0, 255, 255, 0.2);
+            }
+            100% {
+                border-color: #ff3300;
+                box-shadow: 0 0 35px rgba(255, 51, 0, 0.8), inset 0 0 25px rgba(255, 51, 0, 0.4);
+            }
         }
 
-        @keyframes hypePulse {
-            0% { box-shadow: 0 0 15px rgba(255, 51, 0, 0.3), inset 0 0 10px rgba(255, 51, 0, 0.1); }
-            100% { box-shadow: 0 0 35px rgba(255, 85, 0, 0.6), inset 0 0 25px rgba(255, 85, 0, 0.3); }
+        .hype-active-shell {
+            border: 3px solid #ff3300 !important;
+            animation: multiColorFireAnimation 4s infinite linear;
         }
 
         .hype-btn-admin {
@@ -861,25 +885,23 @@
         <!-- 4. الخاص -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
-                <div class="dm-contacts-sidebar">الدعم الفني والرسائل المباشرة</div>
+                <div class="dm-contacts-sidebar">الدردشة العامة والمراسلة المباشرة</div>
                 <div class="dm-messages-list" id="dmMessagesList"></div>
                 <div class="dm-input-area">
-                    <input type="text" id="dmInputText" placeholder="اكتب رسالة للدعم أو للمنصة..." onkeypress="handleDmKeyPress(event)">
+                    <input type="text" id="dmInputText" placeholder="اكتب رسالة للجميع هنا..." onkeypress="handleDmKeyPress(event)">
                     <button class="dm-send-btn" onclick="sendDmMessage()">إرسال</button>
                 </div>
             </div>
         </div>
 
-        <!-- 5. الملف الشخصي (لأي مستخدم نزوره أو حسابنا) -->
+        <!-- 5. الملف الشخصي -->
         <div id="profilePane" class="pane">
             <div class="profile-header-banner" id="profilePageHeaderBanner"></div>
             <div class="profile-info-section">
                 <div class="profile-avatar-wrapper">
                     <img id="profilePageAvatar" src="" alt="Avatar">
                 </div>
-                <div class="profile-actions-row" id="profileActionsRowContainer">
-                    <!-- سيتم تعبئتها ديناميكياً (تعديل لو حسابنا، أو فولو/إلغاء فولو لو حساب غيرنا) -->
-                </div>
+                <div class="profile-actions-row" id="profileActionsRowContainer"></div>
                 <div class="profile-names">
                     <div class="profile-display-name-row">
                         <div class="profile-display-name" id="profileDisplayName">الاسم</div>
@@ -981,7 +1003,7 @@
         ];
 
         let dmMessages = JSON.parse(localStorage.getItem('r_dm_global')) || [
-            { id: 1, sender: 'الدعم الفني', text: 'مرحباً بك! تواصل هنا مع الدعم الفني مباشرة.' }
+            { id: 1, sender: 'النظام العام', text: 'مرحباً بالجميع! تواصلوا هنا واسبحوا في عالم السوالف والتغريد.' }
         ];
 
         let currentProfileSubTab = 'tweets';
@@ -1074,13 +1096,9 @@
 
             if (!handle.startsWith('@')) handle = '@' + handle;
 
-            if (handle.toLowerCase() === '@r' && pass !== 'Rr987321') {
-                alert('عذراً، كلمة المرور غير صحيحة لحساب R.');
-                return;
-            }
-
-            if (allAccounts[handle] && handle.toLowerCase() !== '@r') {
-                alert('اسم المستخدم هذا مستخدم مسبقاً، يرجى اختيار اسم مستخدم آخر.');
+            // ذكاء منع تكرار اليوزرات تماماً
+            if (allAccounts[handle]) {
+                alert('عذراً، اسم المستخدم (اليوزر) هذا مسجل مسبقاً لمستخدم آخر. ي اختيار يوزر فريد غير مكرر!');
                 return;
             }
 
@@ -1099,9 +1117,9 @@
                 pass, 
                 avatar: avatarBase64, 
                 header: headerBase64, 
-                bio: 'مرحباً، أنا استخدم منصة R.',
+                bio: 'مرحباً، أنا سعيد بوجودي في منصة R.',
                 verified: false,
-                fireVerified: (handle.toLowerCase() === '@r'),
+                fireVerified: false,
                 isHypeActive: false,
                 followers: [],
                 following: []
@@ -1283,13 +1301,11 @@
             fireEl.style.display = (targetAcc.fireVerified || targetAcc.handle.toLowerCase() === '@r') ? 'inline-flex' : 'none';
             goldEl.style.display = (!targetAcc.fireVerified && targetAcc.verified) ? 'inline-flex' : 'none';
 
-            // إحصائيات المتابعة
             const followersList = targetAcc.followers || [];
             const followingList = targetAcc.following || [];
             document.getElementById('followersCountText').innerText = followersList.length;
             document.getElementById('followingCountText').innerText = followingList.length;
 
-            // بناء أزرار الملف الشخصي (هل هو حسابنا أم حساب شخص آخر لكي نتابعهم؟)
             const actionsRow = document.getElementById('profileActionsRowContainer');
             actionsRow.innerHTML = '';
 
@@ -1303,7 +1319,7 @@
                 const isFollowing = (targetAcc.followers || []).includes(currentUser.handle);
                 actionsRow.innerHTML = `
                     <button class="btn-profile-action ${isFollowing ? 'following' : ''}" onclick="toggleFollowUser('${targetAcc.handle}')">
-                        ${isFollowing ? 'متابَع' : 'متابعة'}
+                        ${isFollowing ? 'متابَع (صديق)' : 'إضافة صديق +'}
                     </button>
                 `;
             }
@@ -1515,8 +1531,8 @@
                 <div style="display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border-color);">
                     <div style="font-weight: 700; color: var(--accent-color);">R</div>
                     <div>
-                        <div style="font-weight: 700; font-size: 15px;">تم إضافة ميزة تصفح بروفايلات الحسابات والمتابعة!</div>
-                        <div style="font-size: 13px; color: var(--text-secondary);">يمكنك الآن الضغط على أي صورة أو اسم مستخدم لزيارة بروفايله ومتابعته.</div>
+                        <div style="font-weight: 700; font-size: 15px;">تم تفعيل النظام الجديد بكامل القوة والتفاعل!</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">يمكنكم الآن إضافة بعضكم البعض، التغريد، السوالف بحرية تامة، ومنع تكرار اليوزرات نهائياً.</div>
                     </div>
                 </div>
             `;
@@ -1548,7 +1564,7 @@
             const input = document.getElementById('dmInputText');
             const txt = input.value.trim();
             if (!txt) return;
-            dmMessages.push({ id: Date.now(), sender: `${getCurrentUser().name} (الدعم الفني)`, text: txt });
+            dmMessages.push({ id: Date.now(), sender: getCurrentUser().name, text: txt });
             localStorage.setItem('r_dm_global', JSON.stringify(dmMessages));
             input.value = '';
             renderDmMessages();
