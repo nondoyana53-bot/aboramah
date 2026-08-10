@@ -449,6 +449,7 @@
         }
 
         .tweet-name { font-weight: 700; font-size: 15px; cursor: pointer; }
+        .tweet-name:hover { text-decoration: underline; }
         .tweet-handle-time { font-size: 14px; color: var(--text-secondary); margin-right: 4px; }
 
         .gold-badge {
@@ -471,10 +472,39 @@
         }
         .fire-badge svg { width: 16px; height: 16px; fill: var(--fire-color); filter: drop-shadow(0 0 4px #ff3300); }
 
+        .hype-active-shell {
+            border: 2px solid #ff3300 !important;
+            box-shadow: 0 0 25px rgba(255, 51, 0, 0.4), inset 0 0 15px rgba(255, 51, 0, 0.2);
+            animation: hypePulse 2s infinite alternate;
+        }
+
+        @keyframes hypePulse {
+            0% { box-shadow: 0 0 15px rgba(255, 51, 0, 0.3), inset 0 0 10px rgba(255, 51, 0, 0.1); }
+            100% { box-shadow: 0 0 35px rgba(255, 85, 0, 0.6), inset 0 0 25px rgba(255, 85, 0, 0.3); }
+        }
+
+        .hype-btn-admin {
+            background: linear-gradient(45deg, #ff3300, #ff9900);
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 0 10px rgba(255, 51, 0, 0.5);
+            transition: transform 0.2s;
+        }
+        .hype-btn-admin:active { transform: scale(0.95); }
+
         .admin-actions-dropdown {
             margin-right: auto;
             display: flex;
             gap: 6px;
+            align-items: center;
         }
         .admin-action-btn {
             background: #202327;
@@ -658,6 +688,11 @@
             cursor: pointer;
         }
 
+        .btn-profile-action.following {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
         .profile-names { margin-bottom: 12px; }
         .profile-display-name-row { display: flex; align-items: center; gap: 4px; }
         .profile-display-name { font-size: 20px; font-weight: 800; }
@@ -738,7 +773,7 @@
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
             <h3>تسجيل الدخول أو إنشاء حساب جديد</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">يوزر R مخصص لك بالباسورد: Rr987321</p>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">يوزر R مخصص لك ومحمي بكلمة مرور مخفية</p>
             <input type="text" id="setupName" class="input-r" placeholder="الاسم الكامل">
             <input type="text" id="setupHandle" class="input-r" placeholder="اسم المستخدم (مثال: @user)">
             <input type="password" id="setupPass" class="input-r" placeholder="كلمة المرور">
@@ -774,7 +809,7 @@
                 <div style="font-weight: 800; font-size: 16px;" id="drawerName">الاسم</div>
                 <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px;" id="drawerHandle">@handle</div>
                 
-                <div class="drawer-item" onclick="openProfileFromHeader(); toggleDrawer(false);"><span>الملف الشخصي</span><span>›</span></div>
+                <div class="drawer-item" onclick="openMyOwnProfile(); toggleDrawer(false);"><span>الملف الشخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="openEditProfileModal(); toggleDrawer(false);"><span>تعديل ملف شخصي</span><span>›</span></div>
                 <div class="drawer-item" onclick="switchPane('authScreenDrawer', document.getElementById('navHome')); toggleDrawer(false);"><span>إضافة حساب جديد / تبديل</span><span>›</span></div>
                 <hr style="border-color: var(--border-color); margin: 15px 0;">
@@ -835,16 +870,15 @@
             </div>
         </div>
 
-        <!-- 5. الملف الشخصي -->
+        <!-- 5. الملف الشخصي (لأي مستخدم نزوره أو حسابنا) -->
         <div id="profilePane" class="pane">
             <div class="profile-header-banner" id="profilePageHeaderBanner"></div>
             <div class="profile-info-section">
                 <div class="profile-avatar-wrapper">
                     <img id="profilePageAvatar" src="" alt="Avatar">
                 </div>
-                <div class="profile-actions-row">
-                    <button class="btn-profile-action" onclick="openEditProfileModal()">تعديل ملف شخصي</button>
-                    <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880;">خروج</button>
+                <div class="profile-actions-row" id="profileActionsRowContainer">
+                    <!-- سيتم تعبئتها ديناميكياً (تعديل لو حسابنا، أو فولو/إلغاء فولو لو حساب غيرنا) -->
                 </div>
                 <div class="profile-names">
                     <div class="profile-display-name-row">
@@ -855,6 +889,10 @@
                     <div class="profile-user-handle" id="profileUserHandle">@user</div>
                 </div>
                 <div class="profile-bio" id="profileBioText">مرحباً بك في حسابي.</div>
+                <div style="font-size: 13px; color: var(--text-secondary); display: flex; gap: 15px;" id="profileFollowStats">
+                    <span><strong id="followingCountText" style="color: var(--text-color);">0</strong> متابَعون</span>
+                    <span><strong id="followersCountText" style="color: var(--text-color);">0</strong> المتابعون</span>
+                </div>
             </div>
 
             <div class="profile-tabs">
@@ -919,7 +957,6 @@
     </div>
 
     <script>
-        // نظام التخزين والمزامنة المحدث لمنع أي تعليق أو توقف
         let allAccounts = JSON.parse(localStorage.getItem('r_accounts_global')) || {
             "@R": { 
                 name: "R", 
@@ -928,12 +965,16 @@
                 avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop", 
                 header: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop", 
                 bio: "الحساب الرسمي والمالك للموقع R", 
-                verified: true,
-                fireVerified: true 
+                verified: false,
+                fireVerified: true,
+                isHypeActive: false,
+                followers: [],
+                following: []
             }
         };
         
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
+        let viewingProfileHandle = null;
 
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
             { id: 1, name: 'R', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بكم في منصة R المتزامنة للجميع.', time: 'الان', likes: '1', retweets: '0', liked: false, retweeted: false }
@@ -951,7 +992,6 @@
             { category: 'ترند رائج', name: 'برمجة', tweets: '١٥ ألف تغريدة' }
         ];
 
-        // الاستماع للتحديثات الفورية في التخزين المحلي لضمان المزامنة الحية بدون مشاكل
         window.addEventListener('storage', (event) => {
             if (event.key === 'r_accounts_global' && event.newValue) {
                 allAccounts = JSON.parse(event.newValue);
@@ -1035,7 +1075,7 @@
             if (!handle.startsWith('@')) handle = '@' + handle;
 
             if (handle.toLowerCase() === '@r' && pass !== 'Rr987321') {
-                alert('عذراً، هذا اليوزر مخصص حصرياً لـ R وكلمة المرور غير صحيحة.');
+                alert('عذراً، كلمة المرور غير صحيحة لحساب R.');
                 return;
             }
 
@@ -1061,7 +1101,10 @@
                 header: headerBase64, 
                 bio: 'مرحباً، أنا استخدم منصة R.',
                 verified: false,
-                fireVerified: (handle.toLowerCase() === '@r') 
+                fireVerified: (handle.toLowerCase() === '@r'),
+                isHypeActive: false,
+                followers: [],
+                following: []
             };
             
             localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
@@ -1096,28 +1139,27 @@
             document.getElementById('authScreen').style.display = 'none';
             document.getElementById('appShell').style.display = 'flex';
 
+            const shell = document.getElementById('appShell');
+            if (user.handle.toLowerCase() === '@r' && user.isHypeActive) {
+                shell.classList.add('hype-active-shell');
+            } else {
+                shell.classList.remove('hype-active-shell');
+            }
+
             document.getElementById('headerAvatarImg').src = user.avatar;
-            document.getElementById('profilePageAvatar').src = user.avatar;
-            document.getElementById('profilePageHeaderBanner').style.backgroundImage = `url('${user.header}')`;
             document.getElementById('drawerAvatar').src = user.avatar;
             document.getElementById('drawerName').innerText = user.name;
             document.getElementById('drawerHandle').innerText = user.handle;
-
-            document.getElementById('profileDisplayName').innerText = user.name;
-            document.getElementById('profileUserHandle').innerText = user.handle;
-            document.getElementById('profileBioText').innerText = user.bio || '';
-
-            const goldEl = document.getElementById('profileGoldBadge');
-            const fireEl = document.getElementById('profileFireBadge');
-            
-            fireEl.style.display = (user.fireVerified || user.handle.toLowerCase() === '@r') ? 'inline-flex' : 'none';
-            goldEl.style.display = (!user.fireVerified && user.verified) ? 'inline-flex' : 'none';
 
             renderStoriesBar();
             renderTimeline();
             renderNotifications();
             renderDmMessages();
-            renderProfileContent();
+
+            if (!viewingProfileHandle) {
+                viewingProfileHandle = currentHandle;
+            }
+            renderProfile(viewingProfileHandle);
         }
 
         function openEditProfileModal() {
@@ -1164,7 +1206,7 @@
                     <div class="story-name">${acc.name}</div>
                 `;
                 item.onclick = () => {
-                    switchPane('chatPane', document.getElementById('navChat'));
+                    openUserProfile(handle);
                 };
                 bar.appendChild(item);
             });
@@ -1213,10 +1255,85 @@
             if (btnEl) btnEl.classList.add('active');
         }
 
-        function openProfileFromHeader() {
+        function openMyOwnProfile() {
+            openUserProfile(currentHandle);
+        }
+
+        function openUserProfile(handle) {
+            viewingProfileHandle = handle;
             switchPane('profilePane', document.getElementById('navHome'));
             document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
             document.getElementById('profilePane').classList.add('active');
+            renderProfile(handle);
+        }
+
+        function renderProfile(handle) {
+            const targetAcc = allAccounts[handle];
+            if (!targetAcc) return;
+
+            document.getElementById('profilePageAvatar').src = targetAcc.avatar;
+            document.getElementById('profilePageHeaderBanner').style.backgroundImage = `url('${targetAcc.header}')`;
+            document.getElementById('profileDisplayName').innerText = targetAcc.name;
+            document.getElementById('profileUserHandle').innerText = targetAcc.handle;
+            document.getElementById('profileBioText').innerText = targetAcc.bio || '';
+
+            const goldEl = document.getElementById('profileGoldBadge');
+            const fireEl = document.getElementById('profileFireBadge');
+            
+            fireEl.style.display = (targetAcc.fireVerified || targetAcc.handle.toLowerCase() === '@r') ? 'inline-flex' : 'none';
+            goldEl.style.display = (!targetAcc.fireVerified && targetAcc.verified) ? 'inline-flex' : 'none';
+
+            // إحصائيات المتابعة
+            const followersList = targetAcc.followers || [];
+            const followingList = targetAcc.following || [];
+            document.getElementById('followersCountText').innerText = followersList.length;
+            document.getElementById('followingCountText').innerText = followingList.length;
+
+            // بناء أزرار الملف الشخصي (هل هو حسابنا أم حساب شخص آخر لكي نتابعهم؟)
+            const actionsRow = document.getElementById('profileActionsRowContainer');
+            actionsRow.innerHTML = '';
+
+            if (handle === currentHandle) {
+                actionsRow.innerHTML = `
+                    <button class="btn-profile-action" onclick="openEditProfileModal()">تعديل ملف شخصي</button>
+                    <button class="btn-profile-action" onclick="logoutAccount()" style="color: #f91880;">خروج</button>
+                `;
+            } else {
+                const currentUser = getCurrentUser();
+                const isFollowing = (targetAcc.followers || []).includes(currentUser.handle);
+                actionsRow.innerHTML = `
+                    <button class="btn-profile-action ${isFollowing ? 'following' : ''}" onclick="toggleFollowUser('${targetAcc.handle}')">
+                        ${isFollowing ? 'متابَع' : 'متابعة'}
+                    </button>
+                `;
+            }
+
+            renderProfileContent();
+        }
+
+        function toggleFollowUser(targetHandle) {
+            const currentUser = getCurrentUser();
+            const targetAcc = allAccounts[targetHandle];
+            if (!targetAcc) return;
+
+            if (!targetAcc.followers) targetAcc.followers = [];
+            if (!currentUser.following) currentUser.following = [];
+
+            const indexInFollowers = targetAcc.followers.indexOf(currentUser.handle);
+            if (indexInFollowers > -1) {
+                targetAcc.followers.splice(indexInFollowers, 1);
+                const indexInFollowing = currentUser.following.indexOf(targetHandle);
+                if (indexInFollowing > -1) currentUser.following.splice(indexInFollowing, 1);
+            } else {
+                targetAcc.followers.push(currentUser.handle);
+                currentUser.following.push(targetHandle);
+            }
+
+            allAccounts[targetHandle] = targetAcc;
+            allAccounts[currentHandle] = currentUser;
+            localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+
+            renderProfile(targetHandle);
         }
 
         function renderRequiredTrends() {
@@ -1256,7 +1373,7 @@
                 let accHtml = '<div style="padding: 10px 16px; font-weight: 700; font-size: 14px; color: var(--text-secondary);">الحسابات المطابقة:</div>';
                 matchingHandles.forEach(acc => {
                     accHtml += `
-                        <div class="account-item-select" style="margin: 0 16px 8px 16px;" onclick="loginIntoAccount('${acc.handle}')">
+                        <div class="account-item-select" style="margin: 0 16px 8px 16px;" onclick="openUserProfile('${acc.handle}')">
                             <div class="account-item-left">
                                 <img src="${acc.avatar}" alt="avatar">
                                 <div>
@@ -1264,6 +1381,7 @@
                                     <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
                                 </div>
                             </div>
+                            <span style="font-size: 12px; color: var(--accent-color);">زيارة الملف ›</span>
                         </div>
                     `;
                 });
@@ -1296,6 +1414,15 @@
             }
         }
 
+        function toggleHypeMode() {
+            if (currentHandle !== '@R') return;
+            const user = getCurrentUser();
+            user.isHypeActive = !user.isHypeActive;
+            allAccounts[currentHandle] = user;
+            localStorage.setItem('r_accounts_global', JSON.stringify(allAccounts));
+            startAppShell();
+        }
+
         function banAccount(handle) {
             if (currentHandle !== '@R') return;
             if (handle.toLowerCase() === '@r') {
@@ -1326,16 +1453,17 @@
                 const card = document.createElement('div');
                 card.className = 'tweet-card';
                 card.innerHTML = `
-                    <img src="${t.avatar}" class="tweet-avatar">
+                    <img src="${t.avatar}" class="tweet-avatar" onclick="openUserProfile('${t.handle}')">
                     <div class="tweet-body">
                         <div class="tweet-header-info">
-                            <span class="tweet-name">${t.name}</span>
+                            <span class="tweet-name" onclick="openUserProfile('${t.handle}')">${t.name}</span>
                             ${isFire ? '<span class="fire-badge"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></span>' : ''}
                             ${isGold ? '<span class="gold-badge"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.92 14.15l-3.27-3.27c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0L10 13.34l5.79-5.79c.39-.39 1.02-.39 1.41 0 .39.39.39 1.02 0 1.41l-6.5 6.5c-.39.39-1.02.39-1.41 0z"></path></svg></span>' : ''}
                             <span class="tweet-handle-time">${t.handle} · ${t.time}</span>
                             
                             ${isAdmin ? `
                                 <div class="admin-actions-dropdown">
+                                    <button class="hype-btn-admin" onclick="toggleHypeMode()">🔥 ${getCurrentUser().isHypeActive ? 'إيقاف الهايب' : 'تفعيل الهايب'}</button>
                                     <button class="admin-action-btn" onclick="toggleFireVerifyAccount('${t.handle}')" style="color: #ff3300; border-color: rgba(255,51,0,0.3);">${isFire ? 'إلغاء الناري' : 'توثيق ناري'}</button>
                                     <button class="admin-action-btn" onclick="toggleGoldVerifyAccount('${t.handle}')">${isGold ? 'إلغاء الذهبي' : 'توثيق ذهبي'}</button>
                                     ${t.handle.toLowerCase() !== '@r' ? `<button class="admin-action-btn danger" onclick="banAccount('${t.handle}')">حذف</button>` : ''}
@@ -1387,8 +1515,8 @@
                 <div style="display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border-color);">
                     <div style="font-weight: 700; color: var(--accent-color);">R</div>
                     <div>
-                        <div style="font-weight: 700; font-size: 15px;">صلاحيات الأدمن والتوثيق الناري مفعلة!</div>
-                        <div style="font-size: 13px; color: var(--text-secondary);">يمكنك التحكم بالكامل وتوثيق الحسابات مباشرة من واجهة الموقع.</div>
+                        <div style="font-weight: 700; font-size: 15px;">تم إضافة ميزة تصفح بروفايلات الحسابات والمتابعة!</div>
+                        <div style="font-size: 13px; color: var(--text-secondary);">يمكنك الآن الضغط على أي صورة أو اسم مستخدم لزيارة بروفايله ومتابعته.</div>
                     </div>
                 </div>
             `;
@@ -1403,14 +1531,16 @@
         }
 
         function renderProfileContent() {
-            const user = getCurrentUser();
-            if(!user) return;
+            if (!viewingProfileHandle) return;
+            const targetAcc = allAccounts[viewingProfileHandle];
+            if (!targetAcc) return;
+
             if (currentProfileSubTab === 'tweets') {
-                const myTweets = tweetsData.filter(t => t.handle === user.handle);
-                renderTimeline(myTweets, 'userProfileContentContainer');
+                const userTweets = tweetsData.filter(t => t.handle === targetAcc.handle);
+                renderTimeline(userTweets, 'userProfileContentContainer');
             } else {
-                const myLiked = tweetsData.filter(t => t.liked);
-                renderTimeline(myLiked, 'userProfileContentContainer');
+                const userLiked = tweetsData.filter(t => t.liked);
+                renderTimeline(userLiked, 'userProfileContentContainer');
             }
         }
 
@@ -1433,9 +1563,9 @@
         }
 
         function renderDmMessages() {
-            const list = document.getElementById('dmMessagesList');
-            if(!list) return;
-            list.innerHTML = '';
+            const container = document.getElementById('dmMessagesList');
+            if(!container) return;
+            container.innerHTML = '';
             dmMessages.forEach(m => {
                 const wrapper = document.createElement('div');
                 wrapper.className = `dm-bubble-wrapper theirs`;
@@ -1444,9 +1574,9 @@
                     <div class="dm-bubble">${m.text}</div>
                     <button class="dm-delete-btn" onclick="deleteDmMessage(${m.id})">حذف</button>
                 `;
-                list.appendChild(wrapper);
+                container.appendChild(wrapper);
             });
-            list.scrollTop = list.scrollHeight;
+            container.scrollTop = container.scrollHeight;
         }
     </script>
 </body>
