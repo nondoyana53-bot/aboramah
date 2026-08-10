@@ -2,204 +2,806 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المحامية ليان العنزي | المنصة القانونية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مكتب المحامية ليان العنزي - للمحاماة والاستشارات القانونية</title>
+    <!-- خطوط عربية فخمة وقانونية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-light: #FAFAFA;
-            --white: #FFFFFF;
-            --gold: #C5A059;
-            --gold-hover: #A3803C;
-            --burgundy: #5B1E29;
-            --text-dark: #222222;
-            --text-muted: #666666;
-            --border: #E5E5E5;
+            --bg-tent: #060607;
+            --card-dark: #0b0c0e;
+            --gold-ancient: #d4af37;
+            --gold-glow: #ffc83b;
+            --gold-muted: rgba(212, 175, 55, 0.25);
+            --burgundy-dark: #121824;
+            --sand-text: #b8bec8;
+            --text-light: #f0f3f7;
+            --border-gold: #8c6d1d;
+            
+            /* ألوان المخطوطة والملفات */
+            --book-bg: #101216;
+            --book-border: #2a303d;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-light); color: var(--text-dark); font-family: 'Tajawal', sans-serif; line-height: 1.6; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        /* الهيدر العلوي */
-        header {
-            background-color: var(--white);
-            border-bottom: 2px solid var(--gold);
-            padding: 1.2rem 8%;
+        body {
+            background-color: var(--bg-tent);
+            /* خلفية سينمائية داكنة بلمسات الإضاءة المذهبة */
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                linear-gradient(rgba(6, 6, 7, 0.96), rgba(6, 6, 7, 0.96)),
+                url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-light);
+            font-family: 'Amiri', serif;
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo { font-family: 'Amiri', serif; font-size: 1.8rem; font-weight: 700; color: var(--burgundy); text-decoration: none; }
-        .logo span { font-size: 0.85rem; color: var(--gold); display: block; margin-top: -5px; font-family: 'Tajawal', sans-serif; }
-
-        /* منطقة البحث الرئيسية */
-        .hero-search {
-            background: linear-gradient(135deg, var(--white) 0%, #F4F1EA 100%);
-            padding: 4rem 10% 3rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero-search h1 { font-family: 'Amiri', serif; font-size: 2.8rem; color: var(--burgundy); margin-bottom: 0.5rem; }
-        .hero-search p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; }
-
-        /* محرك البحث التفاعلي */
-        .search-box {
-            max-width: 650px;
-            margin: 0 auto;
+            justify-content: center;
+            padding: 15px 10px;
             position: relative;
         }
 
-        .search-box input {
+        /* ---------------- السراجان المنيران في الزوايا ---------------- */
+        .lantern {
+            position: fixed;
+            top: 15px;
+            width: 55px;
+            height: 90px;
+            z-index: 99;
+            pointer-events: none;
+            filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
+            animation: flicker 3s infinite alternate ease-in-out;
+        }
+
+        .lantern-right { right: 15px; }
+        .lantern-left { left: 15px; transform: scaleX(-1); }
+
+        @keyframes flicker {
+            0% { opacity: 0.85; filter: drop-shadow(0 0 12px rgba(255, 200, 59, 0.5)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 22px rgba(255, 200, 59, 0.8)); }
+            100% { opacity: 0.9; filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6)); }
+        }
+
+        .diwan-container {
             width: 100%;
-            padding: 1.1rem 1.5rem;
-            font-size: 1.05rem;
-            border: 2px solid var(--gold);
+            max-width: 850px;
+            background: var(--card-dark);
+            border: 2px solid var(--border-gold);
             border-radius: 8px;
-            outline: none;
-            background: var(--white);
-            box-shadow: 0 4px 15px rgba(197, 160, 89, 0.15);
-            font-family: 'Tajawal', sans-serif;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 40px rgba(0, 0, 0, 0.9);
+            padding: 22px 18px;
+            position: relative;
+            margin-bottom: 40px;
+            margin-top: 25px;
         }
 
-        /* شبكة الخيارات والمواضيع */
-        .main-container { padding: 3rem 10%; }
-        .section-title { font-family: 'Amiri', serif; font-size: 2rem; color: var(--burgundy); margin-bottom: 1.5rem; border-right: 4px solid var(--gold); padding-right: 12px; }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 4rem;
+        .diwan-container::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            pointer-events: none;
         }
 
-        .card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.8rem;
+        /* Header / العنوان الرئيسي */
+        header {
+            text-align: center;
+            padding: 10px 0 16px 0;
+            border-bottom: 2px double var(--border-gold);
+            margin-bottom: 20px;
+        }
+
+        /* رسمة شعار العدالة والميزان */
+        .scale-illustration {
+            width: 220px;
+            height: 45px;
+            margin: 0 auto 8px;
+            display: block;
+            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+        }
+
+        h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 36px;
+            color: var(--gold-ancient);
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(255, 200, 59, 0.2);
+        }
+
+        .subtitle {
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            color: var(--sand-text);
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* Navigation Bar / الأزرار التنقلية */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--gold-muted);
+            padding-bottom: 12px;
+        }
+
+        .nav-btn {
+            background: #10131a;
+            border: 1px solid var(--border-gold);
+            color: var(--text-light);
+            padding: 8px 18px;
+            border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .card:hover {
-            border-color: var(--gold);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        .nav-btn.active {
+            background: var(--burgundy-dark);
+            color: var(--gold-ancient);
+            border-color: var(--gold-ancient);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
 
-        .card h3 { font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--burgundy); margin-bottom: 0.8rem; }
-        .card p { color: var(--text-muted); font-size: 0.95rem; }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.35s ease-in-out;
+        }
 
-        /* قسم الاقتباسات القانونية */
-        .quotes-grid {
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------------- SECTION: الواجهة الرئيسية ---------------- */
+        
+        .law-banner {
+            position: relative;
+            width: 100%;
+            height: 230px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border-gold);
+            margin-bottom: 22px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+        }
+
+        .law-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            filter: brightness(0.65) contrast(1.15);
+        }
+
+        .law-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(6, 6, 7, 0.95) 0%, rgba(6, 6, 7, 0.3) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .law-banner-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 28px;
+            color: var(--gold-ancient);
+            text-shadow: 0 2px 8px rgba(0,0,0,1);
+        }
+
+        /* بطاقة الاقتباس القانوني الأجمل */
+        .featured-quote-card {
+            background: linear-gradient(145deg, #10131a, #07080a);
+            border: 1px solid var(--gold-ancient);
+            border-radius: 6px;
+            padding: 25px 18px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(212, 175, 55, 0.05);
+        }
+
+        .featured-quote-card:hover {
+            border-color: #ffe07d;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+        }
+
+        .featured-tag {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 13px;
+            color: var(--gold-ancient);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .featured-quote-text {
+            font-size: 22px;
+            line-height: 2;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: 'Amiri', serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .click-hint {
+            font-size: 12px;
+            color: var(--sand-text);
+            margin-top: 8px;
+            display: inline-block;
+            border-bottom: 1px dashed var(--gold-muted);
+        }
+
+        /* ---------------- SECTION: أرشيف القضايا والأحكام ---------------- */
+        
+        .search-box input {
+            width: 100%;
+            background: #090b0e;
+            border: 1px solid var(--border-gold);
+            border-radius: 4px;
+            padding: 10px 16px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            color: var(--text-light);
+            outline: none;
+            margin-bottom: 18px;
+        }
+
+        .cases-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
         }
 
-        .quote-box {
-            background: var(--white);
-            border-right: 4px solid var(--burgundy);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        .case-mini-card {
+            background: #0d1015;
+            border: 1px solid var(--gold-muted);
+            border-radius: 6px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .quote-box blockquote { font-family: 'Amiri', serif; font-size: 1.25rem; color: var(--text-dark); font-style: italic; margin-bottom: 0.5rem; }
-        .quote-box span { font-size: 0.85rem; color: var(--gold); font-weight: bold; }
+        .case-mini-card:hover {
+            border-color: var(--gold-ancient);
+            background: #131821;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
 
-        footer { background: var(--burgundy); color: var(--white); text-align: center; padding: 1.5rem; margin-top: 4rem; font-size: 0.9rem; }
+        .mini-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding-bottom: 6px;
+        }
+
+        .mini-card-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            color: var(--gold-ancient);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mini-card-badge {
+            font-size: 11px;
+            background: var(--burgundy-dark);
+            color: #fff;
+            padding: 2px 7px;
+            border-radius: 3px;
+            border: 1px solid var(--gold-muted);
+        }
+
+        .mini-card-snippet {
+            font-size: 15px;
+            color: var(--sand-text);
+            line-height: 1.7;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mini-card-footer {
+            font-size: 12px;
+            color: var(--border-gold);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ---------------- Modal Window (تصميم سجل القضايا) ---------------- */
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(6px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px 10px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .book-container {
+            background: var(--book-bg);
+            border: 3px solid var(--gold-ancient);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 720px;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 35px 30px;
+            position: relative;
+            box-shadow: 
+                0 0 50px rgba(0,0,0,1),
+                inset 0 0 60px rgba(0,0,0,0.8),
+                inset 0 0 15px rgba(212, 175, 55, 0.3);
+            background-image: linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%, rgba(0,0,0,0.4) 100%);
+        }
+
+        .book-container::before {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid var(--gold-muted);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            background: none;
+            border: 1px solid var(--gold-muted);
+            color: var(--gold-ancient);
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--burgundy-dark);
+            border-color: var(--gold-ancient);
+        }
+
+        .modal-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 32px;
+            color: var(--gold-ancient);
+            text-align: center;
+            margin-bottom: 6px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: var(--sand-text);
+            margin-bottom: 25px;
+            border-bottom: 1px double var(--gold-muted);
+            padding-bottom: 12px;
+        }
+
+        .case-line {
+            font-size: 19px;
+            line-height: 2;
+            color: #ffffff;
+            padding: 10px 8px;
+            border-bottom: 1px rgba(212, 175, 55, 0.1) solid;
+            text-align: justify;
+        }
+
+        /* ---------------- SECTION: محرر إضافة ملف/استشارة جديدة ---------------- */
+        
+        .editor-card {
+            background: #0d1015;
+            border: 1px solid var(--border-gold);
+            border-radius: 6px;
+            padding: 20px;
+        }
+
+        .editor-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 22px;
+            color: var(--gold-ancient);
+            margin-bottom: 14px;
+            border-bottom: 1px dashed var(--gold-muted);
+            padding-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #131821;
+            border: 1px solid var(--gold-muted);
+            border-radius: 4px;
+            color: var(--text-light);
+            padding: 10px 12px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--gold-ancient);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 2;
+            font-size: 17px;
+        }
+
+        .btn-feather {
+            width: 100%;
+            background: linear-gradient(135deg, #182232 0%, #0c111a 100%);
+            color: var(--gold-ancient);
+            border: 1px solid var(--gold-ancient);
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        @media (max-width: 500px) {
+            .lantern {
+                width: 40px;
+                height: 70px;
+            }
+            .book-container {
+                padding: 25px 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">
-            المحامية ليان العنزي
-            <span>منصة الأنظمة والحقوق القانونية</span>
-        </a>
-    </header>
+    <!-- السراج المنير الأيمن -->
+    <svg class="lantern lantern-right" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
 
-    <div class="hero-search">
-        <h1>موسوعة الخدمات والفكر القانوني</h1>
-        <p>ابحث عن التخصصات والأحكام والمعلومات القانونية فوراً</p>
-        <div class="search-box">
-            <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="🔍 ابحث هنا عن القضايا، العقود، التركات، التحكيم...">
+    <!-- السراج المنير الأيسر -->
+    <svg class="lantern lantern-left" viewBox="0 0 64 100">
+        <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
+        <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+        <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
+        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
+    </svg>
+
+    <div class="diwan-container">
+
+        <!-- Header -->
+        <header>
+            <!-- رسمة ميزان العدالة والسيف SVG -->
+            <svg class="scale-illustration" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- العمود الأوسط -->
+                <rect x="148" y="5" width="4" height="40" fill="#d4af37"/>
+                <path d="M140 45 L160 45 L150 40 Z" fill="#d4af37"/>
+                <!-- الميزان -->
+                <path d="M90 15 L210 15" stroke="#d4af37" stroke-width="3"/>
+                <!-- كفة اليمين -->
+                <path d="M90 15 L75 35 L105 35 Z" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+                <!-- كفة اليسار -->
+                <path d="M210 15 L195 35 L225 35 Z" fill="none" stroke="#d4af37" stroke-width="1.5"/>
+            </svg>
+
+            <h1>المحامية ليان العنزي</h1>
+            <div class="subtitle">مكتب المحاماة والتحكيم والاستشارات القانونية</div>
+        </header>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
+            <button class="nav-btn" onclick="switchTab('casesTab', this)">أرشيف القضايا</button>
+            <button class="nav-btn" onclick="switchTab('editorTab', this)">إضافة قضية/نص</button>
         </div>
+
+        <!-- TAB 1: الصفحة الرئيسية -->
+        <div id="homeTab" class="tab-content active">
+            
+            <!-- بنر لقطات محاماة سينمائي مشهور -->
+            <div class="law-banner">
+                <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop" alt="لقطة محاماة سينمائية">
+                <div class="law-banner-overlay">
+                    <div class="law-banner-title">العدالة هي الحقيقة في عملها</div>
+                </div>
+            </div>
+
+            <!-- بطاقة الاقتباس القانوني الأجمل (تفتح الملف عند الضغط) -->
+            <div class="featured-quote-card" onclick="openFeaturedCase()">
+                <span class="featured-tag">⚖️ المبدأ القانوني الذهبي</span>
+                <div class="featured-quote-text" id="featuredQuoteText">
+                    "لا يجوز إدانة متهم إلا بناءً على دليل قاطع يثبت الجرم دون أدنى شك"
+                </div>
+                <span class="click-hint">📜 اضغط هنا لقراءة السجل والتقرير الكامل</span>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: أرشيف القضايا والأحكام (مربعات ومختصرة) -->
+        <div id="casesTab" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="searchCases()" placeholder="🔍 ابحث في عناوين القضايا أو المبادئ...">
+            </div>
+
+            <div class="cases-grid" id="casesGrid">
+                <!-- ستظهر القضايا كمربعات هنا -->
+            </div>
+        </div>
+
+        <!-- TAB 3: محرر إضافة قضية أو نص جديد -->
+        <div id="editorTab" class="tab-content">
+            <div class="editor-card">
+                <div class="editor-title">تدوين قضية أو نص قانوني جديد</div>
+                <input type="text" id="caseTitle" placeholder="عنوان الملف (مثال: قضية تجارية رقم 402)">
+                
+                <div style="display: flex; gap: 8px;">
+                    <select id="caseCategory">
+                        <option value="قضاء تجاري">قضاء تجاري</option>
+                        <option value="قضايا جنائية">قضايا جنائية</option>
+                        <option value="أنظمة شركات">أنظمة شركات</option>
+                        <option value="استشارات عامة">استشارات عامة</option>
+                    </select>
+                    <input type="text" id="caseNumber" placeholder="رقم المادة / المبدأ (اختياري)">
+                </div>
+
+                <textarea id="caseText" placeholder="اكتب تفاصيل المبدأ القانوني أو تفاصيل الحكم هنا..."></textarea>
+                
+                <button class="btn-feather" onclick="saveCase()">توثيق الملف في السجل</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="main-container">
-        <!-- الخيارات والخدمات -->
-        <h2 class="section-title">التخصصات والأنظمة</h2>
-        <div class="cards-grid" id="cardsGrid">
-            <div class="card" data-title="القضايا التجارية والشركات">
-                <h3>القضايا التجارية والشركات</h3>
-                <p>تأسيس الشركات، صياغة العقود التجارية الاستراتيجية، وحل نزاعات الشركاء والصفقات.</p>
+    <!-- نافذة عرض القضية/النص بتصميم (المخطوطة والملف المفتوح) -->
+    <div class="modal-overlay" id="caseModal" onclick="closeModalOnOverlay(event)">
+        <div class="book-container">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            
+            <div style="text-align: center; color: var(--gold-ancient); font-size: 18px; margin-bottom: 5px;">📜 المخطوطة والملف القانوني</div>
+            <div class="modal-title" id="modalTitle">عنوان القضية</div>
+            <div class="modal-subtitle" id="modalSubtitle">التصنيف | التاريخ</div>
+            
+            <div id="modalBody">
+                <!-- تفاصيل النص والقضية ستظهر هنا -->
             </div>
-            <div class="card" data-title="الترافع والتقاضي">
-                <h3>الترافع والتقاضي المحترف</h3>
-                <p>صياغة المذكرات واللوائح الاعتراضية والترافع أمام المحاكم العامة والحقوقية والإدارية.</p>
-            </div>
-            <div class="card" data-title="التحكيم وتسوية النزاعات">
-                <h3>التحكيم وتسوية النزاعات</h3>
-                <p>إدارة جلسات التحكيم والوساطة للوصول لنتائج حاسمة دون الحاجة لنزاعات طويلة.</p>
-            </div>
-            <div class="card" data-title="الملكية الفكرية">
-                <h3>الملكية الفكرية والحماية</h3>
-                <p>تسجيل وحماية العلامات التجارية، براءات الاختراع، والتصدي للانتهاكات التجارية.</p>
-            </div>
-            <div class="card" data-title="قسمة التركات والعقارات">
-                <h3>قسمة التركات والعقارات</h3>
-                <p>تصفية الأصول العقارية وتنظيم التركات المعقدة وفق الأطر الشرعية والنظامية.</p>
-            </div>
-            <div class="card" data-title="الاستشارات الوقائية">
-                <h3>الاستشارات الوقائية</h3>
-                <p>تحليل المخاطر القانونية مسبقاً وتوفير المظلة النظامية لحماية الاستثمارات.</p>
-            </div>
-        </div>
 
-        <!-- الاقتباسات -->
-        <h2 class="section-title">اقتباسات وفلسفة قانونية</h2>
-        <div class="quotes-grid">
-            <div class="quote-box">
-                blockquote>"القانون هو الخيط الدقيق الذي يفصل بين النظام والفوضى."</blockquote>
-                <span>— المحامية ليان العنزي</span>
-            </div>
-            <div class="quote-box">
-                blockquote>"العدالة ليست حظاً يُمنح، بل حقٌ يُنتزع بقوة الحجة وصرامة الدليل."</blockquote>
-                <span>— حكم وأدبيات قانونية</span>
-            </div>
-            <div class="quote-box">
-                blockquote>"المحامي الناجح لا يقرأ النص فقط، بل يفهم الغاية الاستراتيجية خلفه."</blockquote>
-                <span>— ليان العنزي</span>
+            <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 12px;">
+                <button onclick="copyCurrentModalCase()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 15px;">📋 نسخ التقرير</button>
+                <button onclick="deleteCurrentModalCase()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 15px;">🗑️ حذف الملف</button>
             </div>
         </div>
     </div>
-
-    <footer>
-        جميع الحقوق محفوظة © 2026 - المحامية ليان العنزي
-    </footer>
 
     <script>
-        function filterCards() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('#cardsGrid .card');
+        let cases = JSON.parse(localStorage.getItem('layal_law_firm')) || [
+            {
+                id: 1,
+                title: "مبدأ افتراض البراءة",
+                category: "قضايا جنائية",
+                number: "المادة 3",
+                text: "لا يجوز إدانة متهم إلا بناءً على دليل قاطع يثبت الجرم دون أدنى شك.\nالأصل في الإنسان البراءة، وتفسر الشكوك دائماً لصالح المتهم حفاظاً على الحقوق والحريات.",
+                date: "سجل الأحكام 2026"
+            },
+            {
+                id: 2,
+                title: "النزاعات التجارية والعقود",
+                category: "قضاء تجاري",
+                number: "المادة 105",
+                text: "العقد شريعة المتعاقدين، ولا يجوز نقضه ولا تعديله إلا باتفاق الطرفين أو للأسباب التي يقررها النظام.",
+                date: "سجل العقود 2026"
+            }
+        ];
+
+        let activeCaseId = null;
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            cards.forEach(card => {
-                let title = card.getAttribute('data-title').toLowerCase();
-                let text = card.textContent.toLowerCase();
-                if (title.includes(input) || text.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            if(tabId === 'homeTab') {
+                updateFeaturedQuote();
+            }
+        }
+
+        function updateFeaturedQuote() {
+            if(cases.length > 0) {
+                const firstCase = cases[0];
+                activeCaseId = firstCase.id;
+                const firstLine = firstCase.text.split('\n')[0];
+                document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
+            }
+        }
+
+        function openFeaturedCase() {
+            if(activeCaseId) {
+                openCaseModal(activeCaseId);
+            }
+        }
+
+        function renderCasesGrid(filteredList = null) {
+            const grid = document.getElementById('casesGrid');
+            grid.innerHTML = '';
+
+            const listToRender = filteredList || cases;
+
+            if (listToRender.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px;">لا توجد قضايا أو نصوص قانونية حالياً...</div>`;
+                return;
+            }
+
+            listToRender.forEach(c => {
+                const lines = c.text.split('\n').filter(l => l.trim());
+                const firstLine = lines[0] || '';
+
+                const card = document.createElement('div');
+                card.className = 'case-mini-card';
+                card.onclick = () => openCaseModal(c.id);
+                card.innerHTML = `
+                    <div>
+                        <div class="mini-card-header">
+                            <div class="mini-card-title">${c.title}</div>
+                            <span class="mini-card-badge">${c.category}</span>
+                        </div>
+                        <div class="mini-card-snippet">${firstLine}</div>
+                    </div>
+                    <div class="mini-card-footer">
+                        <span>📜 قراءة السجل الكامل</span>
+                        <span>🗓️ ${c.date}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
         }
+
+        function openCaseModal(id) {
+            const c = cases.find(item => item.id === id);
+            if (!c) return;
+
+            activeCaseId = id;
+            document.getElementById('modalTitle').innerText = c.title;
+            document.getElementById('modalSubtitle').innerText = `${c.category} ${c.number ? '• ' + c.number : ''} • ${c.date}`;
+
+            const lines = c.text.split('\n');
+            const formatted = lines.map(line => {
+                if (!line.trim()) return '';
+                return `<div class="case-line">${line}</div>`;
+            }).join('');
+
+            document.getElementById('modalBody').innerHTML = formatted;
+            document.getElementById('caseModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('caseModal').classList.remove('active');
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'caseModal') {
+                closeModal();
+            }
+        }
+
+        function saveCase() {
+            const title = document.getElementById('caseTitle').value.trim();
+            const category = document.getElementById('caseCategory').value;
+            const number = document.getElementById('caseNumber').value.trim();
+            const text = document.getElementById('caseText').value.trim();
+
+            if (!text) {
+                alert('يرجى كتابة تفاصيل القضية أو النص القانوني أولاً!');
+                return;
+            }
+
+            const newCase = {
+                id: Date.now(),
+                title: title || 'ملف قانوني جديد',
+                category: category,
+                number: number,
+                text: text,
+                date: new Date().toLocaleDateString('ar-SA')
+            };
+
+            cases.unshift(newCase);
+            localStorage.setItem('layal_law_firm', JSON.stringify(cases));
+
+            document.getElementById('caseTitle').value = '';
+            document.getElementById('caseNumber').value = '';
+            document.getElementById('caseText').value = '';
+
+            renderCasesGrid();
+            alert('تم توثيق الملف القانوني بنجاح!');
+            switchTab('casesTab', document.querySelectorAll('.nav-btn')[1]);
+        }
+
+        function deleteCurrentModalCase() {
+            if (confirm('هل أنت متأكد من مسح هذا الملف؟')) {
+                cases = cases.filter(c => c.id !== activeCaseId);
+                localStorage.setItem('layal_law_firm', JSON.stringify(cases));
+                closeModal();
+                renderCasesGrid();
+                updateFeaturedQuote();
+            }
+        }
+
+        function copyCurrentModalCase() {
+            const c = cases.find(item => item.id === activeCaseId);
+            if (c) {
+                navigator.clipboard.writeText(c.text);
+                alert('تم نسخ النص القانوني بنجاح!');
+            }
+        }
+
+        function searchCases() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = cases.filter(c => 
+                c.title.toLowerCase().includes(query) || 
+                c.text.toLowerCase().includes(query)
+            );
+            renderCasesGrid(filtered);
+        }
+
+        renderCasesGrid();
+        updateFeaturedQuote();
     </script>
 </body>
 </html>
