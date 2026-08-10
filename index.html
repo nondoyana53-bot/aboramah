@@ -1,31 +1,24 @@
-تم تحويل ديوانك بالكامل ليصبح بأسلوب **"ديوان شيخ"** فاخر وراقي جداً.
-### أبرز التحديثات في الكود الجديد:
- 1. **تصميم فاتح أثري ومطوّر:** خلفية بورق البردي/الرخامي الفاخر (#fcfaf6) وزخارف ملكية بالأخضر الزمردي والعنابي مع الذهب، لمنح هيبة وتاريخية الديوان.
- 2. **شريط بحث تفاعلي في الأعلى:** لبحث سريع وفوري بالكلمات داخل الأبيات، العناوين، أو البحور الشعريّة.
- 3. **تنسيق شبكي للأبيات (شطرين متوازيين):** تقسيم الصدر والعجز بشكل محاذٍ ومنظم جداً ومريح للعين مع علامة الفصل (... أو ***).
- 4. **تطوير المحرر والحفظ:** تم الإبقاء على كافة الوظائف البرمجية والتخزين المحلي (localStorage) كما هي تماماً دون مساس بخصائص الحفظ والنسخ والحذف والتصنيف.
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ديوان أبو رماح وليان - المخطوطة الملكية</title>
-    <!-- خطوط عربية أصيلة وتاريخية من Google Fonts -->
+    <!-- خطوط عربية فاخرة وأصيلة -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-cream: #f4efe6;
-            --papyrus-card: #fdfbf7;
-            --emerald-dark: #1b3b2b;
+            --bg-cream: #f7f3eb;
+            --papyrus-card: #ffffff;
+            --emerald-dark: #12291e;
             --gold-primary: #b8860b;
             --gold-light: #d4af37;
-            --burgundy: #6b1d2f;
-            --text-dark: #2c221e;
-            --text-muted: #6e6259;
+            --burgundy: #5c1827;
+            --text-dark: #231c18;
+            --text-muted: #6b5e55;
             --border-gold: rgba(184, 134, 11, 0.35);
         }
 
@@ -38,7 +31,7 @@
 
         body {
             background-color: var(--bg-cream);
-            background-image: radial-gradient(#e2d7c5 1.5px, transparent 0);
+            background-image: radial-gradient(#e4d9c6 1.5px, transparent 0);
             background-size: 28px 28px;
             color: var(--text-dark);
             font-family: 'Amiri', serif;
@@ -50,17 +43,16 @@
 
         .diwan-container {
             width: 100%;
-            max-width: 720px;
+            max-width: 780px;
             background: var(--papyrus-card);
             border: 3px double var(--gold-primary);
             border-radius: 12px;
-            box-shadow: 0 10px 35px rgba(27, 59, 43, 0.08), inset 0 0 25px rgba(184, 134, 11, 0.05);
+            box-shadow: 0 10px 35px rgba(18, 41, 30, 0.08), inset 0 0 25px rgba(184, 134, 11, 0.04);
             padding: 25px 20px;
             position: relative;
             margin-bottom: 40px;
         }
 
-        /* الإطار الزخرفي الأثري */
         .diwan-container::before {
             content: '';
             position: absolute;
@@ -73,23 +65,21 @@
         /* Header / العنوان الرئيسي */
         header {
             text-align: center;
-            padding: 15px 0 20px 0;
-            border-bottom: 2px solid var(--gold-primary);
-            margin-bottom: 25px;
-            position: relative;
+            padding: 10px 0 18px 0;
+            border-bottom: 2px double var(--gold-primary);
+            margin-bottom: 20px;
         }
 
         .ancient-symbol {
-            font-size: 26px;
+            font-size: 28px;
             color: var(--gold-primary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         h1 {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 36px;
+            font-size: 38px;
             color: var(--emerald-dark);
-            letter-spacing: 0.5px;
             font-weight: 700;
         }
 
@@ -97,11 +87,155 @@
             font-family: 'Reem Kufi', sans-serif;
             font-size: 14px;
             color: var(--burgundy);
-            margin-top: 4px;
+            margin-top: 2px;
             font-weight: 500;
         }
 
-        /* Search Box / محرك البحث السريع */
+        /* Navigation Bar / القائمة الرئيسية للتحول بين الأبواب */
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-gold);
+            padding-bottom: 12px;
+        }
+
+        .nav-btn {
+            background: #fdfcf9;
+            border: 1px solid var(--border-gold);
+            color: var(--text-dark);
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn.active {
+            background: var(--emerald-dark);
+            color: #fcefdc;
+            border-color: var(--gold-primary);
+            box-shadow: 0 4px 10px rgba(18, 41, 30, 0.2);
+        }
+
+        /* Tab Content Control */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---------------- SECTION: الصفحة الرئيسية (الرائقة) ---------------- */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(18,41,30,0.03) 0%, rgba(92,24,39,0.03) 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 25px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 26px;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 580px;
+            margin: 0 auto 20px;
+        }
+
+        /* بطاقات فرسان وسيوف */
+        .knights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .knight-card {
+            background: #fff;
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+            transition: 0.3s;
+        }
+
+        .knight-card:hover {
+            border-color: var(--gold-primary);
+            transform: translateY(-3px);
+        }
+
+        .knight-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .knight-card h3 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            color: var(--emerald-dark);
+            margin-bottom: 5px;
+        }
+
+        .knight-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* قسم روائع ومقتطفات الديوان */
+        .featured-section {
+            background: #fff;
+            border-right: 4px solid var(--gold-primary);
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
+            border-left: 1px solid var(--border-gold);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+        }
+
+        .featured-header {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 22px;
+            color: var(--emerald-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .featured-quote {
+            font-size: 20px;
+            line-height: 2;
+            text-align: center;
+            color: var(--burgundy);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* ---------------- SECTION: باب الأبيات والديوان ---------------- */
         .search-box {
             margin-bottom: 20px;
         }
@@ -117,88 +251,8 @@
             color: var(--text-dark);
             outline: none;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-            transition: 0.3s;
         }
 
-        .search-box input:focus {
-            box-shadow: 0 0 10px rgba(184, 134, 11, 0.25);
-            border-color: var(--emerald-dark);
-        }
-
-        /* Editor Section / محرر الملاحظات والقصائد */
-        .editor-card {
-            background: #ffffff;
-            border: 1px solid var(--border-gold);
-            border-radius: 10px;
-            padding: 18px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        }
-
-        .editor-title {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 20px;
-            color: var(--emerald-dark);
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px dashed var(--border-gold);
-            padding-bottom: 6px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            background: #fcfcfb;
-            border: 1px solid rgba(184, 134, 11, 0.4);
-            border-radius: 6px;
-            color: var(--text-dark);
-            padding: 10px 12px;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            margin-bottom: 12px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--emerald-dark);
-            background: #fff;
-            box-shadow: 0 0 8px rgba(27, 59, 43, 0.15);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-            line-height: 2;
-            font-size: 17px;
-        }
-
-        .btn-feather {
-            width: 100%;
-            background: linear-gradient(135deg, var(--emerald-dark) 0%, #0d2117 100%);
-            color: #fcefdc;
-            border: 1px solid var(--gold-primary);
-            padding: 12px;
-            border-radius: 6px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 19px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(27, 59, 43, 0.2);
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-feather:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
-
-        /* Filter Tabs */
         .filter-bar {
             display: flex;
             gap: 8px;
@@ -228,21 +282,13 @@
             font-weight: bold;
         }
 
-        /* Poem List / عرض الأبيات والقصائد */
         .poem-card {
             background: #ffffff;
             border: 1px solid var(--gold-primary);
             border-radius: 10px;
             padding: 22px 18px;
             margin-bottom: 20px;
-            position: relative;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.04);
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 5px 18px rgba(0,0,0,0.03);
         }
 
         .poem-header {
@@ -271,7 +317,6 @@
             font-family: 'Reem Kufi', sans-serif;
         }
 
-        /* تنسيق البيت الشعري الشطرين */
         .poem-content {
             margin: 15px 0;
             display: flex;
@@ -292,7 +337,7 @@
         }
 
         .verse-line:nth-child(even) {
-            background-color: rgba(244, 239, 230, 0.4);
+            background-color: rgba(244, 239, 230, 0.45);
         }
 
         .shatr {
@@ -337,6 +382,78 @@
             color: var(--emerald-dark);
         }
 
+        /* ---------------- SECTION: محرر تدوين الأبيات ---------------- */
+        .editor-card {
+            background: #ffffff;
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .editor-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 21px;
+            color: var(--emerald-dark);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-gold);
+            padding-bottom: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #fcfcfb;
+            border: 1px solid rgba(184, 134, 11, 0.4);
+            border-radius: 6px;
+            color: var(--text-dark);
+            padding: 10px 12px;
+            font-family: 'Amiri', serif;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--emerald-dark);
+            background: #fff;
+            box-shadow: 0 0 8px rgba(18, 41, 30, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+            line-height: 2;
+            font-size: 17px;
+        }
+
+        .btn-feather {
+            width: 100%;
+            background: linear-gradient(135deg, var(--emerald-dark) 0%, #0a1711 100%);
+            color: #fcefdc;
+            border: 1px solid var(--gold-primary);
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 19px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(18, 41, 30, 0.2);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-feather:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
         .empty-state {
             text-align: center;
             padding: 40px 10px;
@@ -363,50 +480,104 @@
 
         <!-- Header -->
         <header>
-            <div class="ancient-symbol">꧁ 📜 ꧂</div>
+            <div class="ancient-symbol">⚔️ 🐎 ⚔️</div>
             <h1>ديوان أبو رماح وليان</h1>
-            <div class="subtitle">سجل المخطوطات والقصائد الجاهلية والخاصة</div>
+            <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
         </header>
 
-        <!-- Search Box -->
-        <div class="search-box">
-            <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في القصائد، الأبيات، أو البحور الشعريّة...">
+        <!-- Navigation Buttons / أزرار التنقل السلس بين الأبواب -->
+        <div class="nav-menu">
+            <button class="nav-btn active" onclick="switchTab('homeTab', this)">🏛️ الواجهة الرئيسية</button>
+            <button class="nav-btn" onclick="switchTab('poemsTab', this)">📜 أرشيف الأبيات</button>
+            <button class="nav-btn" onclick="switchTab('editorTab', this)">🪶 نقش جديد</button>
         </div>
 
-        <!-- Editor Section -->
-        <div class="editor-card">
-            <div class="editor-title">✒️ تدوين قصيدة أو ملاحظة شعرية</div>
-            <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
-            
-            <div style="display: flex; gap: 8px;">
-                <select id="poemCategory">
-                    <option value="غزل">غزل</option>
-                    <option value="فخر">فخر وحماسة</option>
-                    <option value="حكمة">حكمة وموعظة</option>
-                    <option value="شوق">شوق وعتاب</option>
-                    <option value="عام">ملاحظة عامة</option>
-                </select>
-                <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
+        <!-- TAB 1: الصفحة الرئيسية (الرائقة بأسلوب الخيل والسيوف) -->
+        <div id="homeTab" class="tab-content active">
+            <div class="hero-banner">
+                <div class="hero-title">مرحباً بكم في ديوان الفخر والفروسية</div>
+                <div class="hero-desc">
+                    هنا يُدوّن الشعر الذي تحفه صهيل الخيل وصليل السيوف، وتتوارثه الأجيال مجداً وحكمة.
+                </div>
+                <button class="btn-feather" style="max-width: 250px; margin: 0 auto;" onclick="switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1])">
+                    ⚔️ تصفّح أبيات الديوان
+                </button>
             </div>
 
-            <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
-            
-            <button class="btn-feather" onclick="savePoem()">🪶 نقش القصيدة في الديوان</button>
+            <!-- بطاقات الرمزية العربية -->
+            <div class="knights-grid">
+                <div class="knight-card">
+                    <div class="knight-icon">🐎</div>
+                    <h3>الخيول الأصيلة</h3>
+                    <p>رمز العزة والأنفة والركض في ميادين القصيد</p>
+                </div>
+                <div class="knight-card">
+                    <div class="knight-icon">⚔️</div>
+                    <h3>السيوف الصارمة</h3>
+                    <p>قوة الحجة وصرامة المعنى والقصائد الخالدة</p>
+                </div>
+                <div class="knight-card">
+                    <div class="knight-icon">🏰</div>
+                    <h3>مجلس الشيوخ</h3>
+                    <p>ديوان جامع لأرفع ألوان الغزل والفخر والحكمة</p>
+                </div>
+            </div>
+
+            <!-- قسم اقتباسات أجمل الأبيات -->
+            <div class="featured-section">
+                <div class="featured-header">
+                    <span>✨ من أروع مقتطفات أبياتك:</span>
+                </div>
+                <div class="featured-quote" id="featuredQuote">
+                    "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
+                </div>
+                <div style="text-align: center; color: var(--text-muted); font-size: 13px;">
+                    — معلقة الفخر والعزة
+                </div>
+            </div>
         </div>
 
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-            <div class="filter-chip active" onclick="filterPoems('الكل', this)">🏛️ الكل</div>
-            <div class="filter-chip" onclick="filterPoems('غزل', this)">❤️ غزل</div>
-            <div class="filter-chip" onclick="filterPoems('فخر', this)">⚔️ فخر</div>
-            <div class="filter-chip" onclick="filterPoems('حكمة', this)">📜 حكمة</div>
-            <div class="filter-chip" onclick="filterPoems('شوق', this)">🌙 شوق</div>
-            <div class="filter-chip" onclick="filterPoems('عام', this)">📝 ملاحظات</div>
+        <!-- TAB 2: باب الديوان (استعراض الأبيات فقط) -->
+        <div id="poemsTab" class="tab-content">
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="🔍 ابحث في القصائد، الأبيات، أو البحور الشعريّة...">
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-chip active" onclick="filterPoems('الكل', this)">🏛️ الكل</div>
+                <div class="filter-chip" onclick="filterPoems('غزل', this)">❤️ غزل</div>
+                <div class="filter-chip" onclick="filterPoems('فخر', this)">⚔️ فخر</div>
+                <div class="filter-chip" onclick="filterPoems('حكمة', this)">📜 حكمة</div>
+                <div class="filter-chip" onclick="filterPoems('شوق', this)">🌙 شوق</div>
+                <div class="filter-chip" onclick="filterPoems('عام', this)">📝 ملاحظات</div>
+            </div>
+
+            <div id="poemsList">
+                <!-- ستظهر القصائد المكتوبة هنا تلقائياً -->
+            </div>
         </div>
 
-        <!-- Poems Display List -->
-        <div id="poemsList">
-            <!-- ستظهر القصائد المكتوبة هنا تلقائياً -->
+        <!-- TAB 3: محرر نقش قصيدة جديدة -->
+        <div id="editorTab" class="tab-content">
+            <div class="editor-card">
+                <div class="editor-title">✒️ تدوين قصيدة أو ملاحظة شعرية جديدة</div>
+                <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
+                
+                <div style="display: flex; gap: 8px;">
+                    <select id="poemCategory">
+                        <option value="غزل">غزل</option>
+                        <option value="فخر">فخر وحماسة</option>
+                        <option value="حكمة">حكمة وموعظة</option>
+                        <option value="شوق">شوق وعتاب</option>
+                        <option value="عام">ملاحظة عامة</option>
+                    </select>
+                    <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
+                </div>
+
+                <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
+                
+                <button class="btn-feather" onclick="savePoem()">🪶 نقش القصيدة في الديوان</button>
+            </div>
         </div>
 
     </div>
@@ -424,6 +595,26 @@
         ];
 
         let currentFilter = 'الكل';
+
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            if(tabId === 'homeTab') {
+                updateFeaturedQuote();
+            }
+        }
+
+        function updateFeaturedQuote() {
+            if(poems.length > 0) {
+                const randomPoem = poems[Math.floor(Math.random() * poems.length)];
+                const firstLine = randomPoem.text.split('\n')[0];
+                document.getElementById('featuredQuote').innerText = `"${firstLine}"`;
+            }
+        }
 
         function formatPoemText(text) {
             const lines = text.split('\n');
@@ -462,7 +653,7 @@
             if (listToRender.length === 0) {
                 listContainer.innerHTML = `
                     <div class="empty-state">
-                        لا توجد قصائد محفوظة حتى الآن...<br>ابدأ بنقش أبياتك الأولى!
+                        لا توجد قصائد محفوظة حتى الآن...<br>ابدأ بنقش أبياتك الأولى في خانة (نقش جديد)!
                     </div>
                 `;
                 return;
@@ -512,12 +703,15 @@
             poems.unshift(newPoem);
             localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
 
-            // Reset Input
             document.getElementById('poemTitle').value = '';
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
 
             renderPoems();
+            alert('تم نقش القصيدة بنجاح في الديوان!');
+            
+            // الانتقال القائي لباب الأبيات
+            switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
         }
 
         function deletePoem(id) {
@@ -553,8 +747,7 @@
 
         // Initialize display on load
         renderPoems();
+        updateFeaturedQuote();
     </script>
 </body>
 </html>
-
-```
