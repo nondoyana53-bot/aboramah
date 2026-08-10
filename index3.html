@@ -548,7 +548,6 @@
         .tweet-action-btn.liked svg { fill: var(--like-color); }
         .tweet-action-btn.retweeted { color: var(--retweet-color); }
 
-        /* تعديلات نظام الرسائل الخاصة (DM) الحقيقي */
         .dm-container {
             display: flex;
             flex-direction: column;
@@ -796,7 +795,6 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول وإنشاء الحسابات -->
     <div class="auth-container" id="authScreen">
         <div class="r-logo-large">𝕽</div>
         <div class="auth-card">
@@ -825,7 +823,6 @@
         </div>
     </div>
 
-    <!-- التطبيق الرئيسي -->
     <div class="app-shell" id="appShell">
         
         <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer(false)">
@@ -856,7 +853,6 @@
             </button>
         </div>
 
-        <!-- 1. الرئيسية -->
         <div id="homePane" class="pane active">
             <div class="stories-bar" id="storiesBarContainer"></div>
             <div id="timelineContainer"></div>
@@ -866,7 +862,6 @@
             </button>
         </div>
 
-        <!-- 2. الاستكشاف والبحث -->
         <div id="searchPane" class="pane">
             <div class="instagram-search-header">
                 <div class="instagram-search-input-wrapper">
@@ -880,13 +875,11 @@
             <div id="searchResultsContainer"></div>
         </div>
 
-        <!-- 3. التنبيهات -->
         <div id="notificationsPane" class="pane">
             <div style="padding: 16px; font-weight: 700; font-size: 18px; border-bottom: 1px solid var(--border-color);">التنبيهات</div>
             <div id="notificationsContainer"></div>
         </div>
 
-        <!-- 4. الخاص (الرسائل الشخصية الحقيقية) -->
         <div id="chatPane" class="pane">
             <div class="dm-container">
                 <div class="dm-layout">
@@ -907,7 +900,6 @@
             </div>
         </div>
 
-        <!-- 5. الملف الشخصي -->
         <div id="profilePane" class="pane">
             <div class="profile-header-banner" id="profilePageHeaderBanner"></div>
             <div class="profile-info-section">
@@ -953,7 +945,6 @@
         </div>
     </div>
 
-    <!-- نافذة تعديل الملف الشخصي -->
     <div class="edit-profile-modal" id="editProfileModal">
         <div class="edit-profile-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -980,7 +971,6 @@
         </div>
     </div>
 
-    <!-- نافذة كتابة التغريدة -->
     <div class="modal-overlay" id="tweetModalOverlay">
         <div class="modal-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -1010,7 +1000,7 @@
         
         let currentHandle = localStorage.getItem('r_current_handle_global') || null;
         let viewingProfileHandle = null;
-        let activeChatHandle = null; // المحادثة الخاصة النشطة حالياً
+        let activeChatHandle = null;
 
         let tweetsData = JSON.parse(localStorage.getItem('r_tweets_global')) || [
             { id: 1, name: 'R', handle: '@R', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=300&auto=format&fit=crop', text: 'أهلاً بكم في منصة R المتزامنة للجميع.', time: 'الان', likes: '1', retweets: '0', liked: false, retweeted: false }
@@ -1572,9 +1562,6 @@
             }
         }
 
-        // ========================================== //
-        // نظام الرسائل الخاصة (DM) الحقيقي المحدث     //
-        // ========================================== //
         function renderDmContacts() {
             const container = document.getElementById('dmContactsList');
             if(!container) return;
@@ -1647,7 +1634,6 @@
             if(!container) return;
             container.innerHTML = '';
 
-            // تصفية الرسائل بين المستخدم الحالي والصديق المحدد فقط
             const filteredMsgs = dmMessages.filter(m => 
                 (m.sender === currentHandle && m.receiver === chatHandle) ||
                 (m.sender === chatHandle && m.receiver === currentHandle)
