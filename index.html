@@ -267,7 +267,7 @@
         .featured-quote-text { font-size: 22px; line-height: 2; color: #ffffff; font-weight: bold; margin: 10px 0; font-family: 'Amiri', serif; }
         .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
 
-        /* مشغل الصوت المحسّن */
+        /* مشغل الصوت والصورة المحدث */
         .audio-player-wrapper {
             background: linear-gradient(145deg, #140f0c, #0a0806);
             border: 1px solid var(--border-gold);
@@ -413,18 +413,17 @@
                 <span class="click-hint">📖 اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
             </div>
 
-            <!-- مشغل الصوت المباشر -->
+            <!-- مشغل الميديا المحدث بالاسم الجديد DLVideo.mp4 -->
             <div class="audio-player-wrapper">
                 <div class="audio-player-header">
                     <div class="audio-player-title">🎵 المشغل الصوتي الأصيل</div>
-                    <span style="font-size: 12px; color: var(--sand-text);">المقطع الصوتي المرفق</span>
+                    <span style="font-size: 12px; color: var(--sand-text);">المقطع المرفق (DLVideo.mp4)</span>
                 </div>
                 
-                <!-- تم ضبط المسار ليدعم الملف المرفوع تلقائياً -->
                 <audio id="mainAudioPlayer" preload="metadata">
-                    <source src="./83E1307A-3918-406B-928A-DAAD779FEB15.MP3" type="audio/mpeg">
-                    <source src="./83E1307A-3918-406B-928A-DAAD779FEB15.mp3" type="audio/mpeg">
-                    متصفحك لا يدعم تشغيل الصوت.
+                    <source src="./DLVideo.mp4" type="video/mp4">
+                    <source src="DLVideo.mp4" type="video/mp4">
+                    متصفحك لا يدعم تشغيل هذا المقطع.
                 </audio>
 
                 <div class="audio-controls">
@@ -626,7 +625,7 @@
             renderPoemsGrid(filtered);
         }
 
-        // تحسين تشغيل الصوت وتفادي الأخطاء
+        // تشغيل ميديا الفيديو الصوتي المحدث
         document.addEventListener("DOMContentLoaded", function () {
             const audio = document.getElementById("mainAudioPlayer");
             const playBtn = document.getElementById("audioPlayBtn");
@@ -654,7 +653,7 @@
                             playIcon.textContent = "❚❚";
                         }).catch(e => {
                             console.log("تعذر التشغيل المباشر:", e);
-                            alert("تعذر تشغيل الملف الصوتي. تأكد من رفع الملف في المجلد الرئيسي بشكل صحيح.");
+                            alert("تعذر تشغيل المقطع. تأكد من صحة اسم الملف المرفوع.");
                         });
                     } else {
                         audio.pause();
