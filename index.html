@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ديوان أبو رماح وليان - المخطوطة الشعرية</title>
+    <!-- خطوط عربية أصيلة وتاريخية من Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-sand: #120e0b;
+            --papyrus-bg: #1e1711;
+            --papyrus-card: #281f17;
+            --border-gold: #c5a059;
+            --gold-bright: #e6c687;
+            --ink-black: #f0e6d2;
+            --text-muted: #a6937c;
+            --crimson: #8b2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-sand);
+            background-image: radial-gradient(#2a1f16 1px, transparent 0);
+            background-size: 24px 24px;
+            color: var(--ink-black);
+            font-family: 'Amiri', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .diwan-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--papyrus-bg);
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.9), inset 0 0 15px rgba(197, 160, 89, 0.15);
+            padding: 20px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        /* الإطار الزخرفي الأثري */
+        .diwan-container::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1px dashed rgba(197, 160, 89, 0.4);
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        /* Header / العنوان الرئيسي */
+        header {
+            text-align: center;
+            padding: 20px 0 15px 0;
+            border-bottom: 2px double var(--border-gold);
+            margin-bottom: 20px;
+        }
+
+        .ancient-symbol {
+            font-size: 24px;
+            color: var(--border-gold);
+            margin-bottom: 4px;
+        }
+
+        h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 32px;
+            color: var(--gold-bright);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Editor Section / محرر الملاحظات والقصائد */
+        .editor-card {
+            background: var(--papyrus-card);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .editor-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            color: var(--gold-bright);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background: #140f0b;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 6px;
+            color: var(--ink-black);
+            padding: 10px 12px;
+            font-family: 'Amiri', serif;
+            font-size: 15px;
+            margin-bottom: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--border-gold);
+            box-shadow: 0 0 8px rgba(197, 160, 89, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.8;
+            font-size: 17px;
+        }
+
+        .btn-feather {
+            width: 100%;
+            background: linear-gradient(135deg, #c5a059 0%, #8c6a2d 100%);
+            color: #120e0b;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-feather:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        /* Filter Tabs */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .filter-chip {
+            background: #140f0b;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            color: var(--text-muted);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .filter-chip.active {
+            background: var(--border-gold);
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Poem List / عرض الأبيات والقصائد */
+        .poem-card {
+            background: var(--papyrus-card);
+            border: 1px solid var(--border-gold);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 16px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .poem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .poem-title {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 20px;
+            color: var(--gold-bright);
+        }
+
+        .poem-category {
+            font-size: 11px;
+            color: #000;
+            background: var(--border-gold);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .poem-content {
+            font-size: 19px;
+            line-height: 2.2;
+            text-align: center;
+            color: #fcefdc;
+            white-space: pre-line;
+            margin: 12px 0;
+            font-weight: 500;
+        }
+
+        .poem-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px dashed rgba(197, 160, 89, 0.2);
+            padding-top: 8px;
+            margin-top: 12px;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-icon {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .action-icon:hover {
+            color: var(--gold-bright);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 10px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="diwan-container">
+
+        <!-- Header -->
+        <header>
+            <div class="ancient-symbol">꧁ 📜 ꧂</div>
+            <h1>ديوان أبو رماح وليان</h1>
+            <div class="subtitle">سجل المخطوطات والقصائد الجاهلية والخاصة</div>
+        </header>
+
+        <!-- Editor Section -->
+        <div class="editor-card">
+            <div class="editor-title">✒️ تدوين قصيدة أو ملاحظة شعرية</div>
+            <input type="text" id="poemTitle" placeholder="عنوان القصيدة (مثال: معلقة الشوق)">
+            
+            <div style="display: flex; gap: 8px;">
+                <select id="poemCategory">
+                    <option value="غزل">غزل</option>
+                    <option value="فخر">فخر وحماسة</option>
+                    <option value="حكمة">حكمة وموعظة</option>
+                    <option value="شوق">شوق وعتاب</option>
+                    <option value="عام">ملاحظة عامة</option>
+                </select>
+                <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
+            </div>
+
+            <textarea id="poemText" placeholder="اكتب أبياتك هنا...&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
+            
+            <button class="btn-feather" onclick="savePoem()">🪶 نقش القصيدة في الديوان</button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-chip active" onclick="filterPoems('الكل', this)">🏛️ الكل</div>
+            <div class="filter-chip" onclick="filterPoems('غزل', this)">❤️ غزل</div>
+            <div class="filter-chip" onclick="filterPoems('فخر', this)">⚔️ فخر</div>
+            <div class="filter-chip" onclick="filterPoems('حكمة', this)">📜 حكمة</div>
+            <div class="filter-chip" onclick="filterPoems('شوق', this)">🌙 شوق</div>
+            <div class="filter-chip" onclick="filterPoems('عام', this)">📝 ملاحظات</div>
+        </div>
+
+        <!-- Poems Display List -->
+        <div id="poemsList">
+            <!-- ستظهر القصائد المكتوبة هنا تلقائياً -->
+        </div>
+
+    </div>
+
+    <script>
+        let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
+            {
+                id: 1,
+                title: "معلقة الفخر",
+                category: "فخر",
+                meter: "البحر الطويل",
+                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
+                date: "العصر الجاهلي"
+            }
+        ];
+
+        let currentFilter = 'الكل';
+
+        function renderPoems() {
+            const listContainer = document.getElementById('poemsList');
+            listContainer.innerHTML = '';
+
+            const filtered = currentFilter === 'الكل' 
+                ? poems 
+                : poems.filter(p => p.category === currentFilter);
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        لا توجد قصائد محفوظة في هذا القسم حتى الآن...<br>ابدأ بنقش أبياتك الأولى!
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(poem => {
+                const card = document.createElement('div');
+                card.className = 'poem-card';
+                card.innerHTML = `
+                    <div class="poem-header">
+                        <div class="poem-title">${poem.title}</div>
+                        <span class="poem-category">${poem.category}</span>
+                    </div>
+                    <div class="poem-content">${poem.text}</div>
+                    <div class="poem-footer">
+                        <span>${poem.meter ? '🏷️ ' + poem.meter : ''} | 🗓️ ${poem.date}</span>
+                        <div class="action-btns">
+                            <button class="action-icon" onclick="copyPoem(\`${poem.text}\`)">📋 نسخ</button>
+                            <button class="action-icon" onclick="deletePoem(${poem.id})" style="color: #c94c4c;">🗑️ حذف</button>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        function savePoem() {
+            const title = document.getElementById('poemTitle').value.trim();
+            const category = document.getElementById('poemCategory').value;
+            const meter = document.getElementById('poemMeter').value.trim();
+            const text = document.getElementById('poemText').value.trim();
+
+            if (!text) {
+                alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً!');
+                return;
+            }
+
+            const newPoem = {
+                id: Date.now(),
+                title: title || 'قصيدة بدون عنوان',
+                category: category,
+                meter: meter,
+                text: text,
+                date: new Date().toLocaleDateString('ar-SA')
+            };
+
+            poems.unshift(newPoem);
+            localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+
+            // Reset Input
+            document.getElementById('poemTitle').value = '';
+            document.getElementById('poemMeter').value = '';
+            document.getElementById('poemText').value = '';
+
+            renderPoems();
+        }
+
+        function deletePoem(id) {
+            if (confirm('هل أنت تأكد من رغبتك في مسح هذه القصيدة من الديوان؟')) {
+                poems = poems.filter(p => p.id !== id);
+                localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+                renderPoems();
+            }
+        }
+
+        function copyPoem(text) {
+            navigator.clipboard.writeText(text);
+            alert('تم نسخ الأبيات بنجاح إلى الحافظة!');
+        }
+
+        function filterPoems(cat, element) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            renderPoems();
+        }
+
+        // Initialize display on load
+        renderPoems();
+    </script>
+</body>
+</html>
