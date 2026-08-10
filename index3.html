@@ -774,14 +774,15 @@
             </button>
         </div>
 
-        <!-- 2. الاستكشاف -->
+        <!-- 2. الاستكشاف والبحث -->
         <div id="searchPane" class="pane">
             <div class="instagram-search-header">
                 <div class="instagram-search-input-wrapper">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--text-secondary)"><path d="M10.25 3.75c-3.59 0-6.5 2.91-6.5 6.5s2.91 6.5 6.5 6.5c1.79 0 3.41-.72 4.6-1.88l5.05 5.05 1.06-1.06-5.05-5.05c1.16-1.19 1.88-2.81 1.88-4.6 0-3.59-2.91-6.5-6.5-6.5zm0 1.5c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z"></path></svg>
-                    <input type="text" id="igSearchInput" onkeyup="performSearch()" placeholder="بحث في R...">
+                    <input type="text" id="igSearchInput" onkeyup="performSearch()" placeholder="ابحث عن يوزر أو تغريدة...">
                 </div>
             </div>
+            <div id="searchMatchAccountsContainer"></div>
             <div class="trends-section-title">الترندات الرائجة عالمياً ومحلياً</div>
             <div id="requiredTrendsContainer"></div>
             <div id="searchResultsContainer"></div>
@@ -1096,18 +1097,20 @@
             if (!text) return;
             const user = getCurrentUser();
             
-            tweetsData.unshift({
+            const newTweet = {
                 id: Date.now(),
                 name: user.name,
                 handle: user.handle,
                 avatar: user.avatar,
                 text: text,
                 time: 'الآن',
-                likes: '1M',
-                retweets: '500K',
+                likes: '0',
+                retweets: '0',
                 liked: false,
                 retweeted: false
-            });
+            };
+
+            tweetsData.unshift(newTweet);
             localStorage.setItem('r_tweets_global', JSON.stringify(tweetsData));
             document.getElementById('modalTweetText').value = '';
             closeTweetModal();
@@ -1145,8 +1148,43 @@
         }
 
         function performSearch() {
-            const query = document.getElementById('igSearchInput').value.toLowerCase();
-            const results = tweetsData.filter(t => t.text.toLowerCase().includes(query));
+            const query = document.getElementById('igSearchInput').value.trim().toLowerCase();
+            const matchAccountsContainer = document.getElementById('searchMatchAccountsContainer');
+            matchAccountsContainer.innerHTML = '';
+
+            if (!query) {
+                document.getElementById('requiredTrendsContainer').style.display = 'block';
+                document.getElementById('searchResultsContainer').innerHTML = '';
+                return;
+            }
+
+            document.getElementById('requiredTrendsContainer').style.display = 'none';
+
+            // البحث عن اليوزرات أو الحسابات المطابقة
+            const matchingHandles = Object.values(allAccounts).filter(acc => 
+                acc.handle.toLowerCase().includes(query) || acc.name.toLowerCase().includes(query)
+            );
+
+            if (matchingHandles.length > 0) {
+                let accHtml = '<div style="padding: 10px 16px; font-weight: 700; font-size: 14px; color: var(--text-secondary);">الحسابات المطابقة:</div>';
+                matchingHandles.forEach(acc => {
+                    accHtml += `
+                        <div class="account-item-select" style="margin: 0 16px 8px 16px;">
+                            <div class="account-item-left">
+                                <img src="${acc.avatar}" alt="avatar">
+                                <div>
+                                    <div style="font-weight: 700; font-size: 14px;">${acc.name}</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">${acc.handle}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                matchAccountsContainer.innerHTML = accHtml;
+            }
+
+            // البحث في التغريدات
+            const results = tweetsData.filter(t => t.text.toLowerCase().includes(query) || t.handle.toLowerCase().includes(query) || t.name.toLowerCase().includes(query));
             renderTimeline(results, 'searchResultsContainer');
         }
 
@@ -1211,7 +1249,7 @@
                 <div style="display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--border-color);">
                     <div style="font-weight: 700; color: var(--accent-color);">R</div>
                     <div>
-                        <div style="font-weight: 700; font-size: 15px;">وصلت تغريدتك إلى مليون إعجاب عالمياً!</div>
+                        <div style="font-weight: 700; font-size: 15px;">تم تفعيل حفظ التغريدات والحسابات بنجاح!</div>
                         <div style="font-size: 13px; color: var(--text-secondary);">منذ لحظات</div>
                     </div>
                 </div>
