@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحامية ليان العنزي | صرح العدالة والهيبة Legal Practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;600;800&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dark: #AA7C11;
+            --bg-deep-black: #08080A;
+            --bg-card: #121318;
+            --text-light: #E0E6ED;
+            --text-muted: #8A94A6;
+            --border-gold: rgba(212, 175, 55, 0.25);
+            --font-title: 'Amiri', serif;
+            --font-body: 'Tajawal', sans-serif;
+            --font-accent: 'Cinzel', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep-black);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Ambient Cinematic Background Glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-gold);
+            z-index: 1000;
+            padding: 1.2rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: var(--font-title);
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo span {
+            font-family: var(--font-accent);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: -5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--gold-primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--gold-primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section (Cinematic Entrance) */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(18, 19, 24, 0.6) 0%, rgba(8, 8, 10, 1) 100%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeIn 1.8s ease-in-out;
+        }
+
+        .hero-title-sub {
+            font-family: var(--font-accent);
+            letter-spacing: 4px;
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .btn-gold {
+            display: inline-block;
+            padding: 0.9rem 2.8rem;
+            background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+            color: #000;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 2px;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            border: 1px solid var(--gold-primary);
+        }
+
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--gold-primary);
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Section Commons */
+        section {
+            padding: 7rem 10%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header div {
+            width: 60px;
+            height: 2px;
+            background: var(--gold-primary);
+            margin: 0 auto;
+        }
+
+        /* Practice Areas */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border: 1px solid var(--border-gold);
+            border-radius: 4px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--gold-primary);
+            transition: width 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .service-card:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-title);
+            font-size: 1.5rem;
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Quotes Section (Cinematic Focus) */
+        .quotes-section {
+            background: linear-gradient(180deg, var(--bg-deep-black) 0%, rgba(18, 19, 24, 0.9) 50%, var(--bg-deep-black) 100%);
+            text-align: center;
+        }
+
+        .quote-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 200px;
+        }
+
+        .quote-item {
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .quote-item.active {
+            display: block;
+        }
+
+        blockquote {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        blockquote::before, blockquote::after {
+            content: '"';
+            color: var(--gold-primary);
+            font-size: 2.5rem;
+            vertical-align: middle;
+            margin: 0 0.5rem;
+        }
+
+        .quote-author {
+            font-family: var(--font-accent);
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .quote-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--gold-primary);
+        }
+
+        /* About Section */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-family: var(--font-title);
+            font-size: 2rem;
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-box {
+            border-right: 2px solid var(--gold-primary);
+            padding-right: 1.5rem;
+        }
+
+        .stat-number {
+            font-family: var(--font-accent);
+            font-size: 2.2rem;
+            color: var(--gold-primary);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            color: var(--gold-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        input, textarea {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            padding: 1rem;
+            color: var(--text-light);
+            font-family: var(--font-body);
+            border-radius: 2px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--gold-primary);
+        }
+
+        textarea {
+            resize: vertical;
+            height: 140px;
+        }
+
+        /* Footer */
+        footer {
+            background: #040405;
+            padding: 3rem 10% 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-gold);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            header { padding: 1rem 5%; }
+            nav ul { display: none; } /* Expanded in production via JS */
+            .hero h1 { font-size: 2.5rem; }
+            .about-container, .contact-container { grid-template-columns: 1fr; gap: 2rem; }
+            section { padding: 4rem 6%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header>
+        <a href="#" class="brand-logo">
+            ليان العنزي
+            <span>LAYAN AL-ENEZI</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#about">عن المحامية</a></li>
+                <li><a href="#services">مجالات الاختصاص</a></li>
+                <li><a href="#quotes">فلسفة العدالة</a></li>
+                <li><a href="#contact">استشارة قانونية</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-title-sub">ATTORNEY & LEGAL COUNSELOR</div>
+            <h1>المحامية ليان العنزي</h1>
+            <p>نصون الحقوق برؤية صلبة، ونخوض معارك القانون بهيبة واستراتيجية نافذة. حيث تتجسد العدالة في أرقى صورها.</p>
+            <a href="#contact" class="btn-gold">حجز جلسة استشارية</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h3>سيادة القانون.. دفاعٌ يتجاوز المألوف</h3>
+                <p>تتمتع المحامية ليان العنزي بخبرة راسخة في تقديم الاستشارات القانونية والترافع أمام مختلف المحاكم، مع التركيز على الاستراتيجيات الحازمة والدقيقة لحماية مصالح العملاء.</p>
+                <p>إن القانون ليس مجرد نصوص جامدة، بل هو درع حماية وسلاح استراتيجي يتطلب فكراً عميقاً وقدرة على إدارة أعقد القضايا بثبات واقتدار.</p>
+                <div class="about-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">التزام بالسرية والمهنية</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">PRO</div>
+                        <div class="stat-label">تمثيل قضائي رفيع المستوى</div>
+                    </div>
+                </div>
+            </div>
+            <div style="border: 1px solid var(--border-gold); padding: 2rem; background: var(--bg-card); text-align: center;">
+                <h4 style="font-family: var(--font-title); color: var(--gold-primary); font-size: 1.5rem; margin-bottom: 1rem;">القيم الجوهرية</h4>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">الحزم • الدقة • النزاهة المطلقة • الشغف بالعدالة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (كل ما يخص المحاماة) -->
+    <section id="services">
+        <div class="section-header">
+            <h2>مجالات الممارسة والتخصص</h2>
+            <div></div>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>القضايا التجارية والشركات</h3>
+                <p>صياغة العقود المعقدة، حل النزاعات التجارية، وتمثيل الشركات في صفقاتها واستراتيجياتها الوقائية.</p>
+            </div>
+            <div class="service-card">
+                <h3>الترافع والتقاضي</h3>
+                <p>دفاع صلب أمام المحاكم العامة، التجارية، والإدارية بإعداد لوائح اعتراضية وترافع شفوي محكم.</p>
+            </div>
+            <div class="service-card">
+                <h3>الاستشارات الاستراتيجية</h3>
+                <p>تقديم تحليلات قانونية عميقة لتفادي المخاطر المستقبلية وضمان الامتثال التام للأنظمة واللوائح.</p>
+            </div>
+            <div class="service-card">
+                <h3>التحكيم وتسوية النزاعات</h3>
+                <p>إدارة جلسات التحكيم والوساطة للوصول إلى حلول حاسمة تحفظ الحقوق دون استنزاف الوقت.</p>
+            </div>
+            <div class="service-card">
+                <h3>الملكية الفكرية</h3>
+                <p>حماية العلامات التجارية، براءات الاختراع، والابتكارات ضد أي تعديات أو انتهاكات قانونية.</p>
+            </div>
+            <div class="service-card">
+                <h3>قضايا التركات والعقارات</h3>
+                <p>قسمة التركات المعقدة، وتصفية الأصول، وحماية الحقوق العقارية وفق أطر شرعية ونظامية دقيقة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinematic Quotes Section -->
+    <section id="quotes" class="quotes-section">
+        <div class="section-header">
+            <h2>فلسفة العدالة</h2>
+            <div></div>
+        </div>
+        <div class="quote-slider">
+            <div class="quote-item active">
+                <blockquote>"القانون هو الخيط الباريك الذي يفصل بين النظام والفوضى، ووظيفتنا هي منع ذلك الخيط من الانقطاع."</blockquote>
+                <div class="quote-author">— المحامية ليان العنزي</div>
+            </div>
+            <div class="quote-item">
+                <blockquote>"العدالة ليست حظاً يُمنح، بل حقٌ يُنتزع بقوة الحجة وصرامة الدليل."</blockquote>
+                <div class="quote-author">— حكم قانونية</div>
+            </div>
+            <div class="quote-item">
+                <blockquote>"المحامي الناجح لا يدرس النص فقط، بل يدرس الفكر الذي يقف خلف النص."</blockquote>
+                <div class="quote-author">— ليان العنزي</div>
+            </div>
+        </div>
+        <div class="quote-dots">
+            <span class="dot active" onclick="setQuote(0)"></span>
+            <span class="dot" onclick="setQuote(1)"></span>
+            <span class="dot" onclick="setQuote(2)"></span>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-header">
+            <h2>حجز جلسة عمل</h2>
+            <div></div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>تواصل مع مكتب المحامية</h3>
+                <p>لطلب الاستشارات القانونية التخصصية أو جدول جلسة ترافع، يمكنكم تعبئة النموذج أو التواصل عبر القنوات الرسمية.</p>
+                <p style="margin-top: 2rem;"><strong>الموقع:</strong> الرياض / جدة — المملكة العربية السعودية</p>
+                <p><strong>البريد الإلكتروني:</strong> contact@layan-law.com</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('تم إرسال طلبكم بنجاح. سيتم التواصل معكم قريباً.');">
+                <input type="text" placeholder="الاسم الكامل" required>
+                <input type="email" placeholder="البريد الإلكتروني" required>
+                <input type="tel" placeholder="رقم الهاتف">
+                <textarea placeholder="تفاصيل الاستشارة أو القضية..." required></textarea>
+                <button type="submit" class="btn-gold">إرسال الطلب</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 مكتب المحامية ليان العنزي للمحاماة والاستشارات القانونية. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- Interactive Quotes Script -->
+    <script>
+        let currentQuote = 0;
+        const quotes = document.querySelectorAll('.quote-item');
+        const dots = document.querySelectorAll('.dot');
+
+        function setQuote(index) {
+            quotes[currentQuote].classList.remove('active');
+            dots[currentQuote].classList.remove('active');
+            currentQuote = index;
+            quotes[currentQuote].classList.add('active');
+            dots[currentQuote].classList.add('active');
+        }
+
+        // Auto rotate quotes every 6 seconds
+        setInterval(() => {
+            let next = (currentQuote + 1) % quotes.length;
+            setQuote(next);
+        }, 6000);
+    </script>
+</body>
+</html>
