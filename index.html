@@ -369,9 +369,11 @@
         </div>
     </div>
 
-    <script>const supabaseUrl = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
-const supabaseKey = 'sb_publishable_0WnFJ-I6_Dj--j6BS6ICXg_W1-_F-o_';
-const clientSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+    <script>
+        const supabaseUrl = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
+        const supabaseKey = 'sb_publishable_0WnFJ-I6_Dj--j6BS6ICXg_W1-_F-o_';
+        const clientSupabase = supabase.createClient(supabaseUrl, supabaseKey);
+
         const correctUser = "ابو رماح";
         const correctPass = "Rr987321";
         const editorSpecialPass = "S123123";
@@ -580,16 +582,18 @@ const clientSupabase = supabase.createClient(supabaseUrl, supabaseKey);
             const text = document.getElementById('poemText').value.trim();
             const explanation = document.getElementById('poemExplanationInput').value.trim();
 
-            if (!text) { alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً'); return; }
+            if (!text) { 
+                alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً'); 
+                return; 
+            }
 
             const newPoem = {
-                const newPoem = {
-    title: title || 'قصيدة بدون عنوان',
-    category: category,
-    meter: meter,
-    text: text,
-    explanation: explanation
-};
+                title: title || 'قصيدة بدون عنوان',
+                category: category,
+                meter: meter,
+                text: text,
+                explanation: explanation
+            };
 
             try {
                 const { data, error } = await clientSupabase
