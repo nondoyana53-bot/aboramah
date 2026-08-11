@@ -182,10 +182,6 @@
             font-size: 0.9rem;
             cursor: pointer;
         }
-        .compose-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
 
         .post-card {
             padding: 12px 16px;
@@ -348,11 +344,11 @@
     <div id="loginBox" class="x-auth-box">
         <div class="logo">R</div>
         <h1>تسجيل الدخول إلى R</h1>
-        <input type="text" id="loginUser" class="x-input" placeholder="اسم المستخدم" autocomplete="username">
-        <input type="password" id="loginPass" class="x-input" placeholder="كلمة المرور" autocomplete="current-password">
-        <button class="x-main-btn" onclick="loginUser()">تسجيل الدخول</button>
+        <input type="text" id="loginUser" class="x-input" placeholder="اسم المستخدم">
+        <input type="password" id="loginPass" class="x-input" placeholder="كلمة المرور">
+        <button class="x-main-btn" id="loginBtn">تسجيل الدخول</button>
         <div id="loginError" class="error-msg"></div>
-        <span class="x-switch-link" onclick="toggleAuthMode('register')">ليس لديك حساب؟ إنشاء حساب</span>
+        <span class="x-switch-link" id="goRegister">ليس لديك حساب؟ إنشاء حساب</span>
     </div>
 
     <div id="registerBox" class="x-auth-box" style="display:none;">
@@ -360,9 +356,10 @@
         <h1>انضم إلى R</h1>
         <input type="text" id="regUser" class="x-input" placeholder="اسم المستخدم (فريد)">
         <input type="text" id="regName" class="x-input" placeholder="الاسم الظاهر">
-        <input type="password" id="regPass" class="x-input" placeholder="كلمة المرور"><button class="x-main-btn" id="regBtn">إنشاء الحساب</button>
+        <input type="password" id="regPass" class="x-input" placeholder="كلمة المرور">
+        <button class="x-main-btn" id="regBtn">إنشاء الحساب</button>
         <div id="regError" class="error-msg"></div>
-        <span class="x-switch-link" onclick="toggleAuthMode('login')">لديك حساب؟ تسجيل الدخول</span>
+        <span class="x-switch-link" id="goLogin">لديك حساب؟ تسجيل الدخول</span>
     </div>
 </div>
 
@@ -385,9 +382,9 @@
                     </div>
                     <div class="compose-footer">
                         <div style="display:flex; gap:18px; color:var(--accent);">
-                            <i class="fa-regular fa-image" style="cursor:pointer; font-size:1.15rem;" onclick="toggleMedia()"></i>
+                            <i class="fa-regular fa-image" style="cursor:pointer; font-size:1.15rem;" id="mediaIcon"></i>
                         </div>
-                        <button class="compose-btn" id="postBtn" onclick="createPost()">نشر</button>
+                        <button class="compose-btn" id="postBtn">نشر</button>
                     </div>
                 </div>
             </div>
@@ -420,16 +417,15 @@
 
             <div class="chat-room" id="chatRoom">
                 <div style="padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:12px;">
-                    <i class="fa-solid fa-arrow-right" onclick="closeChat()" style="cursor:pointer; font-size:1.1rem;"></i>
+                    <i class="fa-solid fa-arrow-right" id="closeChatBtn" style="cursor:pointer; font-size:1.1rem;"></i>
                     <img id="chatAvatar" src="" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
                     <span id="chatName" style="font-weight:700;"></span>
                 </div>
                 <div class="chat-messages" id="chatBox"></div>
                 <div style="padding:10px 14px; border-top:1px solid var(--border-color); display:flex; gap:10px;">
                     <input type="text" id="chatInput" placeholder="رسالة..." 
-                           style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:11px 16px; border-radius:999px; color:white; outline:none;"
-                           onkeypress="if(event.key==='Enter') sendMsg()">
-                    <button onclick="sendMsg()" style="background:var(--accent); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer;">
+                           style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:11px 16px; border-radius:999px; color:white; outline:none;">
+                    <button id="sendMsgBtn" style="background:var(--accent); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer;">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
@@ -439,7 +435,7 @@
         <div id="page-profile" class="page-view">
             <header class="top-header">
                 <span id="profileHeader" style="font-weight:700;">الملف الشخصي</span>
-                <button onclick="logout()" style="background:none; border:1px solid var(--border-color); color:var(--text-muted); padding:5px 12px; border-radius:999px; font-size:0.8rem; cursor:pointer;">
+                <button id="logoutBtn" style="background:none; border:1px solid var(--border-color); color:var(--text-muted); padding:5px 12px; border-radius:999px; font-size:0.8rem; cursor:pointer;">
                     خروج
                 </button>
             </header>
@@ -450,7 +446,7 @@
                     <img id="profileAvatar" src="" style="width:80px; height:80px; border-radius:50%; border:4px solid #000; object-fit:cover; background:#222;">
                     <label style="background:var(--text-main); color:#000; padding:7px 16px; border-radius:999px; font-weight:700; font-size:0.85rem; cursor:pointer;">
                         تغيير الصورة
-                        <input type="file" accept="image/*" style="display:none;" onchange="changeAvatar(event)">
+                        <input type="file" accept="image/*" style="display:none;" id="avatarInput">
                     </label>
                 </div>
 
@@ -465,15 +461,14 @@
     </main>
 
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i></button>
-        <button class="nav-item" onclick="switchTab('explore', this)"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <button class="nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i></button>
-        <button class="nav-item" onclick="switchTab('profile', this)"><i class="fa-solid fa-user"></i></button>
+        <button class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i></button>
+        <button class="nav-item" data-tab="explore"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="nav-item" data-tab="messages"><i class="fa-solid fa-envelope"></i></button>
+        <button class="nav-item" data-tab="profile"><i class="fa-solid fa-user"></i></button>
     </nav>
 </div>
 
 <script>
-    // ===================== بيانات مشروعك مربوطة =====================
     const SUPABASE_URL = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdwYm54Y3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzExMjMsImV4cCI6MjEwMjAwNzEyM30.JGbLkdWbC0KNEs0zipfRjusG2Tkjh8pEzip5ID7vWqY';
 
@@ -482,12 +477,29 @@
     let currentUser = JSON.parse(localStorage.getItem('r_current')) || null;
     let postsCache = [];
     let myLikes = new Set();
-
     let dms = [
         { id: 1, name: "سارة", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
           messages: [{ sender: "incoming", text: "أهلاً، كيفك؟" }] }
     ];
     let activeDm = null;
+
+    // ========== ربط الأزرار ==========
+    document.getElementById('loginBtn').addEventListener('click', loginUser);
+    document.getElementById('regBtn').addEventListener('click', registerUser);
+    document.getElementById('goRegister').addEventListener('click', () => toggleAuthMode('register'));
+    document.getElementById('goLogin').addEventListener('click', () => toggleAuthMode('login'));
+    document.getElementById('postBtn').addEventListener('click', createPost);
+    document.getElementById('mediaIcon').addEventListener('click', toggleMedia);
+    document.getElementById('logoutBtn').addEventListener('click', logout);
+    document.getElementById('avatarInput').addEventListener('change', changeAvatar);
+    document.getElementById('closeChatBtn').addEventListener('click', closeChat);
+    document.getElementById('sendMsgBtn').addEventListener('click', sendMsg);
+
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+            switchTab(this.dataset.tab, this);
+        });
+    });
 
     if (currentUser) {
         startApp();
@@ -515,39 +527,47 @@
             return;
         }
 
-        const { data: exists } = await supabase
-            .from('r_profiles')
-            .select('id')
-            .eq('username', username)
-            .maybeSingle();
+        err.innerText = 'جاري إنشاء الحساب...';
 
-        if (exists) {
-            err.innerText = 'اسم المستخدم مستخدم مسبقاً';
-            return;
+        try {
+            const { data: exists } = await supabase
+                .from('r_profiles')
+                .select('id')
+                .eq('username', username)
+                .maybeSingle();
+
+            if (exists) {
+                err.innerText = 'اسم المستخدم مستخدم مسبقاً';
+                return;
+            }
+
+            const isVerified = (username === 'r');
+
+            const { data, error } = await supabase
+                .from('r_profiles')
+                .insert({
+                    username,
+                    password,
+                    full_name: fullName,
+                    verified: isVerified
+                })
+                .select()
+                .single();
+
+            if (error) {
+                err.innerText = 'حدث خطأ: ' + error.message;
+                console.error(error);
+                return;
+            }
+
+            err.innerText = '';
+            alert('تم إنشاء الحساب بنجاح');
+            toggleAuthMode('login');
+            document.getElementById('loginUser').value = username;
+        } catch (e) {
+            err.innerText = 'خطأ في الاتصال';
+            console.error(e);
         }
-
-        const isVerified = (username === 'r');
-
-        const { data, error } = await supabase
-            .from('r_profiles')
-            .insert({
-                username,
-                password,
-                full_name: fullName,
-                verified: isVerified
-            })
-            .select()
-            .single();
-
-        if (error) {
-            err.innerText = 'حدث خطأ، حاول مرة أخرى';
-            console.error(error);
-            return;
-        }
-
-        alert('تم إنشاء الحساب بنجاح');
-        toggleAuthMode('login');
-        document.getElementById('loginUser').value = username;
     }
 
     async function loginUser() {
@@ -560,27 +580,33 @@
             return;
         }
 
-        const { data, error } = await supabase
-            .from('r_profiles')
-            .select('*')
-            .eq('username', username)
-            .eq('password', password)
-            .maybeSingle();
+        err.innerText = 'جاري تسجيل الدخول...';
 
-        if (error || !data) {
-            err.innerText = 'اسم المستخدم أو كلمة المرور غير صحيحة';
-            return;
+        try {
+            const { data, error } = await supabase
+                .from('r_profiles')
+                .select('*')
+                .eq('username', username)
+                .eq('password', password)
+                .maybeSingle();
+
+            if (error || !data) {
+                err.innerText = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+                return;
+            }
+
+            currentUser = data;
+            localStorage.setItem('r_current', JSON.stringify(currentUser));
+            startApp();
+        } catch (e) {
+            err.innerText = 'خطأ في الاتصال';
+            console.error(e);
         }
-
-        currentUser = data;
-        localStorage.setItem('r_current', JSON.stringify(currentUser));
-        startApp();
     }
 
     async function startApp() {
         document.getElementById('authScreen').style.display = 'none';
         document.getElementById('mainApp').classList.add('active');
-
         updateUI();
         await loadMyLikes();
         await loadPosts();
@@ -602,7 +628,6 @@
             .from('r_likes')
             .select('post_id')
             .eq('user_id', currentUser.id);
-
         myLikes = new Set((data || []).map(l => l.post_id));
     }
 
@@ -613,18 +638,8 @@
         const { data, error } = await supabase
             .from('r_posts')
             .select(`
-                id,
-                content,
-                media_url,
-                likes_count,
-                created_at,
-                r_profiles (
-                    id,
-                    username,
-                    full_name,
-                    avatar_url,
-                    verified
-                )
+                id, content, media_url, likes_count, created_at,
+                r_profiles (id, username, full_name, avatar_url, verified)
             `)
             .order('created_at', { ascending: false })
             .limit(50);
@@ -641,7 +656,6 @@
 
     function renderPosts() {
         const feed = document.getElementById('feed');
-
         if (!postsCache.length) {
             feed.innerHTML = '<div class="empty-state">لا توجد منشورات بعد<br>كن أول من ينشر</div>';
             return;
@@ -667,7 +681,7 @@
                         <div class="post-actions">
                             <button class="post-action-btn"><i class="fa-regular fa-comment"></i></button>
                             <button class="post-action-btn"><i class="fa-solid fa-retweet"></i></button>
-                            <button class="post-action-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
+                            <button class="post-action-btn ${liked ? 'liked' : ''}" data-id="${p.id}">
                                 <i class="fa-solid fa-heart"></i>
                                 <span>${p.likes_count || 0}</span>
                             </button>
@@ -677,6 +691,11 @@
             `;
         });
         feed.innerHTML = html;
+
+        // ربط أزرار الإعجاب
+        document.querySelectorAll('.post-action-btn[data-id]').forEach(btn => {
+            btn.addEventListener('click', () => toggleLike(btn.dataset.id));
+        });
     }
 
     function escapeHtml(text) {
@@ -725,9 +744,7 @@
             await supabase.from('r_likes').delete()
                 .eq('user_id', currentUser.id)
                 .eq('post_id', postId);
-
             myLikes.delete(postId);
-
             const post = postsCache.find(p => p.id === postId);
             if (post) {
                 post.likes_count = Math.max(0, (post.likes_count || 0) - 1);
@@ -738,16 +755,13 @@
                 user_id: currentUser.id,
                 post_id: postId
             });
-
             myLikes.add(postId);
-
             const post = postsCache.find(p => p.id === postId);
             if (post) {
                 post.likes_count = (post.likes_count || 0) + 1;
                 await supabase.from('r_posts').update({ likes_count: post.likes_count }).eq('id', postId);
             }
         }
-
         renderPosts();
     }
 
@@ -758,7 +772,6 @@
         const reader = new FileReader();
         reader.onload = async function(ev) {
             const base64 = ev.target.result;
-
             const { error } = await supabase
                 .from('r_profiles')
                 .update({ avatar_url: base64 })
@@ -789,7 +802,7 @@
     function renderDms() {
         const list = document.getElementById('dmList');
         list.innerHTML = dms.map(d => `
-            <div class="dm-item" onclick="openChat(${d.id})">
+            <div class="dm-item" data-id="${d.id}">
                 <img src="${d.avatar}" style="width:48px; height:48px; border-radius:50%; object-fit:cover;">
                 <div>
                     <div style="font-weight:700; font-size:0.95rem;">${d.name}</div>
@@ -797,6 +810,10 @@
                 </div>
             </div>
         `).join('');
+
+        document.querySelectorAll('.dm-item').forEach(item => {
+            item.addEventListener('click', () => openChat(Number(item.dataset.id)));
+        });
     }
 
     function openChat(id) {
