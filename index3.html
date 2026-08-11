@@ -2,14 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق روميو - النسخة الاحترافية المدمجة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>تطبيق روميو</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #000000;
             --bg-secondary: #16181c;
-            --bg-hover: rgba(255, 255, 255, 0.08);
             --border-color: #2f3336;
             --text-main: #e7e9ea;
             --text-muted: #71767b;
@@ -19,7 +18,6 @@
             --accent-ig-2: #fd1d1d;
             --accent-ig-3: #fcb045;
             --danger: #f4212e;
-            --success: #00ba7c;
         }
 
         * {
@@ -36,159 +34,40 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            overflow-x: hidden;
         }
 
-        /* نظام الصفحات والتخطيط العام */
+        /* الهيكل الأساسي المتوافق تماماً مع الجوال */
         .app-container {
             width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 275px 1fr 350px;
+            max-width: 600px;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-bottom: 65px; /* مساحة للقائمة السفلية */
             border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
         }
 
-        @media (max-width: 1024px) {
-            .app-container {
-                grid-template-columns: 80px 1fr;
-            }
-            .right-sidebar { display: none; }
-        }
-
-        @media (max-width: 768px) {
-            .app-container {
-                grid-template-columns: 1fr;
-                margin-bottom: 60px;
-            }
-            .left-sidebar {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 60px;
-                background: var(--bg-main);
-                border-top: 1px solid var(--border-color);
-                flex-direction: row;
-                justify-content: space-around;
-                align-items: center;
-                z-index: 1000;
-                padding: 0;
-            }
-            .left-sidebar .nav-item span, .left-sidebar .profile-mini, .left-sidebar .tweet-btn-big {
-                display: none;
-            }
-            .left-sidebar .nav-item {
-                margin: 0;
-                padding: 10px;
-            }
-            .left-sidebar .nav-item i {
-                font-size: 1.4rem;
-            }
-        }
-
-        /* القائمة الجانبية اليسرى (تويتر ستايل) */
-        .left-sidebar {
-            border-right: 1px solid var(--border-color);
-            padding: 10px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
-
-        .logo-area {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--text-main);
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        .logo-area i { color: var(--accent); }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 12px 16px;
-            border-radius: 30px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 1.15rem;
-            cursor: pointer;
-            transition: background 0.2s;
-            width: fit-content;
-        }
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--bg-hover);
-            font-weight: bold;
-        }
-        .nav-item i { font-size: 1.4rem; width: 25px; text-align: center; }
-
-        .tweet-btn-big {
-            background-color: var(--text-main);
-            color: var(--bg-main);
-            border: none;
-            padding: 15px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1.05rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            transition: opacity 0.2s;
-        }
-        .tweet-btn-big:hover { opacity: 0.9; }
-
-        .profile-mini {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .profile-mini:hover { background-color: var(--bg-hover); }
-
-        /* منطقة المحتوى الرئيسي */
-        .main-content {
-            border-right: 1px solid var(--border-color);
-            min-height: 100vh;
-            background-color: var(--bg-main);
-        }
-
+        /* الهيدر العلوي */
         .top-header {
             position: sticky;
             top: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
-            z-index: 99;
+            z-index: 100;
         }
-
         .header-title-bar {
-            padding: 15px 20px;
-            font-size: 1.2rem;
+            padding: 12px 16px;
+            font-size: 1.1rem;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* تبويبات انستقرام + تويتر في الهيدر */
+        /* تبويبات الفيد */
         .feed-tabs {
             display: flex;
             border-bottom: 1px solid var(--border-color);
@@ -196,33 +75,31 @@
         .feed-tab {
             flex: 1;
             text-align: center;
-            padding: 15px;
+            padding: 12px;
             cursor: pointer;
             font-weight: 600;
             color: var(--text-muted);
-            transition: 0.2s;
+            font-size: 0.95rem;
             position: relative;
         }
-        .feed-tab.active {
-            color: var(--text-main);
-        }
+        .feed-tab.active { color: var(--text-main); }
         .feed-tab.active::after {
             content: '';
             position: absolute;
             bottom: 0;
             right: 50%;
             transform: translateX(50%);
-            width: 60px;
-            height: 4px;
+            width: 40px;
+            height: 3px;
             background-color: var(--accent);
             border-radius: 2px;
         }
 
-        /* شريط الملاحظات (Notes - انستقرام ستايل) */
+        /* شريط الملاحظات (انستجرام) */
         .ig-notes-bar {
             display: flex;
-            gap: 15px;
-            padding: 12px 20px;
+            gap: 12px;
+            padding: 10px 16px;
             overflow-x: auto;
             border-bottom: 1px solid var(--border-color);
             background: var(--bg-main);
@@ -233,12 +110,12 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            min-width: 65px;
+            min-width: 60px;
         }
         .note-avatar-wrapper {
             position: relative;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             padding: 2px;
             background: linear-gradient(45deg, var(--accent-ig-1), var(--accent-ig-2), var(--accent-ig-3));
@@ -252,605 +129,259 @@
         }
         .note-text-bubble {
             position: absolute;
-            top: -22px;
+            top: -20px;
             right: 0;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.65rem;
             white-space: nowrap;
-            max-width: 90px;
+            max-width: 80px;
             overflow: hidden;
             text-overflow: ellipsis;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         .note-username {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 3px;
             text-align: center;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 65px;
+            width: 60px;
         }
 
-        /* صندوق إنشاء التغريدة/المنشور */
+        /* صندوق النشر */
         .compose-box {
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
-        .compose-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        .compose-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .compose-body { flex: 1; }
         .compose-input {
             width: 100%;
             background: transparent;
             border: none;
             color: var(--text-main);
-            font-size: 1.1rem;
+            font-size: 1rem;
             resize: none;
             outline: none;
-            min-height: 60px;
-            margin-top: 10px;
+            min-height: 50px;
         }
         .compose-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
+            margin-top: 8px;
             border-top: 1px solid var(--border-color);
-            padding-top: 10px;
+            padding-top: 8px;
         }
-        .compose-icons {
-            display: flex;
-            gap: 15px;
-            color: var(--accent);
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
+        .compose-icons { display: flex; gap: 15px; color: var(--accent); font-size: 1rem; }
         .compose-btn {
             background-color: var(--accent);
             color: white;
             border: none;
-            padding: 8px 20px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: opacity 0.2s;
         }
-        .compose-btn:hover { opacity: 0.9; }
 
-        /* ستايل المنشورات والتغريدات المدمجة */
+        /* المنشورات */
         .post-card {
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
-            gap: 15px;
-            transition: background 0.1s;
-            cursor: pointer;
+            gap: 12px;
         }
-        .post-card:hover { background-color: rgba(255,255,255,0.01); }
-        .post-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        .post-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .post-content-area { flex: 1; }
-        .post-user-info {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-        }
-        .user-name { font-weight: bold; color: var(--text-main); }
+        .post-user-info { display: flex; align-items: center; gap: 4px; font-size: 0.9rem; margin-bottom: 3px; }
+        .user-name { font-weight: bold; }
         .user-handle { color: var(--text-muted); }
-        .verified-gold {
-            color: var(--accent-gold);
-            margin-right: 3px;
-        }
-        .post-text {
-            font-size: 1rem;
-            line-height: 1.5;
-            color: var(--text-main);
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-        .post-media {
+        .verified-gold { color: var(--accent-gold); font-size: 0.8rem; }
+        .post-text { font-size: 0.95rem; line-height: 1.4; margin-bottom: 8px; word-break: break-word; }
+        .post-media { width: 100%; max-height: 350px; border-radius: 12px; object-fit: cover; margin-top: 8px; border: 1px solid var(--border-color); }
+        .post-actions { display: flex; justify-content: space-between; max-width: 320px; margin-top: 10px; color: var(--text-muted); font-size: 0.8rem; }
+        .post-action-btn { background: none; border: none; color: var(--text-muted); display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .post-action-btn.like.liked i { color: var(--danger); }
+        .post-action-btn.like.liked span { color: var(--danger); }
+
+        /* القائمة السفلية (Navigation Bar للموبايل) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            max-height: 450px;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-top: 10px;
-            border: 1px solid var(--border-color);
-        }
-        .post-actions {
+            height: 60px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
             display: flex;
-            justify-content: space-between;
-            max-width: 400px;
-            margin-top: 12px;
-            color: var(--text-muted);
-        }
-        .post-action-btn {
-            display: flex;
+            justify-content: space-around;
             align-items: center;
-            gap: 8px;
+            z-index: 1000;
+        }
+        .nav-item {
             background: none;
             border: none;
             color: var(--text-muted);
+            font-size: 1.3rem;
             cursor: pointer;
-            font-size: 0.85rem;
+            padding: 10px;
             transition: color 0.2s;
         }
-        .post-action-btn:hover.comment { color: var(--accent); }
-        .post-action-btn:hover.retweet { color: var(--success); }
-        .post-action-btn:hover.like { color: var(--danger); }
-        .post-action-btn.liked i { color: var(--danger); }
+        .nav-item.active { color: var(--text-main); }
 
-        /* القائمة الجانبية اليمنى (البحث والترندات) */
-        .right-sidebar {
-            padding: 15px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: var(--bg-secondary);
-            border-radius: 30px;
-            padding: 10px 15px;
-            gap: 12px;
-            border: 1px solid transparent;
-            transition: 0.2s;
-        }
-        .search-box:focus-within {
-            border-color: var(--accent);
-            background: var(--bg-main);
-        }
-        .search-box input {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            outline: none;
-            width: 100%;
-            font-size: 0.95rem;
-        }
-        .trending-card, .welcome-banner-card {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 15px;
-            border: 1px solid var(--border-color);
-        }
-        .trending-card h3, .welcome-banner-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-        }
-        .trend-item {
-            padding: 8px 0;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-        .trend-item:last-child { border-bottom: none; }
-        .trend-category { font-size: 0.75rem; color: var(--text-muted); }
-        .trend-title { font-size: 0.95rem; font-weight: bold; margin: 2px 0; }
-        .trend-posts { font-size: 0.75rem; color: var(--text-muted); }
+        /* صفحة الشات الخاص */
+        .dm-container { display: flex; flex-direction: column; height: calc(100vh - 110px); }
+        .dm-list { flex: 1; overflow-y: auto; }
+        .dm-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; }
+        .dm-item:hover { background: var(--bg-secondary); }
+        
+        .chat-room { display: none; flex-direction: column; height: calc(100vh - 110px); background: var(--bg-main); position: absolute; top: 0; left: 0; width: 100%; z-index: 200; }
+        .chat-room.active { display: flex; }
+        .chat-room-header { padding: 12px 16px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; background: var(--bg-main); }
+        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg-bubble { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 0.9rem; word-break: break-word; }
+        .msg-bubble.incoming { background: var(--bg-secondary); align-self: flex-start; }
+        .msg-bubble.outgoing { background: var(--accent); color: white; align-self: flex-end; }
+        .chat-input-box { padding: 10px 16px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; background: var(--bg-main); }
+        .chat-input-box input { flex: 1; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 20px; color: white; outline: none; }
+        .chat-send-btn { background: var(--accent); color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; }
 
-        /* صفحة الشات الخاص (Direct Messages - X + Instagram Style) */
-        .dm-container {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            height: calc(100vh - 55px);
-        }
-        @media(max-width: 768px) {
-            .dm-container { grid-template-columns: 1fr; }
-            .dm-chat-area { display: none; }
-            .dm-chat-area.active-chat { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; background: var(--bg-main); }
-        }
-        .dm-list-sidebar {
-            border-left: 1px solid var(--border-color);
-            overflow-y: auto;
-        }
-        .dm-user-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            cursor: pointer;
-            transition: background 0.2s;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-        .dm-user-item:hover, .dm-user-item.active { background-color: var(--bg-secondary); }
-        .dm-user-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
-        .dm-user-info h4 { font-size: 0.95rem; font-weight: bold; }
-        .dm-user-info p { font-size: 0.85rem; color: var(--text-muted); margin-top: 3px; }
-
-        .dm-chat-area {
-            display: flex;
-            flex-direction: column;
-            background: var(--bg-main);
-        }
-        .dm-chat-header {
-            padding: 12px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-main);
-        }
-        .dm-messages-box {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .message-bubble {
-            max-width: 65%;
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            word-break: break-word;
-        }
-        .message-bubble.incoming {
-            background-color: var(--bg-secondary);
-            color: var(--text-main);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        .message-bubble.outgoing {
-            background-color: var(--accent);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        .dm-input-area {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-main);
-        }
-        .dm-input-area input {
-            flex: 1;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            padding: 12px 18px;
-            border-radius: 24px;
-            color: var(--text-main);
-            outline: none;
-            font-size: 0.95rem;
-        }
-        .dm-send-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-        }
-        .dm-send-btn:hover { transform: scale(1.05); }
-
-        /* نموذج تسجيل الدخول والخروج المتطور */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            display: none;
-        }
-        .modal-box {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-        }
-        .modal-box h2 { margin-bottom: 20px; font-size: 1.6rem; }
-        .modal-box input {
-            width: 100%;
-            padding: 12px 15px;
-            margin: 10px 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-        }
-        .modal-box button {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 24px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        /* نافذة تفاصيل المنشور أو التعليقات */
-        .comments-section {
-            margin-top: 10px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 10px;
-        }
-        .comment-item {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-            font-size: 0.9rem;
-        }
-
-        /* إخفاء الصفحات حسب التبويب النشط */
+        /* صفحات التطبيق */
         .page-view { display: none; }
         .page-view.active { display: block; }
-
-        /* تفضيلات عامة */
-        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
 
-    <!-- القائمة الجانبية اليسرى -->
-    <aside class="left-sidebar">
-        <div>
-            <div class="logo-area" onclick="switchPage('home')">
-                <i class="fa-solid fa-crown"></i>
-                <span>روميو</span>
-            </div>
-            <nav class="nav-links">
-                <a class="nav-item active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
-                <a class="nav-item" onclick="switchPage('explore', this)"><i class="fa-solid fa-hashtag"></i><span>استكشاف</span></a>
-                <a class="nav-item" onclick="switchPage('notifications', this)"><i class="fa-solid fa-bell"></i><span>الإشعارات</span></a>
-                <a class="nav-item" onclick="switchPage('messages', this)"><i class="fa-solid fa-envelope"></i><span>الرسائل</span></a>
-                <a class="nav-item" onclick="switchPage('profile', this)"><i class="fa-solid fa-user"></i><span>الملف الشخصي</span></a>
-            </nav>
-            <button class="tweet-btn-big" onclick="focusComposer()">نشر تغريدة</button>
-        </div>
+    <!-- المحتوى الرئيسي -->
+    <main style="flex: 1;">
 
-        <div class="profile-mini" onclick="openProfileMenu()">
-            <img id="sidebarUserAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" class="post-avatar">
-            <div style="flex:1; overflow:hidden;">
-                <div style="font-weight:bold; font-size:0.9rem; display:flex; align-items:center;">
-                    <span id="sidebarUserName">رامي الرشيدي</span>
-                    <i class="fa-solid fa-circle-check verified-gold"></i>
-                </div>
-                <div style="font-size:0.8rem; color:var(--text-muted);" id="sidebarUserHandle">@R</div>
-            </div>
-            <i class="fa-solid fa-ellipsis-vertical" style="color:var(--text-muted);"></i>
-        </div>
-    </aside>
-
-    <!-- منطقة المحتوى الرئيسي -->
-    <main class="main-content">
-
-        <!-- 1. صفحة الرئيسية (دمج تويتر + انستجرام + نوتات) -->
+        <!-- 1. الرئيسية -->
         <div id="page-home" class="page-view active">
             <header class="top-header">
                 <div class="header-title-bar">
-                    <span>الرئيسية</span>
+                    <span style="color:var(--accent); font-weight:900;"><i class="fa-solid fa-crown"></i> روميو</span>
                     <i class="fa-solid fa-sparkles" style="color:var(--accent);"></i>
                 </div>
-                <!-- تبويبات نمط العرض (للكل أو المتابعين أو ستوري انستا) -->
                 <div class="feed-tabs">
-                    <div class="feed-tab active" onclick="switchFeedTab(this, 'all')">كل المنشورات</div>
-                    <div class="feed-tab" onclick="switchFeedTab(this, 'following')">المتابعون</div>
+                    <div class="feed-tab active">الرئيسية</div>
+                    <div class="feed-tab">المتابعون</div>
                 </div>
-                <!-- شريط الملاحظات (Instagram Notes Style) -->
-                <div class="ig-notes-bar" id="igNotesBar">
-                    <!-- يتم توليد الملاحظات ديناميكياً هنا -->
-                </div>
+                <!-- ستوري/نوتات انستجرام -->
+                <div class="ig-notes-bar" id="igNotesBar"></div>
             </header>
 
-            <!-- صندوق النشر السريع المدمج -->
+            <!-- صندوق النشر -->
             <div class="compose-box">
-                <img id="composeUserAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" class="compose-avatar">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" class="compose-avatar">
                 <div class="compose-body">
-                    <textarea id="composeText" class="compose-input" placeholder="ما الذي يحدث؟ أو شارك لحظتك..."></textarea>
-                    <div id="mediaUrlContainer" style="display:none; margin-bottom: 10px;">
-                        <input type="text" id="composeMediaUrl" placeholder="رابط صورة أو ميديا (اختياري)..." style="width:100%; padding:8px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white; border-radius:8px;">
+                    <textarea id="composeText" class="compose-input" placeholder="رامي الرشيدي يرحب فيكم... ماذا يدور بذهنك؟"></textarea>
+                    <div id="mediaUrlContainer" style="display:none; margin-bottom: 8px;">
+                        <input type="text" id="composeMediaUrl" placeholder="رابط صورة (اختياري)..." style="width:100%; padding:6px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white; border-radius:6px; font-size:0.85rem;">
                     </div>
                     <div class="compose-footer">
                         <div class="compose-icons">
-                            <i class="fa-regular fa-image" onclick="toggleMediaInput()" title="إضافة صورة"></i>
-                            <i class="fa-solid fa-face-smile" title="إيموجي"></i>
-                            <i class="fa-solid fa-chart-column" title="استطلاع رأي إكسل"></i>
+                            <i class="fa-regular fa-image" onclick="toggleMediaInput()"></i>
+                            <i class="fa-solid fa-face-smile"></i>
                         </div>
                         <button class="compose-btn" onclick="addNewPost()">نشر</button>
                     </div>
                 </div>
             </div>
 
-            <!-- قائمة التغريدات والمنشورات -->
-            <div id="postsFeedContainer">
-                <!-- المنشورات الديناميكية -->
-            </div>
+            <div id="postsFeedContainer"></div>
         </div>
 
-        <!-- 2. صفحة استكشاف (Explore / Trends) -->
+        <!-- 2. استكشاف -->
         <div id="page-explore" class="page-view">
             <header class="top-header">
                 <div class="header-title-bar">
-                    <div class="search-box" style="width:100%;">
+                    <div style="background:var(--bg-secondary); padding:8px 12px; border-radius:20px; width:100%; display:flex; align-items:center; gap:8px;">
                         <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
-                        <input type="text" placeholder="بحث في روميو (تغريدات، مستخدمين، هاشتاقات)">
+                        <input type="text" placeholder="بحث في روميو" style="background:none; border:none; color:white; outline:none; width:100%;">
                     </div>
                 </div>
             </header>
-            <div style="padding: 20px;">
-                <div class="trending-card">
-                    <h3>الترندات الرائجة في المملكة</h3>
-                    <div id="trendingList">
-                        <!-- ترندات افتراضية احترافية -->
-                    </div>
+            <div style="padding: 16px;">
+                <h3 style="margin-bottom: 12px; font-size: 1rem;">الترندات الرائجة</h3>
+                <div style="background:var(--bg-secondary); padding:12px; border-radius:12px; margin-bottom:10px;">
+                    <div style="font-size:0.75rem; color:var(--text-muted);">تقنية · رائج</div>
+                    <div style="font-weight:bold; font-size:0.95rem; margin:2px 0;">تطبيق روميو المدمج</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">54 ألف منشور</div>
                 </div>
             </div>
         </div>
 
-        <!-- 3. صفحة الإشعارات -->
-        <div id="page-notifications" class="page-view">
-            <header class="top-header">
-                <div class="header-title-bar"><span>الإشعارات</span></div>
-            </header>
-            <div style="padding: 40px; text-align: center; color: var(--text-muted);">
-                <i class="fa-solid fa-bell-slash" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                <p>لا توجد إشعارات جديدة في الوقت الحالي. تفاعلات حسابك الموثق تظهر هنا أولاً بأول.</p>
-            </div>
-        </div>
-
-        <!-- 4. صفحة الرسائل (شات خاص - انستقرام + تويتر مدمج) -->
+        <!-- 3. الرسائل (خاص انستجرام + تويتر) -->
         <div id="page-messages" class="page-view">
-            <div class="dm-container">
-                <div class="dm-list-sidebar">
-                    <div style="padding: 15px; font-weight: bold; border-bottom: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
-                        <span>الرسائل المباشرة</span>
-                        <i class="fa-regular fa-pen-to-square" style="cursor:pointer;" onclick="startNewChat()"></i>
-                    </div>
-                    <div id="dmUsersList">
-                        <!-- قائمة المحادثات -->
-                    </div>
-                </div>
-                <div class="dm-chat-area" id="activeChatArea">
-                    <div class="dm-chat-header">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" class="post-avatar" id="currentChatAvatar">
-                        <div>
-                            <h4 id="currentChatName">سارة الروقي</h4>
-                            <p style="font-size: 0.75rem; color: var(--success);" id="currentChatStatus">نشط الآن</p>
-                        </div>
-                    </div>
-                    <div class="dm-messages-box" id="dmMessagesBox">
-                        <!-- رسائل الشات -->
-                    </div>
-                    <div class="dm-input-area">
-                        <i class="fa-regular fa-image" style="color:var(--text-muted); cursor:pointer;"></i>
-                        <input type="text" id="dmInputText" placeholder="اكتب رسالة..." onkeypress="handleDmKeypress(event)">
-                        <button class="dm-send-btn" onclick="sendDirectMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 5. صفحة الملف الشخصي (Profile) -->
-        <div id="page-profile" class="page-view">
             <header class="top-header">
                 <div class="header-title-bar">
-                    <div>
-                        <div style="font-weight: bold;" id="profileHeaderName">رامي الرشيدي</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted);" id="profileHeaderPostsCount">0 منشور</div>
-                    </div>
+                    <span>الرسائل المباشرة</span>
+                    <i class="fa-regular fa-pen-to-square"></i>
                 </div>
             </header>
-            <div style="height: 150px; background: linear-gradient(135deg, #1d9bf0, #833ab4);"></div>
-            <div style="padding: 0 20px; position: relative;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: -45px; margin-bottom: 15px;">
-                    <img id="profileAvatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" style="width: 90px; height: 90px; border-radius: 50%; border: 4px solid var(--bg-main); object-fit: cover;">
-                    <button style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;" onclick="openEditProfileModal()">تعديل الملف الشخصي</button>
+            <div class="dm-container">
+                <div class="dm-list" id="dmUsersList"></div>
+            </div>
+            
+            <!-- غرفة الشات الخاصة -->
+            <div class="chat-room" id="chatRoom">
+                <div class="chat-room-header">
+                    <i class="fa-solid fa-arrow-right" onclick="closeChatRoom()" style="cursor:pointer; font-size:1.1rem;"></i>
+                    <img id="activeChatAvatar" src="" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                    <div>
+                        <h4 id="activeChatName" style="font-size:0.95rem;"></h4>
+                        <p style="font-size:0.7rem; color:var(--success);">نشط الآن</p>
+                    </div>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <h2 style="display: flex; align-items: center; gap: 5px; font-size: 1.2rem;">
-                        <span id="profileName">رامي الرشيدي</span>
-                        <i class="fa-solid fa-circle-check verified-gold"></i>
-                    </h2>
-                    <div style="color: var(--text-muted); font-size: 0.95rem;" id="profileHandle">@R</div>
-                    <p style="margin-top: 10px; font-size: 0.95rem;" id="profileBio">مرحباً بكم في تطبيق روميو. المنصة الاحترافية الجامعة لتويتر وانستجرام وتجربة تواصل لا مثيل لها.</p>
-                </div>
-                <div style="display: flex; gap: 20px; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-                    <span><strong style="color:var(--text-main);">1.2M</strong> متابعون</span>
-                    <span><strong style="color:var(--text-main);">142</strong> يتابعون</span>
+                <div class="chat-messages" id="chatMessagesBox"></div>
+                <div class="chat-input-box">
+                    <input type="text" id="chatInputText" placeholder="اكتب رسالة..." onkeypress="handleChatEnter(event)">
+                    <button class="chat-send-btn" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
-            <div style="border-bottom: 1px solid var(--border-color); display: flex;">
-                <div style="flex:1; text-align:center; padding:12px; font-weight:bold; border-bottom: 2px solid var(--accent);">المنشورات</div>
-            </div>
-            <div id="userProfilePosts">
-                <!-- منشورات المستخدم الحالي -->
+        </div>
+
+        <!-- 4. الملف الشخصي -->
+        <div id="page-profile" class="page-view">
+            <header class="top-header">
+                <div class="header-title-bar"><span>رامي الرشيدي</span></div>
+            </header>
+            <div style="height: 120px; background: linear-gradient(135deg, #1d9bf0, #833ab4);"></div>
+            <div style="padding: 0 16px; position: relative;">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--bg-main); margin-top: -40px; margin-bottom: 10px; object-fit: cover;">
+                <h2 style="display:flex; align-items:center; gap:5px; font-size:1.1rem;">
+                    <span>رامي الرشيدي</span>
+                    <i class="fa-solid fa-circle-check verified-gold"></i>
+                </h2>
+                <div style="color:var(--text-muted); font-size:0.85rem;">@R</div>
+                <p style="margin-top:8px; font-size:0.9rem;" id="profileWelcomeText">رامي الرشيدي يرحب فيكم في تطبيق روميو.</p>
             </div>
         </div>
 
     </main>
 
-    <!-- القائمة الجانبية اليمنى (البحث والترندات) -->
-    <aside class="right-sidebar">
-        <!-- ترحيب المطور المخفي (أو الظاهر بشكل احترافي بناءً على طلبك) -->
-        <div class="welcome-banner-card">
-            <h3><i class="fa-solid fa-crown" style="color:var(--accent-gold);"></i> منصة روميو</h3>
-            <p id="welcomeMessageDisplay" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.4;"></p>
-        </div>
+    <!-- القائمة السفلية (Navigation Bar) -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i></button>
+        <button class="nav-item" onclick="switchPage('explore', this)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="nav-item" onclick="switchPage('messages', this)"><i class="fa-solid fa-envelope"></i></button>
+        <button class="nav-item" onclick="switchPage('profile', this)"><i class="fa-solid fa-user"></i></button>
+    </nav>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
-            <input type="text" placeholder="بحث في روميو">
-        </div>
-
-        <div class="trending-card">
-            <h3>ما يحدث الآن</h3>
-            <div id="sidebarTrending">
-                <!-- ترندات -->
-            </div>
-        </div>
-    </aside>
-
-</div>
-
-<!-- مودال تعديل الملف الشخصي أو تسجيل حساب جديد -->
-<div class="modal-overlay" id="profileModal">
-    <div class="modal-box">
-        <h2>إعدادات حساب روميو</h2>
-        <input type="text" id="modalNameInput" placeholder="الاسم الكامل">
-        <input type="text" id="modalUsernameInput" placeholder="اسم المستخدم (مثال: R)">
-        <input type="password" id="modalPasswordInput" placeholder="كلمة المرور">
-        <textarea id="modalBioInput" placeholder="نبذة عنك..." style="width:100%; padding:12px; margin:10px 0; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:8px; color:white; resize:none; height:80px; outline:none;"></textarea>
-        <button onclick="saveProfileSettings()">حفظ التغييرات</button>
-        <button onclick="closeProfileModal()" style="background: transparent; color: var(--text-muted); margin-top: 5px;">إلغاء</button>
-    </div>
 </div>
 
 <script>
-    // بيانات الحساب الأساسية المطلوبة بدقة عالية
-    let currentUser = {
-        name: "رامي الرشيدي",
-        handle: "R",
-        password: "Rr987321",
-        verified: true,
-        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
-        bio: "رامي الرشيدي يرحب فيكم في تطبيق روميو - الدمج الأروع بين X وانستجرام."
-    };
-
-    // مصفوفة المنشورات والتغريدات الافتراضية عالية المستوى
+    // البيانات الأساسية
     let postsData = [
         {
             id: 1,
@@ -858,321 +389,44 @@
             handle: "R",
             verified: true,
             avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
-            text: "رامي الرشيدي يرحب فيكم في تطبيق روميو! 🚀 تم دمج عالم X (تويتر سابقاً) مع روعة انستغرام لتجربة فخمة وبدون أي تنازلات عن السرعة أو السلاسة.",
+            text: "رامي الرشيدي يرحب فيكم في تطبيق روميو! 🚀 تم ضبط الواجهة وتعديلها لتناسب الجوال بأعلى سلاسة.",
             media: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-            likes: 1420,
-            retweets: 320,
-            liked: false,
-            comments: [
-                { user: "سارة الروقي", text: "التصميم والتجربة خرافية يا رامي!" },
-                { user: "خالد العتيبي", text: "هذا الشغل العالي مو شغل مبتدئين." }
-            ]
-        },
-        {
-            id: 2,
-            user: "تقنية المستقبل",
-            handle: "TechVision",
-            verified: true,
-            avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=150&q=80",
-            text: "ميزة شات انستجرام مع واجهة تويتر المدمجة تعطي شعوراً بالاحترافية المطلقة في منصة واحدة. من جرب المحادثات المباشرة الجديدة؟ 🔥",
-            media: "",
-            likes: 850,
-            retweets: 95,
-            liked: true,
-            comments: []
+            likes: 142,
+            liked: false
         }
     ];
 
-    // ملاحظات انستجرام (Instagram Notes)
     let notesData = [
-        { user: "رامي الرشيدي", handle: "R", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80", note: "أهلاً بالجميع في روميو ✨" },
-        { user: "سارة الروقي", handle: "Sara", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", note: "يوم ممتع جداً 💻" },
-        { user: "فهد القحطاني", handle: "Fahad", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80", note: "برمجة عالية المستوى" },
-        { user: "نورا السالم", handle: "Noura", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80", note: "تطبيق فخم ⚡" }
+        { user: "رامي", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80", note: "أهلاً بالجميع ✨" },
+        { user: "سارة", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", note: "روميو فخم 💻" },
+        { user: "فهد", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80", note: "شغل عالي" }
     ];
 
-    // محادثات الشات الخاص (Direct Messages)
     let dmsData = [
-        { id: 1, name: "سارة الروقي", handle: "Sara", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", messages: [
-            { sender: "incoming", text: "أهلاً رامي، كيف تتقدم منصة روميو؟" },
-            { sender: "outgoing", text: "كل شيء ماشي بأعلى لفل وسلاسة تامة!" }
-        ]},
-        { id: 2, name: "فهد القحطاني", handle: "Fahad", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80", messages: [
-            { sender: "incoming", text: "يعطيك العافية على الكود الجبار." }
-        ]}
+        { id: 1, name: "سارة الروقي", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", messages: [{ sender: "incoming", text: "أهلاً رامي، كيف الواجهة معك الحين بالجوال؟" }] },
+        { id: 2, name: "فهد القحطاني", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80", messages: [{ sender: "incoming", text: "يعطيك العافية، التصميم صار ممتاز." }] }
     ];
 
-    let activeDmId = 1;
+    let activeChatId = null;
 
-    // ترندات الجانب الأيمن
-    let trendsData = [
-        { category: "تقنية · رائج", title: "تطبيق روميو", posts: "54.2 ألف منشور" },
-        { category: "برمجة وتطوير · رائج", title: "تويتر وانستجرام", posts: "18.9 ألف منشور" },
-        { category: "تصميم واجهات · رائج", title: "UI/UX الاحترافي", posts: "12.4 ألف منشور" }
-    ];
-
-    // تهيئة التطبيق عند التحميل
     window.onload = function() {
-        // تعيين رسالة الترحيب الخاصة بطلبك بدقة
-        document.getElementById('welcomeMessageDisplay').innerText = "رامي الرشيدي يرحب فيكم في تطبيق روميو (دمج X وانستجرام بأعلى معايير الاحترافية).";
-        
         renderPosts();
         renderNotes();
-        renderDmsList();
-        renderDmMessages(activeDmId);
-        renderTrends();
-        updateProfileUI();
+        renderDms();
     };
 
-    // تبديل الصفحات الرئيسية
-    function switchPage(pageId, element) {
+    function switchPage(pageId, btnEl) {
         document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + pageId).classList.add('active');
 
-        if(element) {
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            element.classList.add('active');
-        }
-
-        if(pageId === 'profile') {
-            renderUserProfilePosts();
-        }
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('active'));
+        if(btnEl) btnEl.classList.add('active');
     }
 
-    // عرض المنشورات والتغريدات
     function renderPosts() {
         let container = document.getElementById('postsFeedContainer');
         let html = '';
         postsData.forEach(p => {
-            let verifiedBadge = p.verified ? '<i class="fa-solid fa-circle-check verified-gold"></i>' : '';
-            html += `
-                <div class="post-card">
-                    <img src="${p.avatar}" class="post-avatar">
-                    <div class="post-content-area">
-                        <div class="post-user-info">
-                            <span class="user-name">${p.user}</span>
-                            ${verifiedBadge}
-                            <span class="user-handle">@${p.handle}</span>
-                        </div>
-                        <div class="post-text">${p.text}</div>
-                        ${p.media ? `<img src="${p.media}" class="post-media">` : ''}
-                        <div class="post-actions">
-                            <button class="post-action-btn comment" onclick="toggleComments(${p.id})"><i class="fa-regular fa-comment"></i> <span>${p.comments.length}</span></button>
-                            <button class="post-action-btn retweet"><i class="fa-solid fa-retweet"></i> <span>${p.retweets}</span></button>
-                            <button class="post-action-btn like ${p.liked ? 'liked' : ''}" onclick="toggleLike(${p.id})"><i class="fa-solid fa-heart"></i> <span>${p.likes}</span></button>
-                            <button class="post-action-btn"><i class="fa-solid fa-share-nodes"></i></button>
-                        </div>
-                        <div id="comments-${p.id}" class="comments-section" style="display:none;">
-                            <div style="display:flex; gap:10px; margin-bottom:10px;">
-                                <input type="text" id="comment-input-${p.id}" placeholder="اكتب تعليقاً..." style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:8px 12px; border-radius:15px; color:white; outline:none; font-size:0.85rem;">
-                                <button onclick="addComment(${p.id})" style="background:var(--accent); color:white; border:none; padding:6px 14px; border-radius:15px; font-weight:bold; cursor:pointer;">إرسال</button>
-                            </div>
-                            <div id="comments-list-${p.id}">
-                                ${p.comments.map(c => `<div class="comment-item"><strong>${c.user}:</strong> <span>${c.text}</span></div>`).join('')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    // عرض ملاحظات انستجرام (Notes)
-    function renderNotes() {
-        let container = document.getElementById('igNotesBar');
-        let html = '';
-        notesData.forEach(n => {
-            html += `
-                <div class="note-bubble">
-                    <div class="note-avatar-wrapper">
-                        <div class="note-text-bubble">${n.note}</div>
-                        <img src="${n.avatar}">
-                    </div>
-                    <span class="note-username">${n.user.split(' ')[0]}</span>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    // ترندات البحث
-    function renderTrends() {
-        let container = document.getElementById('trendingList');
-        let sidebarContainer = document.getElementById('sidebarTrending');
-        let html = '';
-        trendsData.forEach(t => {
-            html += `
-                <div class="trend-item">
-                    <div class="trend-category">${t.category}</div>
-                    <div class="trend-title">${t.title}</div>
-                    <div class="trend-posts">${t.posts}</div>
-                </div>
-            `;
-        });
-        if(container) container.innerHTML = html;
-        if(sidebarContainer) sidebarContainer.innerHTML = html;
-    }
-
-    // إضافة منشور جديد
-    function toggleMediaInput() {
-        let box = document.getElementById('mediaUrlContainer');
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function addNewPost() {
-        let text = document.getElementById('composeText').value.trim();
-        let media = document.getElementById('composeMediaUrl').value.trim();
-        if(!text && !media) return;
-
-        let newPost = {
-            id: Date.now(),
-            user: currentUser.name,
-            handle: currentUser.handle,
-            verified: currentUser.verified,
-            avatar: currentUser.avatar,
-            text: text,
-            media: media,
-            likes: 1,
-            retweets: 0,
-            liked: false,
-            comments: []
-        };
-
-        postsData.unshift(newPost);
-        document.getElementById('composeText').value = '';
-        document.getElementById('composeMediaUrl').value = '';
-        document.getElementById('mediaUrlContainer').style.display = 'none';
-        renderPosts();
-        renderUserProfilePosts();
-    }
-
-    // تفاعل الإعجاب
-    function toggleLike(postId) {
-        let post = postsData.find(p => p.id === postId);
-        if(post) {
-            if(post.liked) {
-                post.likes--;
-                post.liked = false;
-            } else {
-                post.likes++;
-                post.liked = true;
-            }
-            renderPosts();
-        }
-    }
-
-    // إظهار/إخفاء التعليقات
-    function toggleComments(postId) {
-        let box = document.getElementById(`comments-${postId}`);
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function addComment(postId) {
-        let input = document.getElementById(`comment-input-${postId}`);
-        let text = input.value.trim();
-        if(!text) return;
-
-        let post = postsData.find(p => p.id === postId);
-        if(post) {
-            post.comments.push({ user: currentUser.name, text: text });
-            input.value = '';
-            renderPosts();
-            document.getElementById(`comments-${postId}`).style.display = 'block';
-        }
-    }
-
-    // نظام الشات الخاص (Direct Messages)
-    function renderDmsList() {
-        let container = document.getElementById('dmUsersList');
-        let html = '';
-        dmsData.forEach(d => {
-            let lastMsg = d.messages[d.messages.length - 1] ? d.messages[d.messages.length - 1].text : '';
-            html += `
-                <div class="dm-user-item ${d.id === activeDmId ? 'active' : ''}" onclick="selectChat(${d.id})">
-                    <img src="${d.avatar}" class="dm-user-avatar">
-                    <div class="dm-user-info" style="flex:1; overflow:hidden;">
-                        <h4>${d.name}</h4>
-                        <p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${lastMsg}</p>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    function selectChat(chatId) {
-        activeDmId = chatId;
-        renderDmsList();
-        renderDmMessages(chatId);
-        // للموبايل
-        if(window.innerWidth <= 768) {
-            document.querySelector('.dm-chat-area').classList.add('active-chat');
-        }
-    }
-
-    function renderDmMessages(chatId) {
-        let chat = dmsData.find(d => d.id === chatId);
-        if(!chat) return;
-
-        document.getElementById('currentChatName').innerText = chat.name;
-        document.getElementById('currentChatAvatar').src = chat.avatar;
-
-        let container = document.getElementById('dmMessagesBox');
-        let html = '';
-        chat.messages.forEach(m => {
-            html += `<div class="message-bubble ${m.sender}">${m.text}</div>`;
-        });
-        container.innerHTML = html;
-        container.scrollTop = container.scrollHeight;
-    }
-
-    function sendDirectMessage() {
-        let input = document.getElementById('dmInputText');
-        let text = input.value.trim();
-        if(!text) return;
-
-        let chat = dmsData.find(d => d.id === activeDmId);
-        if(chat) {
-            chat.messages.push({ sender: 'outgoing', text: text });
-            input.value = '';
-            renderDmMessages(activeDmId);
-            renderDmsList();
-
-            // رد تلقائي ذكي بعد ثانية لتعزيز التفاعل
-            setTimeout(() => {
-                chat.messages.push({ sender: 'incoming', text: "تم استلام رسالتك في تطبيق روميو بنجاح! ⚡" });
-                renderDmMessages(activeDmId);
-                renderDmsList();
-            }, 1200);
-        }
-    }
-
-    function handleDmKeypress(e) {
-        if(e.key === 'Enter') sendDirectMessage();
-    }
-
-    // الملف الشخصي وتحديث بيانات المستخدم الموثق
-    function updateProfileUI() {
-        document.getElementById('sidebarUserName').innerText = currentUser.name;
-        document.getElementById('sidebarUserHandle').innerText = "@" + currentUser.handle;
-        document.getElementById('sidebarUserAvatar').src = currentUser.avatar;
-        document.getElementById('composeUserAvatar').src = currentUser.avatar;
-
-        document.getElementById('profileName').innerText = currentUser.name;
-        document.getElementById('profileHandle').innerText = "@" + currentUser.handle;
-        document.getElementById('profileBio').innerText = currentUser.bio;
-        document.getElementById('profileAvatar').src = currentUser.avatar;
-        document.getElementById('profileHeaderName').innerText = currentUser.name;
-    }
-
-    function renderUserProfilePosts() {
-        let userPosts = postsData.filter(p => p.handle === currentUser.handle);
-        document.getElementById('profileHeaderPostsCount').innerText = userPosts.length + " منشور";
-        
-        let container = document.getElementById('userProfilePosts');
-        let html = '';
-        userPosts.forEach(p => {
             html += `
                 <div class="post-card">
                     <img src="${p.avatar}" class="post-avatar">
@@ -1184,54 +438,138 @@
                         </div>
                         <div class="post-text">${p.text}</div>
                         ${p.media ? `<img src="${p.media}" class="post-media">` : ''}
+                        <div class="post-actions">
+                            <button class="post-action-btn"><i class="fa-regular fa-comment"></i> <span>0</span></button>
+                            <button class="post-action-btn"><i class="fa-solid fa-retweet"></i> <span>0</span></button>
+                            <button class="post-action-btn like ${p.liked ? 'liked' : ''}" onclick="toggleLike(${p.id})"><i class="fa-solid fa-heart"></i> <span>${p.likes}</span></button>
+                        </div>
                     </div>
                 </div>
             `;
         });
-        container.innerHTML = html || '<div style="padding:30px; text-align:center; color:var(--text-muted);">لا توجد منشورات خاصة بك حتى الآن.</div>';
+        container.innerHTML = html;
     }
 
-    // إعدادات تعديل الحساب
-    function openEditProfileModal() {
-        document.getElementById('modalNameInput').value = currentUser.name;
-        document.getElementById('modalUsernameInput').value = currentUser.handle;
-        document.getElementById('modalPasswordInput').value = currentUser.password;
-        document.getElementById('modalBioInput').value = currentUser.bio;
-        document.getElementById('profileModal').style.display = 'flex';
+    function renderNotes() {
+        let container = document.getElementById('igNotesBar');
+        let html = '';
+        notesData.forEach(n => {
+            html += `
+                <div class="note-bubble">
+                    <div class="note-avatar-wrapper">
+                        <div class="note-text-bubble">${n.note}</div>
+                        <img src="${n.avatar}">
+                    </div>
+                    <span class="note-username">${n.user}</span>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
     }
 
-    function closeProfileModal() {
-        document.getElementById('profileModal').style.display = 'none';
+    function renderDms() {
+        let container = document.getElementById('dmUsersList');
+        let html = '';
+        dmsData.forEach(d => {
+            let lastMsg = d.messages[d.messages.length - 1].text;
+            html += `
+                <div class="dm-item" onclick="openChat(${d.id})">
+                    <img src="${d.avatar}" style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
+                    <div style="flex:1; overflow:hidden;">
+                        <h4 style="font-size:0.9rem;">${d.name}</h4>
+                        <p style="font-size:0.8rem; color:var(--text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${lastMsg}</p>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
     }
 
-    function saveProfileSettings() {
-        let name = document.getElementById('modalNameInput').value.trim();
-        let handle = document.getElementById('modalUsernameInput').value.trim();
-        let pass = document.getElementById('modalPasswordInput').value.trim();
-        let bio = document.getElementById('modalBioInput').value.trim();
+    function openChat(chatId) {
+        activeChatId = chatId;
+        let chat = dmsData.find(d => d.id === chatId);
+        document.getElementById('activeChatName').innerText = chat.name;
+        document.getElementById('activeChatAvatar').src = chat.avatar;
+        
+        renderChatMessages();
+        document.getElementById('chatRoom').classList.add('active');
+    }
 
-        if(name && handle && pass) {
-            currentUser.name = name;
-            currentUser.handle = handle;
-            currentUser.password = pass;
-            currentUser.bio = bio;
-            updateProfileUI();
-            closeProfileModal();
-            alert("تم تحديث بيانات حساب روميو الموثق بنجاح!");
+    function closeChatRoom() {
+        document.getElementById('chatRoom').classList.remove('active');
+    }
+
+    function renderChatMessages() {
+        let chat = dmsData.find(d => d.id === activeChatId);
+        let container = document.getElementById('chatMessagesBox');
+        let html = '';
+        chat.messages.forEach(m => {
+            html += `<div class="msg-bubble ${m.sender}">${m.text}</div>`;
+        });
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function sendChatMessage() {
+        let input = document.getElementById('chatInputText');
+        let text = input.value.trim();
+        if(!text) return;
+
+        let chat = dmsData.find(d => d.id === activeChatId);
+        chat.messages.push({ sender: 'outgoing', text: text });
+        input.value = '';
+        renderChatMessages();
+        renderDms();
+
+        setTimeout(() => {
+            chat.messages.push({ sender: 'incoming', text: "وصلت رسالتك يا رامي! ⚡" });
+            renderChatMessages();
+            renderDms();
+        }, 1000);
+    }
+
+    function handleChatEnter(e) {
+        if(e.key === 'Enter') sendChatMessage();
+    }
+
+    function toggleMediaInput() {
+        let box = document.getElementById('mediaUrlContainer');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function addNewPost() {
+        let text = document.getElementById('composeText').value.trim();
+        let media = document.getElementById('composeMediaUrl').value.trim();
+        if(!text && !media) return;
+
+        postsData.unshift({
+            id: Date.now(),
+            user: "رامي الرشيدي",
+            handle: "R",
+            verified: true,
+            avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+            text: text,
+            media: media,
+            likes: 1,
+            liked: false
+        });
+
+        document.getElementById('composeText').value = '';
+        document.getElementById('composeMediaUrl').value = '';
+        document.getElementById('mediaUrlContainer').style.display = 'none';
+        renderPosts();
+    }
+
+    function toggleLike(id) {
+        let p = postsData.find(x => x.id === id);
+        if(p.liked) {
+            p.likes--;
+            p.liked = false;
         } else {
-            alert("يرجى تعبئة الحقول الأساسية.");
+            p.likes++;
+            p.liked = true;
         }
-    }
-
-    function focusComposer() {
-        switchPage('home', document.querySelector('.nav-links a'));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.getElementById('composeText').focus();
-    }
-
-    function switchFeedTab(tabEl, type) {
-        document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
-        tabEl.classList.add('active');
+        renderPosts();
     }
 </script>
 
