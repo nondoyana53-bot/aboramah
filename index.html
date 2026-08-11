@@ -73,7 +73,6 @@
                 url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1600&auto=format&fit=crop');
         }
 
-        /* أزرار التحكم في الزاوية العليا اليمنى */
         #auth-container {
             position: fixed;
             top: 15px;
@@ -371,7 +370,6 @@
     </div>
 
     <script>
-        // إعدادات اتصال Supabase بالمفتاح الصحيح
         const supabaseUrl = 'https://ifpvuaswfvejgbnxcwp.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdwYm54Y3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzExMjMsImV4cCI6MjEwMjAwNzEyM30.JGbLkdWbC0KNEs0zipfRjusG2Tkjh8pEzip5ID7vWqY';
         const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
@@ -391,7 +389,6 @@
             if(savedTheme === "light") {
                 document.documentElement.setAttribute("data-theme", "light");
             }
-            // جلب القصائد من قاعدة البيانات عند فتح الموقع
             await fetchPoemsFromSupabase();
         };
 
@@ -407,7 +404,6 @@
                 } else if (data && data.length > 0) {
                     poems = data;
                 } else {
-                    // قصيدة افتراضية أولية إذا كانت القاعدة فارغة
                     poems = [
                         {
                             id: 1,
@@ -597,25 +593,28 @@
                 date: new Date().toLocaleDateString('ar-SA')
             };
 
-            // إرسال البيانات لقاعدة بيانات Supabase
-            const { data, error } = await _supabase
-                .from('poems')
-                .insert([newPoem])
-                .select();
+            try {
+                const { data, error } = await _supabase
+                    .from('poems')
+                    .insert([newPoem])
+                    .select();
 
-            if (error) {
-                alert('حدث خطأ أثناء الحفظ في القاعدة: ' + error.message);
-                console.error(error);
-            } else {
-                alert('تمت إضافة القصيدة ونشرها في القاعدة بنجاح!');
-                document.getElementById('poemTitle').value = '';
-                document.getElementById('poemMeter').value = '';
-                document.getElementById('poemText').value = '';
-                document.getElementById('poemExplanationInput').value = '';
-                
-                // تحديث القائمة مباشرة
-                await fetchPoemsFromSupabase();
-                switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
+                if (error) {
+                    alert('خطأ من القاعدة: ' + error.message);
+                    console.error(error);
+                } else {
+                    alert('تمت إضافة القصيدة ونشرها في القاعدة بنجاح!');
+                    document.getElementById('poemTitle').value = '';
+                    document.getElementById('poemMeter').value = '';
+                    document.getElementById('poemText').value = '';
+                    document.getElementById('poemExplanationInput').value = '';
+                    
+                    await fetchPoemsFromSupabase();
+                    switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
+                }
+            } catch (err) {
+                alert('فشل الاتصال بالخادم. تأكد من الإنترنت أو إعدادات الشبكة.');
+                console.error(err);
             }
         }
 
