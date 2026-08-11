@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>تطبيق روميو - شبيه X وانستقرام</title>
+    <title>R</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-main: #000000;
@@ -15,7 +16,6 @@
             --accent: #1d9bf0;
             --accent-gold: #f4ab0a;
             --danger: #f4212e;
-            --success: #00ba7c;
         }
 
         * {
@@ -34,13 +34,9 @@
             justify-content: center;
         }
 
-        /* شاشة تسجيل الدخول والإنشاء (نمط X الدقيق) */
         #authScreen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: var(--bg-main);
             z-index: 9999;
             display: flex;
@@ -53,29 +49,28 @@
         .x-auth-box {
             width: 100%;
             max-width: 380px;
-            text-align: right;
         }
 
-        .x-auth-box i.logo {
-            font-size: 2.5rem;
+        .x-auth-box .logo {
+            font-size: 2.8rem;
             color: var(--text-main);
-            margin-bottom: 25px;
-            display: block;
+            margin-bottom: 28px;
             text-align: center;
+            display: block;
+            font-weight: 900;
         }
 
         .x-auth-box h1 {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 800;
-            margin-bottom: 25px;
-            color: var(--text-main);
+            margin-bottom: 28px;
         }
 
         .x-input {
             width: 100%;
             padding: 14px 16px;
-            margin-bottom: 15px;
-            background: var(--bg-main);
+            margin-bottom: 14px;
+            background: transparent;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             color: var(--text-main);
@@ -88,26 +83,32 @@
             width: 100%;
             padding: 14px;
             background: var(--text-main);
-            color: var(--bg-main);
+            color: #000;
             border: none;
-            border-radius: 30px;
-            font-weight: bold;
+            border-radius: 999px;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
         }
-        .x-main-btn:hover { opacity: 0.9; }
 
         .x-switch-link {
             color: var(--accent);
             text-align: center;
             display: block;
-            margin-top: 20px;
+            margin-top: 22px;
             cursor: pointer;
             font-size: 0.9rem;
         }
 
-        /* الهيكل الأساسي للتطبيق */
+        .error-msg {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 12px;
+            text-align: center;
+            min-height: 20px;
+        }
+
         .app-container {
             width: 100%;
             max-width: 600px;
@@ -121,11 +122,10 @@
         }
         .app-container.active { display: flex; }
 
-        /* الهيدر العلوي */
         .top-header {
             position: sticky;
             top: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0,0,0,0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-color);
             z-index: 100;
@@ -135,466 +135,676 @@
             padding: 12px 16px;
         }
 
-        /* صندوق النشر (X Style) */
         .compose-box {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             gap: 12px;
         }
-        .user-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #333; }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #333;
+            flex-shrink: 0;
+        }
+
         .compose-input {
             width: 100%;
             background: transparent;
             border: none;
             color: var(--text-main);
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             resize: none;
             outline: none;
-            min-height: 50px;
+            min-height: 55px;
+            line-height: 1.4;
         }
+
         .compose-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 8px;
+            margin-top: 10px;
             border-top: 1px solid var(--border-color);
-            padding-top: 8px;
-        }
-        .compose-btn {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 6px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
+            padding-top: 10px;
         }
 
-        /* التغريدات / المنشورات */
+        .compose-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .compose-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .post-card {
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             gap: 12px;
         }
-        .post-content { flex: 1; }
-        .post-header-info { display: flex; align-items: center; gap: 5px; font-size: 0.95rem; margin-bottom: 4px; }
-        .post-text { font-size: 0.95rem; line-height: 1.5; margin-bottom: 8px; word-break: break-word; }
-        .post-media { width: 100%; max-height: 350px; border-radius: 16px; object-fit: cover; margin-top: 8px; border: 1px solid var(--border-color); }
-        .post-actions { display: flex; justify-content: space-between; max-width: 350px; margin-top: 10px; color: var(--text-muted); font-size: 0.85rem; }
-        .post-action-btn { background: none; border: none; color: var(--text-muted); display: flex; align-items: center; gap: 6px; cursor: pointer; }
-        .post-action-btn.liked i, .post-action-btn.liked span { color: var(--danger); }
 
-        /* القائمة السفلية لـ X */
+        .post-content { flex: 1; min-width: 0; }
+
+        .post-header-info {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+            flex-wrap: wrap;
+        }
+
+        .post-text {
+            font-size: 0.97rem;
+            line-height: 1.45;
+            margin-bottom: 8px;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .post-media {
+            width: 100%;
+            max-height: 320px;
+            border-radius: 16px;
+            object-fit: cover;
+            margin-top: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 320px;
+            margin-top: 10px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .post-action-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 4px 0;
+        }
+        .post-action-btn.liked,
+        .post-action-btn.liked i,
+        .post-action-btn.liked span {
+            color: var(--danger);
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
+            max-width: 600px;
+            height: 56px;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(12px);
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
             align-items: center;
             z-index: 1000;
         }
-        .nav-item { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; padding: 10px; }
+
+        .nav-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 10px 16px;
+        }
         .nav-item.active { color: var(--text-main); }
 
-        /* صفحات التطبيق */
         .page-view { display: none; }
         .page-view.active { display: block; }
 
-        /* الشات الخاص */
-        .dm-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.03); cursor: pointer; }
-        .dm-item:hover { background: var(--bg-secondary); }
-        
-        .chat-room { display: none; flex-direction: column; height: calc(100vh - 60px); background: var(--bg-main); position: absolute; top: 0; left: 0; width: 100%; z-index: 200; }
+        .dm-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+        }
+
+        .chat-room {
+            display: none;
+            flex-direction: column;
+            height: calc(100vh - 56px);
+            background: var(--bg-main);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 200;
+        }
         .chat-room.active { display: flex; }
-        .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg-bubble { max-width: 75%; padding: 10px 14px; border-radius: 16px; font-size: 0.9rem; word-break: break-word; }
-        .msg-bubble.incoming { background: var(--bg-secondary); align-self: flex-start; }
-        .msg-bubble.outgoing { background: var(--accent); color: white; align-self: flex-end; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .msg-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.92rem;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        .msg-bubble.incoming {
+            background: var(--bg-secondary);
+            align-self: flex-start;
+            border-bottom-right-radius: 4px;
+        }
+        .msg-bubble.outgoing {
+            background: var(--accent);
+            color: white;
+            align-self: flex-end;
+            border-bottom-left-radius: 4px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول وإنشاء الحساب (نسخ X الحرفي) -->
-    <div id="authScreen">
-        <!-- وضع تسجيل الدخول -->
-        <div id="loginBox" class="x-auth-box">
-            <i class="fa-solid fa-crown logo"></i>
-            <h1>تسجيل الدخول إلى روميو</h1>
-            <input type="text" id="loginUser" class="x-input" placeholder="اسم المستخدم (Username)">
-            <input type="password" id="loginPass" class="x-input" placeholder="كلمة المرور (Password)">
-            <button class="x-main-btn" onclick="loginUser()">تسجيل الدخول</button>
-            <div id="loginError" style="color:var(--danger); font-size:0.85rem; margin-top:10px; text-align:center;"></div>
-            <span class="x-switch-link" onclick="toggleAuthMode('register')">ليس لديك حساب؟ إنشاء حساب جديد</span>
-        </div>
-
-        <!-- وضع إنشاء حساب جديد (بدون تكرار اليوزر وباسورد Rr987321 المخفي للحساب الموثق) -->
-        <div id="registerBox" class="x-auth-box" style="display: none;">
-            <i class="fa-solid fa-crown logo"></i>
-            <h1>انضم إلى روميو اليوم</h1>
-            <input type="text" id="regUser" class="x-input" placeholder="اسم المستخدم الفريد">
-            <input type="password" id="regPass" class="x-input" placeholder="كلمة المرور">
-            <button class="x-main-btn" onclick="registerUser()">إنشاء الحساب</button>
-            <div id="regError" style="color:var(--danger); font-size:0.85rem; margin-top:10px; text-align:center;"></div>
-            <span class="x-switch-link" onclick="toggleAuthMode('login')">لديك حساب بالفعل؟ تسجيل الدخول</span>
-        </div>
+<div id="authScreen">
+    <div id="loginBox" class="x-auth-box">
+        <div class="logo">R</div>
+        <h1>تسجيل الدخول إلى R</h1>
+        <input type="text" id="loginUser" class="x-input" placeholder="اسم المستخدم" autocomplete="username">
+        <input type="password" id="loginPass" class="x-input" placeholder="كلمة المرور" autocomplete="current-password">
+        <button class="x-main-btn" onclick="loginUser()">تسجيل الدخول</button>
+        <div id="loginError" class="error-msg"></div>
+        <span class="x-switch-link" onclick="toggleAuthMode('register')">ليس لديك حساب؟ إنشاء حساب</span>
     </div>
 
-    <!-- تطبيق روميو الرئيسي -->
-    <div class="app-container" id="mainAppContainer">
-
-        <main style="flex: 1; overflow-y: auto;">
-
-            <!-- 1. الرئيسية (X Style) -->
-            <div id="page-home" class="page-view active">
-                <header class="top-header">
-                    <span style="font-weight: 900; font-size: 1.2rem;"><i class="fa-solid fa-crown" style="color:var(--accent);"></i> روميو</span>
-                    <i class="fa-solid fa-sparkles" style="color:var(--accent);"></i>
-                </header>
-
-                <!-- صندوق النشر -->
-                <div class="compose-box">
-                    <img id="myAvatarDisplay" src="" class="user-avatar">
-                    <div style="flex: 1;">
-                        <textarea id="composeText" class="compose-input" placeholder="ما الذي يحدث؟"></textarea>
-                        <div id="mediaContainer" style="display:none; margin-bottom:8px;">
-                            <input type="text" id="composeMediaUrl" placeholder="رابط صورة (اختياري)..." style="width:100%; padding:8px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white; border-radius:6px; font-size:0.85rem;">
-                        </div>
-                        <div class="compose-footer">
-                            <div style="display:flex; gap:15px; color:var(--accent); cursor:pointer;">
-                                <i class="fa-regular fa-image" onclick="toggleMediaInput()"></i>
-                                <i class="fa-solid fa-face-smile"></i>
-                            </div>
-                            <button class="compose-btn" onclick="createPost()">تغريد</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="postsFeed"></div>
-            </div>
-
-            <!-- 2. استكشاف -->
-            <div id="page-explore" class="page-view">
-                <header class="top-header">
-                    <div style="background:var(--bg-secondary); padding:8px 12px; border-radius:20px; width:100%; display:flex; align-items:center; gap:8px;">
-                        <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
-                        <input type="text" placeholder="بحث في روميو" style="background:none; border:none; color:white; outline:none; width:100%;">
-                    </div>
-                </header>
-                <div style="padding: 16px;">
-                    <h3 style="margin-bottom: 12px; font-size: 1rem;">الترندات الرائجة</h3>
-                    <div style="background:var(--bg-secondary); padding:12px; border-radius:12px;">
-                        <div style="font-size:0.75rem; color:var(--text-muted);">تقنية · رائج</div>
-                        <div style="font-weight:bold; font-size:0.95rem; margin:2px 0;">تطبيق روميو المدمج</div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);">14.2 ألف منشور</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. الرسائل (شات خاص انستجرام + X) -->
-            <div id="page-messages" class="page-view">
-                <header class="top-header">
-                    <span>الرسائل المباشرة</span>
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </header>
-                <div id="dmList"></div>
-
-                <!-- غرفة الشات -->
-                <div class="chat-room" id="chatRoom">
-                    <div style="padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:12px;">
-                        <i class="fa-solid fa-arrow-right" onclick="closeChat()" style="cursor:pointer;"></i>
-                        <img id="chatHeaderAvatar" src="" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
-                        <h4 id="chatHeaderName" style="font-size:0.95rem;"></h4>
-                    </div>
-                    <div class="chat-messages" id="chatMessagesBox"></div>
-                    <div style="padding:10px 16px; border-top:1px solid var(--border-color); display:flex; gap:10px;">
-                        <input type="text" id="chatInput" placeholder="اكتب رسالة..." style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:10px 15px; border-radius:20px; color:white; outline:none;" onkeypress="if(event.key=='Enter')sendMsg()">
-                        <button onclick="sendMsg()" style="background:var(--accent); color:white; border:none; width:38px; height:38px; border-radius:50%; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. الملف الشخصي (مع إمكانية رفع وتغيير الأفاتار من ملفات الجهاز) -->
-            <div id="page-profile" class="page-view">
-                <header class="top-header">
-                    <span id="profileHeaderName">الملف الشخصي</span>
-                </header>
-                <div style="height: 110px; background: #333;"></div>
-                <div style="padding: 0 16px; position: relative;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: -35px; margin-bottom: 12px;">
-                        <img id="profileAvatarImg" src="" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bg-main); object-fit: cover; background:#222;">
-                        <!-- زر رفع الصورة من الجهاز -->
-                        <label style="background:var(--text-main); color:var(--bg-main); padding:6px 14px; border-radius:20px; font-weight:bold; font-size:0.85rem; cursor:pointer;">
-                            تغيير الصورة
-                            <input type="file" accept="image/*" style="display:none;" onchange="uploadAvatar(event)">
-                        </label>
-                    </div>
-                    <h2 style="display:flex; align-items:center; gap:5px; font-size:1.1rem;">
-                        <span id="profileNameDisplay"></span>
-                        <i id="profileGoldBadge" class="fa-solid fa-circle-check" style="color:var(--accent-gold); display:none; font-size:0.9rem;"></i>
-                    </h2>
-                    <div style="color:var(--text-muted); font-size:0.85rem;" id="profileHandleDisplay"></div>
-                    <p style="margin-top:10px; font-size:0.9rem;" id="welcomeBannerText"></p>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- القائمة السفلية -->
-        <nav class="bottom-nav">
-            <button class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i></button>
-            <button class="nav-item" onclick="switchTab('explore', this)"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button class="nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i></button>
-            <button class="nav-item" onclick="switchTab('profile', this)"><i class="fa-solid fa-user"></i></button>
-        </nav>
-
+    <div id="registerBox" class="x-auth-box" style="display:none;">
+        <div class="logo">R</div>
+        <h1>انضم إلى R</h1>
+        <input type="text" id="regUser" class="x-input" placeholder="اسم المستخدم (فريد)">
+        <input type="text" id="regName" class="x-input" placeholder="الاسم الظاهر">
+        <input type="password" id="regPass" class="x-input" placeholder="كلمة المرور">
+        <button class="x-main-btn" onclick="registerUser()">إنشاء الحساب</button>
+        <div id="regError" class="error-msg"></div>
+        <span class="x-switch-link" onclick="toggleAuthMode('login')">لديك حساب؟ تسجيل الدخول</span>
     </div>
+</div>
+
+<div class="app-container" id="mainApp">
+    <main style="flex:1; overflow-y:auto;">
+
+        <div id="page-home" class="page-view active">
+            <header class="top-header">
+                <span style="font-weight:900; font-size:1.25rem;">R</span>
+                <i class="fa-solid fa-sparkles" style="color:var(--accent);"></i>
+            </header>
+
+            <div class="compose-box">
+                <img id="myAvatar" src="" class="user-avatar">
+                <div style="flex:1;">
+                    <textarea id="composeText" class="compose-input" placeholder="ما الذي يحدث؟" rows="2"></textarea>
+                    <div id="mediaBox" style="display:none; margin:8px 0;">
+                        <input type="text" id="composeMedia" placeholder="رابط صورة (اختياري)" 
+                               style="width:100%; padding:9px 12px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white; border-radius:8px; font-size:0.85rem; outline:none;">
+                    </div>
+                    <div class="compose-footer">
+                        <div style="display:flex; gap:18px; color:var(--accent);">
+                            <i class="fa-regular fa-image" style="cursor:pointer; font-size:1.15rem;" onclick="toggleMedia()"></i>
+                        </div>
+                        <button class="compose-btn" id="postBtn" onclick="createPost()">نشر</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="feed"></div>
+        </div>
+
+        <div id="page-explore" class="page-view">
+            <header class="top-header">
+                <div style="background:var(--bg-secondary); padding:9px 14px; border-radius:999px; width:100%; display:flex; align-items:center; gap:10px;">
+                    <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
+                    <input type="text" placeholder="بحث في R" style="background:none; border:none; color:white; outline:none; width:100%; font-size:0.95rem;">
+                </div>
+            </header>
+            <div style="padding:20px 16px;">
+                <h3 style="margin-bottom:14px; font-size:1.05rem;">الترندات</h3>
+                <div style="background:var(--bg-secondary); padding:14px; border-radius:14px;">
+                    <div style="font-size:0.75rem; color:var(--text-muted);">تقنية · رائج</div>
+                    <div style="font-weight:700; margin:3px 0;">تطبيق R</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">قيد التطوير</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-messages" class="page-view">
+            <header class="top-header">
+                <span style="font-weight:700;">الرسائل</span>
+            </header>
+            <div id="dmList"></div>
+
+            <div class="chat-room" id="chatRoom">
+                <div style="padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:12px;">
+                    <i class="fa-solid fa-arrow-right" onclick="closeChat()" style="cursor:pointer; font-size:1.1rem;"></i>
+                    <img id="chatAvatar" src="" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
+                    <span id="chatName" style="font-weight:700;"></span>
+                </div>
+                <div class="chat-messages" id="chatBox"></div>
+                <div style="padding:10px 14px; border-top:1px solid var(--border-color); display:flex; gap:10px;">
+                    <input type="text" id="chatInput" placeholder="رسالة..." 
+                           style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:11px 16px; border-radius:999px; color:white; outline:none;"
+                           onkeypress="if(event.key==='Enter') sendMsg()">
+                    <button onclick="sendMsg()" style="background:var(--accent); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer;">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-profile" class="page-view">
+            <header class="top-header">
+                <span id="profileHeader" style="font-weight:700;">الملف الشخصي</span>
+                <button onclick="logout()" style="background:none; border:1px solid var(--border-color); color:var(--text-muted); padding:5px 12px; border-radius:999px; font-size:0.8rem; cursor:pointer;">
+                    خروج
+                </button>
+            </header>
+
+            <div style="height:120px; background:linear-gradient(135deg,#1a1a1a,#333);"></div>
+            <div style="padding:0 16px; position:relative;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:-40px; margin-bottom:14px;">
+                    <img id="profileAvatar" src="" style="width:80px; height:80px; border-radius:50%; border:4px solid #000; object-fit:cover; background:#222;">
+                    <label style="background:var(--text-main); color:#000; padding:7px 16px; border-radius:999px; font-weight:700; font-size:0.85rem; cursor:pointer;">
+                        تغيير الصورة
+                        <input type="file" accept="image/*" style="display:none;" onchange="changeAvatar(event)">
+                    </label>
+                </div>
+
+                <h2 style="font-size:1.2rem; display:flex; align-items:center; gap:6px;">
+                    <span id="profileName"></span>
+                    <i id="verifiedBadge" class="fa-solid fa-circle-check" style="color:var(--accent-gold); display:none; font-size:0.95rem;"></i>
+                </h2>
+                <div style="color:var(--text-muted); font-size:0.9rem; margin-bottom:10px;" id="profileHandle"></div>
+                <p style="font-size:0.92rem; line-height:1.5;" id="profileBio"></p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('home', this)"><i class="fa-solid fa-house"></i></button>
+        <button class="nav-item" onclick="switchTab('explore', this)"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button class="nav-item" onclick="switchTab('messages', this)"><i class="fa-solid fa-envelope"></i></button>
+        <button class="nav-item" onclick="switchTab('profile', this)"><i class="fa-solid fa-user"></i></button>
+    </nav>
+</div>
 
 <script>
-    // قاعدة البيانات المحلية لحفظ الحسابات واليوزرات بدون تكرار
-    let usersDB = JSON.parse(localStorage.getItem('romio_users')) || [
-        { user: "R", pass: "Rr987321", name: "رامي الرشيدي", avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80", verified: true }
+    // ===================== بيانات مشروعك مربوطة =====================
+    const SUPABASE_URL = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdwYm54Y3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzExMjMsImV4cCI6MjEwMjAwNzEyM30.JGbLkdWbC0KNEs0zipfRjusG2Tkjh8pEzip5ID7vWqY';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentUser = JSON.parse(localStorage.getItem('r_current')) || null;
+    let postsCache = [];
+    let myLikes = new Set();
+
+    let dms = [
+        { id: 1, name: "سارة", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+          messages: [{ sender: "incoming", text: "أهلاً، كيفك؟" }] }
     ];
+    let activeDm = null;
 
-    let currentLoggedInUser = JSON.parse(localStorage.getItem('romio_current')) || null;
-
-    let postsData = JSON.parse(localStorage.getItem('romio_posts')) || [
-        {
-            id: 1,
-            user: "رامي الرشيدي",
-            handle: "R",
-            verified: true,
-            avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
-            text: "رامي الرشيدي يرحب فيكم في تطبيق روميو! 🚀 تم ضبط النظام بنسخ لصق مطابق لـ X، مع إمكانية رفع الأفاتار من صورك الشخصية.",
-            media: "",
-            likes: 120,
-            liked: false
-        }
-    ];
-
-    let dmsData = [
-        { id: 1, name: "سارة الروقي", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", messages: [{ sender: "incoming", text: "أهلاً رامي، كيف النظام معك؟" }] }
-    ];
-    let activeDmId = null;
-
-    // التحقق التلقائي إذا كان مسجل دخول مسبقاً
-    if(currentLoggedInUser) {
+    if (currentUser) {
         startApp();
     }
 
     function toggleAuthMode(mode) {
-        if(mode === 'register') {
-            document.getElementById('loginBox').style.display = 'none';
-            document.getElementById('registerBox').style.display = 'block';
-        } else {
-            document.getElementById('registerBox').style.display = 'none';
-            document.getElementById('loginBox').style.display = 'block';
-        }
+        document.getElementById('loginBox').style.display = mode === 'login' ? 'block' : 'none';
+        document.getElementById('registerBox').style.display = mode === 'register' ? 'block' : 'none';
+        document.getElementById('loginError').innerText = '';
+        document.getElementById('regError').innerText = '';
     }
 
-    // تسجيل حساب جديد بدون تكرار اليوزر
-    function registerUser() {
-        let u = document.getElementById('regUser').value.trim();
-        let p = document.getElementById('regPass').value.trim();
-        let err = document.getElementById('regError');
+    async function registerUser() {
+        const username = document.getElementById('regUser').value.trim().toLowerCase();
+        const fullName = document.getElementById('regName').value.trim() || username;
+        const password = document.getElementById('regPass').value.trim();
+        const err = document.getElementById('regError');
 
-        if(!u || !p) {
-            err.innerText = "يرجى تعبئة الحقول المطلوبة";
+        if (!username || !password) {
+            err.innerText = 'املأ جميع الحقول';
+            return;
+        }
+        if (username.length < 3) {
+            err.innerText = 'اسم المستخدم قصير جداً';
             return;
         }
 
-        let exists = usersDB.some(x => x.user === u);
-        if(exists) {
-            err.innerText = "اسم المستخدم مستخدم مسبقاً، اختر غيره";
+        const { data: exists } = await supabase
+            .from('r_profiles')
+            .select('id')
+            .eq('username', username)
+            .maybeSingle();
+
+        if (exists) {
+            err.innerText = 'اسم المستخدم مستخدم مسبقاً';
             return;
         }
 
-        let newUser = {
-            user: u,
-            pass: p,
-            name: u,
-            avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
-            verified: (u === "R" || u.toLowerCase() === "rami")
-        };
+        const isVerified = (username === 'r');
 
-        usersDB.push(newUser);
-        localStorage.setItem('romio_users', JSON.stringify(usersDB));
-        alert("تم إنشاء الحساب بنجاح! سجل دخولك الآن.");
+        const { data, error } = await supabase
+            .from('r_profiles')
+            .insert({
+                username,
+                password,
+                full_name: fullName,
+                verified: isVerified
+            })
+            .select()
+            .single();
+
+        if (error) {
+            err.innerText = 'حدث خطأ، حاول مرة أخرى';
+            console.error(error);
+            return;
+        }
+
+        alert('تم إنشاء الحساب بنجاح');
         toggleAuthMode('login');
+        document.getElementById('loginUser').value = username;
     }
 
-    // تسجيل الدخول مع الحساب السري الموثق R / Rr987321
-    function loginUser() {
-        let u = document.getElementById('loginUser').value.trim();
-        let p = document.getElementById('loginPass').value.trim();
-        let err = document.getElementById('loginError');
+    async function loginUser() {
+        const username = document.getElementById('loginUser').value.trim().toLowerCase();
+        const password = document.getElementById('loginPass').value.trim();
+        const err = document.getElementById('loginError');
 
-        let found = usersDB.find(x => x.user === u && x.pass === p);
-        if(found) {
-            currentLoggedInUser = found;
-            localStorage.setItem('romio_current', JSON.stringify(currentLoggedInUser));
-            startApp();
-        } else {
-            err.innerText = "اسم المستخدم أو كلمة المرور غير صحيحة";
+        if (!username || !password) {
+            err.innerText = 'املأ الحقول';
+            return;
         }
+
+        const { data, error } = await supabase
+            .from('r_profiles')
+            .select('*')
+            .eq('username', username)
+            .eq('password', password)
+            .maybeSingle();
+
+        if (error || !data) {
+            err.innerText = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+            return;
+        }
+
+        currentUser = data;
+        localStorage.setItem('r_current', JSON.stringify(currentUser));
+        startApp();
     }
 
-    function startApp() {
+    async function startApp() {
         document.getElementById('authScreen').style.display = 'none';
-        document.getElementById('mainAppContainer').classList.add('active');
-        
-        // تعيين الترحيب المطلوب بدقة
-        document.getElementById('welcomeBannerText').innerText = "رامي الرشيدي يرحب فيكم في تطبيق روميو";
-        
-        updateUserDataUI();
-        renderPosts();
+        document.getElementById('mainApp').classList.add('active');
+
+        updateUI();
+        await loadMyLikes();
+        await loadPosts();
         renderDms();
     }
 
-    function updateUserDataUI() {
-        document.getElementById('myAvatarDisplay').src = currentLoggedInUser.avatar;
-        document.getElementById('profileAvatarImg').src = currentLoggedInUser.avatar;
-        document.getElementById('profileNameDisplay').innerText = currentLoggedInUser.name;
-        document.getElementById('profileHandleDisplay').innerText = "@" + currentLoggedInUser.user;
-        document.getElementById('profileHeaderName').innerText = currentLoggedInUser.name;
-        
-        if(currentLoggedInUser.verified || currentLoggedInUser.user === "R") {
-            document.getElementById('profileGoldBadge').style.display = 'inline-block';
+    function updateUI() {
+        document.getElementById('myAvatar').src = currentUser.avatar_url;
+        document.getElementById('profileAvatar').src = currentUser.avatar_url;
+        document.getElementById('profileName').innerText = currentUser.full_name;
+        document.getElementById('profileHandle').innerText = '@' + currentUser.username;
+        document.getElementById('profileHeader').innerText = currentUser.full_name;
+        document.getElementById('profileBio').innerText = currentUser.bio || 'مرحباً بك في R';
+        document.getElementById('verifiedBadge').style.display = currentUser.verified ? 'inline-block' : 'none';
+    }
+
+    async function loadMyLikes() {
+        const { data } = await supabase
+            .from('r_likes')
+            .select('post_id')
+            .eq('user_id', currentUser.id);
+
+        myLikes = new Set((data || []).map(l => l.post_id));
+    }
+
+    async function loadPosts() {
+        const feed = document.getElementById('feed');
+        feed.innerHTML = '<div class="loading">جاري التحميل...</div>';
+
+        const { data, error } = await supabase
+            .from('r_posts')
+            .select(`
+                id,
+                content,
+                media_url,
+                likes_count,
+                created_at,
+                r_profiles (
+                    id,
+                    username,
+                    full_name,
+                    avatar_url,
+                    verified
+                )
+            `)
+            .order('created_at', { ascending: false })
+            .limit(50);
+
+        if (error) {
+            feed.innerHTML = '<div class="empty-state">حدث خطأ في تحميل المنشورات</div>';
+            console.error(error);
+            return;
         }
-    }
 
-    // رفع وتغيير الأفاتار من صور الجهاز الشخصية
-    function uploadAvatar(event) {
-        let file = event.target.files[0];
-        if(file) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                currentLoggedInUser.avatar = e.target.result;
-                // تحديث القائمة العامة للمستخدمين
-                let idx = usersDB.findIndex(x => x.user === currentLoggedInUser.user);
-                if(idx !== -1) usersDB[idx].avatar = currentLoggedInUser.avatar;
-                
-                localStorage.setItem('romio_users', JSON.stringify(usersDB));
-                localStorage.setItem('romio_current', JSON.stringify(currentLoggedInUser));
-                updateUserDataUI();
-                renderPosts();
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    // تبديل التبويبات
-    function switchTab(tabId, btn) {
-        document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + tabId).classList.add('active');
-        document.querySelectorAll('.bottom-nav .nav-item').forEach(b => b.classList.remove('active'));
-        if(btn) btn.classList.add('active');
-    }
-
-    function toggleMediaInput() {
-        let box = document.getElementById('mediaContainer');
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    // إنشاء تغريدة / منشور
-    function createPost() {
-        let text = document.getElementById('composeText').value.trim();
-        let media = document.getElementById('composeMediaUrl').value.trim();
-        if(!text && !media) return;
-
-        let newPost = {
-            id: Date.now(),
-            user: currentLoggedInUser.name,
-            handle: currentLoggedInUser.user,
-            verified: (currentLoggedInUser.user === "R" || currentLoggedInUser.verified),
-            avatar: currentLoggedInUser.avatar,
-            text: text,
-            media: media,
-            likes: 0,
-            liked: false
-        };
-
-        postsData.unshift(newPost);
-        localStorage.setItem('romio_posts', JSON.stringify(postsData));
-        
-        document.getElementById('composeText').value = '';
-        document.getElementById('composeMediaUrl').value = '';
-        document.getElementById('mediaContainer').style.display = 'none';
+        postsCache = data || [];
         renderPosts();
     }
 
     function renderPosts() {
-        let container = document.getElementById('postsFeed');
+        const feed = document.getElementById('feed');
+
+        if (!postsCache.length) {
+            feed.innerHTML = '<div class="empty-state">لا توجد منشورات بعد<br>كن أول من ينشر</div>';
+            return;
+        }
+
         let html = '';
-        postsData.forEach(p => {
-            let badge = p.verified ? '<i class="fa-solid fa-circle-check" style="color:var(--accent-gold); font-size:0.85rem;"></i>' : '';
+        postsCache.forEach(p => {
+            const user = p.r_profiles;
+            const liked = myLikes.has(p.id);
+            const badge = user.verified ? '<i class="fa-solid fa-circle-check" style="color:var(--accent-gold); font-size:0.85rem;"></i>' : '';
+
             html += `
                 <div class="post-card">
-                    <img src="${p.avatar}" class="user-avatar">
+                    <img src="${user.avatar_url}" class="user-avatar">
                     <div class="post-content">
                         <div class="post-header-info">
-                            <span style="font-weight:bold;">${p.user}</span>
+                            <span style="font-weight:700;">${user.full_name}</span>
                             ${badge}
-                            <span style="color:var(--text-muted);">@${p.handle}</span>
+                            <span style="color:var(--text-muted);">@${user.username}</span>
                         </div>
-                        <div class="post-text">${p.text}</div>
-                        ${p.media ? `<img src="${p.media}" class="post-media">` : ''}
+                        <div class="post-text">${escapeHtml(p.content || '')}</div>
+                        ${p.media_url ? `<img src="${p.media_url}" class="post-media" onerror="this.style.display='none'">` : ''}
                         <div class="post-actions">
-                            <button class="post-action-btn"><i class="fa-regular fa-comment"></i> <span>0</span></button>
-                            <button class="post-action-btn"><i class="fa-solid fa-retweet"></i> <span>0</span></button>
-                            <button class="post-action-btn ${p.liked ? 'liked' : ''}" onclick="toggleLike(${p.id})"><i class="fa-solid fa-heart"></i> <span>${p.likes}</span></button>
+                            <button class="post-action-btn"><i class="fa-regular fa-comment"></i></button>
+                            <button class="post-action-btn"><i class="fa-solid fa-retweet"></i></button>
+                            <button class="post-action-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>${p.likes_count || 0}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
         });
-        container.innerHTML = html;
+        feed.innerHTML = html;
     }
 
-    function toggleLike(id) {
-        let p = postsData.find(x => x.id === id);
-        if(p.liked) {
-            p.likes--;
-            p.liked = false;
-        } else {
-            p.likes++;
-            p.liked = true;
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.innerText = text;
+        return div.innerHTML;
+    }
+
+    async function createPost() {
+        const text = document.getElementById('composeText').value.trim();
+        const media = document.getElementById('composeMedia').value.trim();
+        const btn = document.getElementById('postBtn');
+
+        if (!text && !media) return;
+
+        btn.disabled = true;
+        btn.innerText = '...';
+
+        const { error } = await supabase
+            .from('r_posts')
+            .insert({
+                user_id: currentUser.id,
+                content: text,
+                media_url: media || null
+            });
+
+        btn.disabled = false;
+        btn.innerText = 'نشر';
+
+        if (error) {
+            alert('فشل النشر');
+            console.error(error);
+            return;
         }
-        localStorage.setItem('romio_posts', JSON.stringify(postsData));
+
+        document.getElementById('composeText').value = '';
+        document.getElementById('composeMedia').value = '';
+        document.getElementById('mediaBox').style.display = 'none';
+        await loadPosts();
+    }
+
+    async function toggleLike(postId) {
+        const isLiked = myLikes.has(postId);
+
+        if (isLiked) {
+            await supabase.from('r_likes').delete()
+                .eq('user_id', currentUser.id)
+                .eq('post_id', postId);
+
+            myLikes.delete(postId);
+
+            const post = postsCache.find(p => p.id === postId);
+            if (post) {
+                post.likes_count = Math.max(0, (post.likes_count || 0) - 1);
+                await supabase.from('r_posts').update({ likes_count: post.likes_count }).eq('id', postId);
+            }
+        } else {
+            await supabase.from('r_likes').insert({
+                user_id: currentUser.id,
+                post_id: postId
+            });
+
+            myLikes.add(postId);
+
+            const post = postsCache.find(p => p.id === postId);
+            if (post) {
+                post.likes_count = (post.likes_count || 0) + 1;
+                await supabase.from('r_posts').update({ likes_count: post.likes_count }).eq('id', postId);
+            }
+        }
+
         renderPosts();
     }
 
-    // الشات الخاص
+    async function changeAvatar(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async function(ev) {
+            const base64 = ev.target.result;
+
+            const { error } = await supabase
+                .from('r_profiles')
+                .update({ avatar_url: base64 })
+                .eq('id', currentUser.id);
+
+            if (!error) {
+                currentUser.avatar_url = base64;
+                localStorage.setItem('r_current', JSON.stringify(currentUser));
+                updateUI();
+                await loadPosts();
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function switchTab(tab, btn) {
+        document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + tab).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+    }
+
+    function toggleMedia() {
+        const box = document.getElementById('mediaBox');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
     function renderDms() {
-        let container = document.getElementById('dmList');
-        let html = '';
-        dmsData.forEach(d => {
-            html += `
-                <div class="dm-item" onclick="openChat(${d.id})">
-                    <img src="${d.avatar}" style="width:45px; height:45px; border-radius:50%; object-fit:cover;">
-                    <div>
-                        <h4 style="font-size:0.9rem;">${d.name}</h4>
-                        <p style="font-size:0.8rem; color:var(--text-muted);">${d.messages[d.messages.length-1].text}</p>
-                    </div>
+        const list = document.getElementById('dmList');
+        list.innerHTML = dms.map(d => `
+            <div class="dm-item" onclick="openChat(${d.id})">
+                <img src="${d.avatar}" style="width:48px; height:48px; border-radius:50%; object-fit:cover;">
+                <div>
+                    <div style="font-weight:700; font-size:0.95rem;">${d.name}</div>
+                    <div style="font-size:0.82rem; color:var(--text-muted);">${d.messages[d.messages.length-1].text}</div>
                 </div>
-            `;
-        });
-        container.innerHTML = html;
+            </div>
+        `).join('');
     }
 
     function openChat(id) {
-        activeDmId = id;
-        let chat = dmsData.find(x => x.id === id);
-        document.getElementById('chatHeaderName').innerText = chat.name;
-        document.getElementById('chatHeaderAvatar').src = chat.avatar;
-        renderChatMsgs();
+        activeDm = dms.find(d => d.id === id);
+        document.getElementById('chatName').innerText = activeDm.name;
+        document.getElementById('chatAvatar').src = activeDm.avatar;
+        renderChat();
         document.getElementById('chatRoom').classList.add('active');
     }
 
@@ -602,28 +812,29 @@
         document.getElementById('chatRoom').classList.remove('active');
     }
 
-    function renderChatMsgs() {
-        let chat = dmsData.find(x => x.id === activeDmId);
-        let box = document.getElementById('chatMessagesBox');
-        let html = '';
-        chat.messages.forEach(m => {
-            html += `<div class="msg-bubble ${m.sender}">${m.text}</div>`;
-        });
-        box.innerHTML = html;
+    function renderChat() {
+        const box = document.getElementById('chatBox');
+        box.innerHTML = activeDm.messages.map(m => 
+            `<div class="msg-bubble ${m.sender}">${m.text}</div>`
+        ).join('');
         box.scrollTop = box.scrollHeight;
     }
 
     function sendMsg() {
-        let input = document.getElementById('chatInput');
-        let text = input.value.trim();
-        if(!text) return;
-        let chat = dmsData.find(x => x.id === activeDmId);
-        chat.messages.push({ sender: 'outgoing', text: text });
+        const input = document.getElementById('chatInput');
+        const text = input.value.trim();
+        if (!text || !activeDm) return;
+        activeDm.messages.push({ sender: 'outgoing', text });
         input.value = '';
-        renderChatMsgs();
+        renderChat();
         renderDms();
     }
-</script>
 
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('r_current');
+        location.reload();
+    }
+</script>
 </body>
 </html>
