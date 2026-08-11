@@ -177,7 +177,7 @@
             filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
             animation: flicker 3s infinite alternate ease-in-out;
         }
-        .lantern-right { right: 85px; } /* تم تعديل مكان السراج الأيمن قليلاً لعدم التداخل مع زر الدخول */
+        .lantern-right { right: 85px; }
         .lantern-left { left: 15px; transform: scaleX(-1); }
 
         @keyframes flicker {
@@ -465,9 +465,47 @@
         .modal-close { position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 10; }
         .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
         .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
-        .verse-line { display: flex; justify-content: space-between; align-items: center; font-size: 20px; line-height: 2; color: #ffffff; font-weight: bold; padding: 10px 8px; border-bottom: 1px rgba(212, 175, 55, 0.1) solid; }
-        .shatr { flex: 1; text-align: center; }
-        .separator { color: var(--gold-ancient); padding: 0 10px; font-size: 14px; }
+        
+        /* تنسيق الأبيات بالطريقة الديوانية التقليدية (الصدر يمين والعجز يسار بمسافة واضحة بينهما) */
+        .verse-line { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; 
+            font-size: 19px; 
+            line-height: 2.2; 
+            color: #ffffff; 
+            font-weight: bold; 
+            padding: 12px 10px; 
+            border-bottom: 1px rgba(212, 175, 55, 0.1) solid; 
+            text-align: center;
+        }
+        .shatr-sadr { text-align: right; padding-left: 15px; }
+        .shatr-ajuz { text-align: left; padding-right: 15px; }
+        .separator { color: var(--gold-ancient); font-size: 14px; justify-self: center; }
+
+        /* صندوق شرح القصيدة داخل نافذة القراءة */
+        .poem-explanation-box {
+            background: rgba(140, 109, 29, 0.08);
+            border: 1px dashed var(--border-gold);
+            border-radius: 6px;
+            padding: 15px 18px;
+            margin-top: 25px;
+            font-family: 'Amiri', serif;
+        }
+        .explanation-title {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--gold-ancient);
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .explanation-text {
+            color: var(--sand-text);
+            font-size: 15px;
+            line-height: 1.9;
+        }
 
         .editor-card { background: #0d0a08; border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px; }
         .editor-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); margin-bottom: 14px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
@@ -534,13 +572,13 @@
                     </defs>
                 </svg>
 
-                <h1>ديوان أبو رماح وليان</h1>
+                <h1>ديوان أبو رماح</h1>
                 <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
             </header>
 
             <div class="diwan-royal-banner">
                 <div class="royal-banner-content">
-                    <div class="royal-banner-title">⚔️ ديوان أبو رماح وليان ⚔️</div>
+                    <div class="royal-banner-title">⚔️ ديوان أبو رماح ⚔️</div>
                     <div class="royal-banner-sub">موطن البيان، وعز الفروسية، وذكر الأماجد</div>
                 </div>
             </div>
@@ -625,6 +663,7 @@
                         <input type="text" id="poemMeter" placeholder="البحر / القافية (اختياري)">
                     </div>
                     <textarea id="poemText" placeholder="اكتب أبياتك هنا... استخدم (...) بين الصدر والعجز&#10;مثال:&#10;دعِ الأَيّامَ تَفْعَلُ ما تَشاءُ ... وَطِبْ نَفْساً إِذا حَكَمَ القَضاءُ"></textarea>
+                    <textarea id="poemExplanationInput" placeholder="اكتب شرح القصيدة أو معانيها هنا (اختياري)..." style="min-height: 80px; font-size: 15px;"></textarea>
                     <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
                 </div>
             </div>
@@ -640,6 +679,13 @@
             <div class="modal-title" id="modalTitle">عنوان القصيدة</div>
             <div class="modal-subtitle" id="modalSubtitle">البحر | التابعي</div>
             <div id="modalBody"></div>
+            
+            <!-- صندوق شرح القصيدة -->
+            <div class="poem-explanation-box" id="modalExplanationBox">
+                <div class="explanation-title">💡 شرح وتأملات في القصيدة</div>
+                <div class="explanation-text" id="modalExplanationText">لا يوجد شرح مدون لهذه القصيدة بعد.</div>
+            </div>
+
             <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px dashed var(--gold-muted); padding-top: 12px;">
                 <button onclick="copyCurrentModalPoem()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 15px;">📋 نسخ القصيدة</button>
                 <button onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 15px;">🗑️ حذف القصيدة</button>
@@ -679,7 +725,6 @@
             document.getElementById("lock-screen").style.display = "none";
             document.getElementById("main-site-content").style.display = "block";
             
-            // تحويل زر الزاوية العليا إلى زر تسجيل خروج لمن يرغب بالخروج لاحقاً
             const authBtn = document.getElementById("auth-action-btn");
             authBtn.innerText = "خروج";
             authBtn.style.background = "linear-gradient(135deg, #c0392b 0%, #78281f 100%)";
@@ -687,7 +732,6 @@
             authBtn.style.borderColor = "#e74c3c";
         }
 
-        // التحكم في زر الزاوية العلوية (دخول أو خروج)
         function handleAuthAction() {
             const isLogged = localStorage.getItem("aburamah_isLoggedIn");
             if (isLogged === "true") {
@@ -705,6 +749,7 @@
                 category: "فخر",
                 meter: "البحر الطويل",
                 text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ\nوَوَقْتٍ كَأَنَّ النَّجْمَ فيهِ مُعَلَّقٌ ... بِأَسْبابِ كَتَّانٍ إِلى صُمِّ جَنَّدَلِ",
+                explanation: "تعتبر هذه الأبيات من أشهر ما قيل في وصف طول الليل على المعنّى والمهموم، حيث يصف الشاعر بطء حركة الكواكب وكأنها مربوطة بصخور صلبة بجبل يثبل.",
                 date: "العصر الجاهلي"
             }
         ];
@@ -724,7 +769,9 @@
                 const randomPoem = poems[0];
                 activePoemId = randomPoem.id;
                 const firstLine = randomPoem.text.split('\n')[0];
-                document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
+                // إظهار الشطر الأول فقط في الواجهة إن وجد مفصولاً
+                const cleanFirst = firstLine.split(/\s*\.\.\.\s*|\s*\*\*\*\s*|\s*---\s*/)[0];
+                document.getElementById('featuredQuoteText').innerText = `"${cleanFirst}"`;
             }
         }
 
@@ -743,6 +790,7 @@
             listToRender.forEach(poem => {
                 const lines = poem.text.split('\n').filter(l => l.trim());
                 const firstLine = lines[0] || '';
+                const cleanSnippet = firstLine.split(/\s*\.\.\.\s*|\s*\*\*\*\s*|\s*---\s*/)[0];
                 const card = document.createElement('div');
                 card.className = 'poem-mini-card';
                 card.onclick = () => openPoemModal(poem.id);
@@ -752,7 +800,7 @@
                             <div class="mini-card-title">${poem.title}</div>
                             <span class="mini-card-badge">${poem.category}</span>
                         </div>
-                        <div class="mini-card-snippet">"${firstLine}"</div>
+                        <div class="mini-card-snippet">"${cleanSnippet}..."</div>
                     </div>
                     <div class="mini-card-footer">
                         <span>🗓️ ${poem.date}</span>
@@ -770,17 +818,29 @@
             document.getElementById('modalTitle').innerText = poem.title;
             document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
 
+            // تنسيق الأبيات بالطريقة الديوانية التقليدية (الصدر يمين والعجز يسار)
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
                 const parts = line.split(/\s*\.\.\.\s*|\s*\*\*\*\s*|\s*---\s*/);
                 if (parts.length > 1) {
-                    return `<div class="verse-line"><span class="shatr">${parts[0]}</span><span class="separator">❖</span><span class="shatr">${parts[1]}</span></div>`;
+                    return `<div class="verse-line"><span class="shatr-sadr">${parts[0]}</span><span class="separator">❖</span><span class="shatr-ajuz">${parts[1]}</span></div>`;
                 } else {
-                    return `<div class="verse-line"><span class="shatr" style="width: 100%;">${line}</span></div>`;
+                    return `<div class="verse-line" style="grid-template-columns: 1fr;"><span class="shatr-sadr" style="text-align: center; padding: 0;">${line}</span></div>`;
                 }
             }).join('');
 
             document.getElementById('modalBody').innerHTML = formatted;
+
+            // عرض شرح القصيدة
+            const explanationBox = document.getElementById('modalExplanationBox');
+            const explanationText = document.getElementById('modalExplanationText');
+            if (poem.explanation && poem.explanation.trim() !== "") {
+                explanationText.innerText = poem.explanation;
+                explanationBox.style.display = "block";
+            } else {
+                explanationBox.style.display = "none";
+            }
+
             document.getElementById('poemModal').classList.add('active');
         }
 
@@ -792,6 +852,7 @@
             const category = document.getElementById('poemCategory').value;
             const meter = document.getElementById('poemMeter').value.trim();
             const text = document.getElementById('poemText').value.trim();
+            const explanation = document.getElementById('poemExplanationInput').value.trim();
 
             if (!text) { alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً!'); return; }
 
@@ -801,6 +862,7 @@
                 category: category,
                 meter: meter,
                 text: text,
+                explanation: explanation,
                 date: new Date().toLocaleDateString('ar-SA')
             };
 
@@ -809,6 +871,7 @@
             document.getElementById('poemTitle').value = '';
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
+            document.getElementById('poemExplanationInput').value = '';
             renderPoemsGrid();
             alert('تم نقش القصيدة بنجاح في سجل الديوان!');
             switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
@@ -826,12 +889,19 @@
 
         function copyCurrentModalPoem() {
             const poem = poems.find(p => p.id === activePoemId);
-            if (poem) { navigator.clipboard.writeText(poem.text); alert('تم نسخ الأبيات بنجاح!'); }
+            if (poem) { 
+                let copyText = poem.text;
+                if(poem.explanation) {
+                    copyText += "\n\n[الشرح]:\n" + poem.explanation;
+                }
+                navigator.clipboard.writeText(copyText); 
+                alert('تم نسخ الأبيات مع الشرح بنجاح!'); 
+            }
         }
 
         function searchPoems() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = poems.filter(p => p.title.toLowerCase().includes(query) || p.text.toLowerCase().includes(query));
+            const filtered = poems.filter(p => p.title.toLowerCase().includes(query) || p.text.toLowerCase().includes(query) || (p.explanation && p.explanation.toLowerCase().includes(query)));
             renderPoemsGrid(filtered);
         }
 
