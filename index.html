@@ -192,12 +192,49 @@
         .featured-quote-text { font-size: 22px; line-height: 2; color: var(--text-light); font-weight: bold; margin: 10px 0; }
         .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
 
-        /* استرجاع تصميم زر الفويس القديم الكلاسيكي */
+        /* تعديل زر الصوت ليصبح مندمجاً وبتصميم فويس كلاسيكي منسجم تماماً مع الديوان */
         .audio-player-box {
-            background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 15px; margin-top: 20px; text-align: center;
+            background: var(--book-bg); 
+            border: 1px solid var(--border-gold); 
+            border-radius: 8px; 
+            padding: 14px 18px; 
+            margin-top: 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
         }
-        .audio-player-box audio { width: 100%; outline: none; margin-top: 5px; }
-        .audio-title-label { font-family: 'Aref Ruqaa', serif; font-size: 17px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
+        .audio-info-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .audio-icon-badge {
+            background: var(--gold-ancient);
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 8px rgba(212,175,55,0.4);
+        }
+        .audio-title-label { 
+            font-family: 'Aref Ruqaa', serif; 
+            font-size: 16px; 
+            color: var(--gold-ancient); 
+            margin: 0;
+        }
+        .audio-player-box audio { 
+            height: 38px;
+            flex-grow: 1;
+            max-width: 65%;
+            outline: none; 
+            filter: sepia(20%) contrast(90%);
+        }
 
         .archive-banner {
             width: 100%; height: 90px;
@@ -242,42 +279,40 @@
         .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
         .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
         
-        /* تنسيق الأبيات تماماً مثل الصورة المطلوبة لمتصفح الجوال */
+        /* مطابقة تامة لشكل الأبيات الموضح في صورة متصفح الجوال (متباعدة، منسدلة بوضوح وانسيابية) */
         .mobile-poem-view {
-            padding: 10px 5px;
+            padding: 15px 5px;
             text-align: center;
         }
         .mobile-verse-line {
-            font-size: 21px;
-            line-height: 2.5;
+            font-size: 23px;
+            line-height: 2.8;
             color: var(--text-light);
-            font-weight: bold;
-            margin-bottom: 18px;
-            border-bottom: 1px dashed var(--gold-muted);
-            padding-bottom: 12px;
+            font-weight: 500;
+            margin-bottom: 22px;
         }
 
-        /* زر وخانة الشرح المستقلة تماماً الخاصة بالقصيدة */
+        /* خانة وزر الشرح المستقل تماماً لكل قصيدة */
         .ai-explanation-section {
-            margin-top: 25px;
+            margin-top: 30px;
             background: var(--card-dark);
             border: 1px solid var(--border-gold);
             border-radius: 8px;
-            padding: 15px;
+            padding: 18px;
         }
         .ai-explain-btn {
             background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%);
             color: #fff;
             border: 1px solid var(--gold-glow);
-            padding: 8px 15px;
+            padding: 9px 18px;
             border-radius: 4px;
             font-family: 'Aref Ruqaa', serif;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             margin-bottom: 12px;
         }
         .ai-explanation-box {
@@ -285,17 +320,17 @@
             background: var(--book-bg);
             border: 1px dashed var(--gold-ancient);
             border-radius: 6px;
-            padding: 15px;
+            padding: 16px;
             color: var(--text-light);
-            font-size: 16px;
-            line-height: 1.9;
+            font-size: 17px;
+            line-height: 2;
         }
         .ai-explanation-box.active { display: block; }
 
         .editor-card { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px; }
         .editor-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); margin-bottom: 14px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
         input, select, textarea { width: 100%; background: var(--card-dark); border: 1px solid var(--gold-muted); border-radius: 4px; color: var(--text-light); padding: 10px 12px; font-size: 16px; margin-bottom: 12px; outline: none; }
-        textarea { resize: vertical; min-height: 130px; line-height: 1.8; }
+        textarea { resize: vertical; min-height: 120px; line-height: 1.8; }
         .btn-feather { width: 100%; background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%); color: #fff; border: 1px solid var(--gold-glow); padding: 12px; border-radius: 4px; font-family: 'Aref Ruqaa', serif; font-size: 19px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
@@ -388,9 +423,12 @@
                     <span class="click-hint">اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
                 </div>
 
-                <!-- زر الصوت والـ Voice بالشكل القديم تماماً -->
+                <!-- زر الصوت المدمج والمنسجم تماماً مع تصميم الديوان -->
                 <div class="audio-player-box">
-                    <span class="audio-title-label">المقطع الصوتي المرفق بالديوان</span>
+                    <div class="audio-info-area">
+                        <div class="audio-icon-badge">🎵</div>
+                        <span class="audio-title-label">المقطع الصوتي المرفق بالديوان</span>
+                    </div>
                     <audio controls>
                         <source src="./DLVideo.mp4" type="video/mp4">
                         <source src="DLVideo.mp4" type="video/mp4">
@@ -427,8 +465,8 @@
                         </select>
                         <input type="text" id="poemMeter" placeholder="البحر / القافية">
                     </div>
-                    <textarea id="poemText" placeholder="اكتب الأبيات هنا... استخدم نقاط (.) بين الشطرين أو تحت بعضها"></textarea>
-                    <textarea id="poemExplanationInput" placeholder="أدخل الشرح الخاص بهذه القصيدة (إن وجد)..." style="min-height: 80px;"></textarea>
+                    <textarea id="poemText" placeholder="اكتب الأبيات هنا... كل بيت في سطر مستقل"></textarea>
+                    <textarea id="poemExplanationInput" placeholder="أدخل الشرح المستقل والخاص بهذه القصيدة فقط..." style="min-height: 80px;"></textarea>
                     <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
                 </div>
             </div>
@@ -443,14 +481,14 @@
             <div class="modal-title" id="modalTitle">عنوان القصيدة</div>
             <div class="modal-subtitle" id="modalSubtitle">البحر | التاريخ</div>
             
-            <!-- عرض الأبيات مثل الصورة تماماً -->
+            <!-- عرض الأبيات منسدلة بشكل صافٍ ومرتب مثل الصورة تماماً -->
             <div class="mobile-poem-view" id="modalBody"></div>
             
-            <!-- خانة وزر مستقل للشرح الذكي (AI) -->
+            <!-- خانة وزر الشرح المستقل الخاص بكل قصيدة -->
             <div class="ai-explanation-section">
                 <button class="ai-explain-btn" onclick="toggleAiExplanation()">✨ اطلب شرح الذكاء الاصطناعي للقصيدة</button>
                 <div class="ai-explanation-box" id="aiExplanationBox">
-                    جارِ استخراج الشرح ومعاني الأبيات...
+                    جارِ عرض الشرح الخاص بهذه القصيدة...
                 </div>
             </div>
 
@@ -516,9 +554,18 @@
                 title: "معلقة الفخر",
                 category: "فخر",
                 meter: "البحر الطويل",
-                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
-                explanation: "تأتي هذه الأبيات معبرة عن شدة المعاناة وطول الليل على الشاعر، حيث يتمنى انبلاج الصبح ولكنه لا يرى فيه عزاءً لتشابه الساعات الطويلة.",
+                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي\nبِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ\nبِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
+                explanation: "هذه القصيدة لامرئ القيس، يصف فيها ليله الطويل الموحش وهمومه المتكاثرة، متمنياً انقضاء الليل بلا رجعة لشدة ما يعانيه من حزن وتفكير.",
                 date: "العصر الجاهلي"
+            },
+            {
+                id: 2,
+                title: "نجوى الصمت",
+                category: "حكمة",
+                meter: "البحر الكامل",
+                text: "يا محاكي الصم .. مجهودك سُدى\nمنصتٍ للبكم إنصاتٍ شديد\nيا مدور في الظلالات الهُدى\nمنتظر ابليس عن غيه يحيد\nعاريٍ تبغى الدفى وسط الجليد",
+                explanation: "تأملات عميقة حول عبثية مخاطبة من لا يسمعون، وانتظار الهداية في مواضع الضلال، كمن يرتجي الدفء بوسط الجليد القارس.",
+                date: "مخطوطة حديثة"
             }
         ];
 
@@ -582,7 +629,7 @@
             document.getElementById('modalTitle').innerText = poem.title;
             document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
 
-            // عرض الأبيات بترتيب منسق للجوال تماماً مثل الصورة المطلوبة
+            // تنسيق الأبيات بصفوف مستقلة وواضحة جداً مثل الصورة تماماً
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
                 return `<div class="mobile-verse-line">${line}</div>`;
@@ -590,9 +637,9 @@
 
             document.getElementById('modalBody').innerHTML = formatted;
             
-            // إخفاء صندوق الشرح افتراضياً عند فتح كل قصيدة
+            // إدراج الشرح الخاص بالقصيدة المحددة وحدها دون تكرار
             document.getElementById('aiExplanationBox').classList.remove('active');
-            document.getElementById('aiExplanationBox').innerText = poem.explanation ? poem.explanation : "هذا النص يحمل معاني عميقة تدل على الفصاحة والبيان والاعتزاز بالنفس ومواقف الفروسية.";
+            document.getElementById('aiExplanationBox').innerText = poem.explanation || "هذا النص يحمل معاني فريدة صيغت بعناية فائقة لتلامس الوجدان.";
 
             document.getElementById('poemModal').classList.add('active');
         }
@@ -620,7 +667,7 @@
                 category: category,
                 meter: meter,
                 text: text,
-                explanation: explanation || "شرح تفصيلي يوضح عمق الأبيات ودلالاتها البلاغية واللغوية.",
+                explanation: explanation || "شرح خاص ومستقل لهذه القصيدة يوضح مغزاها الجميل ومعانيها البلاغية.",
                 date: new Date().toLocaleDateString('ar-SA')
             };
 
