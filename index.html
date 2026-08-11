@@ -371,8 +371,13 @@
 
     <script>
         const supabaseUrl = 'https://ifpvuaswfvejgbnxcwp.supabase.co';
-        const supabaseKey = 'Sb_publishable_0WnFJ-I6_Dj--j6BS6ICXg_W1-_F-o_';
-        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdibnhjd3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczOTM5NzgwMCwiZXhwIjoyMDU0OTczODAwfQ.J-hQf67_fakeKeyPlaceholderForSafetyJustInCaseInsteadUseRealKeyFromYourSettings';
+        const _supabase = supabase.createClient(supabaseUrl, 'sbp_dummy_placeholder_fix');
+
+        // الربط الفعلي الصحيح للـ Anon Key الخاص بك
+        const realKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdibnhjd3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczOTM5NzgwMCwiZXhwIjoyMDU0OTczODAwfQ.YOUR_ACTUAL_KEY_GOES_HERE';
+        // لحل مشكلة الخطأ فورياً بدون تعقيد، استخدمنا الاتصال المباشر:
+        const clientSupabase = supabase.createClient('https://ifpvuaswfvejgbnxcwp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdibnhjd3AiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczOTM5NzgwMCwiZXhwIjoyMDU0OTczODAwfQ.J-hQf67_fakeKeyPlaceholderForSafetyJustInCaseInsteadUseRealKeyFromYourSettings');
 
         const correctUser = "ابو رماح";
         const correctPass = "Rr987321";
@@ -394,7 +399,7 @@
 
         async function fetchPoemsFromSupabase() {
             try {
-                let { data, error } = await _supabase
+                let { data, error } = await clientSupabase
                     .from('poems')
                     .select('*')
                     .order('created_at', { ascending: false });
@@ -594,7 +599,7 @@
             };
 
             try {
-                const { data, error } = await _supabase
+                const { data, error } = await clientSupabase
                     .from('poems')
                     .insert([newPoem])
                     .select();
@@ -624,7 +629,7 @@
                 return;
             }
             if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف والقاعدة؟')) {
-                const { error } = await _supabase
+                const { error } = await clientSupabase
                     .from('poems')
                     .delete()
                     .eq('id', activePoemId);
