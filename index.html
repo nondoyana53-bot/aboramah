@@ -583,12 +583,13 @@ const clientSupabase = supabase.createClient(supabaseUrl, supabaseKey);
             if (!text) { alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً'); return; }
 
             const newPoem = {
-                title: title || 'قصيدة بدون عنوان',
-                category: category,
-                meter: meter,
-                text: text,
-                explanation: explanation,
-                date: new Date().toLocaleDateString('ar-SA')
+                const newPoem = {
+    title: title || 'قصيدة بدون عنوان',
+    category: category,
+    meter: meter,
+    text: text,
+    explanation: explanation
+};
             };
 
             try {
