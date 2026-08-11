@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
     
+    <!-- مكتبة Supabase للربط بقاعدة البيانات -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
             --bg-tent: #080605;
@@ -339,7 +342,7 @@
                     </div>
                     <textarea id="poemText" placeholder="اكتب الأبيات هنا... استخدم (...) بين الصدر والعجز&#10;مثال: الشطر الأول ... الشطر الثاني"></textarea>
                     <textarea id="poemExplanationInput" placeholder="اكتب شرح القصيدة ومعانيها هنا..." style="min-height: 90px;"></textarea>
-                    <button class="btn-feather" onclick="savePoemAndExport()">حفظ ونشر القصيدة نهائياً</button>
+                    <button class="btn-feather" onclick="savePoemToSupabase()">حفظ ونشر القصيدة في القاعدة</button>
                 </div>
             </div>
 
@@ -367,23 +370,20 @@
         </div>
     </div>
 
-    <!-- نافذة إظهار الكود الجديد عند النشر لنسخه وتحديثه -->
-    <div class="modal-overlay" id="exportModal" onclick="closeExportOnOverlay(event)">
-        <div class="book-container" style="max-width: 600px; text-align: center;">
-            <button class="modal-close" onclick="closeExportModal()">×</button>
-            <div class="modal-title" style="font-size: 24px;">تمت إضافة القصيدة بنجاح!</div>
-            <p style="font-size: 14px; color: var(--sand-text); margin-bottom: 12px;">لكي ترى أنت وأي شخص الرابط مضافاً إليه هذه القصيدة دائماً، انسخ الكود أدناه وحدث به ملف موقعك:</p>
-            <textarea id="exportCodeOutput" readonly style="height: 120px; font-family: monospace; font-size: 12px; direction: ltr; text-align: left;"></textarea>
-            <button class="btn-feather" onclick="copyExportCode()" style="margin-top: 10px;">نسخ الكود بالكامل</button>
-        </div>
-    </div>
-
     <script>
+        // إعدادات اتصال Supabase
+        const supabaseUrl = 'https://ifpvuaswfvejgbnxcwp.supabase.co';
+        const supabaseKey = 'Sb_publishable_0WnFJ-I6_Dj--j6BS6ICXg_W1-_F-o_';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
         const correctUser = "ابو رماح";
         const correctPass = "Rr987321";
-        const editorSpecialPass = "S123123"; // كلمة المرور السرية مخفية تماماً عن الواجهة
+        const editorSpecialPass = "S123123";
 
-        window.onload = function() {
+        let poems = [];
+        let activePoemId = null;
+
+        window.onload = async function() {
             if (localStorage.getItem("aburamah_isLoggedIn") === "true") {
                 grantAccess();
             }
@@ -391,7 +391,41 @@
             if(savedTheme === "light") {
                 document.documentElement.setAttribute("data-theme", "light");
             }
+            // جلب القصائد من قاعدة البيانات عند فتح الموقع
+            await fetchPoemsFromSupabase();
         };
+
+        async function fetchPoemsFromSupabase() {
+            try {
+                let { data, error } = await _supabase
+                    .from('poems')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('خطأ في جلب البيانات:', error.message);
+                } else if (data && data.length > 0) {
+                    poems = data;
+                } else {
+                    // قصيدة افتراضية أولية إذا كانت القاعدة فارغة
+                    poems = [
+                        {
+                            id: 1,
+                            title: "معلقة الفخر",
+                            category: "فخر",
+                            meter: "البحر الطويل",
+                            text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
+                            explanation: "تعتبر هذه الأبيات من أشهر ما قيل في وصف طول الليل على المعنّى والمهموم.",
+                            date: "العصر الجاهلي"
+                        }
+                    ];
+                }
+                renderPoemsGrid();
+                updateFeaturedQuote();
+            } catch (err) {
+                console.error('استثناء:', err);
+            }
+        }
 
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute("data-theme");
@@ -458,20 +492,6 @@
             document.getElementById("editor-lock-modal").style.display = "none";
         }
 
-        let poems = JSON.parse(localStorage.getItem('aburamah_diwan_persistent')) || [
-            {
-                id: 1,
-                title: "معلقة الفخر",
-                category: "فخر",
-                meter: "البحر الطويل",
-                text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
-                explanation: "تعتبر هذه الأبيات من أشهر ما قيل في وصف طول الليل على المعنّى والمهموم.",
-                date: "العصر الجاهلي"
-            }
-        ];
-
-        let activePoemId = null;
-
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -517,7 +537,7 @@
                         <div class="mini-card-snippet">"${cleanSnippet}..."</div>
                     </div>
                     <div class="mini-card-footer">
-                        <span>${poem.date}</span>
+                        <span>${poem.date || ''}</span>
                         <span class="open-book-btn-text">قراءة الأبيات والشرح</span>
                     </div>
                 `;
@@ -530,7 +550,7 @@
             if (!poem) return;
             activePoemId = id;
             document.getElementById('modalTitle').innerText = poem.title;
-            document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
+            document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date || ''}`;
 
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
@@ -559,7 +579,7 @@
         function closeModal() { document.getElementById('poemModal').classList.remove('active'); }
         function closeModalOnOverlay(e) { if (e.target.id === 'poemModal') closeModal(); }
 
-        function savePoemAndExport() {
+        async function savePoemToSupabase() {
             const title = document.getElementById('poemTitle').value.trim();
             const category = document.getElementById('poemCategory').value;
             const meter = document.getElementById('poemMeter').value.trim();
@@ -569,7 +589,6 @@
             if (!text) { alert('يرجى كتابة أجزاء أو أبيات القصيدة أولاً'); return; }
 
             const newPoem = {
-                id: Date.now(),
                 title: title || 'قصيدة بدون عنوان',
                 category: category,
                 meter: meter,
@@ -578,48 +597,45 @@
                 date: new Date().toLocaleDateString('ar-SA')
             };
 
-            poems.unshift(newPoem);
-            localStorage.setItem('aburamah_diwan_persistent', JSON.stringify(poems));
-            
-            document.getElementById('poemTitle').value = '';
-            document.getElementById('poemMeter').value = '';
-            document.getElementById('poemText').value = '';
-            document.getElementById('poemExplanationInput').value = '';
-            
-            renderPoemsGrid();
-            switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
-            
-            generateFullCodeExport();
+            // إرسال البيانات لقاعدة بيانات Supabase
+            const { data, error } = await _supabase
+                .from('poems')
+                .insert([newPoem])
+                .select();
+
+            if (error) {
+                alert('حدث خطأ أثناء الحفظ في القاعدة: ' + error.message);
+                console.error(error);
+            } else {
+                alert('تمت إضافة القصيدة ونشرها في القاعدة بنجاح!');
+                document.getElementById('poemTitle').value = '';
+                document.getElementById('poemMeter').value = '';
+                document.getElementById('poemText').value = '';
+                document.getElementById('poemExplanationInput').value = '';
+                
+                // تحديث القائمة مباشرة
+                await fetchPoemsFromSupabase();
+                switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
+            }
         }
 
-        function generateFullCodeExport() {
-            let fullHtml = document.documentElement.outerHTML;
-            document.getElementById('exportCodeOutput').value = "<!DOCTYPE html>\n" + fullHtml;
-            document.getElementById('exportModal').classList.add('active');
-        }
-
-        function closeExportModal() { document.getElementById('exportModal').classList.remove('active'); }
-        function closeExportOnOverlay(e) { if (e.target.id === 'exportModal') closeExportModal(); }
-
-        function copyExportCode() {
-            const textarea = document.getElementById('exportCodeOutput');
-            textarea.select();
-            document.execCommand('copy');
-            alert('تم نسخ الكود المحدث بالكامل!');
-            closeExportModal();
-        }
-
-        function deleteCurrentModalPoem() {
+        async function deleteCurrentModalPoem() {
             if (localStorage.getItem("aburamah_editor_unlocked") !== "true") {
                 alert("مرفوض. يتطلب صلاحية خلوة النظم!");
                 return;
             }
-            if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف؟')) {
-                poems = poems.filter(p => p.id !== activePoemId);
-                localStorage.setItem('aburamah_diwan_persistent', JSON.stringify(poems));
-                closeModal();
-                renderPoemsGrid();
-                updateFeaturedQuote();
+            if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف والقاعدة؟')) {
+                const { error } = await _supabase
+                    .from('poems')
+                    .delete()
+                    .eq('id', activePoemId);
+
+                if (error) {
+                    alert('خطأ أثناء الحذف: ' + error.message);
+                } else {
+                    closeModal();
+                    await fetchPoemsFromSupabase();
+                }
             }
         }
 
@@ -671,9 +687,6 @@
                 audio.addEventListener("ended", function () { playBtn.textContent = "▶"; progressBar.style.width = "0%"; currentTimeEl.textContent = "00:00"; audio.currentTime = 0; });
             }
         });
-
-        renderPoemsGrid();
-        updateFeaturedQuote();
     </script>
 </body>
 </html>
