@@ -206,10 +206,27 @@
         .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
         .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
         
-        .verse-line { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 19px; line-height: 2.3; color: var(--text-light); font-weight: bold; padding: 10px 5px; border-bottom: 1px var(--gold-muted) solid; text-align: center; }
-        .shatr-sadr { text-align: right; padding-left: 15px; }
-        .shatr-ajuz { text-align: left; padding-right: 15px; }
-        .separator { color: var(--gold-ancient); font-size: 14px; justify-self: center; }
+        /* تنسيق الأبيات بترتيب الدرج (يمين - يسار) */
+        .verse-line {
+            display: block;
+            font-size: 20px;
+            line-height: 2.5;
+            color: var(--text-light);
+            font-weight: bold;
+            padding: 6px 8px;
+            margin: 2px 0;
+        }
+        .verse-line.sadr {
+            text-align: right;
+            padding-right: 8%;
+        }
+        .verse-line.ajuz {
+            text-align: left;
+            padding-left: 8%;
+        }
+        .verse-line.full {
+            text-align: center;
+        }
 
         .poem-explanation-box { background: var(--card-dark); border: 1px solid var(--border-gold); border-radius: 6px; padding: 18px; margin-top: 25px; }
         .explanation-title { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 19px; margin-bottom: 8px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 4px; }
@@ -548,13 +565,17 @@
             document.getElementById('modalTitle').innerText = poem.title;
             document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date || ''}`;
 
+            // تنسيق الأبيات بترتيب الدرج (يمين - يسار)
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
                 const parts = line.split(/\s*\.\.\.\s*/);
                 if (parts.length > 1) {
-                    return `<div class="verse-line"><span class="shatr-sadr">${parts[0]}</span><span class="separator">❖</span><span class="shatr-ajuz">${parts[1]}</span></div>`;
+                    return `
+                        <div class="verse-line sadr">${parts[0]}</div>
+                        <div class="verse-line ajuz">${parts[1]}</div>
+                    `;
                 } else {
-                    return `<div class="verse-line" style="grid-template-columns: 1fr;"><span class="shatr-sadr" style="text-align: center; padding: 0;">${line}</span></div>`;
+                    return `<div class="verse-line full">${line}</div>`;
                 }
             }).join('');
 
