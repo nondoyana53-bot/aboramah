@@ -205,30 +205,24 @@
         .modal-close { position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 10; }
         .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
         .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
-        
         /* تنسيق الأبيات بترتيب الدرج (يمين - يسار) */
         .verse-line {
             display: block;
-            font-size: 20px;
-            line-height: 2.5;
+            font-size: 21px;
+            line-height: 2.6;
             color: var(--text-light);
             font-weight: bold;
-            padding: 6px 8px;
-            margin: 2px 0;
+            padding: 4px 12px;
+            margin: 6px 0;
         }
-        .verse-line.sadr {
+        .verse-line.right {
             text-align: right;
-            padding-right: 8%;
+            padding-right: 12%;
         }
-        .verse-line.ajuz {
+        .verse-line.left {
             text-align: left;
-            padding-left: 8%;
-        }
-        .verse-line.full {
-            text-align: center;
-        }
-
-        .poem-explanation-box { background: var(--card-dark); border: 1px solid var(--border-gold); border-radius: 6px; padding: 18px; margin-top: 25px; }
+            padding-left: 12%;
+        }        .poem-explanation-box { background: var(--card-dark); border: 1px solid var(--border-gold); border-radius: 6px; padding: 18px; margin-top: 25px; }
         .explanation-title { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 19px; margin-bottom: 8px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 4px; }
         .explanation-text { color: var(--text-light); font-size: 16px; line-height: 1.9; }
 
@@ -565,19 +559,21 @@
             document.getElementById('modalTitle').innerText = poem.title;
             document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date || ''}`;
 
-            // تنسيق الأبيات بترتيب الدرج (يمين - يسار)
-            const formatted = poem.text.split('\n').map(line => {
-                if (!line.trim()) return '';
+                      // ترتيب الدرج: سطر يمين ثم سطر يسار بالتناوب
+            const lines = poem.text.split('\n').filter(line => line.trim() !== '');
+            let formatted = '';
+
+            lines.forEach((line, index) => {
                 const parts = line.split(/\s*\.\.\.\s*/);
+                
                 if (parts.length > 1) {
-                    return `
-                        <div class="verse-line sadr">${parts[0]}</div>
-                        <div class="verse-line ajuz">${parts[1]}</div>
-                    `;
+                    formatted += `<div class="verse-line right">${parts[0]}</div>`;
+                    formatted += `<div class="verse-line left">${parts[1]}</div>`;
                 } else {
-                    return `<div class="verse-line full">${line}</div>`;
+                    const alignClass = (index % 2 === 0) ? 'right' : 'left';
+                    formatted += `<div class="verse-line ${alignClass}">${line}</div>`;
                 }
-            }).join('');
+            });
 
             document.getElementById('modalBody').innerHTML = formatted;
 
