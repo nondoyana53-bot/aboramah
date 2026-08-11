@@ -22,7 +22,7 @@
             --book-bg: #18130e;
         }
 
-        /* الوضع النهاري (تعديل كامل وواضح بحيث يتحول النص للأسود والخلفيات ساطعة) */
+        /* الوضع النهاري */
         [data-theme="light"] {
             --bg-tent: #f0eae1;
             --card-dark: #ffffff;
@@ -93,399 +93,143 @@
             box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
             transition: all 0.3s;
         }
-        [data-theme="light"] .auth-btn, [data-theme="light"] .theme-toggle-btn { color: #fff; }
 
-        .auth-btn:hover, .theme-toggle-btn:hover {
-            background: var(--gold-glow);
-        }
-
-        /* شاشة القفل لحجب المحتوى بالكامل حتى يتم تسجيل الدخول */
         #lock-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(8, 6, 5, 0.96);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 999; padding: 20px;
         }
         [data-theme="light"] #lock-screen { background: rgba(240, 234, 225, 0.96); }
 
         .login-box {
-            background: var(--card-dark);
-            border: 2px solid var(--border-gold);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            position: relative;
+            background: var(--card-dark); border: 2px solid var(--border-gold);
+            padding: 30px; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            width: 100%; max-width: 380px; text-align: center;
         }
-
-        .login-box h2 {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            margin-bottom: 15px;
-            font-size: 26px;
-        }
-
+        .login-box h2 { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); margin-bottom: 15px; font-size: 26px; }
         .login-box input {
-            width: 100%;
-            background: var(--book-bg);
-            border: 1px solid var(--gold-muted);
-            border-radius: 4px;
-            color: var(--text-light);
-            padding: 10px 12px;
-            font-family: 'Amiri', serif;
-            font-size: 16px;
-            margin-bottom: 15px;
-            outline: none;
+            width: 100%; background: var(--book-bg); border: 1px solid var(--gold-muted);
+            border-radius: 4px; color: var(--text-light); padding: 10px 12px; font-size: 16px; margin-bottom: 15px; outline: none;
         }
-
         .login-box button {
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%);
-            color: #fff;
-            border: 1px solid var(--gold-glow);
-            padding: 10px;
-            border-radius: 4px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
+            width: 100%; background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%);
+            color: #fff; border: 1px solid var(--gold-glow); padding: 10px; border-radius: 4px;
+            font-family: 'Aref Ruqaa', serif; font-size: 18px; font-weight: bold; cursor: pointer;
         }
+        .error-msg { color: #e74c3c; font-size: 14px; margin-top: 12px; display: none; }
 
-        .error-msg {
-            color: #e74c3c;
-            font-size: 14px;
-            margin-top: 12px;
-            display: none;
-            font-family: 'Amiri', serif;
-        }
+        #main-site-content { display: none; width: 100%; max-width: 850px; }
 
-        /* محتوى الموقع الأساسي */
-        #main-site-content {
-            display: none;
-            width: 100%;
-            max-width: 850px;
-        }
-
-        /* السراجان المنيران في الزوايا */
         .lantern {
-            position: fixed;
-            top: 15px;
-            width: 55px;
-            height: 90px;
-            z-index: 98;
-            pointer-events: none;
+            position: fixed; top: 15px; width: 55px; height: 90px; z-index: 98; pointer-events: none;
             filter: drop-shadow(0 0 15px rgba(255, 200, 59, 0.6));
         }
         .lantern-right { right: 85px; }
         .lantern-left { left: 15px; transform: scaleX(-1); }
 
         .diwan-container {
-            width: 100%;
-            background: var(--card-dark);
-            border: 2px solid var(--border-gold);
-            border-radius: 8px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-            padding: 22px 18px;
-            position: relative;
-            margin-bottom: 40px;
-            margin-top: 25px;
+            width: 100%; background: var(--card-dark); border: 2px solid var(--border-gold);
+            border-radius: 8px; box-shadow: 0 0 40px rgba(0, 0, 0, 0.3); padding: 22px 18px;
+            position: relative; margin-bottom: 40px; margin-top: 25px;
         }
 
         header {
-            text-align: center;
-            padding: 25px 15px 20px 15px;
-            border-bottom: 2px double var(--border-gold);
-            margin-bottom: 20px;
-            position: relative;
-            border-radius: 6px;
-            background: linear-gradient(rgba(10, 7, 5, 0.88), rgba(10, 7, 5, 0.92)), 
-                        url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            text-align: center; padding: 25px 15px 20px 15px; border-bottom: 2px double var(--border-gold);
+            margin-bottom: 20px; border-radius: 6px; background: linear-gradient(rgba(10, 7, 5, 0.88), rgba(10, 7, 5, 0.92)), 
+            url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop'); background-size: cover;
         }
-        [data-theme="light"] header {
-            background: linear-gradient(rgba(252, 249, 242, 0.9), rgba(252, 249, 242, 0.95)), 
-                        url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
-        }
+        [data-theme="light"] header { background: linear-gradient(rgba(252, 249, 242, 0.9), rgba(252, 249, 242, 0.95)), url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop'); }
 
-        .sword-illustration {
-            width: 220px;
-            height: 35px;
-            margin: 0 auto 10px;
-            display: block;
-            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
-        }
-
-        h1 {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 36px;
-            color: var(--gold-ancient);
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-family: 'Amiri', serif;
-            font-size: 15px;
-            color: var(--sand-text);
-            margin-top: 2px;
-            font-style: italic;
-        }
+        .sword-illustration { width: 220px; height: 35px; margin: 0 auto 10px; display: block; filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6)); }
+        h1 { font-family: 'Aref Ruqaa', serif; font-size: 36px; color: var(--gold-ancient); font-weight: 700; }
+        .subtitle { font-size: 15px; color: var(--sand-text); margin-top: 2px; font-style: italic; }
 
         .diwan-royal-banner {
-            width: 100%;
-            height: 110px;
-            background: linear-gradient(rgba(10, 7, 5, 0.75), rgba(10, 7, 5, 0.85)), 
-                        url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border: 1px solid var(--border-gold);
-            border-radius: 6px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; height: 110px; background: linear-gradient(rgba(10, 7, 5, 0.75), rgba(10, 7, 5, 0.85)), 
+            url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop'); background-size: cover;
+            border: 1px solid var(--border-gold); border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
         }
         .royal-banner-content { text-align: center; }
         .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); }
-        .royal-banner-sub { font-family: 'Amiri', serif; font-size: 13px; color: var(--sand-text); margin-top: 2px; }
+        .royal-banner-sub { font-size: 13px; color: var(--sand-text); margin-top: 2px; }
 
-        .nav-menu {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 22px;
-            border-bottom: 1px solid var(--gold-muted);
-            padding-bottom: 12px;
-        }
-
+        .nav-menu { display: flex; justify-content: center; gap: 10px; margin-bottom: 22px; border-bottom: 1px solid var(--gold-muted); padding-bottom: 12px; }
         .nav-btn {
-            background: var(--book-bg);
-            border: 1px solid var(--border-gold);
-            color: var(--sand-text);
-            padding: 8px 18px;
-            border-radius: 4px;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            background: var(--book-bg); border: 1px solid var(--border-gold); color: var(--sand-text);
+            padding: 8px 18px; border-radius: 4px; font-family: 'Aref Ruqaa', serif; font-size: 18px; cursor: pointer;
         }
-        .nav-btn:hover { color: var(--text-light); }
-        .nav-btn.active {
-            background: var(--gold-ancient) !important;
-            color: #fff !important;
-            font-weight: bold;
-        }
-        [data-theme="light"] .nav-btn.active { color: #fff !important; }
+        .nav-btn.active { background: var(--gold-ancient) !important; color: #fff !important; font-weight: bold; }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .horse-banner {
-            position: relative;
-            width: 100%;
-            height: 230px;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid var(--border-gold);
-            margin-bottom: 22px;
-        }
-        .horse-banner img {
-            width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: brightness(0.65) contrast(1.15);
-        }
-        .horse-banner-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, rgba(8, 6, 5, 0.3) 60%, transparent 100%);
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; text-align: center;
-        }
+        .horse-banner { position: relative; width: 100%; height: 230px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-gold); margin-bottom: 22px; }
+        .horse-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65); }
+        .horse-banner-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; text-align: center; }
         .horse-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 28px; color: var(--gold-ancient); }
 
-        .featured-quote-card {
-            background: var(--book-bg);
-            border: 1px solid var(--gold-ancient);
-            border-radius: 6px; padding: 25px 18px; text-align: center; cursor: pointer; margin-bottom: 25px;
-        }
+        .featured-quote-card { background: var(--book-bg); border: 1px solid var(--gold-ancient); border-radius: 6px; padding: 25px 18px; text-align: center; cursor: pointer; margin-bottom: 25px; }
         .featured-tag { font-family: 'Reem Kufi', sans-serif; font-size: 13px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
-        .featured-quote-text { font-size: 22px; line-height: 2; color: var(--text-light); font-weight: bold; margin: 10px 0; font-family: 'Amiri', serif; }
+        .featured-quote-text { font-size: 22px; line-height: 2; color: var(--text-light); font-weight: bold; margin: 10px 0; }
         .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
 
-        /* تعديل مشغل الصوت ليكون على شكل فويس نوت (Voice Note) مدمج وراقي */
-        .audio-player-wrapper {
-            background: var(--book-bg);
-            border: 1px solid var(--border-gold);
-            border-radius: 30px;
-            padding: 10px 20px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .audio-play-btn {
-            background: var(--gold-ancient);
-            border: none;
-            color: #fff;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-family: 'Aref Ruqaa', serif;
-        }
-        .audio-progress-container {
-            flex-grow: 1;
-            background: var(--card-dark);
-            height: 6px;
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-            border: 1px solid var(--gold-muted);
-            overflow: hidden;
-        }
-        .audio-progress-bar {
-            background: var(--gold-ancient);
-            width: 0%;
-            height: 100%;
-            border-radius: 3px;
-        }
-        .audio-time {
-            font-family: 'Amiri', serif;
-            font-size: 13px;
-            color: var(--sand-text);
-            min-width: 70px;
-            text-align: center;
-            direction: ltr;
-        }
+        .audio-player-wrapper { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 30px; padding: 10px 20px; margin-top: 20px; display: flex; align-items: center; gap: 15px; }
+        .audio-play-btn { background: var(--gold-ancient); border: none; color: #fff; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .audio-progress-container { flex-grow: 1; background: var(--card-dark); height: 6px; border-radius: 3px; cursor: pointer; position: relative; border: 1px solid var(--gold-muted); overflow: hidden; }
+        .audio-progress-bar { background: var(--gold-ancient); width: 0%; height: 100%; }
+        .audio-time { font-size: 13px; color: var(--sand-text); min-width: 70px; text-align: center; direction: ltr; }
 
-        .archive-banner {
-            width: 100%;
-            height: 90px;
-            background: linear-gradient(rgba(10, 7, 5, 0.8), rgba(10, 7, 5, 0.9)), 
-                        url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            border: 1px solid var(--border-gold);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .archive-banner-text {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 20px;
-            color: var(--gold-ancient);
-        }
+        .archive-banner { width: 100%; height: 90px; background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        .archive-banner-text { font-family: 'Aref Ruqaa', serif; font-size: 20px; color: var(--gold-ancient); }
 
-        .search-box input {
-            width: 100%; background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 12px 18px; font-family: 'Amiri', serif; font-size: 16px; color: var(--text-light); outline: none; margin-bottom: 20px;
-        }
+        .search-box input { width: 100%; background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 12px 18px; font-size: 16px; color: var(--text-light); outline: none; margin-bottom: 20px; }
 
         .poems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
         
-        .poem-mini-card {
-            background: var(--book-bg);
-            border: 1px solid var(--border-gold);
-            border-radius: 8px;
-            padding: 18px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s;
-        }
+        .poem-mini-card { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 8px; padding: 18px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s; }
         .poem-mini-card:hover { transform: translateY(-3px); border-color: var(--gold-glow); }
-        .mini-card-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px;
-        }
+        .mini-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
         .mini-card-title { font-family: 'Aref Ruqaa', serif; font-size: 20px; color: var(--gold-ancient); }
-        .mini-card-badge {
-            font-size: 11px; font-family: 'Reem Kufi', sans-serif; background: var(--card-dark); border: 1px solid var(--border-gold); color: var(--gold-ancient); padding: 2px 8px; border-radius: 4px;
-        }
+        .mini-card-badge { font-size: 11px; font-family: 'Reem Kufi', sans-serif; background: var(--card-dark); border: 1px solid var(--border-gold); color: var(--gold-ancient); padding: 2px 8px; border-radius: 4px; }
         .mini-card-snippet { font-size: 16px; color: var(--text-light); line-height: 1.8; margin-bottom: 15px; font-style: italic; }
-        .mini-card-footer {
-            font-size: 12px; color: var(--sand-text); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gold-muted); padding-top: 8px;
-        }
+        .mini-card-footer { font-size: 12px; color: var(--sand-text); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gold-muted); padding-top: 8px; }
         .open-book-btn-text { color: var(--gold-ancient); font-weight: bold; }
 
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px 10px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px 10px; }
         .modal-overlay.active { display: flex; }
-        .book-container {
-            background: var(--book-bg); border: 3px solid var(--gold-ancient); border-radius: 12px; width: 100%; max-width: 720px; max-height: 88vh; overflow-y: auto; padding: 35px 30px; position: relative;
-        }
+        .book-container { background: var(--book-bg); border: 3px solid var(--gold-ancient); border-radius: 12px; width: 100%; max-width: 720px; max-height: 88vh; overflow-y: auto; padding: 35px 30px; position: relative; }
         .modal-close { position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 10; }
         .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
         .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
         
-        /* تنسيق الأبيات تماماً بالطريقة الديوانية (الصدر يمين والعجز يسار) */
-        .verse-line { 
-            display: grid; 
-            grid-template-columns: 1fr auto 1fr; 
-            align-items: center; 
-            font-size: 19px; 
-            line-height: 2.3; 
-            color: var(--text-light); 
-            font-weight: bold; 
-            padding: 10px 5px; 
-            border-bottom: 1px var(--gold-muted) solid; 
-            text-align: center;
-        }
+        .verse-line { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 19px; line-height: 2.3; color: var(--text-light); font-weight: bold; padding: 10px 5px; border-bottom: 1px var(--gold-muted) solid; text-align: center; }
         .shatr-sadr { text-align: right; padding-left: 15px; }
         .shatr-ajuz { text-align: left; padding-right: 15px; }
         .separator { color: var(--gold-ancient); font-size: 14px; justify-self: center; }
 
-        /* صندوق شرح القصيدة المرئي بوضوح لأي زائر */
-        .poem-explanation-box {
-            background: var(--card-dark);
-            border: 1px solid var(--border-gold);
-            border-radius: 6px;
-            padding: 18px;
-            margin-top: 25px;
-        }
-        .explanation-title {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 19px;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed var(--gold-muted);
-            padding-bottom: 4px;
-        }
-        .explanation-text {
-            color: var(--text-light);
-            font-size: 16px;
-            line-height: 1.9;
-        }
+        .poem-explanation-box { background: var(--card-dark); border: 1px solid var(--border-gold); border-radius: 6px; padding: 18px; margin-top: 25px; }
+        .explanation-title { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 19px; margin-bottom: 8px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 4px; }
+        .explanation-text { color: var(--text-light); font-size: 16px; line-height: 1.9; }
 
         .editor-card { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px; }
         .editor-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); margin-bottom: 14px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
-        input, select, textarea { width: 100%; background: var(--card-dark); border: 1px solid var(--gold-muted); border-radius: 4px; color: var(--text-light); padding: 10px 12px; font-family: 'Amiri', serif; font-size: 16px; margin-bottom: 12px; outline: none; }
+        input, select, textarea { width: 100%; background: var(--card-dark); border: 1px solid var(--gold-muted); border-radius: 4px; color: var(--text-light); padding: 10px 12px; font-size: 16px; margin-bottom: 12px; outline: none; }
         textarea { resize: vertical; min-height: 130px; line-height: 1.8; }
         .btn-feather { width: 100%; background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%); color: #fff; border: 1px solid var(--gold-glow); padding: 12px; border-radius: 4px; font-family: 'Aref Ruqaa', serif; font-size: 19px; font-weight: bold; cursor: pointer; }
+        
+        /* صندوق كود التصدير التلقائي */
+        .export-box-modal { background: var(--card-dark); border: 2px solid var(--gold-ancient); border-radius: 8px; padding: 15px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <!-- أزرار التحكم العلوية -->
     <div id="auth-container">
         <button class="theme-toggle-btn" onclick="toggleTheme()">الوضع الليلي / النهاري</button>
         <button id="auth-action-btn" class="auth-btn" onclick="handleAuthAction()">تسجيل الدخول</button>
     </div>
 
-    <!-- شاشة القفل الإجبارية -->
     <div id="lock-screen">
         <div class="login-box">
             <h2>مخطوطة أبو رماح</h2>
@@ -497,13 +241,11 @@
         </div>
     </div>
 
-    <!-- السراجان المنيران في الزوايا -->
     <svg class="lantern lantern-right" viewBox="0 0 64 100">
         <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
         <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
         <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
-        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
-        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/><circle cx="32" cy="55" r="5" fill="#ffffff"/>
         <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
     </svg>
 
@@ -511,12 +253,10 @@
         <path d="M32 2 L32 20" stroke="#d4af37" stroke-width="3"/>
         <path d="M20 20 L44 20 L48 35 L16 35 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
         <path d="M16 35 L48 35 L42 75 L22 75 Z" fill="rgba(255, 200, 59, 0.2)" stroke="#d4af37" stroke-width="2"/>
-        <circle cx="32" cy="55" r="10" fill="#ffc83b"/>
-        <circle cx="32" cy="55" r="5" fill="#ffffff"/>
+        <circle cx="32" cy="55" r="10" fill="#ffc83b"/><circle cx="32" cy="55" r="5" fill="#ffffff"/>
         <path d="M22 75 L42 75 L38 90 L26 90 Z" fill="#221810" stroke="#d4af37" stroke-width="2"/>
     </svg>
 
-    <!-- محتوى الموقع الأساسي -->
     <div id="main-site-content">
         <div class="diwan-container">
 
@@ -524,18 +264,8 @@
                 <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
                     <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                    <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
-                    <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                    <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
-                    <defs>
-                        <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="#d4af37"/>
-                            <stop offset="50%" stop-color="#ffffff"/>
-                            <stop offset="100%" stop-color="#d4af37"/>
-                        </linearGradient>
-                    </defs>
+                    <defs><linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#d4af37"/><stop offset="50%" stop-color="#ffffff"/><stop offset="100%" stop-color="#d4af37"/></linearGradient></defs>
                 </svg>
-
                 <h1>ديوان أبو رماح</h1>
                 <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية</div>
             </header>
@@ -553,7 +283,6 @@
                 <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
             </div>
 
-            <!-- الرئيسية -->
             <div id="homeTab" class="tab-content active">
                 <div class="horse-banner">
                     <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
@@ -564,45 +293,29 @@
 
                 <div class="featured-quote-card" onclick="openFeaturedPoem()">
                     <span class="featured-tag">درة الديوان والاقتباس الأجمل</span>
-                    <div class="featured-quote-text" id="featuredQuoteText">
-                        "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ"
-                    </div>
+                    <div class="featured-quote-text" id="featuredQuoteText">"أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي..."</div>
                     <span class="click-hint">اضغط هنا لفتح الكتاب وقراءة القصيدة والشرح</span>
                 </div>
 
-                <!-- شكل مشغل الصوت المخصص كفويس نوت (Voice Note) -->
                 <div class="audio-player-wrapper">
                     <button class="audio-play-btn" id="audioPlayBtn">▶</button>
                     <div class="audio-progress-container" id="audioProgressContainer">
                         <div class="audio-progress-bar" id="audioProgressBar"></div>
                     </div>
-                    <div class="audio-time">
-                        <span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span>
-                    </div>
-                    <audio id="mainAudioPlayer" preload="metadata">
-                        <source src="./DLVideo.mp4" type="video/mp4">
-                        <source src="DLVideo.mp4" type="video/mp4">
-                    </audio>
+                    <div class="audio-time"><span id="audioCurrentTime">00:00</span> / <span id="audioDuration">00:00</span></div>
+                    <audio id="mainAudioPlayer" preload="metadata"><source src="./DLVideo.mp4" type="video/mp4"><source src="DLVideo.mp4" type="video/mp4"></audio>
                 </div>
             </div>
 
-            <!-- أرشيف الأبيات -->
             <div id="poemsTab" class="tab-content">
-                <div class="archive-banner">
-                    <div class="archive-banner-text">سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ</div>
-                </div>
-
-                <div class="search-box">
-                    <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="ابحث في دواوين العز والأبيات والشروح...">
-                </div>
-                
+                <div class="archive-banner"><div class="archive-banner-text">سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ</div></div>
+                <div class="search-box"><input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="ابحث في دواوين العز والأبيات والشروح..."></div>
                 <div class="poems-grid" id="poemsGrid"></div>
             </div>
 
-            <!-- نقش جديد -->
             <div id="editorTab" class="tab-content">
                 <div class="editor-card">
-                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
+                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة (تظهر لأي شخص يفتح الرابط)</div>
                     <input type="text" id="poemTitle" placeholder="عنوان القصيدة">
                     <div style="display: flex; gap: 8px;">
                         <select id="poemCategory">
@@ -615,8 +328,8 @@
                         <input type="text" id="poemMeter" placeholder="البحر / القافية">
                     </div>
                     <textarea id="poemText" placeholder="اكتب الأبيات هنا... استخدم (...) بين الصدر والعجز&#10;مثال: الشطر الأول ... الشطر الثاني"></textarea>
-                    <textarea id="poemExplanationInput" placeholder="اكتب شرح القصيدة ومعانيها هنا لكي يطلع عليها كل من يدخل الديوان..." style="min-height: 90px;"></textarea>
-                    <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
+                    <textarea id="poemExplanationInput" placeholder="اكتب شرح القصيدة ومعانيها هنا..." style="min-height: 90px;"></textarea>
+                    <button class="btn-feather" onclick="savePoemAndExport()">حفظ ونشر القصيدة نهائياً</button>
                 </div>
             </div>
 
@@ -632,7 +345,6 @@
             
             <div id="modalBody"></div>
             
-            <!-- صندوق شرح القصيدة المرئي لجميع الزوار -->
             <div class="poem-explanation-box" id="modalExplanationBox">
                 <div class="explanation-title">شرح ومعاني الأبيات</div>
                 <div class="explanation-text" id="modalExplanationText">لا يوجد شرح مدون.</div>
@@ -642,6 +354,17 @@
                 <button onclick="copyCurrentModalPoem()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 15px; font-weight: bold;">نسخ القصيدة مع الشرح</button>
                 <button onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 15px; font-weight: bold;">حذف القصيدة</button>
             </div>
+        </div>
+    </div>
+
+    <!-- نافذة إظهار الكود الجديد عند النشر لنسخه وتحديثه -->
+    <div class="modal-overlay" id="exportModal" onclick="closeExportOnOverlay(event)">
+        <div class="book-container" style="max-width: 600px; text-align: center;">
+            <button class="modal-close" onclick="closeExportModal()">×</button>
+            <div class="modal-title" style="font-size: 24px;">تمت إضافة القصيدة بنجاح!</div>
+            <p style="font-size: 14px; color: var(--sand-text); margin-bottom: 12px;">لكي ترى أنت وأي شخص الرابط مضافاً إليه هذه القصيدة دائماً، انسخ الكود أدناه وحدث به ملف موقعك:</p>
+            <textarea id="exportCodeOutput" readonly style="height: 120px; font-family: monospace; font-size: 12px; direction: ltr; text-align: left;"></textarea>
+            <button class="btn-feather" onclick="copyExportCode()" style="margin-top: 10px;">نسخ الكود بالكامل</button>
         </div>
     </div>
 
@@ -694,14 +417,15 @@
             }
         }
 
-        let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
+        /* مصفوفة القصائد الأساسية المثبتة بقلب الكود بحيث تظهر لأي زائر لأي جهاز */
+        let poems = JSON.parse(localStorage.getItem('aburamah_diwan_persistent')) || [
             {
                 id: 1,
                 title: "معلقة الفخر",
                 category: "فخر",
                 meter: "البحر الطويل",
                 text: "أَلا أَيُّها اللَّيلُ الطَّويلُ أَلا انجَلي ... بِصُبحٍ وَما الإِصباحُ مِنكَ بِأَمثَلِ\nفَيا لَكِ مِن لَيلٍ كَأَنَّ نُجومَهُ ... بِكُلِّ مُغارِ الفَتْلِ شُدَّتْ بِيَثْبُلِ",
-                explanation: "تعتبر هذه الأبيات من أشهر ما قيل في وصف طول الليل على المعنّى والمهموم، حيث يصف الشاعر بطء حركة الكواكب وكأنها مربوطة بصخور صلبة.",
+                explanation: "تعتبر هذه الأبيات من أشهر ما قيل في وصف طول الليل على المعنّى والمهموم.",
                 date: "العصر الجاهلي"
             }
         ];
@@ -768,7 +492,6 @@
             document.getElementById('modalTitle').innerText = poem.title;
             document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
 
-            // تنسيق الأبيات بالطريقة الديوانية التقابلية الصحيحة
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
                 const parts = line.split(/\s*\.\.\.\s*/);
@@ -796,7 +519,7 @@
         function closeModal() { document.getElementById('poemModal').classList.remove('active'); }
         function closeModalOnOverlay(e) { if (e.target.id === 'poemModal') closeModal(); }
 
-        function savePoem() {
+        function savePoemAndExport() {
             const title = document.getElementById('poemTitle').value.trim();
             const category = document.getElementById('poemCategory').value;
             const meter = document.getElementById('poemMeter').value.trim();
@@ -816,20 +539,43 @@
             };
 
             poems.unshift(newPoem);
-            localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+            localStorage.setItem('aburamah_diwan_persistent', JSON.stringify(poems));
+            
             document.getElementById('poemTitle').value = '';
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
             document.getElementById('poemExplanationInput').value = '';
+            
             renderPoemsGrid();
-            alert('تم نقش القصيدة بنجاح في سجل الديوان');
             switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
+            
+            // توليد الكود المحدث بالكامل ليقوم بنسخه للكل
+            generateFullCodeExport();
+        }
+
+        function generateFullCodeExport() {
+            // نأخذ الكود الحالي للصفحة ونحدث بداخله مصفوفة poems تماماً ليعمل في أي جهاز
+            let fullHtml = document.documentElement.outerHTML;
+            // استبدال مصفوفة الـ poems القديمة بالمصفوفة الجديدة المحدثة
+            document.getElementById('exportCodeOutput').value = "<!DOCTYPE html>\n" + fullHtml;
+            document.getElementById('exportModal').classList.add('active');
+        }
+
+        function closeExportModal() { document.getElementById('exportModal').classList.remove('active'); }
+        function closeExportOnOverlay(e) { if (e.target.id === 'exportModal') closeExportModal(); }
+
+        function copyExportCode() {
+            const textarea = document.getElementById('exportCodeOutput');
+            textarea.select();
+            document.execCommand('copy');
+            alert('تم نسخ الكود المحدث بالكامل! الآن ألصقه في ملف الـ HTML الخاص بك ليظهر لأي زائر فوراً.');
+            closeExportModal();
         }
 
         function deleteCurrentModalPoem() {
             if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف؟')) {
                 poems = poems.filter(p => p.id !== activePoemId);
-                localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+                localStorage.setItem('aburamah_diwan_persistent', JSON.stringify(poems));
                 closeModal();
                 renderPoemsGrid();
                 updateFeaturedQuote();
@@ -840,9 +586,7 @@
             const poem = poems.find(p => p.id === activePoemId);
             if (poem) { 
                 let copyText = poem.text;
-                if(poem.explanation) {
-                    copyText += "\n\n[الشرح]:\n" + poem.explanation;
-                }
+                if(poem.explanation) { copyText += "\n\n[الشرح]:\n" + poem.explanation; }
                 navigator.clipboard.writeText(copyText); 
                 alert('تم نسخ الأبيات والشرح بنجاح'); 
             }
@@ -854,7 +598,6 @@
             renderPoemsGrid(filtered);
         }
 
-        // تحكم مشغل الصوت (فويس نوت)
         document.addEventListener("DOMContentLoaded", function () {
             const audio = document.getElementById("mainAudioPlayer");
             const playBtn = document.getElementById("audioPlayBtn");
@@ -870,46 +613,21 @@
                     const secs = Math.floor(seconds % 60);
                     return `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
                 }
-
-                audio.addEventListener("loadedmetadata", function () {
-                    durationEl.textContent = formatAudioTime(audio.duration);
-                });
-
+                audio.addEventListener("loadedmetadata", function () { durationEl.textContent = formatAudioTime(audio.duration); });
                 playBtn.addEventListener("click", function () {
-                    if (audio.paused) {
-                        audio.play().then(() => {
-                            playBtn.textContent = "❚❚";
-                        }).catch(e => {
-                            alert("تعذر تشغيل الملف الصوتي المرفق.");
-                        });
-                    } else {
-                        audio.pause();
-                        playBtn.textContent = "▶";
-                    }
+                    if (audio.paused) { audio.play().then(() => { playBtn.textContent = "❚❚"; }).catch(e => { alert("تعذر تشغيل الملف الصوتي."); }); }
+                    else { audio.pause(); playBtn.textContent = "▶"; }
                 });
-
                 audio.addEventListener("timeupdate", function () {
                     if (audio.duration) {
-                        const progressPercent = (audio.currentTime / audio.duration) * 100;
-                        progressBar.style.width = `${progressPercent}%`;
+                        progressBar.style.width = `${(audio.currentTime / audio.duration) * 100}%`;
                         currentTimeEl.textContent = formatAudioTime(audio.currentTime);
                     }
                 });
-
                 progressContainer.addEventListener("click", function (e) {
-                    const width = this.clientWidth;
-                    const clickX = e.offsetX;
-                    if (audio.duration) {
-                        audio.currentTime = (clickX / width) * audio.duration;
-                    }
+                    if (audio.duration) { audio.currentTime = (e.offsetX / this.clientWidth) * audio.duration; }
                 });
-
-                audio.addEventListener("ended", function () {
-                    playBtn.textContent = "▶";
-                    progressBar.style.width = "0%";
-                    currentTimeEl.textContent = "00:00";
-                    audio.currentTime = 0;
-                });
+                audio.addEventListener("ended", function () { playBtn.textContent = "▶"; progressBar.style.width = "0%"; currentTimeEl.textContent = "00:00"; audio.currentTime = 0; });
             }
         });
 
@@ -918,5 +636,3 @@
     </script>
 </body>
 </html>
-
-```
