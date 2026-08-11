@@ -1,856 +1,517 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>R</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            --bg-main: #000000;
-            --bg-secondary: #16181c;
-            --border-color: #2f3336;
-            --text-main: #e7e9ea;
-            --text-muted: #71767b;
-            --accent: #1d9bf0;
-            --accent-gold: #f4ab0a;
-            --danger: #f4212e;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>R</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg: #000;
+  --bg2: #16181c;
+  --border: #2f3336;
+  --text: #e7e9ea;
+  --muted: #71767b;
+  --blue: #1d9bf0;
+  --gold: #f4ab0a;
+  --red: #f4212e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text); min-height: 100vh; display: flex; justify-content: center; }
+button { font-family: inherit; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+/* Auth */
+#auth { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.auth-box { width: 100%; max-width: 380px; }
+.auth-box .logo { font-size: 2.8rem; font-weight: 900; text-align: center; margin-bottom: 28px; }
+.auth-box h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 24px; }
+.input { width: 100%; padding: 14px 16px; margin-bottom: 12px; background: transparent; border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 1rem; outline: none; }
+.input:focus { border-color: var(--blue); }
+.btn-main { width: 100%; padding: 14px; background: var(--text); color: #000; border: none; border-radius: 999px; font-weight: 700; font-size: 1rem; margin-top: 8px; }
+.switch { color: var(--blue); text-align: center; display: block; margin-top: 20px; font-size: 0.9rem; cursor: pointer; }
+.error { color: var(--red); font-size: 0.85rem; margin-top: 10px; text-align: center; min-height: 18px; }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-        }
+/* App */
+#app { width: 100%; max-width: 600px; min-height: 100vh; display: none; flex-direction: column; position: relative; padding-bottom: 56px; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+#app.show { display: flex; }
 
-        #authScreen {
-            position: fixed;
-            inset: 0;
-            background: var(--bg-main);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+.header { position: sticky; top: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 50; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
 
-        .x-auth-box {
-            width: 100%;
-            max-width: 380px;
-        }
+.compose { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: #333; flex-shrink: 0; }
+.compose textarea { width: 100%; background: transparent; border: none; color: var(--text); font-size: 1.1rem; resize: none; outline: none; min-height: 50px; line-height: 1.4; }
+.compose-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 8px; }
+.btn-post { background: var(--blue); color: #fff; border: none; padding: 7px 18px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; }
 
-        .x-auth-box .logo {
-            font-size: 2.8rem;
-            color: var(--text-main);
-            margin-bottom: 28px;
-            text-align: center;
-            display: block;
-            font-weight: 900;
-        }
+.post { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.post-body { flex: 1; min-width: 0; }
+.post-user { display: flex; align-items: center; gap: 4px; font-size: 0.95rem; margin-bottom: 2px; flex-wrap: wrap; }
+.post-text { font-size: 0.97rem; line-height: 1.45; margin: 4px 0 8px; white-space: pre-wrap; word-break: break-word; }
+.post-media { width: 100%; max-height: 300px; border-radius: 16px; object-fit: cover; border: 1px solid var(--border); margin-top: 6px; }
+.post-actions { display: flex; justify-content: space-between; max-width: 300px; margin-top: 8px; color: var(--muted); font-size: 0.85rem; }
+.action-btn { background: none; border: none; color: var(--muted); display: flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.85rem; }
+.action-btn.liked { color: var(--red); }
 
-        .x-auth-box h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 28px;
-        }
+.nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 600px; height: 56px; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; }
+.nav button { background: none; border: none; color: var(--muted); font-size: 1.25rem; padding: 10px 16px; }
+.nav button.active { color: var(--text); }
 
-        .x-input {
-            width: 100%;
-            padding: 14px 16px;
-            margin-bottom: 14px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-        }
-        .x-input:focus { border-color: var(--accent); }
+.page { display: none; }
+.page.active { display: block; }
 
-        .x-main-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--text-main);
-            color: #000;
-            border: none;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 8px;
-        }
+/* Profile */
+.banner { height: 140px; background: #333; background-size: cover; background-position: center; }
+.profile-info { padding: 0 16px; position: relative; }
+.profile-top { display: flex; justify-content: space-between; align-items: flex-end; margin-top: -45px; margin-bottom: 12px; }
+.profile-avatar { width: 90px; height: 90px; border-radius: 50%; border: 4px solid #000; object-fit: cover; background: #222; }
+.btn-edit { background: transparent; border: 1px solid var(--border); color: var(--text); padding: 7px 16px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; }
+.profile-name { font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+.profile-handle { color: var(--muted); font-size: 0.95rem; margin-bottom: 10px; }
+.profile-bio { font-size: 0.95rem; line-height: 1.5; margin-bottom: 16px; }
 
-        .x-switch-link {
-            color: var(--accent);
-            text-align: center;
-            display: block;
-            margin-top: 22px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
+.empty { text-align: center; padding: 50px 20px; color: var(--muted); }
+.loading { text-align: center; padding: 40px; color: var(--muted); }
 
-        .error-msg {
-            color: var(--danger);
-            font-size: 0.85rem;
-            margin-top: 12px;
-            text-align: center;
-            min-height: 20px;
-        }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.modal.show { display: flex; }
+.modal-content { background: var(--bg2); width: 100%; max-width: 600px; border-radius: 16px 16px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; }
+.modal h3 { margin-bottom: 16px; }
+.modal .input { margin-bottom: 12px; }
+.modal-actions { display: flex; gap: 10px; margin-top: 16px; }
+.modal-actions button { flex: 1; padding: 12px; border-radius: 999px; font-weight: 700; border: none; }
+.btn-cancel { background: transparent; border: 1px solid var(--border) !important; color: var(--text); }
+.btn-save { background: var(--blue); color: #fff; }
 
-        .app-container {
-            width: 100%;
-            max-width: 600px;
-            min-height: 100vh;
-            display: none;
-            flex-direction: column;
-            position: relative;
-            padding-bottom: 60px;
-            border-left: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-        }
-        .app-container.active { display: flex; }
-
-        .top-header {
-            position: sticky;
-            top: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-        }
-
-        .compose-box {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #333;
-            flex-shrink: 0;
-        }
-
-        .compose-input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-size: 1.1rem;
-            resize: none;
-            outline: none;
-            min-height: 55px;
-            line-height: 1.4;
-        }
-
-        .compose-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 10px;
-        }
-
-        .compose-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 7px 18px;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .post-card {
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            gap: 12px;
-        }
-
-        .post-content { flex: 1; min-width: 0; }
-
-        .post-header-info {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.95rem;
-            margin-bottom: 3px;
-            flex-wrap: wrap;
-        }
-
-        .post-text {
-            font-size: 0.97rem;
-            line-height: 1.45;
-            margin-bottom: 8px;
-            word-break: break-word;
-            white-space: pre-wrap;
-        }
-
-        .post-media {
-            width: 100%;
-            max-height: 320px;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-top: 8px;
-            border: 1px solid var(--border-color);
-        }
-
-        .post-actions {
-            display: flex;
-            justify-content: space-between;
-            max-width: 320px;
-            margin-top: 10px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .post-action-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            padding: 4px 0;
-        }
-        .post-action-btn.liked,
-        .post-action-btn.liked i,
-        .post-action-btn.liked span {
-            color: var(--danger);
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 600px;
-            height: 56px;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.25rem;
-            cursor: pointer;
-            padding: 10px 16px;
-        }
-        .nav-item.active { color: var(--text-main); }
-
-        .page-view { display: none; }
-        .page-view.active { display: block; }
-
-        .dm-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            cursor: pointer;
-        }
-
-        .chat-room {
-            display: none;
-            flex-direction: column;
-            height: calc(100vh - 56px);
-            background: var(--bg-main);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 200;
-        }
-        .chat-room.active { display: flex; }
-
-        .chat-messages {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .msg-bubble {
-            max-width: 75%;
-            padding: 10px 14px;
-            border-radius: 18px;
-            font-size: 0.92rem;
-            word-break: break-word;
-            line-height: 1.4;
-        }
-        .msg-bubble.incoming {
-            background: var(--bg-secondary);
-            align-self: flex-start;
-            border-bottom-right-radius: 4px;
-        }
-        .msg-bubble.outgoing {
-            background: var(--accent);
-            color: white;
-            align-self: flex-end;
-            border-bottom-left-radius: 4px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-muted);
-        }
-    </style>
+.delete-btn { color: var(--red) !important; }
+</style>
 </head>
 <body>
 
-<div id="authScreen">
-    <div id="loginBox" class="x-auth-box">
-        <div class="logo">R</div>
-        <h1>تسجيل الدخول إلى R</h1>
-        <input type="text" id="loginUser" class="x-input" placeholder="اسم المستخدم">
-        <input type="password" id="loginPass" class="x-input" placeholder="كلمة المرور">
-        <button class="x-main-btn" id="loginBtn">تسجيل الدخول</button>
-        <div id="loginError" class="error-msg"></div>
-        <span class="x-switch-link" id="goRegister">ليس لديك حساب؟ إنشاء حساب</span>
-    </div>
+<!-- Auth -->
+<div id="auth">
+  <div class="auth-box" id="loginBox">
+    <div class="logo">R</div>
+    <h1>تسجيل الدخول إلى R</h1>
+    <input class="input" id="loginUser" placeholder="اسم المستخدم">
+    <input class="input" id="loginPass" type="password" placeholder="كلمة المرور">
+    <button class="btn-main" id="loginBtn">تسجيل الدخول</button>
+    <div class="error" id="loginError"></div>
+    <span class="switch" id="toRegister">ليس لديك حساب؟ إنشاء حساب</span>
+  </div>
 
-    <div id="registerBox" class="x-auth-box" style="display:none;">
-        <div class="logo">R</div>
-        <h1>انضم إلى R</h1>
-        <input type="text" id="regUser" class="x-input" placeholder="اسم المستخدم (فريد)">
-        <input type="text" id="regName" class="x-input" placeholder="الاسم الظاهر">
-        <input type="password" id="regPass" class="x-input" placeholder="كلمة المرور">
-        <button class="x-main-btn" id="regBtn">إنشاء الحساب</button>
-        <div id="regError" class="error-msg"></div>
-        <span class="x-switch-link" id="goLogin">لديك حساب؟ تسجيل الدخول</span>
-    </div>
+  <div class="auth-box" id="registerBox" style="display:none">
+    <div class="logo">R</div>
+    <h1>انضم إلى R</h1>
+    <input class="input" id="regUser" placeholder="اسم المستخدم">
+    <input class="input" id="regName" placeholder="الاسم الظاهر">
+    <input class="input" id="regPass" type="password" placeholder="كلمة المرور">
+    <button class="btn-main" id="regBtn">إنشاء الحساب</button>
+    <div class="error" id="regError"></div>
+    <span class="switch" id="toLogin">لديك حساب؟ تسجيل الدخول</span>
+  </div>
 </div>
 
-<div class="app-container" id="mainApp">
-    <main style="flex:1; overflow-y:auto;">
+<!-- App -->
+<div id="app">
+  <main style="flex:1; overflow-y:auto">
 
-        <div id="page-home" class="page-view active">
-            <header class="top-header">
-                <span style="font-weight:900; font-size:1.25rem;">R</span>
-                <i class="fa-solid fa-sparkles" style="color:var(--accent);"></i>
-            </header>
+    <!-- Home -->
+    <div class="page active" id="page-home">
+      <div class="header">
+        <span style="font-weight:900; font-size:1.25rem">R</span>
+        <i class="fa-solid fa-sparkles" style="color:var(--blue)"></i>
+      </div>
 
-            <div class="compose-box">
-                <img id="myAvatar" src="" class="user-avatar">
-                <div style="flex:1;">
-                    <textarea id="composeText" class="compose-input" placeholder="ما الذي يحدث؟" rows="2"></textarea>
-                    <div id="mediaBox" style="display:none; margin:8px 0;">
-                        <input type="text" id="composeMedia" placeholder="رابط صورة (اختياري)" 
-                               style="width:100%; padding:9px 12px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white; border-radius:8px; font-size:0.85rem; outline:none;">
-                    </div>
-                    <div class="compose-footer">
-                        <div style="display:flex; gap:18px; color:var(--accent);">
-                            <i class="fa-regular fa-image" style="cursor:pointer; font-size:1.15rem;" id="mediaIcon"></i>
-                        </div>
-                        <button class="compose-btn" id="postBtn">نشر</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="feed"></div>
+      <div class="compose">
+        <img class="avatar" id="homeAvatar" src="">
+        <div style="flex:1">
+          <textarea id="postText" placeholder="ما الذي يحدث؟" rows="2"></textarea>
+          <div id="mediaBox" style="display:none; margin:8px 0">
+            <input class="input" id="postMedia" placeholder="رابط صورة (اختياري)" style="margin:0; padding:10px 12px; font-size:0.9rem">
+          </div>
+          <div class="compose-actions">
+            <i class="fa-regular fa-image" id="mediaToggle" style="color:var(--blue); font-size:1.2rem; cursor:pointer"></i>
+            <button class="btn-post" id="postBtn">نشر</button>
+          </div>
         </div>
+      </div>
 
-        <div id="page-explore" class="page-view">
-            <header class="top-header">
-                <div style="background:var(--bg-secondary); padding:9px 14px; border-radius:999px; width:100%; display:flex; align-items:center; gap:10px;">
-                    <i class="fa-solid fa-magnifying-glass" style="color:var(--text-muted);"></i>
-                    <input type="text" placeholder="بحث في R" style="background:none; border:none; color:white; outline:none; width:100%; font-size:0.95rem;">
-                </div>
-            </header>
-            <div style="padding:20px 16px;">
-                <h3 style="margin-bottom:14px; font-size:1.05rem;">الترندات</h3>
-                <div style="background:var(--bg-secondary); padding:14px; border-radius:14px;">
-                    <div style="font-size:0.75rem; color:var(--text-muted);">تقنية · رائج</div>
-                    <div style="font-weight:700; margin:3px 0;">تطبيق R</div>
-                    <div style="font-size:0.75rem; color:var(--text-muted);">قيد التطوير</div>
-                </div>
-            </div>
+      <div id="feed"></div>
+    </div>
+
+    <!-- Explore -->
+    <div class="page" id="page-explore">
+      <div class="header">
+        <div style="background:var(--bg2); padding:9px 14px; border-radius:999px; width:100%; display:flex; align-items:center; gap:10px">
+          <i class="fa-solid fa-magnifying-glass" style="color:var(--muted)"></i>
+          <input placeholder="بحث في R" style="background:none; border:none; color:white; outline:none; width:100%; font-size:0.95rem">
         </div>
+      </div>
+      <div id="exploreFeed" style="padding-top:8px"></div>
+    </div>
 
-        <div id="page-messages" class="page-view">
-            <header class="top-header">
-                <span style="font-weight:700;">الرسائل</span>
-            </header>
-            <div id="dmList"></div>
+    <!-- Messages -->
+    <div class="page" id="page-messages">
+      <div class="header"><span>الرسائل</span></div>
+      <div class="empty">قريباً...</div>
+    </div>
 
-            <div class="chat-room" id="chatRoom">
-                <div style="padding:12px 16px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:12px;">
-                    <i class="fa-solid fa-arrow-right" id="closeChatBtn" style="cursor:pointer; font-size:1.1rem;"></i>
-                    <img id="chatAvatar" src="" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
-                    <span id="chatName" style="font-weight:700;"></span>
-                </div>
-                <div class="chat-messages" id="chatBox"></div>
-                <div style="padding:10px 14px; border-top:1px solid var(--border-color); display:flex; gap:10px;">
-                    <input type="text" id="chatInput" placeholder="رسالة..." 
-                           style="flex:1; background:var(--bg-secondary); border:1px solid var(--border-color); padding:11px 16px; border-radius:999px; color:white; outline:none;">
-                    <button id="sendMsgBtn" style="background:var(--accent); border:none; width:42px; height:42px; border-radius:50%; color:white; cursor:pointer;">
-                        <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
+    <!-- Profile -->
+    <div class="page" id="page-profile">
+      <div class="header">
+        <span id="profileTitle">الملف الشخصي</span>
+        <button id="logoutBtn" style="background:none; border:1px solid var(--border); color:var(--muted); padding:5px 12px; border-radius:999px; font-size:0.8rem">خروج</button>
+      </div>
+
+      <div class="banner" id="profileBanner"></div>
+      <div class="profile-info">
+        <div class="profile-top">
+          <img class="profile-avatar" id="profileAvatar" src="">
+          <button class="btn-edit" id="editProfileBtn">تعديل الملف</button>
         </div>
-
-        <div id="page-profile" class="page-view">
-            <header class="top-header">
-                <span id="profileHeader" style="font-weight:700;">الملف الشخصي</span>
-                <button id="logoutBtn" style="background:none; border:1px solid var(--border-color); color:var(--text-muted); padding:5px 12px; border-radius:999px; font-size:0.8rem; cursor:pointer;">
-                    خروج
-                </button>
-            </header>
-
-            <div style="height:120px; background:linear-gradient(135deg,#1a1a1a,#333);"></div>
-            <div style="padding:0 16px; position:relative;">
-                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:-40px; margin-bottom:14px;">
-                    <img id="profileAvatar" src="" style="width:80px; height:80px; border-radius:50%; border:4px solid #000; object-fit:cover; background:#222;">
-                    <label style="background:var(--text-main); color:#000; padding:7px 16px; border-radius:999px; font-weight:700; font-size:0.85rem; cursor:pointer;">
-                        تغيير الصورة
-                        <input type="file" accept="image/*" style="display:none;" id="avatarInput">
-                    </label>
-                </div>
-
-                <h2 style="font-size:1.2rem; display:flex; align-items:center; gap:6px;">
-                    <span id="profileName"></span>
-                    <i id="verifiedBadge" class="fa-solid fa-circle-check" style="color:var(--accent-gold); display:none; font-size:0.95rem;"></i>
-                </h2>
-                <div style="color:var(--text-muted); font-size:0.9rem; margin-bottom:10px;" id="profileHandle"></div>
-                <p style="font-size:0.92rem; line-height:1.5;" id="profileBio"></p>
-            </div>
+        <div class="profile-name">
+          <span id="profileName"></span>
+          <i class="fa-solid fa-circle-check" id="verifiedIcon" style="color:var(--gold); display:none; font-size:1rem"></i>
         </div>
-    </main>
+        <div class="profile-handle" id="profileHandle"></div>
+        <div class="profile-bio" id="profileBio"></div>
+      </div>
 
-    <nav class="bottom-nav">
-        <button class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i></button>
-        <button class="nav-item" data-tab="explore"><i class="fa-solid fa-magnifying-glass"></i></button>
-        <button class="nav-item" data-tab="messages"><i class="fa-solid fa-envelope"></i></button>
-        <button class="nav-item" data-tab="profile"><i class="fa-solid fa-user"></i></button>
-    </nav>
+      <div id="profilePosts"></div>
+    </div>
+  </main>
+
+  <nav class="nav">
+    <button class="active" data-tab="home"><i class="fa-solid fa-house"></i></button>
+    <button data-tab="explore"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <button data-tab="messages"><i class="fa-solid fa-envelope"></i></button>
+    <button data-tab="profile"><i class="fa-solid fa-user"></i></button>
+  </nav>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3>تعديل الملف الشخصي</h3>
+    <input class="input" id="editName" placeholder="الاسم">
+    <input class="input" id="editBio" placeholder="النبذة">
+    <label style="display:block; margin:12px 0 6px; color:var(--muted); font-size:0.9rem">تغيير الأفاتار</label>
+    <input type="file" id="editAvatar" accept="image/*" style="margin-bottom:12px; color:var(--text)">
+    <label style="display:block; margin:12px 0 6px; color:var(--muted); font-size:0.9rem">تغيير الهيدر</label>
+    <input type="file" id="editBanner" accept="image/*" style="margin-bottom:12px; color:var(--text)">
+    <div class="modal-actions">
+      <button class="btn-cancel" id="cancelEdit">إلغاء</button>
+      <button class="btn-save" id="saveEdit">حفظ</button>
+    </div>
+  </div>
 </div>
 
 <script>
-    const SUPABASE_URL = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdwYm54Y3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzExMjMsImV4cCI6MjEwMjAwNzEyM30.JGbLkdWbC0KNEs0zipfRjusG2Tkjh8pEzip5ID7vWqY';
+const SUPABASE_URL = 'https://ifpvuaswfvejgpbnxcwp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmcHZ1YXN3ZnZlamdwYm54Y3dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MzExMjMsImV4cCI6MjEwMjAwNzEyM30.JGbLkdWbC0KNEs0zipfRjusG2Tkjh8pEzip5ID7vWqY';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentUser = JSON.parse(localStorage.getItem('r_user')) || null;
+let posts = [];
+let myLikes = new Set();
 
-    let currentUser = JSON.parse(localStorage.getItem('r_current')) || null;
-    let postsCache = [];
-    let myLikes = new Set();
-    let dms = [
-        { id: 1, name: "سارة", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
-          messages: [{ sender: "incoming", text: "أهلاً، كيفك؟" }] }
-    ];
-    let activeDm = null;
+// ========== Auth ==========
+document.getElementById('loginBtn').onclick = login;
+document.getElementById('regBtn').onclick = register;
+document.getElementById('toRegister').onclick = () => switchAuth('register');
+document.getElementById('toLogin').onclick = () => switchAuth('login');
 
-    // ========== ربط الأزرار ==========
-    document.getElementById('loginBtn').addEventListener('click', loginUser);
-    document.getElementById('regBtn').addEventListener('click', registerUser);
-    document.getElementById('goRegister').addEventListener('click', () => toggleAuthMode('register'));
-    document.getElementById('goLogin').addEventListener('click', () => toggleAuthMode('login'));
-    document.getElementById('postBtn').addEventListener('click', createPost);
-    document.getElementById('mediaIcon').addEventListener('click', toggleMedia);
-    document.getElementById('logoutBtn').addEventListener('click', logout);
-    document.getElementById('avatarInput').addEventListener('change', changeAvatar);
-    document.getElementById('closeChatBtn').addEventListener('click', closeChat);
-    document.getElementById('sendMsgBtn').addEventListener('click', sendMsg);
+function switchAuth(mode) {
+  document.getElementById('loginBox').style.display = mode === 'login' ? 'block' : 'none';
+  document.getElementById('registerBox').style.display = mode === 'register' ? 'block' : 'none';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('regError').textContent = '';
+}
 
-    document.querySelectorAll('.nav-item').forEach(btn => {
-        btn.addEventListener('click', function() {
-            switchTab(this.dataset.tab, this);
-        });
-    });
+async function register() {
+  const username = document.getElementById('regUser').value.trim().toLowerCase();
+  const name = document.getElementById('regName').value.trim() || username;
+  const pass = document.getElementById('regPass').value.trim();
+  const err = document.getElementById('regError');
 
-    if (currentUser) {
-        startApp();
+  if (!username || !pass) return err.textContent = 'املأ الحقول';
+  if (username.length < 3) return err.textContent = 'اسم المستخدم قصير';
+
+  err.textContent = 'جاري الإنشاء...';
+
+  const { data: exists } = await supabase.from('r_profiles').select('id').eq('username', username).maybeSingle();
+  if (exists) return err.textContent = 'اسم المستخدم مستخدم';
+
+  const { error } = await supabase.from('r_profiles').insert({
+    username, password: pass, full_name: name, verified: username === 'r'
+  });
+
+  if (error) return err.textContent = error.message;
+  err.textContent = '';
+  alert('تم إنشاء الحساب');
+  switchAuth('login');
+  document.getElementById('loginUser').value = username;
+}
+
+async function login() {
+  const username = document.getElementById('loginUser').value.trim().toLowerCase();
+  const pass = document.getElementById('loginPass').value.trim();
+  const err = document.getElementById('loginError');
+
+  if (!username || !pass) return err.textContent = 'املأ الحقول';
+  err.textContent = 'جاري الدخول...';
+
+  const { data, error } = await supabase.from('r_profiles')
+    .select('*').eq('username', username).eq('password', pass).maybeSingle();
+
+  if (error || !data) return err.textContent = 'بيانات غير صحيحة';
+
+  currentUser = data;
+  localStorage.setItem('r_user', JSON.stringify(currentUser));
+  startApp();
+}
+
+// ========== App Start ==========
+if (currentUser) startApp();
+
+async function startApp() {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('app').classList.add('show');
+  updateProfileUI();
+  await loadLikes();
+  await loadPosts();
+}
+
+function updateProfileUI() {
+  document.getElementById('homeAvatar').src = currentUser.avatar_url || '';
+  document.getElementById('profileAvatar').src = currentUser.avatar_url || '';
+  document.getElementById('profileName').textContent = currentUser.full_name;
+  document.getElementById('profileHandle').textContent = '@' + currentUser.username;
+  document.getElementById('profileTitle').textContent = currentUser.full_name;
+  document.getElementById('profileBio').textContent = currentUser.bio || '';
+  document.getElementById('verifiedIcon').style.display = currentUser.verified ? 'inline' : 'none';
+
+  const banner = currentUser.banner_url;
+  document.getElementById('profileBanner').style.backgroundImage = banner ? `url(${banner})` : '';
+  document.getElementById('profileBanner').style.backgroundColor = banner ? 'transparent' : '#333';
+}
+
+// ========== Posts ==========
+async function loadLikes() {
+  const { data } = await supabase.from('r_likes').select('post_id').eq('user_id', currentUser.id);
+  myLikes = new Set((data || []).map(x => x.post_id));
+}
+
+async function loadPosts() {
+  const feed = document.getElementById('feed');
+  const explore = document.getElementById('exploreFeed');
+  feed.innerHTML = '<div class="loading">جاري التحميل...</div>';
+
+  const { data, error } = await supabase.from('r_posts')
+    .select(`id, content, media_url, likes_count, created_at, user_id,
+      r_profiles (id, username, full_name, avatar_url, verified)`)
+    .order('created_at', { ascending: false })
+    .limit(40);
+
+  if (error) {
+    feed.innerHTML = '<div class="empty">خطأ في التحميل</div>';
+    return;
+  }
+
+  posts = data || [];
+  renderFeed(feed, posts);
+  renderFeed(explore, posts);
+  renderProfilePosts();
+}
+
+function renderFeed(container, list) {
+  if (!list.length) {
+    container.innerHTML = '<div class="empty">لا توجد تغريدات بعد</div>';
+    return;
+  }
+
+  container.innerHTML = list.map(p => {
+    const u = p.r_profiles;
+    const liked = myLikes.has(p.id);
+    const isOwner = p.user_id === currentUser.id;
+    const badge = u.verified ? '<i class="fa-solid fa-circle-check" style="color:var(--gold);font-size:0.85rem"></i>' : '';
+
+    return `
+      <div class="post">
+        <img class="avatar" src="${u.avatar_url || ''}">
+        <div class="post-body">
+          <div class="post-user">
+            <strong>${u.full_name}</strong>
+            ${badge}
+            <span style="color:var(--muted)">@${u.username}</span>
+            <span style="color:var(--muted);font-size:0.8rem"> · ${timeAgo(p.created_at)}</span>
+          </div>
+          <div class="post-text">${esc(p.content || '')}</div>
+          ${p.media_url ? `<img class="post-media" src="${p.media_url}" onerror="this.style.display='none'">` : ''}
+          <div class="post-actions">
+            <button class="action-btn"><i class="fa-regular fa-comment"></i></button>
+            <button class="action-btn"><i class="fa-solid fa-retweet"></i></button>
+            <button class="action-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
+              <i class="fa-solid fa-heart"></i> <span>${p.likes_count || 0}</span>
+            </button>
+            ${isOwner ? `<button class="action-btn delete-btn" onclick="deletePost('${p.id}')"><i class="fa-regular fa-trash-can"></i></button>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderProfilePosts() {
+  const myPosts = posts.filter(p => p.user_id === currentUser.id);
+  renderFeed(document.getElementById('profilePosts'), myPosts);
+}
+
+function esc(t) {
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - new Date(date)) / 1000);
+  if (s < 60) return 'الآن';
+  if (s < 3600) return Math.floor(s/60) + 'د';
+  if (s < 86400) return Math.floor(s/3600) + 'س';
+  return Math.floor(s/86400) + 'ي';
+}
+
+// ========== Actions ==========
+document.getElementById('postBtn').onclick = async () => {
+  const text = document.getElementById('postText').value.trim();
+  const media = document.getElementById('postMedia').value.trim();
+  if (!text && !media) return;
+
+  const btn = document.getElementById('postBtn');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  const { error } = await supabase.from('r_posts').insert({
+    user_id: currentUser.id,
+    content: text,
+    media_url: media || null
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'نشر';
+
+  if (error) return alert('فشل النشر');
+  document.getElementById('postText').value = '';
+  document.getElementById('postMedia').value = '';
+  document.getElementById('mediaBox').style.display = 'none';
+  await loadPosts();
+};
+
+document.getElementById('mediaToggle').onclick = () => {
+  const box = document.getElementById('mediaBox');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+};
+
+async function toggleLike(id) {
+  const liked = myLikes.has(id);
+  if (liked) {
+    await supabase.from('r_likes').delete().eq('user_id', currentUser.id).eq('post_id', id);
+    myLikes.delete(id);
+    const p = posts.find(x => x.id === id);
+    if (p) {
+      p.likes_count = Math.max(0, (p.likes_count || 0) - 1);
+      await supabase.from('r_posts').update({ likes_count: p.likes_count }).eq('id', id);
     }
-
-    function toggleAuthMode(mode) {
-        document.getElementById('loginBox').style.display = mode === 'login' ? 'block' : 'none';
-        document.getElementById('registerBox').style.display = mode === 'register' ? 'block' : 'none';
-        document.getElementById('loginError').innerText = '';
-        document.getElementById('regError').innerText = '';
+  } else {
+    await supabase.from('r_likes').insert({ user_id: currentUser.id, post_id: id });
+    myLikes.add(id);
+    const p = posts.find(x => x.id === id);
+    if (p) {
+      p.likes_count = (p.likes_count || 0) + 1;
+      await supabase.from('r_posts').update({ likes_count: p.likes_count }).eq('id', id);
     }
+  }
+  renderFeed(document.getElementById('feed'), posts);
+  renderFeed(document.getElementById('exploreFeed'), posts);
+  renderProfilePosts();
+}
 
-    async function registerUser() {
-        const username = document.getElementById('regUser').value.trim().toLowerCase();
-        const fullName = document.getElementById('regName').value.trim() || username;
-        const password = document.getElementById('regPass').value.trim();
-        const err = document.getElementById('regError');
+async function deletePost(id) {
+  if (!confirm('حذف التغريدة؟')) return;
+  await supabase.from('r_posts').delete().eq('id', id);
+  await loadPosts();
+}
 
-        if (!username || !password) {
-            err.innerText = 'املأ جميع الحقول';
-            return;
-        }
-        if (username.length < 3) {
-            err.innerText = 'اسم المستخدم قصير جداً';
-            return;
-        }
+// ========== Profile Edit ==========
+document.getElementById('editProfileBtn').onclick = () => {
+  document.getElementById('editName').value = currentUser.full_name || '';
+  document.getElementById('editBio').value = currentUser.bio || '';
+  document.getElementById('editModal').classList.add('show');
+};
 
-        err.innerText = 'جاري إنشاء الحساب...';
+document.getElementById('cancelEdit').onclick = () => {
+  document.getElementById('editModal').classList.remove('show');
+};
 
-        try {
-            const { data: exists } = await supabase
-                .from('r_profiles')
-                .select('id')
-                .eq('username', username)
-                .maybeSingle();
+document.getElementById('saveEdit').onclick = async () => {
+  const name = document.getElementById('editName').value.trim();
+  const bio = document.getElementById('editBio').value.trim();
+  const avatarFile = document.getElementById('editAvatar').files[0];
+  const bannerFile = document.getElementById('editBanner').files[0];
 
-            if (exists) {
-                err.innerText = 'اسم المستخدم مستخدم مسبقاً';
-                return;
-            }
+  let avatar = currentUser.avatar_url;
+  let banner = currentUser.banner_url;
 
-            const isVerified = (username === 'r');
+  if (avatarFile) {
+    avatar = await fileToBase64(avatarFile);
+  }
+  if (bannerFile) {
+    banner = await fileToBase64(bannerFile);
+  }
 
-            const { data, error } = await supabase
-                .from('r_profiles')
-                .insert({
-                    username,
-                    password,
-                    full_name: fullName,
-                    verified: isVerified
-                })
-                .select()
-                .single();
+  const { error } = await supabase.from('r_profiles').update({
+    full_name: name || currentUser.full_name,
+    bio,
+    avatar_url: avatar,
+    banner_url: banner
+  }).eq('id', currentUser.id);
 
-            if (error) {
-                err.innerText = 'حدث خطأ: ' + error.message;
-                console.error(error);
-                return;
-            }
+  if (error) return alert('فشل الحفظ');
 
-            err.innerText = '';
-            alert('تم إنشاء الحساب بنجاح');
-            toggleAuthMode('login');
-            document.getElementById('loginUser').value = username;
-        } catch (e) {
-            err.innerText = 'خطأ في الاتصال';
-            console.error(e);
-        }
-    }
+  currentUser.full_name = name || currentUser.full_name;
+  currentUser.bio = bio;
+  currentUser.avatar_url = avatar;
+  currentUser.banner_url = banner;
+  localStorage.setItem('r_user', JSON.stringify(currentUser));
 
-    async function loginUser() {
-        const username = document.getElementById('loginUser').value.trim().toLowerCase();
-        const password = document.getElementById('loginPass').value.trim();
-        const err = document.getElementById('loginError');
+  updateProfileUI();
+  document.getElementById('editModal').classList.remove('show');
+  await loadPosts();
+};
 
-        if (!username || !password) {
-            err.innerText = 'املأ الحقول';
-            return;
-        }
+function fileToBase64(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(file);
+  });
+}
 
-        err.innerText = 'جاري تسجيل الدخول...';
+// ========== Navigation ==========
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + btn.dataset.tab).classList.add('active');
+    document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  };
+});
 
-        try {
-            const { data, error } = await supabase
-                .from('r_profiles')
-                .select('*')
-                .eq('username', username)
-                .eq('password', password)
-                .maybeSingle();
-
-            if (error || !data) {
-                err.innerText = 'اسم المستخدم أو كلمة المرور غير صحيحة';
-                return;
-            }
-
-            currentUser = data;
-            localStorage.setItem('r_current', JSON.stringify(currentUser));
-            startApp();
-        } catch (e) {
-            err.innerText = 'خطأ في الاتصال';
-            console.error(e);
-        }
-    }
-
-    async function startApp() {
-        document.getElementById('authScreen').style.display = 'none';
-        document.getElementById('mainApp').classList.add('active');
-        updateUI();
-        await loadMyLikes();
-        await loadPosts();
-        renderDms();
-    }
-
-    function updateUI() {
-        document.getElementById('myAvatar').src = currentUser.avatar_url;
-        document.getElementById('profileAvatar').src = currentUser.avatar_url;
-        document.getElementById('profileName').innerText = currentUser.full_name;
-        document.getElementById('profileHandle').innerText = '@' + currentUser.username;
-        document.getElementById('profileHeader').innerText = currentUser.full_name;
-        document.getElementById('profileBio').innerText = currentUser.bio || 'مرحباً بك في R';
-        document.getElementById('verifiedBadge').style.display = currentUser.verified ? 'inline-block' : 'none';
-    }
-
-    async function loadMyLikes() {
-        const { data } = await supabase
-            .from('r_likes')
-            .select('post_id')
-            .eq('user_id', currentUser.id);
-        myLikes = new Set((data || []).map(l => l.post_id));
-    }
-
-    async function loadPosts() {
-        const feed = document.getElementById('feed');
-        feed.innerHTML = '<div class="loading">جاري التحميل...</div>';
-
-        const { data, error } = await supabase
-            .from('r_posts')
-            .select(`
-                id, content, media_url, likes_count, created_at,
-                r_profiles (id, username, full_name, avatar_url, verified)
-            `)
-            .order('created_at', { ascending: false })
-            .limit(50);
-
-        if (error) {
-            feed.innerHTML = '<div class="empty-state">حدث خطأ في تحميل المنشورات</div>';
-            console.error(error);
-            return;
-        }
-
-        postsCache = data || [];
-        renderPosts();
-    }
-
-    function renderPosts() {
-        const feed = document.getElementById('feed');
-        if (!postsCache.length) {
-            feed.innerHTML = '<div class="empty-state">لا توجد منشورات بعد<br>كن أول من ينشر</div>';
-            return;
-        }
-
-        let html = '';
-        postsCache.forEach(p => {
-            const user = p.r_profiles;
-            const liked = myLikes.has(p.id);
-            const badge = user.verified ? '<i class="fa-solid fa-circle-check" style="color:var(--accent-gold); font-size:0.85rem;"></i>' : '';
-
-            html += `
-                <div class="post-card">
-                    <img src="${user.avatar_url}" class="user-avatar">
-                    <div class="post-content">
-                        <div class="post-header-info">
-                            <span style="font-weight:700;">${user.full_name}</span>
-                            ${badge}
-                            <span style="color:var(--text-muted);">@${user.username}</span>
-                        </div>
-                        <div class="post-text">${escapeHtml(p.content || '')}</div>
-                        ${p.media_url ? `<img src="${p.media_url}" class="post-media" onerror="this.style.display='none'">` : ''}
-                        <div class="post-actions">
-                            <button class="post-action-btn"><i class="fa-regular fa-comment"></i></button>
-                            <button class="post-action-btn"><i class="fa-solid fa-retweet"></i></button>
-                            <button class="post-action-btn ${liked ? 'liked' : ''}" data-id="${p.id}">
-                                <i class="fa-solid fa-heart"></i>
-                                <span>${p.likes_count || 0}</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        feed.innerHTML = html;
-
-        // ربط أزرار الإعجاب
-        document.querySelectorAll('.post-action-btn[data-id]').forEach(btn => {
-            btn.addEventListener('click', () => toggleLike(btn.dataset.id));
-        });
-    }
-
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.innerText = text;
-        return div.innerHTML;
-    }
-
-    async function createPost() {
-        const text = document.getElementById('composeText').value.trim();
-        const media = document.getElementById('composeMedia').value.trim();
-        const btn = document.getElementById('postBtn');
-
-        if (!text && !media) return;
-
-        btn.disabled = true;
-        btn.innerText = '...';
-
-        const { error } = await supabase
-            .from('r_posts')
-            .insert({
-                user_id: currentUser.id,
-                content: text,
-                media_url: media || null
-            });
-
-        btn.disabled = false;
-        btn.innerText = 'نشر';
-
-        if (error) {
-            alert('فشل النشر');
-            console.error(error);
-            return;
-        }
-
-        document.getElementById('composeText').value = '';
-        document.getElementById('composeMedia').value = '';
-        document.getElementById('mediaBox').style.display = 'none';
-        await loadPosts();
-    }
-
-    async function toggleLike(postId) {
-        const isLiked = myLikes.has(postId);
-
-        if (isLiked) {
-            await supabase.from('r_likes').delete()
-                .eq('user_id', currentUser.id)
-                .eq('post_id', postId);
-            myLikes.delete(postId);
-            const post = postsCache.find(p => p.id === postId);
-            if (post) {
-                post.likes_count = Math.max(0, (post.likes_count || 0) - 1);
-                await supabase.from('r_posts').update({ likes_count: post.likes_count }).eq('id', postId);
-            }
-        } else {
-            await supabase.from('r_likes').insert({
-                user_id: currentUser.id,
-                post_id: postId
-            });
-            myLikes.add(postId);
-            const post = postsCache.find(p => p.id === postId);
-            if (post) {
-                post.likes_count = (post.likes_count || 0) + 1;
-                await supabase.from('r_posts').update({ likes_count: post.likes_count }).eq('id', postId);
-            }
-        }
-        renderPosts();
-    }
-
-    async function changeAvatar(e) {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async function(ev) {
-            const base64 = ev.target.result;
-            const { error } = await supabase
-                .from('r_profiles')
-                .update({ avatar_url: base64 })
-                .eq('id', currentUser.id);
-
-            if (!error) {
-                currentUser.avatar_url = base64;
-                localStorage.setItem('r_current', JSON.stringify(currentUser));
-                updateUI();
-                await loadPosts();
-            }
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function switchTab(tab, btn) {
-        document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + tab).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-        if (btn) btn.classList.add('active');
-    }
-
-    function toggleMedia() {
-        const box = document.getElementById('mediaBox');
-        box.style.display = box.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function renderDms() {
-        const list = document.getElementById('dmList');
-        list.innerHTML = dms.map(d => `
-            <div class="dm-item" data-id="${d.id}">
-                <img src="${d.avatar}" style="width:48px; height:48px; border-radius:50%; object-fit:cover;">
-                <div>
-                    <div style="font-weight:700; font-size:0.95rem;">${d.name}</div>
-                    <div style="font-size:0.82rem; color:var(--text-muted);">${d.messages[d.messages.length-1].text}</div>
-                </div>
-            </div>
-        `).join('');
-
-        document.querySelectorAll('.dm-item').forEach(item => {
-            item.addEventListener('click', () => openChat(Number(item.dataset.id)));
-        });
-    }
-
-    function openChat(id) {
-        activeDm = dms.find(d => d.id === id);
-        document.getElementById('chatName').innerText = activeDm.name;
-        document.getElementById('chatAvatar').src = activeDm.avatar;
-        renderChat();
-        document.getElementById('chatRoom').classList.add('active');
-    }
-
-    function closeChat() {
-        document.getElementById('chatRoom').classList.remove('active');
-    }
-
-    function renderChat() {
-        const box = document.getElementById('chatBox');
-        box.innerHTML = activeDm.messages.map(m => 
-            `<div class="msg-bubble ${m.sender}">${m.text}</div>`
-        ).join('');
-        box.scrollTop = box.scrollHeight;
-    }
-
-    function sendMsg() {
-        const input = document.getElementById('chatInput');
-        const text = input.value.trim();
-        if (!text || !activeDm) return;
-        activeDm.messages.push({ sender: 'outgoing', text });
-        input.value = '';
-        renderChat();
-        renderDms();
-    }
-
-    function logout() {
-        currentUser = null;
-        localStorage.removeItem('r_current');
-        location.reload();
-    }
+document.getElementById('logoutBtn').onclick = () => {
+  currentUser = null;
+  localStorage.removeItem('r_user');
+  location.reload();
+};
 </script>
 </body>
 </html>
