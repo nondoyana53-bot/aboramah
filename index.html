@@ -239,15 +239,15 @@
         </div>
     </div>
 
-    <!-- نافذة قفل خاصة بتبويب "نقش جديد" بكلمة المرور S123123 -->
+    <!-- نافذة قفل خلوة النظم السرية -->
     <div id="editor-lock-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1100; justify-content:center; align-items:center; padding:20px;">
         <div class="login-box">
-            <h2>قفل خلوة النظم</h2>
-            <p style="font-size: 13px; color: var(--sand-text); margin-bottom: 15px;">أدخل كلمة مرور النقش الخاصة (S123123)</p>
-            <input type="password" id="editorPasswordInput" placeholder="كلمة المرور الخاصة">
-            <button onclick="verifyEditorPassword()">فك قفل النقش</button>
-            <button onclick="cancelEditorAccess()" style="background:none; border:1px solid var(--gold-muted); color:var(--sand-text); margin-top:10px;">إلغاء والعودة</button>
-            <div id="editorError" class="error-msg">كلمة مرور النقش خاطئة!</div>
+            <h2>خلوة النظم</h2>
+            <p style="font-size: 13px; color: var(--sand-text); margin-bottom: 15px;">أدخل كلمة المرور الخاصة</p>
+            <input type="password" id="editorPasswordInput" placeholder="كلمة المرور">
+            <button onclick="verifyEditorPassword()">تحقق</button>
+            <button onclick="cancelEditorAccess()" style="background:none; border:1px solid var(--gold-muted); color:var(--sand-text); margin-top:10px;">إلغاء</button>
+            <div id="editorError" class="error-msg">كلمة المرور غير صحيحة!</div>
         </div>
     </div>
 
@@ -290,7 +290,7 @@
             <div class="nav-menu">
                 <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
                 <button class="nav-btn" onclick="switchTab('poemsTab', this)">أرشيف الأبيات</button>
-                <button class="nav-btn" onclick="requestEditorAccess(this)">نقش جديد 🔒</button>
+                <button class="nav-btn" onclick="requestEditorAccess(this)">نقش جديد</button>
             </div>
 
             <div id="homeTab" class="tab-content active">
@@ -325,7 +325,7 @@
 
             <div id="editorTab" class="tab-content">
                 <div class="editor-card">
-                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة (محمية بكلمة المرور الخاصة S123123)</div>
+                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
                     <input type="text" id="poemTitle" placeholder="عنوان القصيدة">
                     <div style="display: flex; gap: 8px;">
                         <select id="poemCategory">
@@ -381,14 +381,11 @@
     <script>
         const correctUser = "ابو رماح";
         const correctPass = "Rr987321";
-        const editorSpecialPass = "S123123"; // كلمة المرور الخاصة لزر نقش جديد التي طلبتها
+        const editorSpecialPass = "S123123"; // كلمة المرور السرية مخفية تماماً عن الواجهة
 
         window.onload = function() {
             if (localStorage.getItem("aburamah_isLoggedIn") === "true") {
                 grantAccess();
-            }
-            if (localStorage.getItem("aburamah_editor_unlocked") === "true") {
-                // تظل خلوة النظم مفتوحة طوال الجلسة إذا أدخلها مسبقاً
             }
             const savedTheme = localStorage.getItem("aburamah_theme") || "dark";
             if(savedTheme === "light") {
@@ -432,7 +429,6 @@
             }
         }
 
-        // دالة حماية وطلب كلمة مرور "نقش جديد"
         let pendingEditorBtn = null;
         function requestEditorAccess(btn) {
             if (localStorage.getItem("aburamah_editor_unlocked") === "true") {
@@ -462,7 +458,6 @@
             document.getElementById("editor-lock-modal").style.display = "none";
         }
 
-        /* مصفوفة القصائد الأساسية المثبتة بقلب الكود */
         let poems = JSON.parse(localStorage.getItem('aburamah_diwan_persistent')) || [
             {
                 id: 1,
@@ -610,13 +605,13 @@
             const textarea = document.getElementById('exportCodeOutput');
             textarea.select();
             document.execCommand('copy');
-            alert('تم نسخ الكود المحدث بالكامل! الآن ألصقه في ملف الـ HTML الخاص بك.');
+            alert('تم نسخ الكود المحدث بالكامل!');
             closeExportModal();
         }
 
         function deleteCurrentModalPoem() {
             if (localStorage.getItem("aburamah_editor_unlocked") !== "true") {
-                alert("يجب فتح صلاحية التحرير بكلمة المرور لحذف القصائد!");
+                alert("مرفوض. يتطلب صلاحية خلوة النظم!");
                 return;
             }
             if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف؟')) {
