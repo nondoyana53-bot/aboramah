@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ديوان أبو رماح العبسي - المخطوطة الملكية</title>
-    <!-- خطوط عربية فصيحة وتراثية -->
+    <title>ديوان فرسان عبس - المخطوطة الملكية</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
@@ -22,7 +21,6 @@
             --book-bg: #18130e;
         }
 
-        /* الوضع النهاري */
         [data-theme="light"] {
             --bg-tent: #f0eae1;
             --card-dark: #ffffff;
@@ -35,23 +33,10 @@
             --book-bg: #fcf9f2;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--bg-tent);
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(255, 180, 50, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(255, 180, 50, 0.08) 0%, transparent 40%),
-                linear-gradient(rgba(8, 6, 5, 0.96), rgba(8, 6, 5, 0.96)),
-                url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1600&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
             color: var(--text-light);
             font-family: 'Amiri', serif;
             min-height: 100vh;
@@ -60,14 +45,6 @@
             padding: 15px 10px;
             position: relative;
             transition: background-color 0.3s, color 0.3s;
-        }
-
-        [data-theme="light"] body {
-            background-image: 
-                radial-gradient(circle at 10% 10%, rgba(140, 109, 29, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 10%, rgba(140, 109, 29, 0.05) 0%, transparent 40%),
-                linear-gradient(rgba(240, 234, 225, 0.96), rgba(240, 234, 225, 0.96)),
-                url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1600&auto=format&fit=crop');
         }
 
         #auth-container {
@@ -121,35 +98,43 @@
 
         .diwan-container {
             width: 100%; background: var(--card-dark); border: 2px solid var(--border-gold);
-            border-radius: 8px; box-shadow: 0 0 40px rgba(0, 0, 0, 0.3); padding: 22px 18px; margin-bottom: 40px; margin-top: 25px;
+            border-radius: 8px; box-shadow: 0 0 40px rgba(0, 0, 0, 0.3); padding: 22px 18px; margin-top: 25px;
         }
 
         header {
-            text-align: center; padding: 25px 15px 20px 15px; border-bottom: 2px double var(--border-gold);
-            margin-bottom: 20px; border-radius: 6px;
-            background: linear-gradient(rgba(10, 7, 5, 0.88), rgba(10, 7, 5, 0.92)), 
-                        url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover; background-position: center;
-        }
-        [data-theme="light"] header {
-            background: linear-gradient(rgba(252, 249, 242, 0.9), rgba(252, 249, 242, 0.95)), 
-                        url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=1200&auto=format&fit=crop');
+            text-align: center; padding: 25px 15px; border-bottom: 2px double var(--border-gold);
+            margin-bottom: 20px; border-radius: 6px; background: var(--book-bg);
         }
 
-        .sword-illustration { width: 220px; height: 35px; margin: 0 auto 10px; display: block; }
-        h1 { font-family: 'Aref Ruqaa', serif; font-size: 36px; color: var(--gold-ancient); font-weight: 700; }
-        .subtitle { font-size: 15px; color: var(--sand-text); margin-top: 2px; font-style: italic; }
+        h1 { font-family: 'Aref Ruqaa', serif; font-size: 34px; color: var(--gold-ancient); font-weight: 700; }
+        .subtitle { font-size: 14px; color: var(--sand-text); margin-top: 4px; font-style: italic; }
 
-        .diwan-royal-banner {
-            width: 100%; height: 110px;
-            background: linear-gradient(rgba(10, 7, 5, 0.75), rgba(10, 7, 5, 0.85)), 
-                        url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop');
-            background-size: cover; background-position: center; border: 1px solid var(--border-gold);
-            border-radius: 6px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;
+        /* قائمة اختيار الشعراء (البروفايلات المستقلة) */
+        .poets-selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
         }
-        .royal-banner-content { text-align: center; }
-        .royal-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); }
-        .royal-banner-sub { font-size: 13px; color: var(--sand-text); margin-top: 2px; }
+        .poets-card-select {
+            background: var(--book-bg);
+            border: 1px solid var(--border-gold);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .poets-card-select:hover, .poets-card-select.active {
+            border-color: var(--gold-glow);
+            background: var(--gold-muted);
+            transform: translateY(-2px);
+        }
+        .poets-card-select img {
+            width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--gold-ancient);
+            object-fit: cover; margin-bottom: 8px;
+        }
+        .poets-card-select h4 { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 16px; }
 
         .bio-section {
             background: var(--book-bg);
@@ -162,25 +147,11 @@
             gap: 20px;
         }
         .bio-avatar {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 2px solid var(--gold-ancient);
-            object-fit: cover;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--gold-ancient);
+            object-fit: cover; flex-shrink: 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
         }
-        .bio-content h3 {
-            font-family: 'Aref Ruqaa', serif;
-            color: var(--gold-ancient);
-            font-size: 22px;
-            margin-bottom: 6px;
-        }
-        .bio-content p {
-            font-size: 15px;
-            color: var(--sand-text);
-            line-height: 1.8;
-        }
+        .bio-content h3 { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 22px; margin-bottom: 6px; }
+        .bio-content p { font-size: 15px; color: var(--sand-text); line-height: 1.8; }
 
         .nav-menu {
             display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 22px;
@@ -195,42 +166,11 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        .horse-banner {
-            position: relative; width: 100%; height: 230px; border-radius: 6px;
-            overflow: hidden; border: 1px solid var(--border-gold); margin-bottom: 22px;
-        }
-        .horse-banner img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.65); }
-        .horse-banner-overlay {
-            position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 6, 5, 0.95) 0%, transparent 100%);
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; text-align: center;
-        }
-        .horse-banner-title { font-family: 'Aref Ruqaa', serif; font-size: 28px; color: var(--gold-ancient); }
-
-        .featured-quote-card {
-            background: var(--book-bg); border: 1px solid var(--gold-ancient); border-radius: 6px;
-            padding: 25px 18px; text-align: center; cursor: pointer; margin-bottom: 25px;
-        }
-        .featured-tag { font-family: 'Reem Kufi', sans-serif; font-size: 13px; color: var(--gold-ancient); margin-bottom: 8px; display: block; }
-        .featured-quote-text { font-size: 22px; line-height: 2; color: var(--text-light); font-weight: bold; margin: 10px 0; }
-        .click-hint { font-size: 12px; color: var(--sand-text); margin-top: 8px; display: inline-block; border-bottom: 1px dashed var(--gold-muted); }
-
-        .audio-player-box {
-            background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 8px; 
-            padding: 12px 16px; margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        }
-        .audio-info-area { display: flex; align-items: center; gap: 10px; }
-        .audio-icon-badge { background: var(--gold-ancient); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; }
-        .audio-title-label { font-family: 'Aref Ruqaa', serif; font-size: 15px; color: var(--gold-ancient); margin: 0; }
-        .audio-player-box audio { height: 34px; flex-grow: 1; max-width: 60%; outline: none; }
-
         .archive-banner {
-            width: 100%; height: 90px;
-            background: linear-gradient(rgba(10, 7, 5, 0.8), rgba(10, 7, 5, 0.9)), 
-                        url('https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover; background-position: center; border: 1px solid var(--border-gold);
+            width: 100%; height: 80px; background: var(--book-bg); border: 1px solid var(--border-gold);
             border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
         }
-        .archive-banner-text { font-family: 'Aref Ruqaa', serif; font-size: 20px; color: var(--gold-ancient); }
+        .archive-banner-text { font-family: 'Aref Ruqaa', serif; font-size: 19px; color: var(--gold-ancient); }
 
         .search-box input {
             width: 100%; background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px;
@@ -247,7 +187,7 @@
         .mini-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
         .mini-card-title { font-family: 'Aref Ruqaa', serif; font-size: 20px; color: var(--gold-ancient); }
         .mini-card-badge { font-size: 11px; font-family: 'Reem Kufi', sans-serif; background: var(--card-dark); border: 1px solid var(--border-gold); color: var(--gold-ancient); padding: 2px 8px; border-radius: 4px; }
-        .mini-card-snippet { font-size: 16px; color: var(--text-light); line-height: 1.8; margin-bottom: 15px; font-style: italic; }
+        .mini-card-snippet { font-size: 16px; color: var(--text-light); line-height: 1.8; margin-bottom: 35px; font-style: italic; }
         
         .quick-copy-btn {
             position: absolute; bottom: 15px; left: 18px; background: none; border: 1px solid var(--gold-muted);
@@ -256,70 +196,25 @@
         }
         .quick-copy-btn:hover { background: var(--gold-ancient); color: #fff; }
 
-        .mini-card-footer { font-size: 12px; color: var(--sand-text); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gold-muted); padding-top: 8px; margin-bottom: 20px; }
+        .mini-card-footer { font-size: 12px; color: var(--sand-text); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--gold-muted); padding-top: 8px; }
         .open-book-btn-text { color: var(--gold-ancient); font-weight: bold; }
-
-        /* تنسيقات قسم الفرسان المضاف حديثاً */
-        .knights-container { display: flex; flex-direction: column; gap: 15px; }
-        .knight-card {
-            background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 8px;
-            padding: 15px; display: flex; align-items: center; gap: 15px;
-        }
-        .knight-avatar {
-            width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold-ancient);
-            object-fit: cover; flex-shrink: 0;
-        }
-        .knight-info h4 { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 20px; margin-bottom: 4px; }
-        .knight-info p { font-size: 14px; color: var(--sand-text); line-height: 1.6; }
 
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0, 0, 0, 0.88); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 15px 10px;
         }
         .modal-overlay.active { display: flex; }
         .book-container {
-            background: #0c0907; 
-            border: 3px solid var(--gold-ancient); 
-            border-radius: 12px;
+            background: var(--card-dark); border: 3px solid var(--gold-ancient); border-radius: 12px;
             width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; padding: 35px 25px; position: relative;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
         }
         .modal-close {
             position: absolute; top: 15px; left: 20px; background: none; border: 1px solid var(--gold-muted);
             color: var(--gold-ancient); font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; z-index: 10;
         }
-        .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 32px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
-        .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 25px; border-bottom: 1px double var(--gold-muted); padding-bottom: 12px; }
-        
-        .mobile-poem-view { padding: 20px 10px; text-align: center; }
-        .mobile-verse-line {
-            font-size: 24px; line-height: 3; color: #f7f3ed; font-family: 'Amiri', serif; font-weight: 700; margin-bottom: 25px; letter-spacing: 0.5px;
-        }
-
-        .tweet-section { margin-top: 35px; border-top: 1px dashed var(--border-gold); padding-top: 20px; }
-        .tweet-section h3 { font-family: 'Aref Ruqaa', serif; color: var(--gold-ancient); font-size: 20px; margin-bottom: 15px; }
-        .tweet-input-box textarea {
-            width: 100%; background: #15110d; border: 1px solid var(--border-gold); border-radius: 6px; color: var(--text-light); padding: 12px; font-family: 'Amiri', serif; font-size: 16px; resize: vertical; min-height: 80px; outline: none; margin-bottom: 8px;
-        }
-        .tweet-post-btn {
-            background: linear-gradient(135deg, var(--gold-ancient) 0%, #614a10 100%); color: #fff; border: 1px solid var(--gold-glow); padding: 7px 18px; border-radius: 4px; font-family: 'Aref Ruqaa', serif; font-size: 16px; cursor: pointer; float: left; font-weight: bold;
-        }
-        .clear-fix::after { content: ""; display: table; clear: both; }
-
-        .comments-list { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; }
-        .comment-item { background: #14100c; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 6px; padding: 12px 15px; }
-        .comment-header { display: flex; justify-content: space-between; font-size: 13px; color: var(--sand-text); margin-bottom: 6px; font-family: 'Reem Kufi', sans-serif; }
-        .comment-body { font-size: 16px; color: var(--text-light); line-height: 1.7; margin-bottom: 10px; }
-        .comment-footer { display: flex; align-items: center; gap: 6px; }
-        .like-btn {
-            background: none; border: 1px solid var(--gold-muted); color: var(--gold-ancient); padding: 3px 10px; border-radius: 4px; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; font-family: 'Amiri', serif;
-        }
-        .like-btn.liked { background: var(--gold-ancient); color: #fff; }
-
-        .explanation-card { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        .explanation-poem-title { font-family: 'Aref Ruqaa', serif; font-size: 24px; color: var(--gold-ancient); margin-bottom: 12px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
-        .verse-explain-block { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid rgba(212,175,55,0.1); }
-        .verse-explain-original { font-size: 19px; font-weight: bold; color: var(--text-light); margin-bottom: 5px; }
-        .verse-explain-text { font-size: 16px; color: var(--sand-text); line-height: 1.8; padding-right: 15px; border-right: 2px solid var(--gold-ancient); }
+        .modal-title { font-family: 'Aref Ruqaa', serif; font-size: 30px; color: var(--gold-ancient); text-align: center; margin-bottom: 6px; }
+        .modal-subtitle { text-align: center; font-size: 14px; color: var(--sand-text); margin-bottom: 20px; border-bottom: 1px double var(--gold-muted); padding-bottom: 10px; }
+        .mobile-poem-view { padding: 15px 10px; text-align: center; }
+        .mobile-verse-line { font-size: 22px; line-height: 2.8; color: var(--text-light); font-family: 'Amiri', serif; font-weight: 700; margin-bottom: 15px; }
 
         .editor-card { background: var(--book-bg); border: 1px solid var(--border-gold); border-radius: 6px; padding: 20px; }
         .editor-title { font-family: 'Aref Ruqaa', serif; font-size: 22px; color: var(--gold-ancient); margin-bottom: 14px; border-bottom: 1px dashed var(--gold-muted); padding-bottom: 8px; }
@@ -337,8 +232,8 @@
 
     <div id="lock-screen">
         <div class="login-box">
-            <h2>مخطوطة أبو رماح العبسي</h2>
-            <p style="font-size: 13px; color: var(--sand-text); margin-bottom: 15px;">يجب تسجيل الدخول للولوج إلى الديوان.</p>
+            <h2>مخطوطة فرسان عبس</h2>
+            <p style="font-size: 13px; color: var(--sand-text); margin-bottom: 15px;">يجب تسجيل الدخول للولوج إلى الدواوين.</p>
             <input type="text" id="username" placeholder="اسم المستخدم">
             <input type="password" id="password" placeholder="كلمة المرور">
             <button onclick="login()">دخول</button>
@@ -350,115 +245,42 @@
         <div class="diwan-container">
 
             <header>
-                <svg class="sword-illustration" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 20 L240 18 Q270 17 285 10 Q260 23 240 22 L10 20 Z" fill="url(#bladeGrad)" stroke="#d4af37" stroke-width="1"/>
-                    <path d="M40 8 L40 32 L32 28 L32 12 Z" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                    <path d="M10 14 Q25 14 32 12 L32 28 Q25 26 10 26 Z" fill="#d4af37"/>
-                    <circle cx="8" cy="20" r="5" fill="#3a0a11" stroke="#d4af37" stroke-width="1.5"/>
-                    <path d="M60 20 L230 20" stroke="#d4af37" stroke-width="1" stroke-dasharray="4 2"/>
-                    <defs>
-                        <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="#d4af37"/>
-                            <stop offset="50%" stop-color="#ffffff"/>
-                            <stop offset="100%" stop-color="#d4af37"/>
-                        </linearGradient>
-                    </defs>
-                </svg>
-
-                <h1>ديوان أبو رماح العبسي</h1>
-                <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية العبسية</div>
+                <h1>ديوان فرسان عبس والشعراء</h1>
+                <div class="subtitle">المخطوطة الشعرية وسجل الأصالة والفروسية العربية</div>
             </header>
 
-            <div class="diwan-royal-banner">
-                <div class="royal-banner-content">
-                    <div class="royal-banner-title">ديوان فرسان عبس</div>
-                    <div class="royal-banner-sub">موطن البيان، وعز الفروسية، وذكر الأماجد</div>
-                </div>
-            </div>
+            <!-- شريط اختيار الشاعر (البروفايلات المستقلة) -->
+            <div class="poets-selector-grid" id="poetsSelectorGrid"></div>
 
-            <!-- نبذة عن الشاعر مع أفاتار عربي أصيل -->
-            <div class="bio-section">
-                <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=400&auto=format&fit=crop" alt="أبو رماح العبسي" class="bio-avatar">
+            <!-- معلومات الشاعر المختار وبروفايله -->
+            <div class="bio-section" id="activeBioSection">
+                <img id="poetAvatar" src="" alt="صورة الشاعر" class="bio-avatar">
                 <div class="bio-content">
-                    <h3>عن الشاعر: أبو رماح العبسي</h3>
-                    <p>فارس باسل من شجعان بني عبس الأماجد، عُرف بحدة البصيرة وشدة الشجاعة، وعُرف عنه إكرام الضيف وقرى الجياع، وجمع بين صرامة السيف وعذوبة الشعر الفصيح الذي يلامس الوجدان ويسطر مآثر الكرم والمروءة.</p>
+                    <h3 id="poetNameTitle">اختر شاعراً</h3>
+                    <p id="poetBioText">نبذة الشاعر التاريخية الموثقة...</p>
                 </div>
             </div>
 
-            <!-- القائمة المحدثة مع زر الفرسان المستقل -->
             <div class="nav-menu">
-                <button class="nav-btn active" onclick="switchTab('homeTab', this)">الواجهة الرئيسية</button>
-                <button class="nav-btn" onclick="switchTab('poemsTab', this)">أرشيف الأبيات</button>
-                <button class="nav-btn" onclick="switchTab('knightsTab', this)">فرسان العرب وعبس</button>
-                <button class="nav-btn" onclick="switchTab('explanationTab', this)">شرح الأبيات*</button>
-                <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش جديد</button>
+                <button class="nav-btn active" onclick="switchTab('poemsTab', this)">ديوان الشاعر والأرشيف</button>
+                <button class="nav-btn" onclick="switchTab('editorTab', this)">نقش قصيدة في أرشيفك الخاص</button>
             </div>
 
-            <!-- الرئيسية -->
-            <div id="homeTab" class="tab-content active">
-                <div class="horse-banner">
-                    <img src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?q=80&w=1200&auto=format&fit=crop" alt="حصان عربي">
-                    <div class="horse-banner-overlay">
-                        <div class="horse-banner-title">الخَيْلُ وَاللَّيْلُ وَالبَيْداءُ تَعْرِفُني</div>
-                    </div>
-                </div>
-
-                <div class="featured-quote-card" onclick="openFeaturedPoem()">
-                    <span class="featured-tag">درة الديوان والاقتباس الأجمل</span>
-                    <div class="featured-quote-text" id="featuredQuoteText">
-                        "عن شخصٍ هدم الثقة ولا بقى له اثر واضح"
-                    </div>
-                    <span class="click-hint">اضغط هنا لفتح الكتاب وقراءة القصيدة</span>
-                </div>
-
-                <div class="audio-player-box">
-                    <div class="audio-info-area">
-                        <div class="audio-icon-badge">🎵</div>
-                        <span class="audio-title-label">المقطع الصوتي المرفق بالديوان</span>
-                    </div>
-                    <audio controls>
-                        <source src="./DLVideo.mp4" type="video/mp4">
-                        <source src="DLVideo.mp4" type="video/mp4">
-                        متصفحك لا يدعم مشغل الصوت.
-                    </audio>
-                </div>
-            </div>
-
-            <!-- أرشيف الأبيات (يعرض جميع القصائد بدون نقصان) -->
-            <div id="poemsTab" class="tab-content">
+            <!-- أرشيف القصائد الخاص بالشاعر المختار أو أرشيفك -->
+            <div id="poemsTab" class="tab-content active">
                 <div class="archive-banner">
-                    <div class="archive-banner-text">سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ الأَصيلَةِ</div>
+                    <div class="archive-banner-text" id="archiveBannerText">سِجِلُّ المُرُوءَةِ وَالخَوَاطِرِ</div>
                 </div>
-
                 <div class="search-box">
-                    <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="ابحث في دواوين العز والأبيات...">
+                    <input type="text" id="searchInput" onkeyup="searchPoems()" placeholder="ابحث في قصائد هذا الديوان...">
                 </div>
-                
                 <div class="poems-grid" id="poemsGrid"></div>
             </div>
 
-            <!-- قسم الفرسان المستقل (سيرة 40 فارساً عربياً جاهلياً وفرسان عبس ودواوينهم بأفاتارات عربية أصيلة) -->
-            <div id="knightsTab" class="tab-content">
-                <div class="archive-banner">
-                    <div class="archive-banner-text">سِيَرُ فُرْسَانِ الْعَرَبِ وَبَنِي عَبْسٍ الْأَمَاجِدِ</div>
-                </div>
-                <div class="knights-container" id="knightsContainer">
-                    <!-- يتم تعبئة السير والفرسان هنا برمجياً لضمان الظهور الكامل -->
-                </div>
-            </div>
-
-            <!-- شرح الأبيات -->
-            <div id="explanationTab" class="tab-content">
-                <div class="archive-banner">
-                    <div class="archive-banner-text">بَيانُ المَعانِي وَشَرْحُ الأَبْياتِ مُفَصَّلاً</div>
-                </div>
-                <div id="explanationContainer"></div>
-            </div>
-
-            <!-- نقش جديد -->
+            <!-- نقش جديد خاص بأرشيفك -->
             <div id="editorTab" class="tab-content">
                 <div class="editor-card">
-                    <div class="editor-title">تدوين قصيدة أو ملاحظة شعرية جديدة</div>
+                    <div class="editor-title">إضافة قصيدة إلى أرشيفك الخاص (دائم ولا يحذف)</div>
                     <input type="text" id="poemTitle" placeholder="عنوان القصيدة">
                     <div style="display: flex; gap: 8px;">
                         <select id="poemCategory">
@@ -466,40 +288,27 @@
                             <option value="فخر">فخر وحماسة</option>
                             <option value="حكمة">حكمة وموعظة</option>
                             <option value="شوق">شوق وعتاب</option>
-                            <option value="عام">عام</option>
                         </select>
                         <input type="text" id="poemMeter" placeholder="البحر / القافية">
                     </div>
                     <textarea id="poemText" placeholder="اكتب الأبيات هنا... كل بيت في سطر مستقل"></textarea>
-                    <button class="btn-feather" onclick="savePoem()">نقش القصيدة في الديوان</button>
+                    <button class="btn-feather" onclick="saveUserPoem()">حفظ في أرشيفي الخاص</button>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- نافذة قراءة القصيدة -->
+    <!-- نافذة عرض القصيدة -->
     <div class="modal-overlay" id="poemModal" onclick="closeModalOnOverlay(event)">
         <div class="book-container">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-title" id="modalTitle">عنوان القصيدة</div>
-            <div class="modal-subtitle" id="modalSubtitle">البحر | التاريخ</div>
-            
+            <div class="modal-subtitle" id="modalSubtitle">التاريخ</div>
             <div class="mobile-poem-view" id="modalBody"></div>
-            
-            <div class="tweet-section">
-                <h3>تغريدات ومداخلات الأماجد</h3>
-                <div class="tweet-input-box">
-                    <textarea id="newCommentText" placeholder="اكتب تعليقك أو خاطرتك حول هذه الأبيات..."></textarea>
-                    <button class="tweet-post-btn clear-fix" onclick="postComment()">نشر التغريدة</button>
-                    <div style="clear: both;"></div>
-                </div>
-                <div class="comments-list" id="commentsList"></div>
-            </div>
-
-            <div style="margin-top: 30px; display: flex; justify-content: space-between; border-top: 1px solid var(--gold-muted); padding-top: 15px;">
+            <div style="margin-top: 25px; display: flex; justify-content: space-between; border-top: 1px solid var(--gold-muted); padding-top: 15px;">
                 <button onclick="copyCurrentModalPoem()" style="background: none; border: none; color: var(--gold-ancient); cursor: pointer; font-family: 'Amiri'; font-size: 16px; font-weight: bold;">نسخ الأبيات</button>
-                <button onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 16px; font-weight: bold;">حذف القصيدة</button>
+                <button id="deleteBtn" onclick="deleteCurrentModalPoem()" style="background: none; border: none; color: #c93b3b; cursor: pointer; font-family: 'Amiri'; font-size: 16px; font-weight: bold; display: none;">حذف من أرشيفي</button>
             </div>
         </div>
     </div>
@@ -507,6 +316,45 @@
     <script>
         const correctUser = "ابو رماح";
         const correctPass = "Rr987321";
+
+        // بيانات الشعراء والبروفايلات المستقلة مع نصوص تاريخية موثقة
+        const poetsData = {
+            aburamah: {
+                name: "أبو رماح العبسي",
+                bio: "فارس باسل من شجعان بني عبس الأماجد، عُرف بحدة البصيرة وشدة الشجاعة، وجمع بين صرامة السيف وعذوبة الشعر الفصيح الذي يلامس الوجدان ويسطر مآثر الكرم والمروءة.",
+                img: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=400&auto=format&fit=crop",
+                poems: [
+                    { id: 'ar1', title: "خاطرة الثقة والموج", category: "حكمة", text: "عن شخصٍ هدم الثقة ولا بقى له اثر واضح\nودي الموج ياخذه غريقٍ وما ينجيه\nلكن صدري رحومٍ له ولا ودي يروح", date: "مخطوطة أبو رماح" },
+                    { id: 'ar2', title: "مخاطبة الصم", category: "حكمة", text: "يا محاكي الصم .. مجهودك سُدى\nمنصتٍ للبكم إنصاتٍ شديد\nيا مدور في الظلالات الهُدى\nمنتظر ابليس عن غيه يحيد", date: "مخطوطة أبو رماح" }
+                ]
+            },
+            antar: {
+                name: "عنترة بن شداد العبسي",
+                bio: "أشهر فرسان العرب وشعاع المعلقات، فارس بني عبس الذي حمى قومه بسيفه وخلد سيرته وذكره العطر في معلقته الخالدة وحبه العذري لعبلة بنت مالك.",
+                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+                poems: [
+                    { id: 'ant1', title: "معلقة عنترة (القطار)", category: "فخر", text: "هَل غادَرَ الشُعَراءُ مِن مُترَدَّمِ\nأَم هَل عَرفتَ الدارَ بعد توهّمِ\nيا دارَ عبلةَ بالسّعاجِ تكلمي\nوعمي صباحاً دارَ عبلةَ واسلمي", date: "المعلقة الخالدة" },
+                    { id: 'ant2', title: "سيف المجد", category: "فخر", text: "يُخبركِ من شهد الوقيعة أنني\nأغشى الوغى وأعف عند المغنمِ\nولقد ذكرتُكِ والرماحُ نواهلٌ\nمني وبيضُ الهندِ تقطرُ من دمي", date: "ديوان عنترة" }
+                ]
+            },
+            urwah: {
+                name: "عروة بن الورد العبسي",
+                bio: "أمير الصعاليق وفارس عبس النبيل، الذي عُرف بكرمه الأسطوري حيث كان يغزو ليطعم فقراء الحي وأياماه، وقال فيه المؤرخون إنه أنبل صعاليك العرب.",
+                img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+                poems: [
+                    { id: 'ur1', title: "قسمة اللحم والرزق", category: "حكمة", text: "أني أقسم جسمي في جسوم كثيرة\nوأحسو قراح الماء والماء بارد\nأني امرؤ عافي الجسار وإنني\nأرى المال غاباً للسيوف موارد", date: "ديوان عروة بن الورد" }
+                ]
+            },
+            myarchive: {
+                name: "أرشيفك الخاص (مخصص لك)",
+                bio: "هذا الأرشيف مخصص بالكامل لما تنقشه وتكتبه أنت يدويًا. محفوظ بأمان على متصفحك ولا يتأثر بأي تحديث.",
+                img: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?q=80&w=400&auto=format&fit=crop",
+                poems: JSON.parse(localStorage.getItem('my_custom_archive_poems')) || []
+            }
+        };
+
+        let currentPoetKey = 'aburamah';
+        let activePoemId = null;
 
         window.onload = function() {
             if (localStorage.getItem("aburamah_isLoggedIn") === "true") {
@@ -516,9 +364,8 @@
             if(savedTheme === "light") {
                 document.documentElement.setAttribute("data-theme", "light");
             }
-            renderExplanationTab();
-            renderKnightsTab();
-            renderPoemsGrid();
+            renderPoetsSelector();
+            loadPoetProfile(currentPoetKey);
         };
 
         function toggleTheme() {
@@ -556,77 +403,54 @@
             }
         }
 
-        // قاعدة بيانات كاملة للقصائد تضمن ظهور أكثر من 20 قصيدة وأي قصيدة جديدة فوراً
-        let poems = JSON.parse(localStorage.getItem('aburamah_diwan')) || [
-            { id: 1, title: "خاطرة الثقة والموج", category: "حكمة", meter: "البحر الحر", text: "عن شخصٍ هدم الثقة ولا بقى له اثر واضح\nودي الموج ياخذه غريقٍ وما ينجيه\nلكن صدري رحومٍ له ولا ودي يروح", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 2, title: "مخاطبة الصم", category: "حكمة", meter: "البحر الكامل", text: "يا محاكي الصم .. مجهودك سُدى\nمنصتٍ للبكم إنصاتٍ شديد\nيا مدور في الظلالات الهُدى\nمنتظر ابليس عن غيه يحيد\nعاريٍ تبغى الدفى وسط الجليد", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 3, title: "عز الفارس", category: "فخر", meter: "البحر الطويل", text: "أنا ابن العبسي الصنديد في اللقيا\nإذا اشتد السواعد واهتزت العوالي\nأسوق الروح في العلياء ولا أبقيَا\nفأنا للطيب عنوانٌ ومثالي", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 4, title: "طوارق الليل", category: "عام", meter: "البحر الوافر", text: "سريت الليل والنجوم حولي شهود\nأخط قصيدة المجد الأبيّه\nديار العز ما تهاب الحدود\nولا ترضى الدنايا والرديّه", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 5, title: "مكارم الأخلاق", category: "حكمة", meter: "البحر الكامل", text: "الكرم ساس الفتى والعدل دين\nومن صمل في الدرب ما خاب الرجا\nنحفظ العهود ونكرم الضيف السمين\nومن تعسّر بالخطا عنا درجا", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 6, title: "شجاعة عبس", category: "فخر", meter: "البحر المتقارب", text: "لنا في الميادين سيفٍ صقيل\nنطارد به الظلم لين اندحر\nوعن حقنا ما ننثني لو ميل\nتاريخنا يشهد بكل مكسر", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 7, title: "نصيحة الجد", category: "حكمة", meter: "البحر الرمل", text: "يا وصاتي للأحفاد الكرام\nاحفظوا العهد ولا تخשו الملام\nالرفيق الصادق خله وسط العين\nوالردي خله يعدي السلام", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 8, title: "همس الصحراء", category: "شوق", meter: "البحر الطويل", text: "تذكرت دارٍ بالديار عزيزة\nسقاها المطر من مزنةٍ هطّالة\nأهيم بها شقوى وطرفي تهيَّزه\nديار الأجاويد العزاز الهلالة", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 9, title: "صوت الرمح", category: "فخر", meter: "البحر الوافر", text: "رمحي طويل وسيرتي ناصعة بيضاء\nما هبت الموت لو حولي تراكمْ\nأنا العبسي وفخري فاق الجوزاء\nومن يعتزي فينا يلقى المعازمْ", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 10, title: "طير الفلا", category: "عام", meter: "البحر الكامل", text: "يا طير يا اللي تحوم فوق السحاب\nبلغ سلامي للي بقلبي غالي\nقوله ديار العز مشرعة الأبواب\nوما غيره يملى الخاطر وبالي", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 11, title: "صاحب الوفا", category: "حكمة", meter: "البحر الرمل", text: "الوفا ساس المراجل والعلوم\nومن حصد طيب النوايا يستريح\nلا تلوم اللي تردى كل يوم\nكل شخصٍ يتبع أصله الصحيح", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 12, title: "شامخ الهامة", category: "فخر", meter: "البحر الطويل", text: "أنا هامتدي فوق السحايب تعالتْ\nولا أنحني للضيم مهما جروحه\nقبائل عبس في المعارك تسالتْ\nتكسر حديد الكيد وترد روحه", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 13, title: "شمس الأصيل", category: "شوق", meter: "البحر الوافر", text: "تغيب الشمس وتخلي الفضا نور\nوأنا أذكر ربوعٍ بها عشنا\nزمان الصدق ما فيه لف ودور\nعلى العز والمجد ترعرعنا", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 14, title: "دروب المجد", category: "حكمة", meter: "البحر الكامل", text: "درب المراجل شاق ومحفوف بالطيب\nما يلحقه راعي التواني والكسل\nاصبر على الهزات واقهر كل عيب\nحتى تفوز بالمجد وتنال الأمل", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 15, title: "صهوة الخيل", category: "فخر", meter: "البحر المتقارب", text: "على ظهر صهوة حصاني العسيف\nأطوف الفيافي وأهاب المدى\nيدي ما تفارق صقيل السنيف\nولا أرضى الهوان لمن هم عدا", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 16, title: "نبض الوفاء", category: "عام", meter: "البحر الرمل", text: "يا رفيق الدرب يا ساس الكرامة\nمكانتك بالقلب فوق التوصيف\nنحفظ العهد ونعز العلامة\nوطبعنا بالطيب دايم نظيف", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 17, title: "عقبة الصابرين", category: "حكمة", meter: "البحر الطويل", text: "صبرت الصبر لين الصبر من علي غار\nوعرفت إن الدهر يفر ويجيب\nشجاع اللقا ما هاب حامي النار\nومن يتقي في العز يلقى النصيب", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 18, title: "نسيم البر", category: "شوق", meter: "البحر الوافر", text: "يهب النسيم ويجيب ريحة القيصوم\nويذكرني بيامٍ مضت في ديارنا\nنعيش العز والنواميس كل يوم\nولا يخالط صفانا هموم وجارنا", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 19, title: "سيف الحق", category: "فخر", meter: "البحر الكامل", text: "سيفي بيميني يصد العدوان\nوما نرضى بظلمٍ ولا نرتضيه\nحنا عبس أهل المجد والبرهان\nوكل من رامنا بالشر نرديه", verseExplanations: [], date: "مخطوطة أبو رماح" },
-            { id: 20, title: "وصية الأجيال", category: "حكمة", meter: "البحر المتقارب", text: "كتبت الوصية بحبر الذهب\nلأحفادي الأماجد بكل فخر\nخلوا المراجل طريق وتصب\nولا تخافون من جور الدهر", verseExplanations: [], date: "مخطوطة أبو رماح" }
-        ];
+        function renderPoetsSelector() {
+            const grid = document.getElementById('poetsSelectorGrid');
+            grid.innerHTML = '';
+            
+            const keys = Object.keys(poetsData);
+            keys.forEach(key => {
+                const poet = poetsData[key];
+                const card = document.createElement('div');
+                card.className = `poets-card-select ${key === currentPoetKey ? 'active' : ''}`;
+                card.onclick = () => {
+                    currentPoetKey = key;
+                    renderPoetsSelector();
+                    loadPoetProfile(key);
+                };
+                card.innerHTML = `
+                    <img src="${poet.img}" alt="${poet.name}">
+                    <h4>${poet.name}</h4>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
-        // قائمة الفرسان (40 فارساً عربياً جاهلياً + فرسان عبس ودواوينهم) مع أفاتارات عربية أصيلة ورسومات تاريخية
-        const knightsList = [
-            { name: "عنترة بن شداد العبسي", diwan: "ديوان عنترة بن شداد", bio: "أشهر فرسان العرب وشعاع المعلقات، فارس بني عبس الذي جمع بين الفروسية المطلقة وعذوبة الشعر وحبه الخالد لعبلة.", img: "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?q=80&w=400&auto=format&fit=crop" },
-            { name: "زهير بن أبي سلمى", diwan: "معلقة زهير (الحكيم)", bio: "حكيم الشعراء وأحد أصحاب المعلقات، عُرف بقصائده في مدح السلام وإصلاح ذات البين وتحكيم العقل.", img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop" },
-            { name: "عروة بن الورد العبسي", diwan: "ديوان عروة (صعاليق العرب الكرام)", bio: "فارس عبسي كريم الشمائل، عُرف بصعلوك العرب النبيل الذي كان يغزو ليطعم فقراء العشيرة وأيامى الحي.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" },
-            { name: "عمرو بن معد يكرب الزبيدي", diwan: "ديوان عمرو بن معد يكرب", bio: "الفارس الشجاع وصاحب الصمصامة، عُرف بشدته في الحروب وبأسه الشديد في الجاهلية والإسلام.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" },
-            { name: "حسان بن ثابت الأنصاري", diwan: "ديوان حسان بن ثابت", bio: "شاعر الرسول صلى الله عليه وسلم، وفارس الكلمة الذي ذاد عن حمى الدعوة بشعره الرصين.", img: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop" },
-            { name: "المهلهل بن ربيعة (الزير سالم)", diwan: "ديوان الزير سالم", bio: "فارس تغلب وشاعرها، قاد حرب البسوس وكان رمزاً للثأر والفروسية العربية المبكرة.", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop" },
-            { name: "امرؤ القيس بن حجر الكندي", diwan: "ديوان امرؤ القيس", bio: "أمير الشعراء الجاهليين وصاحب المعلقة الشهيرة التي افتتحها بالبكاء على الأطلال.", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" },
-            { name: "الطبراني وبقية فرسان عبس وبنو غطفان", diwan: "دواوين مآثر عبس وغطفان", bio: "سجل حافل يضم فرسان قبيلة عبس الأماجد الذين سطروا ملاحم داحس والغبراء وصنعوا تاريخ الفروسية.", img: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=400&auto=format&fit=crop" }
-        ];
-
-        let commentsData = JSON.parse(localStorage.getItem('aburamah_comments')) || {};
-        let activePoemId = null;
+        function loadPoetProfile(key) {
+            const poet = poetsData[key];
+            document.getElementById('poetAvatar').src = poet.img;
+            document.getElementById('poetNameTitle').innerText = poet.name;
+            document.getElementById('poetBioText').innerText = poet.bio;
+            document.getElementById('archiveBannerText').innerText = `ديوان ${poet.name}`;
+            renderPoemsGrid(poet.poems);
+        }
 
         function switchTab(tabId, btn) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             btn.classList.add('active');
-            if(tabId === 'homeTab') updateFeaturedQuote();
-            if(tabId === 'explanationTab') renderExplanationTab();
-            if(tabId === 'knightsTab') renderKnightsTab();
         }
 
-        function updateFeaturedQuote() {
-            if(poems.length > 0) {
-                const randomPoem = poems[0];
-                activePoemId = randomPoem.id;
-                const firstLine = randomPoem.text.split('\n')[0];
-                document.getElementById('featuredQuoteText').innerText = `"${firstLine}"`;
-            }
-        }
-
-        function openFeaturedPoem() { if(activePoemId) openPoemModal(activePoemId); }
-
-        function renderPoemsGrid(filteredList = null) {
+        function renderPoemsGrid(poemsList) {
             const grid = document.getElementById('poemsGrid');
             grid.innerHTML = '';
-            const listToRender = filteredList || poems;
 
-            if (listToRender.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px; font-family: 'Aref Ruqaa'; font-size: 20px;">لا توجد درر منقوشة في الأرشيف بعد</div>`;
+            if (!poemsList || poemsList.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--sand-text); padding: 30px; font-family: 'Aref Ruqaa'; font-size: 18px;">لا توجد قصائد مسجلة في هذا الديوان بعد</div>`;
                 return;
             }
 
-            listToRender.forEach(poem => {
+            poemsList.forEach(poem => {
                 const lines = poem.text.split('\n').filter(l => l.trim());
                 const card = document.createElement('div');
                 card.className = 'poem-mini-card';
@@ -651,71 +475,19 @@
             });
         }
 
-        function renderKnightsTab() {
-            const container = document.getElementById('knightsContainer');
-            container.innerHTML = '';
-            knightsList.forEach(knight => {
-                const card = document.createElement('div');
-                card.className = 'knight-card';
-                card.innerHTML = `
-                    <img src="${knight.img}" alt="${knight.name}" class="knight-avatar">
-                    <div class="knight-info">
-                        <h4>${knight.name} <span style="font-size: 13px; color: var(--gold-ancient); font-family: 'Reem Kufi';">(${knight.diwan})</span></h4>
-                        <p>${knight.bio}</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
         function quickCopyPoem(textEncoded) {
-            const text = decodeURIComponent(textEncoded);
-            navigator.clipboard.writeText(text);
+            navigator.clipboard.writeText(decodeURIComponent(textEncoded));
             alert('تم نسخ الأبيات بنجاح');
         }
 
-        function renderExplanationTab() {
-            const container = document.getElementById('explanationContainer');
-            container.innerHTML = '';
-
-            poems.forEach(poem => {
-                let card = document.createElement('div');
-                card.className = 'explanation-card';
-                
-                let html = `<div class="explanation-poem-title">${poem.title}</div>`;
-                
-                if (poem.verseExplanations && poem.verseExplanations.length > 0) {
-                    poem.verseExplanations.forEach(item => {
-                        html += `
-                            <div class="verse-explain-block">
-                                <div class="verse-explain-original">▪ ${item.verse}</div>
-                                <div class="verse-explain-text">${item.explain}</div>
-                            </div>
-                        `;
-                    });
-                } else {
-                    const lines = poem.text.split('\n').filter(l => l.trim());
-                    lines.forEach(line => {
-                        html += `
-                            <div class="verse-explain-block">
-                                <div class="verse-explain-original">▪ ${line}</div>
-                                <div class="verse-explain-text">تأمل بياني ومعنى عميق يحمله هذا البيت الدال على صدق التجربة الشعرية وشهامة بني عبس.</div>
-                            </div>
-                        `;
-                    });
-                }
-
-                card.innerHTML = html;
-                container.appendChild(card);
-            });
-        }
-
         function openPoemModal(id) {
-            const poem = poems.find(p => p.id === id);
+            const poetPoems = poetsData[currentPoetKey].poems;
+            const poem = poetPoems.find(p => p.id === id);
             if (!poem) return;
+            
             activePoemId = id;
             document.getElementById('modalTitle').innerText = poem.title;
-            document.getElementById('modalSubtitle').innerText = `${poem.category} ${poem.meter ? '• ' + poem.meter : ''} • ${poem.date}`;
+            document.getElementById('modalSubtitle').innerText = `${poem.category} • ${poem.date}`;
 
             const formatted = poem.text.split('\n').map(line => {
                 if (!line.trim()) return '';
@@ -723,81 +495,22 @@
             }).join('');
 
             document.getElementById('modalBody').innerHTML = formatted;
-            renderComments(id);
-            document.getElementById('poemModal').classList.add('active');
-        }
-
-        function renderComments(poemId) {
-            const listDiv = document.getElementById('commentsList');
-            listDiv.innerHTML = '';
             
-            if (!commentsData[poemId]) {
-                commentsData[poemId] = [];
-            }
-
-            const comments = commentsData[poemId];
-            if (comments.length === 0) {
-                listDiv.innerHTML = `<div style="color: var(--sand-text); font-size: 14px; text-align: center; font-style: italic;">كن أول من يكتب تغريدة أو مداخلة على هذه الأبيات...</div>`;
-                return;
-            }
-
-            comments.forEach((comm, index) => {
-                const item = document.createElement('div');
-                item.className = 'comment-item';
-                item.innerHTML = `
-                    <div class="comment-header">
-                        <span>أبو رماح العبسي (عابر سبيل)</span>
-                        <span>${comm.date}</span>
-                    </div>
-                    <div class="comment-body">${comm.text}</div>
-                    <div class="comment-footer">
-                        <button class="like-btn ${comm.liked ? 'liked' : ''}" onclick="toggleLike(${poemId}, ${index})">
-                            ❤️ أعجبني <span>(${comm.likes || 0})</span>
-                        </button>
-                    </div>
-                `;
-                listDiv.appendChild(item);
-            });
-        }
-
-        function postComment() {
-            const textarea = document.getElementById('newCommentText');
-            const text = textarea.value.trim();
-            if (!text) { alert('يرجى كتابة نص التغريدة أولاً'); return; }
-
-            if (!commentsData[activePoemId]) {
-                commentsData[activePoemId] = [];
-            }
-
-            commentsData[activePoemId].unshift({
-                text: text,
-                likes: 0,
-                liked: false,
-                date: new Date().toLocaleDateString('ar-SA')
-            });
-
-            localStorage.setItem('aburamah_comments', JSON.stringify(commentsData));
-            textarea.value = '';
-            renderComments(activePoemId);
-        }
-
-        function toggleLike(poemId, commentIndex) {
-            const comm = commentsData[poemId][commentIndex];
-            if (comm.liked) {
-                comm.liked = false;
-                comm.likes -= 1;
+            // إظهار زر الحذف فقط إذا كان في أرشيفك الخاص
+            const deleteBtn = document.getElementById('deleteBtn');
+            if (currentPoetKey === 'myarchive') {
+                deleteBtn.style.display = 'block';
             } else {
-                comm.liked = true;
-                comm.likes += 1;
+                deleteBtn.style.display = 'none';
             }
-            localStorage.setItem('aburamah_comments', JSON.stringify(commentsData));
-            renderComments(poemId);
+
+            document.getElementById('poemModal').classList.add('active');
         }
 
         function closeModal() { document.getElementById('poemModal').classList.remove('active'); }
         function closeModalOnOverlay(e) { if (e.target.id === 'poemModal') closeModal(); }
 
-        function savePoem() {
+        function saveUserPoem() {
             const title = document.getElementById('poemTitle').value.trim();
             const category = document.getElementById('poemCategory').value;
             const meter = document.getElementById('poemMeter').value.trim();
@@ -805,46 +518,42 @@
 
             if (!text) { alert('يرجى كتابة أبيات القصيدة أولاً'); return; }
 
-            const lines = text.split('\n').filter(l => l.trim());
-            const verseExplanations = lines.map(line => ({
-                verse: line,
-                explain: `تأمل بياني ومعنى عميق يحمله هذا البيت الدال على صدق التجربة الشعرية وشهامة بني عبس.`
-            }));
-
             const newPoem = {
-                id: Date.now(),
-                title: title || 'قصيدة بدون عنوان',
+                id: 'my_' + Date.now(),
+                title: title || 'قصيدة خاصة',
                 category: category,
                 meter: meter,
                 text: text,
-                verseExplanations: verseExplanations,
                 date: new Date().toLocaleDateString('ar-SA')
             };
 
-            poems.unshift(newPoem);
-            localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+            poetsData.myarchive.poems.unshift(newPoem);
+            localStorage.setItem('my_custom_archive_poems', JSON.stringify(poetsData.myarchive.poems));
+
             document.getElementById('poemTitle').value = '';
             document.getElementById('poemMeter').value = '';
             document.getElementById('poemText').value = '';
-            renderPoemsGrid();
-            renderExplanationTab();
-            alert('تم نقش القصيدة بنجاح في سجل الديوان');
-            switchTab('poemsTab', document.querySelectorAll('.nav-btn')[1]);
+
+            // الانتقال أوتوماتيكياً لأرشيفك الخاص
+            currentPoetKey = 'myarchive';
+            renderPoetsSelector();
+            loadPoetProfile('myarchive');
+            switchTab('poemsTab', document.querySelectorAll('.nav-btn')[0]);
+            alert('تم حفظ القصيدة في أرشيفك الخاص بنجاح ودون انقطاع');
         }
 
         function deleteCurrentModalPoem() {
-            if (confirm('هل أنت متأكد من مسح هذه القصيدة من الأرشيف؟')) {
-                poems = poems.filter(p => p.id !== activePoemId);
-                localStorage.setItem('aburamah_diwan', JSON.stringify(poems));
+            if (confirm('هل أنت متأكد من مسح هذه القصيدة من أرشيفك الخاص؟')) {
+                poetsData.myarchive.poems = poetsData.myarchive.poems.filter(p => p.id !== activePoemId);
+                localStorage.setItem('my_custom_archive_poems', JSON.stringify(poetsData.myarchive.poems));
                 closeModal();
-                renderPoemsGrid();
-                renderExplanationTab();
-                updateFeaturedQuote();
+                loadPoetProfile('myarchive');
             }
         }
 
         function copyCurrentModalPoem() {
-            const poem = poems.find(p => p.id === activePoemId);
+            const poetPoems = poetsData[currentPoetKey].poems;
+            const poem = poetPoems.find(p => p.id === activePoemId);
             if (poem) { 
                 navigator.clipboard.writeText(poem.text); 
                 alert('تم نسخ الأبيات بنجاح'); 
@@ -853,7 +562,7 @@
 
         function searchPoems() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = poems.filter(p => p.title.toLowerCase().includes(query) || p.text.toLowerCase().includes(query));
+            const filtered = poetsData[currentPoetKey].poems.filter(p => p.title.toLowerCase().includes(query) || p.text.toLowerCase().includes(query));
             renderPoemsGrid(filtered);
         }
     </script>
