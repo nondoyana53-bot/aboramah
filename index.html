@@ -573,13 +573,16 @@
                 
                 if (parts.length > 1) {
                     formatted += `<div class="verse-line right">${parts[0]}</div>`;
-                    formatted += `<div class="verse-line left">${parts[1]}</div>`;
+                    formatted += `<div class="verse-line left" style="margin-bottom: 18px;">${parts[1]}</div>`;
                 } else {
-                    const alignClass = (index % 2 === 0) ? 'right' : 'left';
-                    formatted += `<div class="verse-line ${alignClass}">${line}</div>`;
+                    if (index % 2 === 0) {
+                        formatted += `<div class="verse-line right">${line}</div>`;
+                    } else {
+                        formatted += `<div class="verse-line left" style="margin-bottom: 18px;">${line}</div>`;
+                    }
                 }
             });
-
+            
             document.getElementById('modalBody').innerHTML = formatted;
 
             const explanationBox = document.getElementById('modalExplanationBox');
