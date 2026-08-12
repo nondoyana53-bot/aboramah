@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X</title>
+    <title>X / Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -22,9 +22,9 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* حاوية التطبيق بحجم الجوال المتوافق مع X */
         .app-container {
             width: 100%;
             max-width: 600px;
@@ -33,21 +33,37 @@
             border-left: 1px solid #2f3336;
             border-right: 1px solid #2f3336;
             position: relative;
-            padding-bottom: 60px; /* مساحة للشريط السفلي */
+            padding-bottom: 60px;
         }
 
-        /* --- الهيدر العلوي (Header) --- */
-        .top-header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #2f3336;
+        /* --- شريط الحالة العلوي للأيفون (Status Bar) --- */
+        .ios-status-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 16px;
-            z-index: 100;
+            padding: 12px 20px 5px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            background-color: #000;
+            color: #fff;
+        }
+        .ios-status-bar .icons {
+            display: flex;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        /* --- هيدر تطبيق X العلوي --- */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         .header-avatar {
@@ -60,52 +76,157 @@
             justify-content: center;
             font-weight: bold;
             color: white;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             overflow: hidden;
         }
+        .header-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
-        .header-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .header-logo {
-            font-size: 24px;
-            color: #ffffff;
-            cursor: pointer;
-        }
-
-        .header-settings {
-            font-size: 20px;
-            color: #e7e9ea;
-            cursor: pointer;
-        }
-
-        /* --- شريط التبويبات العلوي --- */
-        .header-tabs {
+        .header-actions-left {
             display: flex;
-            text-align: center;
+            gap: 20px;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* --- صفحة الملف الشخصي (Profile View) المطابقة لصورة 1 --- */
+        #profileView {
+            display: none;
+        }
+
+        .profile-banner {
+            width: 100%;
+            height: 150px;
+            background-color: #1d9bf0;
+            position: relative;
+        }
+
+        .profile-details-section {
+            padding: 0 16px;
+            position: relative;
+            border-bottom: 1px solid #2f3336;
+            padding-bottom: 15px;
+        }
+
+        .profile-avatar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: -38px;
+            margin-bottom: 12px;
+        }
+
+        .profile-big-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 4px solid #000000;
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #fff;
+        }
+        .profile-big-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-buttons-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-outline-profile {
+            background: transparent;
+            border: 1px solid #536471;
+            color: #e7e9ea;
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-outline-profile:hover { background-color: rgba(231,233,234,0.1); }
+
+        .profile-user-info h2 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e7e9ea;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-username {
+            font-size: 14px;
+            color: #71767b;
+            margin-bottom: 10px;
+        }
+
+        .verify-badge-btn {
+            background-color: #202327;
+            color: #e7e9ea;
+            border: none;
+            border-radius: 9999px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .verify-badge-btn i { color: #1d9bf0; }
+
+        .profile-bio {
+            font-size: 15px;
+            color: #e7e9ea;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .profile-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 13px;
+            color: #71767b;
+            margin-bottom: 12px;
+        }
+        .profile-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .profile-follows {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+        }
+        .profile-follows span b { color: #e7e9ea; }
+        .profile-follows span { color: #71767b; cursor: pointer; }
+
+        /* تبويبات الملف الشخصي (المنشورات، الردود..) */
+        .profile-tabs {
+            display: flex;
             border-bottom: 1px solid #2f3336;
             cursor: pointer;
-            background-color: #000;
         }
-
-        .tab {
+        .p-tab {
             flex: 1;
+            text-align: center;
             padding: 14px 0;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             color: #71767b;
             position: relative;
         }
-
-        .tab.active {
-            color: #e7e9ea;
-        }
-
-        .tab.active::after {
+        .p-tab.active { color: #e7e9ea; }
+        .p-tab.active::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -117,19 +238,43 @@
             border-radius: 2px;
         }
 
-        /* --- صندوق التغريد (Tweet Box) --- */
+        /* --- الشاشة الرئيسية (Home View) --- */
+        #homeView { display: block; }
+        .header-tabs {
+            display: flex;
+            text-align: center;
+            border-bottom: 1px solid #2f3336;
+            cursor: pointer;
+        }
+        .tab {
+            flex: 1;
+            padding: 14px 0;
+            font-size: 15px;
+            font-weight: 700;
+            color: #71767b;
+            position: relative;
+        }
+        .tab.active { color: #e7e9ea; }
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background-color: #1d9bf0;
+            border-radius: 2px;
+        }
+
+        /* صندوق التغريد */
         .tweet-box {
             display: flex;
             padding: 12px 16px;
             border-bottom: 1px solid #2f3336;
             gap: 12px;
         }
-
-        .tweet-box-input {
-            flex-grow: 1;
-        }
-
-        .tweet-box-input textarea {
+        .tweet-box textarea {
             width: 100%;
             background: transparent;
             border: none;
@@ -137,27 +282,17 @@
             font-size: 18px;
             resize: none;
             outline: none;
-            padding-top: 6px;
-            min-height: 70px;
+            min-height: 60px;
+            padding-top: 5px;
         }
-
         .tweet-box-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #2f3336;
             padding-top: 10px;
-            margin-top: 6px;
+            margin-top: 5px;
         }
-
-        .tweet-icons {
-            display: flex;
-            gap: 16px;
-            color: #1d9bf0;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
         .post-btn {
             background-color: #ffffff;
             color: #0f1419;
@@ -169,79 +304,109 @@
             cursor: pointer;
         }
 
-        .post-btn:hover {
-            background-color: #d7d7d7;
-        }
-
-        /* --- عرض المنشورات والتغريدات --- */
+        /* التغريدات */
         .tweet {
-            display: flex;
-            padding: 12px 16px;
+            padding: 10px 16px 12px 16px;
             border-bottom: 1px solid #2f3336;
-            gap: 12px;
         }
-
-        .tweet-content {
-            flex-grow: 1;
-        }
-
-        .tweet-header {
+        .pinned-label {
+            font-size: 12px;
+            color: #71767b;
             display: flex;
-            gap: 6px;
             align-items: center;
-            font-size: 15px;
+            gap: 6px;
             margin-bottom: 4px;
-        }
-
-        .tweet-header .name {
+            padding-right: 42px;
             font-weight: 700;
-            color: #e7e9ea;
         }
-
-        .tweet-header .username, .tweet-header .time {
-            color: #71767b;
-            font-size: 14px;
-        }
-
-        .tweet-text {
-            font-size: 15px;
-            line-height: 1.5;
-            color: #e7e9ea;
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-
-        .tweet-image {
-            width: 100%;
-            max-height: 320px;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border: 1px solid #2f3336;
-        }
-
-        .tweet-actions {
-            display: flex;
-            justify-content: space-between;
-            max-width: 380px;
-            color: #71767b;
-        }
-
-        .action-icon {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            cursor: pointer;
-        }
-
-        .action-icon.comment:hover { color: #1d9bf0; }
-        .action-icon.retweet:hover { color: #00ba7c; }
-        .action-icon.like:hover { color: #f91880; }
-        .action-icon.like.liked { color: #f91880; }
+        .tweet-main { display: flex; gap: 12px; }
+        .tweet-content { flex-grow: 1; }
+        .tweet-header { display: flex; gap: 6px; align-items: center; font-size: 15px; margin-bottom: 4px; }
+        .tweet-header .name { font-weight: 700; color: #e7e9ea; }
+        .tweet-header .username, .tweet-header .time { color: #71767b; font-size: 14px; }
+        .tweet-text { font-size: 15px; line-height: 1.45; color: #e7e9ea; margin-bottom: 10px; word-break: break-word; }
+        .tweet-actions { display: flex; justify-content: space-between; max-width: 380px; color: #71767b; font-size: 13px; }
+        .action-icon { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .action-icon.like:hover, .action-icon.like.liked { color: #f91880; }
         .action-icon.like.liked i { font-weight: 900; }
 
-        /* --- الشريط السفلي (Navigation Bar تحت) --- */
+        /* --- القائمة الجانبية (Sidebar Drawer المطابقة للصورة رقم 2) --- */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(91, 112, 131, 0.4);
+            z-index: 1000;
+            display: none;
+            justify-content: flex-start;
+        }
+        .drawer-content {
+            width: 280px;
+            height: 100%;
+            background-color: #000000;
+            border-left: 1px solid #2f3336;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            gap: 15px;
+            overflow-y: auto;
+        }
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .drawer-avatar-top {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #1d9bf0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .drawer-avatar-top img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .drawer-user-info { margin-top: 5px; }
+        .drawer-user-info h3 { font-size: 17px; font-weight: 800; }
+        .drawer-user-info span { font-size: 14px; color: #71767b; }
+        
+        .drawer-follows {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .drawer-follows span b { color: #fff; }
+        .drawer-follows span { color: #71767b; }
+
+        .drawer-menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 10px;
+            border-top: 1px solid #2f3336;
+            padding-top: 15px;
+        }
+        .drawer-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #e7e9ea;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .drawer-item i { font-size: 20px; width: 24px; text-align: center; }
+
+        /* --- الشريط السفلي لتطبيق X --- */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -254,26 +419,13 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             z-index: 100;
         }
+        .nav-icon { color: #71767b; font-size: 22px; cursor: pointer; }
+        .nav-icon.active { color: #ffffff; }
 
-        .nav-icon {
-            color: #71767b;
-            font-size: 22px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .nav-icon.active {
-            color: #ffffff;
-        }
-
-        .nav-icon:hover {
-            color: #ffffff;
-        }
-
-        /* --- زر النشر العائم (Floating Action Button) --- */
+        /* زر العوام النشر (FAB) */
         .fab-btn {
             position: fixed;
             bottom: 75px;
@@ -292,34 +444,7 @@
             z-index: 99;
         }
 
-        /* --- شاشة الملف الشخصي (Profile View) --- */
-        .profile-view {
-            display: none;
-            padding: 20px;
-        }
-        .profile-header-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #2f3336;
-            padding-bottom: 20px;
-        }
-        .profile-big-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #1d9bf0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            color: white;
-            overflow: hidden;
-        }
-        .profile-big-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* --- نافذة تعديل الحساب (Modal) --- */
+        /* نافذة تعديل الحساب (Modal) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -330,10 +455,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 200;
+            z-index: 2000;
             display: none;
         }
-
         .modal-box {
             background-color: #000000;
             border: 1px solid #2f3336;
@@ -345,12 +469,11 @@
             flex-direction: column;
             gap: 15px;
         }
-
-        .modal-form input {
+        .modal-form input, .modal-form textarea {
             background: transparent;
             border: 1px solid #2f3336;
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             color: white;
             font-size: 15px;
             outline: none;
@@ -363,36 +486,40 @@
 
     <div class="app-container">
         
-        <!-- الهيدر العلوي بنظام الجوال -->
-        <div class="top-header">
-            <div class="header-avatar" id="topAvatar" onclick="openProfileModal()" title="حسابي">X</div>
-            <div class="header-logo"><i class="fa-solid fa-x"></i></div>
-            <div class="header-settings" onclick="openProfileModal()"><i class="fa-solid fa-sliders"></i></div>
+        <!-- شريط الحالة (ساعة وبطارية الأيفون) -->
+        <div class="ios-status-bar">
+            <span>2:27</span>
+            <div class="icons">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full"></i>
+            </div>
         </div>
 
-        <!-- المحتوى الرئيسي (الرئيسية) -->
+        <!-- الهيدر العلوي -->
+        <div class="top-header">
+            <div class="header-avatar" id="topAvatar" onclick="openDrawer()">L</div>
+            <div style="font-size: 20px; font-weight: 700;" id="headerTitle"></div>
+            <div class="header-actions-left">
+                <i class="fa-solid fa-magnifying-glass" onclick="switchTab('explore')"></i>
+                <i class="fa-solid fa-arrow-right" onclick="switchTab('home')" style="font-size: 18px;"></i>
+            </div>
+        </div>
+
+        <!-- ================= الشاشة الرئيسية (Home) ================= -->
         <div id="homeView">
             <div class="header-tabs">
                 <div class="tab active">لك</div>
                 <div class="tab">المتابِعون</div>
             </div>
 
-            <!-- صندوق التغريد -->
             <div class="tweet-box">
-                <div class="header-avatar" id="boxAvatar" style="width: 40px; height: 40px;">X</div>
-                <div class="tweet-box-input">
+                <div class="header-avatar" id="boxAvatar" style="width: 40px; height: 40px;">L</div>
+                <div style="flex-grow: 1;">
                     <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
-                    
-                    <!-- معاينة الصورة -->
-                    <div id="imagePreviewContainer" style="position: relative; display: none; margin-bottom: 10px;">
-                        <img id="imagePreview" class="tweet-image" src="" alt="معاينة">
-                        <i class="fa-solid fa-xmark" onclick="removeImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 6px; border-radius: 50%; cursor: pointer;"></i>
-                    </div>
-
                     <div class="tweet-box-footer">
-                        <div class="tweet-icons">
-                            <label for="imageUpload" style="cursor: pointer;"><i class="fa-regular fa-image"></i></label>
-                            <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="previewFile()">
+                        <div style="color: #1d9bf0; display: flex; gap: 15px; font-size: 18px; cursor: pointer;">
+                            <i class="fa-regular fa-image"></i>
                             <i class="fa-solid fa-gift"></i>
                             <i class="fa-regular fa-face-smile"></i>
                         </div>
@@ -401,222 +528,328 @@
                 </div>
             </div>
 
-            <!-- جدول المنشورات -->
             <div id="feed">
+                <!-- تغريدة مثبتة مطابقة لصورة 1 -->
                 <div class="tweet">
-                    <div class="header-avatar" style="width: 40px; height: 40px; background-color: #1d9bf0;"><i class="fa-solid fa-x"></i></div>
-                    <div class="tweet-content">
-                        <div class="tweet-header">
-                            <span class="name">X</span>
-                            <span class="username">@X</span>
-                            <span class="time">· الآن</span>
+                    <div class="pinned-label"><i class="fa-solid fa-thumbtack"></i> مُثبّت</div>
+                    <div class="tweet-main">
+                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
+                        <div class="tweet-content">
+                            <div class="tweet-header">
+                                <span class="name" id="feedName">Lost in his worries</span>
+                                <span class="username" id="feedUsername">@ciigari</span>
+                                <span class="time">· ٢٠٢٥/٦/١٩</span>
+                            </div>
+                            <div class="tweet-text">
+                                اللهم إني أسألك من عظيم لطفك وكرمك وستركر الجميل أن تشفي غاليه وتمحّها بالصحة والعافية وتصبر اهلها وعيالها يارب العالمين
+                            </div>
+                            <div class="tweet-actions">
+                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ١</div>
+                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ٢</div>
+                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>١٠</b></div>
+                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                            </div>
                         </div>
-                        <div class="tweet-text">
-                            أهلاً بك في واجهة تطبيق X للهواتف. الشريط السفلي فعال، اضغط على أيقونة حسابك بالأسفل أو الهيدر لتعديل ملفك الشخصي وغرد بكل حرية! 🚀
-                        </div>
-                        <div class="tweet-actions">
-                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 25</div>
-                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 110</div>
-                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">1.5K</span></div>
-                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                    </div>
+                </div>
+
+                <!-- تغريدة ثانية -->
+                <div class="tweet">
+                    <div class="tweet-main">
+                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
+                        <div class="tweet-content">
+                            <div class="tweet-header">
+                                <span class="name">Lost in his worries</span>
+                                <span class="username">@ciigari</span>
+                                <span class="time">· ٣ و</span>
+                            </div>
+                            <div class="tweet-text">
+                                حلمت فيك وليتني ماوعيت شفتك بحلمي وانا كلي وله
+                            </div>
+                            <div class="tweet-actions">
+                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ٠</div>
+                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ١</div>
+                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>١</b></div>
+                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- شاشة الملف الشخصي (لما تضغط على حسابك تحت) -->
-        <div id="profileView" class="profile-view">
-            <div class="profile-header-box">
-                <div class="profile-big-avatar" id="profileBigAvatar">X</div>
-                <h2 id="profileDisplayName" style="font-size: 20px;">مستخدم X</h2>
-                <span id="profileDisplayUsername" style="color: #71767b; font-size: 14px;">@x_user</span>
-                <button class="post-btn" style="background: transparent; border: 1px solid #536471; color: white; margin-top: 10px;" onclick="openProfileModal()">تعديل الملف الشخصي</button>
+        <!-- ================= شاشة الملف الشخصي المطابقة لصورة 1 ================= -->
+        <div id="profileView">
+            <div class="profile-banner"></div>
+            <div class="profile-details-section">
+                <div class="profile-avatar-row">
+                    <div class="profile-big-avatar" id="profileBigAvatar">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200" alt="Avatar">
+                    </div>
+                    <div class="profile-buttons-row">
+                        <button class="btn-outline-profile" onclick="openProfileModal()">تعديل الملف الشخصي</button>
+                    </div>
+                </div>
+
+                <div class="profile-user-info">
+                    <h2 id="profileNameDisplay">Lost in his worries</h2>
+                    <div class="profile-username" id="profileUsernameDisplay">@ciigari</div>
+                    
+                    <button class="verify-badge-btn">
+                        <i class="fa-solid fa-circle-check"></i> وثّق حسابك
+                    </button>
+
+                    <div class="profile-bio" id="profileBioDisplay">فترة وانا اعدي</div>
+
+                    <div class="profile-meta">
+                        <span><i class="fa-solid fa-location-dot"></i> بتزين</span>
+                        <span><i class="fa-regular fa-calendar"></i> انضم في فبراير ٢٠٢١</span>
+                    </div>
+
+                    <div class="profile-follows">
+                        <span><b>٢٠</b> متابِع</span>
+                        <span><b>٠</b> المتابِعون</span>
+                    </div>
+                </div>
             </div>
-            <p style="text-align: center; color: #71767b; margin-top: 30px;">لا توجد منشورات خاصة بك حتى الآن.</p>
+
+            <div class="profile-tabs">
+                <div class="p-tab active">المنشورات</div>
+                <div class="p-tab">الردود</div>
+                <div class="p-tab">الوسائط</div>
+                <div class="p-tab">الإعجابات</div>
+            </div>
+
+            <!-- تغريدات الملف الشخصي -->
+            <div id="userTweetsFeed">
+                <div class="tweet">
+                    <div class="pinned-label"><i class="fa-solid fa-thumbtack"></i> مُثبّت</div>
+                    <div class="tweet-main">
+                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
+                        <div class="tweet-content">
+                            <div class="tweet-header">
+                                <span class="name">Lost in his worries</span>
+                                <span class="username">@ciigari</span>
+                                <span class="time">· ٢٠٢٥/٦/١٩</span>
+                            </div>
+                            <div class="tweet-text">
+                                اللهم إني أسألك من عظيم لطفك وكرمك وستركر الجميل أن تشفي غاليه وتمحّها بالصحة والعافية وتصبر اهلها وعيالها يارب العالمين
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- زر النشر العائم الجانبي -->
-        <div class="fab-btn" onclick="focusTweetBox()">
-            <i class="fa-solid fa-feather-pointed"></i>
+        <!-- ================= القائمة الجانبية (Drawer المطابقة لصورة 2) ================= -->
+        <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer(event)">
+            <div class="drawer-content" onclick="event.stopPropagation()">
+                <div class="drawer-header">
+                    <div class="drawer-avatar-top" id="drawerAvatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
+                    <i class="fa-solid fa-ellipsis" style="font-size: 18px; cursor: pointer;"></i>
+                </div>
+                
+                <div class="drawer-user-info" onclick="goToProfileFromDrawer()" style="cursor: pointer;">
+                    <h3 id="drawerName">Lost in his worries</h3>
+                    <span id="drawerUsername">@ciigari</span>
+                </div>
+
+                <div class="drawer-follows" onclick="goToProfileFromDrawer()" style="cursor: pointer;">
+                    <span><b>٢٠</b> متابِع</span>
+                    <span><b>٠</b> المتابِعون</span>
+                </div>
+
+                <div class="drawer-menu-items">
+                    <div class="drawer-item" onclick="goToProfileFromDrawer()"><i class="fa-regular fa-user"></i> الملف الشخصي</div>
+                    <div class="drawer-item"><i class="fa-solid fa-circle-check" style="color:#1d9bf0;"></i> Premium</div>
+                    <div class="drawer-item"><i class="fa-regular fa-bookmark"></i> السجل</div>
+                    <div class="drawer-item"><i class="fa-solid fa-user-group"></i> المجتمعات</div>
+                    <div class="drawer-item"><i class="fa-regular fa-rectangle-list"></i> القوائم</div>
+                    <div class="drawer-item"><i class="fa-solid fa-podcast"></i> المساحات</div>
+                    <div class="drawer-item"><i class="fa-solid fa-rocket"></i> أستوديو منشئ المحتوى</div>
+                    
+                    <hr style="border: 0; border-top: 1px solid #2f3336; margin: 5px 0;">
+                    
+                    <div class="drawer-item" style="font-size: 16px;"><i class="fa-solid fa-circle-nodes"></i> فتح Grok</div>
+                    <div class="drawer-item" style="font-size: 16px;" onclick="openProfileModal()"><i class="fa-solid fa-gear"></i> الإعدادات والخصوصية</div>
+                    <div class="drawer-item" style="font-size: 16px;"><i class="fa-regular fa-circle-question"></i> مركز المساعدة</div>
+                </div>
+            </div>
         </div>
 
-        <!-- الشريط السفلي (Navigation Bar تحت) -->
+        <!-- زر النشر العائم -->
+        <div class="fab-btn" onclick="focusTweetBox()"><i class="fa-solid fa-feather-pointed"></i></div>
+
+        <!-- الشريط السفلي لتطبيق X (مطابق للصورة ١) -->
         <div class="bottom-nav">
-            <i class="fa-solid fa-house nav-icon active" onclick="switchTab('home')" id="navHome" title="الرئيسية"></i>
-            <i class="fa-solid fa-magnifying-glass nav-icon" onclick="switchTab('explore')" id="navExplore" title="بحث واستكشاف"></i>
-            <i class="fa-regular fa-bell nav-icon" onclick="switchTab('notifications')" id="navNotif" title="الإشعارات"></i>
-            <i class="fa-regular fa-envelope nav-icon" onclick="switchTab('messages')" id="navMsg" title="الرسائل"></i>
-            <i class="fa-regular fa-user nav-icon" onclick="switchTab('profile')" id="navProfile" title="حسابي"></i>
+            <i class="fa-solid fa-house nav-icon active" onclick="switchTab('home')" id="navHome"></i>
+            <i class="fa-solid fa-magnifying-glass nav-icon" onclick="switchTab('explore')" id="navExplore"></i>
+            <i class="fa-solid fa-bolt nav-icon" onclick="switchTab('grok')" id="navGrok"></i>
+            <i class="fa-regular fa-bell nav-icon" onclick="switchTab('notifications')" id="navNotif"></i>
+            <i class="fa-regular fa-envelope nav-icon" onclick="switchTab('messages')" id="navMsg"></i>
         </div>
 
     </div>
 
-    <!-- نافذة تعديل الحساب -->
+    <!-- نافذة تعديل الملف الشخصي -->
     <div class="modal-overlay" id="profileModal">
         <div class="modal-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700;">
-                <span>تعديل حسابك</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 17px;">
+                <span>تعديل الملف الشخصي</span>
                 <i class="fa-solid fa-xmark" onclick="closeProfileModal()" style="cursor: pointer;"></i>
             </div>
             <div class="modal-form">
-                <label>اسمك الكامل:</label>
-                <input type="text" id="inputName" placeholder="مثال: خالد الحربي">
+                <label>الاسم:</label>
+                <input type="text" id="inputName" value="Lost in his worries">
                 
-                <label>معرف الحساب (يوزر):</label>
-                <input type="text" id="inputUsername" placeholder="مثال: @khaled">
+                <label>المعرف (يوزر):</label>
+                <input type="text" id="inputUsername" value="@ciigari">
 
-                <label>رابط صورة الملف الشخصي (اختياري):</label>
-                <input type="text" id="inputAvatar" placeholder="ضع رابط صورة مباشرة هنا">
+                <label>البايو (النبذة التعريفية):</label>
+                <textarea id="inputBio">فترة وانا اعدي</textarea>
 
-                <button class="post-btn" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="saveProfile()">حفظ التغييرات</button>
+                <label>رابط الصورة الشخصية (Avatar URL):</label>
+                <input type="text" id="inputAvatar" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200">
+
+                <button class="post-btn" style="width: 100%; padding: 12px; margin-top: 5px; background: #fff; font-weight: 700;" onclick="saveProfile()">حفظ</button>
             </div>
         </div>
     </div>
 
     <script>
-        let currentUser = {
-            name: "مستخدم X",
-            username: "@x_user",
-            avatar: ""
+        let userData = {
+            name: "Lost in his worries",
+            username: "@ciigari",
+            bio: "فترة وانا اعدي",
+            avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200"
         };
 
-        let uploadedImageSrc = "";
+        // فتح وإغلاق القائمة الجانبية (Drawer)
+        function openDrawer() {
+            document.getElementById('drawerOverlay').style.display = 'flex';
+        }
+        function closeDrawer(e) {
+            document.getElementById('drawerOverlay').style.display = 'none';
+        }
 
-        // التنقل بين الصفحات من الشريط السفلي
+        // الانتقال للملف الشخصي من القائمة الجانبية
+        function goToProfileFromDrawer() {
+            closeDrawer();
+            switchTab('profile');
+        }
+
+        // التبديل بين الشاشات
         function switchTab(tab) {
             document.getElementById('homeView').style.display = 'none';
             document.getElementById('profileView').style.display = 'none';
-
             document.querySelectorAll('.bottom-nav i').forEach(el => el.classList.remove('active'));
 
             if (tab === 'home') {
                 document.getElementById('homeView').style.display = 'block';
                 document.getElementById('navHome').classList.add('active');
+                document.getElementById('headerTitle').innerText = "";
             } else if (tab === 'profile') {
                 document.getElementById('profileView').style.display = 'block';
-                document.getElementById('navProfile').classList.add('active');
+                document.getElementById('headerTitle').innerText = userData.name;
             } else {
                 document.getElementById('homeView').style.display = 'block';
                 if(tab === 'explore') document.getElementById('navExplore').classList.add('active');
+                if(tab === 'grok') document.getElementById('navGrok').classList.add('active');
                 if(tab === 'notifications') document.getElementById('navNotif').classList.add('active');
                 if(tab === 'messages') document.getElementById('navMsg').classList.add('active');
             }
         }
 
-        // إعدادات الحساب والمودال
+        // تعديل الحساب
         function openProfileModal() {
-            document.getElementById('inputName').value = currentUser.name;
-            document.getElementById('inputUsername').value = currentUser.username;
+            closeDrawer();
+            document.getElementById('inputName').value = userData.name;
+            document.getElementById('inputUsername').value = userData.username;
+            document.getElementById('inputBio').value = userData.bio;
+            document.getElementById('inputAvatar').value = userData.avatar;
             document.getElementById('profileModal').style.display = 'flex';
         }
-
         function closeProfileModal() {
             document.getElementById('profileModal').style.display = 'none';
         }
-
         function saveProfile() {
-            const name = document.getElementById('inputName').value.trim();
-            const username = document.getElementById('inputUsername').value.trim();
-            const avatar = document.getElementById('inputAvatar').value.trim();
+            userData.name = document.getElementById('inputName').value;
+            userData.username = document.getElementById('inputUsername').value;
+            userData.bio = document.getElementById('inputBio').value;
+            userData.avatar = document.getElementById('inputAvatar').value;
 
-            if (name) currentUser.name = name;
-            if (username) currentUser.username = username.startsWith('@') ? username : '@' + username;
-            if (avatar) currentUser.avatar = avatar;
-
-            updateUserInterface();
+            updateUI();
             closeProfileModal();
         }
 
-        function updateUserInterface() {
-            document.getElementById('profileDisplayName').innerText = currentUser.name;
-            document.getElementById('profileDisplayUsername').innerText = currentUser.username;
-            
-            const avatarElements = [
+        function updateUI() {
+            document.getElementById('profileNameDisplay').innerText = userData.name;
+            document.getElementById('profileUsernameDisplay').innerText = userData.username;
+            document.getElementById('profileBioDisplay').innerText = userData.bio;
+            document.getElementById('drawerName').innerText = userData.name;
+            document.getElementById('drawerUsername').innerText = userData.username;
+            document.getElementById('feedName').innerText = userData.name;
+            document.getElementById('feedUsername').innerText = userData.username;
+
+            const avatars = [
                 document.getElementById('topAvatar'), 
                 document.getElementById('boxAvatar'), 
+                document.getElementById('drawerAvatar'),
                 document.getElementById('profileBigAvatar')
             ];
 
-            avatarElements.forEach(el => {
-                if (currentUser.avatar) {
-                    el.innerHTML = `<img src="${currentUser.avatar}" alt="صورة">`;
+            avatars.forEach(el => {
+                if (userData.avatar) {
+                    el.innerHTML = `<img src="${userData.avatar}" alt="Avatar">`;
                 } else {
-                    el.innerText = currentUser.name.charAt(0);
+                    el.innerText = userData.name.charAt(0);
                 }
             });
         }
 
-        // معاينة الصورة المرفقة
-        function previewFile() {
-            const file = document.getElementById('imageUpload').files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedImageSrc = e.target.result;
-                    document.getElementById('imagePreview').src = uploadedImageSrc;
-                    document.getElementById('imagePreviewContainer').style.display = 'block';
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function removeImage() {
-            uploadedImageSrc = "";
-            document.getElementById('imagePreviewContainer').style.display = 'none';
-            document.getElementById('imageUpload').value = "";
-        }
-
-        // إنشاء تغريدة أو بوست
+        // إنشاء تغريدة
         function createTweet() {
             const text = document.getElementById('tweetInput').value.trim();
-            if (text === '' && uploadedImageSrc === '') return;
-
-            let avatarContent = currentUser.avatar ? `<img src="${currentUser.avatar}" alt="صورة">` : currentUser.name.charAt(0);
-            let imageHTML = uploadedImageSrc ? `<img src="${uploadedImageSrc}" class="tweet-image">` : '';
+            if (!text) return;
 
             const newTweetHTML = `
                 <div class="tweet">
-                    <div class="header-avatar" style="width: 40px; height: 40px;">${avatarContent}</div>
-                    <div class="tweet-content">
-                        <div class="tweet-header">
-                            <span class="name">${escapeHtml(currentUser.name)}</span>
-                            <span class="username">${escapeHtml(currentUser.username)}</span>
-                            <span class="time">· الآن</span>
-                        </div>
-                        <div class="tweet-text">${escapeHtml(text)}</div>
-                        ${imageHTML}
-                        <div class="tweet-actions">
-                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 0</div>
-                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 0</div>
-                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">0</span></div>
-                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                    <div class="tweet-main">
+                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="${userData.avatar}" alt="avatar"></div>
+                        <div class="tweet-content">
+                            <div class="tweet-header">
+                                <span class="name">${escapeHtml(userData.name)}</span>
+                                <span class="username">${escapeHtml(userData.username)}</span>
+                                <span class="time">· الآن</span>
+                            </div>
+                            <div class="tweet-text">${escapeHtml(text)}</div>
+                            <div class="tweet-actions">
+                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ٠</div>
+                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ٠</div>
+                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>٠</b></div>
+                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
-
             document.getElementById('feed').insertAdjacentHTML('afterbegin', newTweetHTML);
             document.getElementById('tweetInput').value = '';
-            removeImage();
             switchTab('home');
         }
 
-        // الإعجاب
         function toggleLike(element) {
             element.classList.toggle('liked');
-            const icon = element.querySelector('i');
-            const countSpan = element.querySelector('.likes-count');
-            let count = parseInt(countSpan.innerText) || 0;
-
+            const b = element.querySelector('b');
+            let count = parseInt(b.innerText) || 0;
             if (element.classList.contains('liked')) {
-                icon.classList.remove('fa-regular');
-                icon.classList.add('fa-solid');
-                countSpan.innerText = count + 1;
+                element.querySelector('i').classList.remove('fa-regular');
+                element.querySelector('i').classList.add('fa-solid');
+                b.innerText = count + 1;
             } else {
-                icon.classList.remove('fa-solid');
-                icon.classList.add('fa-regular');
-                countSpan.innerText = count - 1;
+                element.querySelector('i').classList.remove('fa-solid');
+                element.querySelector('i').classList.add('fa-regular');
+                b.innerText = count - 1;
             }
         }
 
@@ -628,6 +861,8 @@
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
+
+        updateUI();
     </script>
 </body>
 </html>
