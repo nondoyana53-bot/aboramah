@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>86o</title>
-    <!-- استيراد خط أنيق يدعم العربية -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -31,7 +29,7 @@
             max-width: 1260px;
         }
 
-        /* --- الشريط الجانبي الأيسر (القائمة) --- */
+        /* --- الشريط الجانبي الأيسر --- */
         sidebar {
             width: 275px;
             display: flex;
@@ -72,6 +70,7 @@
             width: fit-content;
             transition: background 0.2s;
             margin-bottom: 5px;
+            cursor: pointer;
         }
 
         .nav-item:hover {
@@ -130,12 +129,20 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: #536471;
+            background-color: #1d9bf0;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             color: white;
+            font-size: 16px;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .user-names h4 {
@@ -148,7 +155,7 @@
             color: #71767b;
         }
 
-        /* --- المحتوى الرئيسي (Timeline) --- */
+        /* --- المحتوى الرئيسي --- */
         main {
             flex-grow: 1;
             max-width: 600px;
@@ -264,13 +271,12 @@
             background-color: #1a8cd8;
         }
 
-        /* قائمة التغريدات */
+        /* عرض التغريدات */
         .tweet {
             display: flex;
             padding: 12px 16px;
             border-bottom: 1px solid #2f3336;
             gap: 12px;
-            cursor: pointer;
             transition: background 0.2s;
         }
 
@@ -305,6 +311,16 @@
             line-height: 1.5;
             color: #e7e9ea;
             margin-bottom: 12px;
+            word-break: break-word;
+        }
+
+        .tweet-image {
+            width: 100%;
+            max-height: 350px;
+            border-radius: 16px;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 1px solid #2f3336;
         }
 
         .tweet-actions {
@@ -327,8 +343,9 @@
         .action-icon.retweet:hover { color: #00ba7c; }
         .action-icon.like:hover { color: #f91880; }
         .action-icon.like.liked { color: #f91880; }
+        .action-icon.like.liked i { font-weight: 900; }
 
-        /* --- الشريط الجانبي الأيمن (Widgets) --- */
+        /* --- الشريط الجانبي الأيمن --- */
         .widgets {
             width: 350px;
             padding: 10px 15px;
@@ -393,7 +410,91 @@
             color: #e7e9ea;
         }
 
-        /* التصميم التجاوبي للشاشات الصغيرة */
+        /* --- تصميم نافذة إنشاء الحساب (Modal) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(91, 112, 131, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .modal-box {
+            background-color: #000000;
+            border: 1px solid #2f3336;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-header i {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+        }
+        .modal-header i:hover {
+            background-color: rgba(231, 233, 234, 0.1);
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-form input {
+            background: transparent;
+            border: 1px solid #2f3336;
+            border-radius: 8px;
+            padding: 14px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .modal-form input:focus {
+            border-color: #1d9bf0;
+        }
+
+        .modal-form label {
+            font-size: 14px;
+            color: #71767b;
+        }
+
+        .modal-submit {
+            background-color: #ffffff;
+            color: #000000;
+            font-weight: 700;
+            border: none;
+            border-radius: 9999px;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .modal-submit:hover {
+            background-color: #d7d7d7;
+        }
+
         @media (max-width: 1020px) {
             .widgets { display: none; }
             sidebar { width: 88px; align-items: center; }
@@ -416,15 +517,15 @@
                 <a href="#" class="nav-item"><i class="fa-solid fa-hashtag"></i><span>استكشاف</span></a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i><span>الإشعارات</span></a>
                 <a href="#" class="nav-item"><i class="fa-regular fa-envelope"></i><span>الرسائل</span></a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-user"></i><span>الملف الشخصي</span></a>
-                <button class="post-btn-sidebar">نشر</button>
+                <a href="#" class="nav-item" onclick="openProfileModal()"><i class="fa-regular fa-user"></i><span>حسابي</span></a>
+                <button class="post-btn-sidebar" onclick="focusTweetBox()">نشر</button>
             </div>
-            <div class="user-profile-mini">
+            <div class="user-profile-mini" onclick="openProfileModal()">
                 <div class="user-info">
-                    <div class="avatar">86</div>
+                    <div class="avatar" id="sidebarAvatar">86</div>
                     <div class="user-names">
-                        <h4>مستخدم 86o</h4>
-                        <span>@86o_user</span>
+                        <h4 id="sidebarName">مستخدم 86o</h4>
+                        <span id="sidebarUsername">@86o_user</span>
                     </div>
                 </div>
                 <i class="fa-solid fa-ellipsis"></i>
@@ -443,60 +544,47 @@
 
             <!-- صندوق التغريد -->
             <div class="tweet-box">
-                <div class="avatar">86</div>
+                <div class="avatar" id="boxAvatar">86</div>
                 <div class="tweet-box-input">
                     <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
+                    
+                    <!-- معاينة الصورة المرفقة إن وجدت -->
+                    <div id="imagePreviewContainer" style="position: relative; display: none; margin-bottom: 10px;">
+                        <img id="imagePreview" class="tweet-image" src="" alt="معاينة">
+                        <i class="fa-solid fa-xmark" onclick="removeImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 8px; border-radius: 50%; cursor: pointer;"></i>
+                    </div>
+
                     <div class="tweet-box-footer">
                         <div class="tweet-icons">
-                            <i class="fa-regular fa-image"></i>
+                            <label for="imageUpload" style="cursor: pointer;"><i class="fa-regular fa-image"></i></label>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="previewFile()">
                             <i class="fa-solid fa-gift"></i>
                             <i class="fa-regular fa-face-smile"></i>
                             <i class="fa-regular fa-calendar"></i>
                         </div>
-                        <button class="post-btn" id="postBtn">نشر</button>
+                        <button class="post-btn" id="postBtn" onclick="createTweet()">نشر</button>
                     </div>
                 </div>
             </div>
 
-            <!-- قائمة التغريدات (Timeline) -->
+            <!-- قائمة التغريدات -->
             <div id="feed">
-                <!-- تغريدة تجريبية 1 -->
+                <!-- التغريدة التجريبية الأولى -->
                 <div class="tweet">
                     <div class="avatar" style="background-color: #1d9bf0;">X</div>
                     <div class="tweet-content">
                         <div class="tweet-header">
                             <span class="name">منصة 86o</span>
                             <span class="username">@86o_official</span>
-                            <span class="time">· ٣ س</span>
+                            <span class="time">· الآن</span>
                         </div>
                         <div class="tweet-text">
-                            أهلاً بك في منصة 86o الرقمية! استمتع بتجربة تواصل سلسة، سريعة، وبنفس تصميم وتفاصيل التطبيق العالمي المفضل لديك. 🚀🔥
+                            أهلاً بك في منصة 86o المتكاملة! يمكنك الآن تعديل بيانات حسابك، كتابة التغريدات، وإرفاق الصور بكل سهولة. 🚀🔥
                         </div>
                         <div class="tweet-actions">
-                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 24</div>
-                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 152</div>
-                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">1.2K</span></div>
-                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- تغريدة تجريبية 2 -->
-                <div class="tweet">
-                    <div class="avatar" style="background-color: #00ba7c;">بر</div>
-                    <div class="tweet-content">
-                        <div class="tweet-header">
-                            <span class="name">برمجة وتصميم</span>
-                            <span class="username">@code_86o</span>
-                            <span class="time">· ٥ س</span>
-                        </div>
-                        <div class="tweet-text">
-                            تم تصميم واجهة 86o باستخدام أحدث معايير الـ HTML5 و CSS لتوفير الوضع المظلم (Dark Mode) والأداء السريع. جرب كتابة تغريدتك الخاصة الآن!
-                        </div>
-                        <div class="tweet-actions">
-                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 8</div>
+                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 12</div>
                             <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 45</div>
-                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">340</span></div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">300</span></div>
                             <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
                         </div>
                     </div>
@@ -508,63 +596,137 @@
         <div class="widgets">
             <div class="search-bar">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="بحث">
+                <input type="text" placeholder="بحث في 86o">
             </div>
 
             <div class="widget-card">
                 <h3>ما يُعقد الآن</h3>
                 <div class="trending-item">
                     <span>تقنية · ترند</span>
-                    <p>#86o_تطبيق_المستقبل</p>
-                    <span>٢٥٫٤ ألف منشور</span>
+                    <p>#86o_المنافس_الحقيقي</p>
+                    <span>٥٠ ألف منشور</span>
                 </div>
                 <div class="trending-item" style="margin-top: 15px;">
                     <span>برمجة · رائج</span>
-                    <p>#تصميم_واجهات</p>
-                    <span>١٢ ألف منشور</span>
+                    <p>#تطوير_الويب</p>
+                    <span>١٨ ألف منشور</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // تفاعل زر الإعجاب (Like)
-        function toggleLike(element) {
-            element.classList.toggle('liked');
-            const icon = element.querySelector('i');
-            const countSpan = element.querySelector('.likes-count');
-            let count = parseFloat(countSpan.innerText);
+    <!-- نافذة تعديل الحساب (Modal) -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>إنشاء / تعديل حسابك الشخصي</span>
+                <i class="fa-solid fa-xmark" onclick="closeProfileModal()"></i>
+            </div>
+            <div class="modal-form">
+                <label>اسمك الكامل:</label>
+                <input type="text" id="inputName" placeholder="مثال: أحمد محمد">
+                
+                <label>معرف الحساب (يوزر):</label>
+                <input type="text" id="inputUsername" placeholder="مثال: @ahmad">
 
-            if (element.classList.contains('liked')) {
-                icon.classList.remove('fa-regular');
-                icon.classList.add('fa-solid');
-                countSpan.innerText = (count + 0.1).toFixed(1) + 'K';
-            } else {
-                icon.classList.remove('fa-solid');
-                icon.classList.add('fa-regular');
-                countSpan.innerText = (count - 0.1).toFixed(1) + 'K';
+                <label>رابط صورة الملف الشخصي (اختياري):</label>
+                <input type="text" id="inputAvatar" placeholder="ضع رابط صورة أو اتركها فارغة">
+
+                <button class="modal-submit" onclick="saveProfile()">حفظ وتحديث الحساب</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات الحساب الافتراضية
+        let currentUser = {
+            name: "مستخدم 86o",
+            username: "@86o_user",
+            avatar: ""
+        };
+
+        let uploadedImageSrc = "";
+
+        // فتح وإغلاق نافذة الحساب
+        function openProfileModal() {
+            document.getElementById('inputName').value = currentUser.name;
+            document.getElementById('inputUsername').value = currentUser.username;
+            document.getElementById('profileModal').style.display = 'flex';
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        // حفظ تفاصيل الحساب وتحديث الواجهة
+        function saveProfile() {
+            const name = document.getElementById('inputName').value.trim();
+            const username = document.getElementById('inputUsername').value.trim();
+            const avatar = document.getElementById('inputAvatar').value.trim();
+
+            if (name) currentUser.name = name;
+            if (username) currentUser.username = username.startsWith('@') ? username : '@' + username;
+            if (avatar) currentUser.avatar = avatar;
+
+            updateUserInterface();
+            closeProfileModal();
+        }
+
+        // تحديث جميع عناصر الحساب في الصفحة
+        function updateUserInterface() {
+            document.getElementById('sidebarName').innerText = currentUser.name;
+            document.getElementById('sidebarUsername').innerText = currentUser.username;
+            
+            const avatars = [document.getElementById('sidebarAvatar'), document.getElementById('boxAvatar')];
+            avatars.forEach(el => {
+                if (currentUser.avatar) {
+                    el.innerHTML = `<img src="${currentUser.avatar}" alt="صورة">`;
+                } else {
+                    el.innerText = currentUser.name.charAt(0);
+                }
+            });
+        }
+
+        // رفع وتصفح الصور وإظهار المعاينة
+        function previewFile() {
+            const file = document.getElementById('imageUpload').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedImageSrc = e.target.result;
+                    document.getElementById('imagePreview').src = uploadedImageSrc;
+                    document.getElementById('imagePreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
             }
         }
 
-        // إضافة تغريدة جديدة تفاعلياً
-        const postBtn = document.getElementById('postBtn');
-        const tweetInput = document.getElementById('tweetInput');
-        const feed = document.getElementById('feed');
+        function removeImage() {
+            uploadedImageSrc = "";
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+            document.getElementById('imageUpload').value = "";
+        }
 
-        postBtn.addEventListener('click', function() {
-            const text = tweetInput.value.trim();
-            if (text === '') return;
+        // إنشاء تغريدة / بوست جديد
+        function createTweet() {
+            const text = document.getElementById('tweetInput').value.trim();
+            if (text === '' && uploadedImageSrc === '') return;
+
+            let avatarContent = currentUser.avatar ? `<img src="${currentUser.avatar}" alt="صورة">` : currentUser.name.charAt(0);
+            
+            let imageHTML = uploadedImageSrc ? `<img src="${uploadedImageSrc}" class="tweet-image">` : '';
 
             const newTweetHTML = `
                 <div class="tweet">
-                    <div class="avatar">86</div>
+                    <div class="avatar">${avatarContent}</div>
                     <div class="tweet-content">
                         <div class="tweet-header">
-                            <span class="name">مستخدم 86o</span>
-                            <span class="username">@86o_user</span>
+                            <span class="name">${escapeHtml(currentUser.name)}</span>
+                            <span class="username">${escapeHtml(currentUser.username)}</span>
                             <span class="time">· الآن</span>
                         </div>
                         <div class="tweet-text">${escapeHtml(text)}</div>
+                        ${imageHTML}
                         <div class="tweet-actions">
                             <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 0</div>
                             <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 0</div>
@@ -575,11 +737,35 @@
                 </div>
             `;
 
-            feed.insertAdjacentHTML('afterbegin', newTweetHTML);
-            tweetInput.value = '';
-        });
+            document.getElementById('feed').insertAdjacentHTML('afterbegin', newTweetHTML);
+            
+            // تفريغ الحقول بعد النشر
+            document.getElementById('tweetInput').value = '';
+            removeImage();
+        }
 
-        // دالة حماية بسيطة للنصوص المدخلة
+        // تفاعل زر الإعجاب الحقيقي
+        function toggleLike(element) {
+            element.classList.toggle('liked');
+            const icon = element.querySelector('i');
+            const countSpan = element.querySelector('.likes-count');
+            let count = parseInt(countSpan.innerText) || 0;
+
+            if (element.classList.contains('liked')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+                countSpan.innerText = count + 1;
+            } else {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+                countSpan.innerText = count - 1;
+            }
+        }
+
+        function focusTweetBox() {
+            document.getElementById('tweetInput').focus();
+        }
+
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
