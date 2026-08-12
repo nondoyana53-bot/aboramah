@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X / Profile</title>
+    <title>X / التطبيق الرسمي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -33,10 +33,83 @@
             border-left: 1px solid #2f3336;
             border-right: 1px solid #2f3336;
             position: relative;
-            padding-bottom: 60px;
+            padding-bottom: 65px;
         }
 
-        /* --- شريط الحالة العلوي للأيفون (Status Bar) --- */
+        /* --- شاشة تسجيل الدخول وإنشاء الحساب (Auth Screen) --- */
+        #authScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            z-index: 5000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .auth-box i.fa-x {
+            font-size: 40px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .auth-box h2 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .auth-input {
+            background: transparent;
+            border: 1px solid #333639;
+            border-radius: 6px;
+            padding: 14px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+        }
+        .auth-input:focus { border-color: #1d9bf0; }
+
+        .auth-btn {
+            background-color: #ffffff;
+            color: #0f1419;
+            border: none;
+            border-radius: 9999px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .auth-btn:hover { background-color: #d7d7d7; }
+
+        .auth-switch {
+            text-align: center;
+            font-size: 14px;
+            color: #71767b;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .auth-switch span { color: #1d9bf0; font-weight: 700; }
+
+        /* --- شريط الحالة للأيفون --- */
         .ios-status-bar {
             display: flex;
             justify-content: space-between;
@@ -47,13 +120,9 @@
             background-color: #000;
             color: #fff;
         }
-        .ios-status-bar .icons {
-            display: flex;
-            gap: 6px;
-            font-size: 13px;
-        }
+        .ios-status-bar .icons { display: flex; gap: 6px; font-size: 13px; }
 
-        /* --- هيدر تطبيق X العلوي --- */
+        /* --- الهيدر العلوي --- */
         .top-header {
             display: flex;
             justify-content: space-between;
@@ -64,6 +133,7 @@
             position: sticky;
             top: 0;
             z-index: 50;
+            border-bottom: 1px solid #2f3336;
         }
 
         .header-avatar {
@@ -90,156 +160,11 @@
             cursor: pointer;
         }
 
-        /* --- صفحة الملف الشخصي (Profile View) المطابقة لصورة 1 --- */
-        #profileView {
-            display: none;
-        }
+        /* --- محتوى الصفحات --- */
+        .view-section { display: none; }
+        .view-section.active { display: block; }
 
-        .profile-banner {
-            width: 100%;
-            height: 150px;
-            background-color: #1d9bf0;
-            position: relative;
-        }
-
-        .profile-details-section {
-            padding: 0 16px;
-            position: relative;
-            border-bottom: 1px solid #2f3336;
-            padding-bottom: 15px;
-        }
-
-        .profile-avatar-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-top: -38px;
-            margin-bottom: 12px;
-        }
-
-        .profile-big-avatar {
-            width: 76px;
-            height: 76px;
-            border-radius: 50%;
-            border: 4px solid #000000;
-            background-color: #333;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            color: #fff;
-        }
-        .profile-big-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
-        .profile-buttons-row {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-outline-profile {
-            background: transparent;
-            border: 1px solid #536471;
-            color: #e7e9ea;
-            border-radius: 9999px;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-outline-profile:hover { background-color: rgba(231,233,234,0.1); }
-
-        .profile-user-info h2 {
-            font-size: 19px;
-            font-weight: 800;
-            color: #e7e9ea;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .profile-username {
-            font-size: 14px;
-            color: #71767b;
-            margin-bottom: 10px;
-        }
-
-        .verify-badge-btn {
-            background-color: #202327;
-            color: #e7e9ea;
-            border: none;
-            border-radius: 9999px;
-            padding: 4px 12px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-        .verify-badge-btn i { color: #1d9bf0; }
-
-        .profile-bio {
-            font-size: 15px;
-            color: #e7e9ea;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .profile-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 13px;
-            color: #71767b;
-            margin-bottom: 12px;
-        }
-        .profile-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .profile-follows {
-            display: flex;
-            gap: 15px;
-            font-size: 14px;
-        }
-        .profile-follows span b { color: #e7e9ea; }
-        .profile-follows span { color: #71767b; cursor: pointer; }
-
-        /* تبويبات الملف الشخصي (المنشورات، الردود..) */
-        .profile-tabs {
-            display: flex;
-            border-bottom: 1px solid #2f3336;
-            cursor: pointer;
-        }
-        .p-tab {
-            flex: 1;
-            text-align: center;
-            padding: 14px 0;
-            font-size: 14px;
-            font-weight: 700;
-            color: #71767b;
-            position: relative;
-        }
-        .p-tab.active { color: #e7e9ea; }
-        .p-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 56px;
-            height: 4px;
-            background-color: #1d9bf0;
-            border-radius: 2px;
-        }
-
-        /* --- الشاشة الرئيسية (Home View) --- */
-        #homeView { display: block; }
+        /* الشاشة الرئيسية */
         .header-tabs {
             display: flex;
             text-align: center;
@@ -261,13 +186,12 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
+            width: 45px;
             height: 4px;
             background-color: #1d9bf0;
             border-radius: 2px;
         }
 
-        /* صندوق التغريد */
         .tweet-box {
             display: flex;
             padding: 12px 16px;
@@ -304,191 +228,241 @@
             cursor: pointer;
         }
 
-        /* التغريدات */
         .tweet {
-            padding: 10px 16px 12px 16px;
+            padding: 12px 16px;
             border-bottom: 1px solid #2f3336;
-        }
-        .pinned-label {
-            font-size: 12px;
-            color: #71767b;
             display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 4px;
-            padding-right: 42px;
-            font-weight: 700;
+            gap: 12px;
         }
-        .tweet-main { display: flex; gap: 12px; }
         .tweet-content { flex-grow: 1; }
         .tweet-header { display: flex; gap: 6px; align-items: center; font-size: 15px; margin-bottom: 4px; }
-        .tweet-header .name { font-weight: 700; color: #e7e9ea; }
+        .tweet-header .name { font-weight: 700; color: #e7e9ea; display: flex; align-items: center; gap: 4px; }
+        .tweet-header .name i { color: #1d9bf0; font-size: 13px; }
         .tweet-header .username, .tweet-header .time { color: #71767b; font-size: 14px; }
         .tweet-text { font-size: 15px; line-height: 1.45; color: #e7e9ea; margin-bottom: 10px; word-break: break-word; }
+        .tweet-img { width: 100%; max-height: 300px; border-radius: 12px; object-fit: cover; margin-bottom: 10px; }
         .tweet-actions { display: flex; justify-content: space-between; max-width: 380px; color: #71767b; font-size: 13px; }
         .action-icon { display: flex; align-items: center; gap: 6px; cursor: pointer; }
         .action-icon.like:hover, .action-icon.like.liked { color: #f91880; }
         .action-icon.like.liked i { font-weight: 900; }
 
-        /* --- القائمة الجانبية (Sidebar Drawer المطابقة للصورة رقم 2) --- */
+        /* --- شاشة الملف الشخصي (Profile View) --- */
+        .profile-banner {
+            width: 100%;
+            height: 150px;
+            background-color: #1d9bf0;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        .profile-details-section {
+            padding: 0 16px;
+            position: relative;
+            border-bottom: 1px solid #2f3336;
+            padding-bottom: 15px;
+        }
+        .profile-avatar-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: -38px;
+            margin-bottom: 12px;
+        }
+        .profile-big-avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            border: 4px solid #000000;
+            background-color: #333;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            color: #fff;
+        }
+        .profile-big-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .btn-outline-profile {
+            background: transparent;
+            border: 1px solid #536471;
+            color: #e7e9ea;
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .profile-user-info h2 {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e7e9ea;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .profile-user-info h2 i { color: #1d9bf0; font-size: 15px; }
+        .profile-username { font-size: 14px; color: #71767b; margin-bottom: 10px; }
+        .profile-bio { font-size: 15px; color: #e7e9ea; margin-bottom: 10px; line-height: 1.4; }
+        .profile-meta { display: flex; gap: 15px; font-size: 13px; color: #71767b; margin-bottom: 12px; }
+
+        /* --- شاشة الرسائل الخاصة (DM Chat View) الحقيقية السلسة --- *//* --- نظام المحادثة المباشر --- */
+        .chat-list-view { display: flex; flex-direction: column; }
+        .chat-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2f3336;
+            cursor: pointer;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .chat-item:hover { background-color: rgba(231,233,234,0.03); }
+
+        .chat-room-view {
+            display: none;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+            justify-content: space-between;
+        }
+        .messages-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .msg-bubble {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 15px;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        .msg-bubble.incoming {
+            background-color: #202327;
+            color: #e7e9ea;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .msg-bubble.outgoing {
+            background-color: #1d9bf0;
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-input-box {
+            display: flex;
+            padding: 10px 16px;
+            border-top: 1px solid #2f3336;
+            background-color: #000;
+            gap: 10px;
+            align-items: center;
+        }
+        .chat-input-box input {
+            flex-grow: 1;
+            background: #202327;
+            border: none;
+            border-radius: 9999px;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+        .chat-input-box button {
+            background: #1d9bf0;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        /* --- القائمة الجانبية (Drawer) --- */
         .drawer-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(91, 112, 131, 0.4);
             z-index: 1000;
             display: none;
             justify-content: flex-start;
         }
         .drawer-content {
-            width: 280px;
-            height: 100%;
+            width: 280px; height: 100%;
             background-color: #000000;
             border-left: 1px solid #2f3336;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 16px;
-            gap: 15px;
-            overflow-y: auto;
-        }
-        .drawer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .drawer-avatar-top {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #1d9bf0;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        .drawer-avatar-top img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .drawer-user-info { margin-top: 5px; }
-        .drawer-user-info h3 { font-size: 17px; font-weight: 800; }
-        .drawer-user-info span { font-size: 14px; color: #71767b; }
-        
-        .drawer-follows {
-            display: flex;
-            gap: 15px;
-            font-size: 14px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-        }
-        .drawer-follows span b { color: #fff; }
-        .drawer-follows span { color: #71767b; }
-
-        .drawer-menu-items {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            margin-top: 10px;
-            border-top: 1px solid #2f3336;
-            padding-top: 15px;
+            display: flex; flex-direction: column;
+            padding: 20px 16px; gap: 15px; overflow-y: auto;
         }
         .drawer-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #e7e9ea;
-            cursor: pointer;
-            text-decoration: none;
+            display: flex; align-items: center; gap: 20px;
+            font-size: 18px; font-weight: 700; color: #e7e9ea; cursor: pointer;
         }
         .drawer-item i { font-size: 20px; width: 24px; text-align: center; }
 
-        /* --- الشريط السفلي لتطبيق X --- */
+        /* --- الشريط السفلي --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 600px;
-            background-color: #000000;
-            border-top: 1px solid #2f3336;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px 0;
-            z-index: 100;
+            position: fixed; bottom: 0; left: 50%;
+            transform: translateX(-50%); width: 100%; max-width: 600px;
+            background-color: #000000; border-top: 1px solid #2f3336;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 12px 0; z-index: 100;
         }
         .nav-icon { color: #71767b; font-size: 22px; cursor: pointer; }
         .nav-icon.active { color: #ffffff; }
 
-        /* زر العوام النشر (FAB) */
         .fab-btn {
-            position: fixed;
-            bottom: 75px;
-            left: 20px;
-            background-color: #1d9bf0;
-            color: white;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            cursor: pointer;
-            z-index: 99;
+            position: fixed; bottom: 75px; left: 20px;
+            background-color: #1d9bf0; color: white;
+            width: 52px; height: 52px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            cursor: pointer; z-index: 99;
         }
 
-        /* نافذة تعديل الحساب (Modal) */
+        /* نافذة التعديل */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(91, 112, 131, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            display: none;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000; display: none;
         }
         .modal-box {
-            background-color: #000000;
-            border: 1px solid #2f3336;
-            width: 90%;
-            max-width: 400px;
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            background-color: #000000; border: 1px solid #2f3336;
+            width: 90%; max-width: 400px; border-radius: 20px;
+            padding: 20px; display: flex; flex-direction: column; gap: 15px;
         }
         .modal-form input, .modal-form textarea {
-            background: transparent;
-            border: 1px solid #2f3336;
-            border-radius: 8px;
-            padding: 10px;
-            color: white;
-            font-size: 15px;
-            outline: none;
-            width: 100%;
+            background: transparent; border: 1px solid #2f3336; border-radius: 8px;
+            padding: 10px; color: white; font-size: 15px; outline: none; width: 100%;
         }
         .modal-form label { font-size: 13px; color: #71767b; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- ================= شاشة تسجيل الدخول / إنشاء الحساب ================= -->
+    <div id="authScreen">
+        <div class="auth-box">
+            <i class="fa-solid fa-x"></i>
+            <h2 id="authTitle">تسجيل الدخول إلى X</h2>
+            <input type="text" id="authUsername" class="auth-input" placeholder="اسم المستخدم أو المعرف (مثال: @saud)">
+            <input type="password" id="authPassword" class="auth-input" placeholder="كلمة المرور">
+            <button class="auth-btn" onclick="handleAuth()">دخول / إنشاء حساب</button>
+            <div class="auth-switch" onclick="toggleAuthMode()">ليس لديك حساب؟ <span>أنشئ حساباً جديداً</span></div>
+        </div>
+    </div>
+
+    <div class="app-container" id="mainAppContainer" style="display: none;">
         
-        <!-- شريط الحالة (ساعة وبطارية الأيفون) -->
         <div class="ios-status-bar">
-            <span>2:27</span>
+            <span>3:15</span>
             <div class="icons">
                 <i class="fa-solid fa-signal"></i>
                 <i class="fa-solid fa-wifi"></i>
@@ -496,30 +470,37 @@
             </div>
         </div>
 
-        <!-- الهيدر العلوي -->
         <div class="top-header">
-            <div class="header-avatar" id="topAvatar" onclick="openDrawer()">L</div>
+            <div class="header-avatar" id="topAvatar" onclick="openDrawer()">X</div>
             <div style="font-size: 20px; font-weight: 700;" id="headerTitle"></div>
             <div class="header-actions-left">
-                <i class="fa-solid fa-magnifying-glass" onclick="switchTab('explore')"></i>
+                <i class="fa-solid fa-magnifying-glass" onclick="switchTab('home')"></i>
                 <i class="fa-solid fa-arrow-right" onclick="switchTab('home')" style="font-size: 18px;"></i>
             </div>
         </div>
 
         <!-- ================= الشاشة الرئيسية (Home) ================= -->
-        <div id="homeView">
+        <div id="homeView" class="view-section active">
             <div class="header-tabs">
                 <div class="tab active">لك</div>
                 <div class="tab">المتابِعون</div>
             </div>
 
             <div class="tweet-box">
-                <div class="header-avatar" id="boxAvatar" style="width: 40px; height: 40px;">L</div>
+                <div class="header-avatar" id="boxAvatar" style="width: 40px; height: 40px;">X</div>
                 <div style="flex-grow: 1;">
                     <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
+                    
+                    <!-- معاينة صورة التغريدة -->
+                    <div id="tweetImgPreviewContainer" style="display: none; position: relative; margin-bottom: 10px;">
+                        <img id="tweetImgPreview" class="tweet-img" src="">
+                        <i class="fa-solid fa-xmark" onclick="removeTweetImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 6px; border-radius: 50%; cursor: pointer;"></i>
+                    </div>
+
                     <div class="tweet-box-footer">
                         <div style="color: #1d9bf0; display: flex; gap: 15px; font-size: 18px; cursor: pointer;">
-                            <i class="fa-regular fa-image"></i>
+                            <label for="tweetImageUpload"><i class="fa-regular fa-image" style="cursor: pointer;"></i></label>
+                            <input type="file" id="tweetImageUpload" accept="image/*" style="display: none;" onchange="previewTweetImage(event)">
                             <i class="fa-solid fa-gift"></i>
                             <i class="fa-regular fa-face-smile"></i>
                         </div>
@@ -529,312 +510,335 @@
             </div>
 
             <div id="feed">
-                <!-- تغريدة مثبتة مطابقة لصورة 1 -->
+                <!-- تغريدة افتراضية -->
                 <div class="tweet">
-                    <div class="pinned-label"><i class="fa-solid fa-thumbtack"></i> مُثبّت</div>
-                    <div class="tweet-main">
-                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
-                        <div class="tweet-content">
-                            <div class="tweet-header">
-                                <span class="name" id="feedName">Lost in his worries</span>
-                                <span class="username" id="feedUsername">@ciigari</span>
-                                <span class="time">· ٢٠٢٥/٦/١٩</span>
-                            </div>
-                            <div class="tweet-text">
-                                اللهم إني أسألك من عظيم لطفك وكرمك وستركر الجميل أن تشفي غاليه وتمحّها بالصحة والعافية وتصبر اهلها وعيالها يارب العالمين
-                            </div>
-                            <div class="tweet-actions">
-                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ١</div>
-                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ٢</div>
-                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>١٠</b></div>
-                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-                            </div>
+                    <div class="header-avatar" style="width: 40px; height: 40px; background-color: #00ba7c;">X</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">إدارة X <i class="fa-solid fa-circle-check"></i></span>
+                            <span class="username">@x_official</span>
+                            <span class="time">· الآن</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- تغريدة ثانية -->
-                <div class="tweet">
-                    <div class="tweet-main">
-                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
-                        <div class="tweet-content">
-                            <div class="tweet-header">
-                                <span class="name">Lost in his worries</span>
-                                <span class="username">@ciigari</span>
-                                <span class="time">· ٣ و</span>
-                            </div>
-                            <div class="tweet-text">
-                                حلمت فيك وليتني ماوعيت شفتك بحلمي وانا كلي وله
-                            </div>
-                            <div class="tweet-actions">
-                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ٠</div>
-                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ١</div>
-                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>١</b></div>
-                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-                            </div>
+                        <div class="tweet-text">أهلاً بك في منصة X المطورة كلياً! حسابك موثق، يمكنك التغريد، وضع صور شخصية وهيدر، والدردشة في الخاص بكل حرية وسلاسة. 🚀</div>
+                        <div class="tweet-actions">
+                            <div class="action-icon"><i class="fa-regular fa-comment"></i> 5</div>
+                            <div class="action-icon"><i class="fa-solid fa-retweet"></i> 12</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>48</b></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ================= شاشة الملف الشخصي المطابقة لصورة 1 ================= -->
-        <div id="profileView">
-            <div class="profile-banner"></div>
+        <!-- ================= شاشة الملف الشخصي (Profile View) ================= -->
+        <div id="profileView" class="view-section">
+            <div class="profile-banner" id="profileBannerDisplay"></div>
             <div class="profile-details-section">
                 <div class="profile-avatar-row">
-                    <div class="profile-big-avatar" id="profileBigAvatar">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200" alt="Avatar">
-                    </div>
-                    <div class="profile-buttons-row">
-                        <button class="btn-outline-profile" onclick="openProfileModal()">تعديل الملف الشخصي</button>
-                    </div>
+                    <div class="profile-big-avatar" id="profileBigAvatar">X</div>
+                    <button class="btn-outline-profile" onclick="openProfileModal()">تعديل الملف الشخصي</button>
                 </div>
 
                 <div class="profile-user-info">
-                    <h2 id="profileNameDisplay">Lost in his worries</h2>
-                    <div class="profile-username" id="profileUsernameDisplay">@ciigari</div>
-                    
-                    <button class="verify-badge-btn">
-                        <i class="fa-solid fa-circle-check"></i> وثّق حسابك
-                    </button>
-
-                    <div class="profile-bio" id="profileBioDisplay">فترة وانا اعدي</div>
-
+                    <h2 id="profileNameDisplay">مستخدم X <i class="fa-solid fa-circle-check" style="color:#1d9bf0;"></i></h2>
+                    <div class="profile-username" id="profileUsernameDisplay">@user</div>
+                    <div class="profile-bio" id="profileBioDisplay">لا توجد نبذة تعريفية حالياً..</div>
                     <div class="profile-meta">
-                        <span><i class="fa-solid fa-location-dot"></i> بتزين</span>
-                        <span><i class="fa-regular fa-calendar"></i> انضم في فبراير ٢٠٢١</span>
+                        <span><i class="fa-regular fa-calendar"></i> انضم حديثاً</span>
                     </div>
-
-                    <div class="profile-follows">
-                        <span><b>٢٠</b> متابِع</span>
-                        <span><b>٠</b> المتابِعون</span>
+                    <div style="display: flex; gap: 15px; font-size: 14px; color: #71767b;">
+                        <span><b style="color:#fff;">140</b> متابِع</span>
+                        <span><b style="color:#fff;">42</b> المتابِعون</span>
                     </div>
                 </div>
             </div>
 
-            <div class="profile-tabs">
-                <div class="p-tab active">المنشورات</div>
-                <div class="p-tab">الردود</div>
-                <div class="p-tab">الوسائط</div>
-                <div class="p-tab">الإعجابات</div>
+            <div class="header-tabs">
+                <div class="tab active">المنشورات</div>
+                <div class="tab">الردود</div>
+                <div class="tab">الإعجابات</div>
+            </div>
+            <div id="userProfileFeed"></div>
+        </div>
+
+        <!-- ================= شاشة الرسائل (الخاص DM الشامل) ================= -->
+        <div id="messagesView" class="view-section">
+            <!-- قائمة المحادثات -->
+            <div id="chatListSection" class="chat-list-view">
+                <div style="padding: 15px; font-size: 20px; font-weight: 800; border-bottom: 1px solid #2f3336;">الرسائل الخاصة</div>
+                <div class="chat-item" onclick="openChatRoom('فريق الدعم الفني', 'support')">
+                    <div class="header-avatar" style="width: 42px; height: 42px; background-color: #00ba7c;"><i class="fa-solid fa-headset"></i></div>
+                    <div>
+                        <h4 style="font-size: 15px; color:#fff;">فريق الدعم الفني <i class="fa-solid fa-circle-check" style="color:#1d9bf0; font-size:12px;"></i></h4>
+                        <span style="font-size: 13px; color: #71767b;">أهلاً بك، كيف يمكننا مساعدتك اليوم؟</span>
+                    </div>
+                </div>
+                <div class="chat-item" onclick="openChatRoom('سارة العتيبي', 'sara')">
+                    <div class="header-avatar" style="width: 42px; height: 42px; background-color: #f91880;">س</div>
+                    <div>
+                        <h4 style="font-size: 15px; color:#fff;">سارة العتيبي</h4>
+                        <span style="font-size: 13px; color: #71767b;">مرحباً! هل تناقشنا بخصوص المشروع القادم؟</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- تغريدات الملف الشخصي -->
-            <div id="userTweetsFeed">
-                <div class="tweet">
-                    <div class="pinned-label"><i class="fa-solid fa-thumbtack"></i> مُثبّت</div>
-                    <div class="tweet-main">
-                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
-                        <div class="tweet-content">
-                            <div class="tweet-header">
-                                <span class="name">Lost in his worries</span>
-                                <span class="username">@ciigari</span>
-                                <span class="time">· ٢٠٢٥/٦/١٩</span>
-                            </div>
-                            <div class="tweet-text">
-                                اللهم إني أسألك من عظيم لطفك وكرمك وستركر الجميل أن تشفي غاليه وتمحّها بالصحة والعافية وتصبر اهلها وعيالها يارب العالمين
-                            </div>
-                        </div>
-                    </div>
+            <!-- غرفة المحادثة الفردية -->
+            <div id="chatRoomSection" class="chat-room-view">
+                <div style="padding: 12px 16px; border-bottom: 1px solid #2f3336; display: flex; align-items: center; gap: 12px; background:#000; position: sticky; top:0; z-index:10;">
+                    <i class="fa-solid fa-arrow-right" onclick="closeChatRoom()" style="cursor: pointer; font-size: 18px;"></i>
+                    <h3 id="activeChatName" style="font-size: 16px; color:#fff;">المحادثة</h3>
+                </div>
+                <div class="messages-container" id="chatMessagesContainer">
+                    <div class="msg-bubble incoming">أهلاً بك في الخاص! تم فتح الدردشة وتستطيع المراسلة بكل حرية.</div>
+                </div>
+                <div class="chat-input-box">
+                    <input type="text" id="chatInputText" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter') sendDirectMessage()">
+                    <button onclick="sendDirectMessage()"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= القائمة الجانبية (Drawer المطابقة لصورة 2) ================= -->
+        <!-- ================= القائمة الجانبية (Drawer) ================= -->
         <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer(event)">
             <div class="drawer-content" onclick="event.stopPropagation()">
-                <div class="drawer-header">
-                    <div class="drawer-avatar-top" id="drawerAvatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="avatar"></div>
-                    <i class="fa-solid fa-ellipsis" style="font-size: 18px; cursor: pointer;"></i>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="header-avatar" id="drawerAvatar" style="width: 45px; height: 45px;">X</div>
+                    <i class="fa-solid fa-xmark" onclick="closeDrawer()" style="cursor: pointer; font-size: 20px;"></i>
                 </div>
-                
-                <div class="drawer-user-info" onclick="goToProfileFromDrawer()" style="cursor: pointer;">
-                    <h3 id="drawerName">Lost in his worries</h3>
-                    <span id="drawerUsername">@ciigari</span>
+                <div style="margin-top: 5px;">
+                    <h3 id="drawerName" style="font-size: 17px; font-weight: 800; color:#fff;">مستخدم</h3>
+                    <span id="drawerUsername" style="font-size: 14px; color: #71767b;">@user</span>
                 </div>
-
-                <div class="drawer-follows" onclick="goToProfileFromDrawer()" style="cursor: pointer;">
-                    <span><b>٢٠</b> متابِع</span>
-                    <span><b>٠</b> المتابِعون</span>
+                <div style="display: flex; gap: 15px; font-size: 14px; color: #71767b; margin-bottom: 10px;">
+                    <span><b style="color:#fff;">140</b> متابِع</span>
+                    <span><b style="color:#fff;">42</b> المتابِعون</span>
                 </div>
-
-                <div class="drawer-menu-items">
-                    <div class="drawer-item" onclick="goToProfileFromDrawer()"><i class="fa-regular fa-user"></i> الملف الشخصي</div>
-                    <div class="drawer-item"><i class="fa-solid fa-circle-check" style="color:#1d9bf0;"></i> Premium</div>
-                    <div class="drawer-item"><i class="fa-regular fa-bookmark"></i> السجل</div>
-                    <div class="drawer-item"><i class="fa-solid fa-user-group"></i> المجتمعات</div>
-                    <div class="drawer-item"><i class="fa-regular fa-rectangle-list"></i> القوائم</div>
-                    <div class="drawer-item"><i class="fa-solid fa-podcast"></i> المساحات</div>
-                    <div class="drawer-item"><i class="fa-solid fa-rocket"></i> أستوديو منشئ المحتوى</div>
-                    
-                    <hr style="border: 0; border-top: 1px solid #2f3336; margin: 5px 0;">
-                    
-                    <div class="drawer-item" style="font-size: 16px;"><i class="fa-solid fa-circle-nodes"></i> فتح Grok</div>
-                    <div class="drawer-item" style="font-size: 16px;" onclick="openProfileModal()"><i class="fa-solid fa-gear"></i> الإعدادات والخصوصية</div>
-                    <div class="drawer-item" style="font-size: 16px;"><i class="fa-regular fa-circle-question"></i> مركز المساعدة</div>
+                <div style="display: flex; flex-direction: column; gap: 18px; border-top: 1px solid #2f3336; padding-top: 15px;">
+                    <div class="drawer-item" onclick="switchTab('profile'); closeDrawer();"><i class="fa-regular fa-user"></i> الملف الشخصي</div>
+                    <div class="drawer-item" onclick="switchTab('messages'); closeDrawer();"><i class="fa-regular fa-envelope"></i> الرسائل الخاصة</div>
+                    <div class="drawer-item"><i class="fa-solid fa-circle-check" style="color:#1d9bf0;"></i> توثيق الحساب (مفعل تلقائياً)</div>
+                    <div class="drawer-item" onclick="openProfileModal(); closeDrawer();"><i class="fa-solid fa-gear"></i> إعدادات الحساب وتغيير الصور</div>
                 </div>
             </div>
         </div>
 
         <!-- زر النشر العائم -->
-        <div class="fab-btn" onclick="focusTweetBox()"><i class="fa-solid fa-feather-pointed"></i></div>
+        <div class="fab-btn" onclick="switchTab('home'); document.getElementById('tweetInput').focus();"><i class="fa-solid fa-feather-pointed"></i></div>
 
-        <!-- الشريط السفلي لتطبيق X (مطابق للصورة ١) -->
+        <!-- الشريط السفلي لتطبيق X -->
         <div class="bottom-nav">
             <i class="fa-solid fa-house nav-icon active" onclick="switchTab('home')" id="navHome"></i>
-            <i class="fa-solid fa-magnifying-glass nav-icon" onclick="switchTab('explore')" id="navExplore"></i>
-            <i class="fa-solid fa-bolt nav-icon" onclick="switchTab('grok')" id="navGrok"></i>
-            <i class="fa-regular fa-bell nav-icon" onclick="switchTab('notifications')" id="navNotif"></i>
+            <i class="fa-solid fa-magnifying-glass nav-icon" onclick="switchTab('home')" id="navSearch"></i>
+            <i class="fa-solid fa-bolt nav-icon" onclick="switchTab('home')" id="navGrok"></i>
+            <i class="fa-regular fa-bell nav-icon" onclick="switchTab('home')" id="navNotif"></i>
             <i class="fa-regular fa-envelope nav-icon" onclick="switchTab('messages')" id="navMsg"></i>
         </div>
 
     </div>
 
-    <!-- نافذة تعديل الملف الشخصي -->
+    <!-- نافذة تعديل الحساب (تغيير الاسم، اليوزر، البايو، الأفاتار، الهيدر) -->
     <div class="modal-overlay" id="profileModal">
         <div class="modal-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 17px;">
-                <span>تعديل الملف الشخصي</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 17px; color:#fff;">
+                <span>تعديل الملف الشخصي والصور</span>
                 <i class="fa-solid fa-xmark" onclick="closeProfileModal()" style="cursor: pointer;"></i>
             </div>
-            <div class="modal-form">
-                <label>الاسم:</label>
-                <input type="text" id="inputName" value="Lost in his worries">
+            <div class="modal-form" style="display: flex; flex-direction: column; gap: 12px; max-height: 75vh; overflow-y: auto;">
+                <label>الاسم الكامل:</label>
+                <input type="text" id="inputName">
                 
                 <label>المعرف (يوزر):</label>
-                <input type="text" id="inputUsername" value="@ciigari">
+                <input type="text" id="inputUsername">
 
                 <label>البايو (النبذة التعريفية):</label>
-                <textarea id="inputBio">فترة وانا اعدي</textarea>
+                <textarea id="inputBio" rows="2"></textarea>
 
-                <label>رابط الصورة الشخصية (Avatar URL):</label>
-                <input type="text" id="inputAvatar" value="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200">
+                <label>صورة الملف الشخصي (اختر صورة من جهازك):</label>
+                <input type="file" id="inputAvatarFile" accept="image/*" style="color:#fff;">
 
-                <button class="post-btn" style="width: 100%; padding: 12px; margin-top: 5px; background: #fff; font-weight: 700;" onclick="saveProfile()">حفظ</button>
+                <label>صورة الهيدر الخلفية (اختر صورة من جهازك):</label>
+                <input type="file" id="inputBannerFile" accept="image/*" style="color:#fff;">
+
+                <button class="post-btn" style="width: 100%; padding: 12px; margin-top: 5px; background: #fff; font-weight: 700;" onclick="saveProfileChanges()">حفظ التغييرات</button>
             </div>
         </div>
     </div>
 
     <script>
-        let userData = {
-            name: "Lost in his worries",
-            username: "@ciigari",
-            bio: "فترة وانا اعدي",
-            avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200"
+        let isSignupMode = false;
+        let currentUser = {
+            name: "مستخدم X",
+            username: "@user",
+            bio: "أهلاً بك في حسابي الموثق على X.",
+            avatar: "",
+            banner: ""
         };
 
-        // فتح وإغلاق القائمة الجانبية (Drawer)
-        function openDrawer() {
-            document.getElementById('drawerOverlay').style.display = 'flex';
-        }
-        function closeDrawer(e) {
-            document.getElementById('drawerOverlay').style.display = 'none';
+        let tempTweetImage = "";
+
+        // إدارة المصادقة (تسجيل دخول أو إنشاء حساب)
+        function toggleAuthMode() {
+            isSignupMode = !isSignupMode;
+            document.getElementById('authTitle').innerText = isSignupMode ? "إنشاء حساب جديد على X" : "تسجيل الدخول إلى X";
         }
 
-        // الانتقال للملف الشخصي من القائمة الجانبية
-        function goToProfileFromDrawer() {
-            closeDrawer();
-            switchTab('profile');
+        function handleAuth() {
+            const u = document.getElementById('authUsername').value.trim();
+            const p = document.getElementById('authPassword').value.trim();
+            if(!u || !p) {
+                alert("الرجاء إدخال اسم المستخدم وكلمة المرور!");
+                return;
+            }
+            currentUser.username = u.startsWith('@') ? u : '@' + u;
+            currentUser.name = u.replace('@', '');
+            
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainAppContainer').style.display = 'block';
+            updateAllUI();
         }
 
-        // التبديل بين الشاشات
-        function switchTab(tab) {
-            document.getElementById('homeView').style.display = 'none';
-            document.getElementById('profileView').style.display = 'none';
+        // التنقل بين التبويبات الشاملة
+        function switchTab(tabName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.bottom-nav i').forEach(el => el.classList.remove('active'));
 
-            if (tab === 'home') {
-                document.getElementById('homeView').style.display = 'block';
+            if (tabName === 'home') {
+                document.getElementById('homeView').classList.add('active');
                 document.getElementById('navHome').classList.add('active');
                 document.getElementById('headerTitle').innerText = "";
-            } else if (tab === 'profile') {
-                document.getElementById('profileView').style.display = 'block';
-                document.getElementById('headerTitle').innerText = userData.name;
-            } else {
-                document.getElementById('homeView').style.display = 'block';
-                if(tab === 'explore') document.getElementById('navExplore').classList.add('active');
-                if(tab === 'grok') document.getElementById('navGrok').classList.add('active');
-                if(tab === 'notifications') document.getElementById('navNotif').classList.add('active');
-                if(tab === 'messages') document.getElementById('navMsg').classList.add('active');
+            } else if (tabName === 'profile') {
+                document.getElementById('profileView').classList.add('active');
+                document.getElementById('headerTitle').innerText = currentUser.name;
+            } else if (tabName === 'messages') {
+                document.getElementById('messagesView').classList.add('active');
+                document.getElementById('navMsg').classList.add('active');
+                document.getElementById('headerTitle').innerText = "الرسائل";
+                closeChatRoom(); // العودة لقائمة الرسائل
             }
         }
 
-        // تعديل الحساب
+        // فتح وإغلاق القائمة الجانبية (Drawer)
+        function openDrawer() { document.getElementById('drawerOverlay').style.display = 'flex'; }
+        function closeDrawer() { document.getElementById('drawerOverlay').style.display = 'none'; }
+
+        // إعدادات وتعديل الحساب والصور
         function openProfileModal() {
-            closeDrawer();
-            document.getElementById('inputName').value = userData.name;
-            document.getElementById('inputUsername').value = userData.username;
-            document.getElementById('inputBio').value = userData.bio;
-            document.getElementById('inputAvatar').value = userData.avatar;
+            document.getElementById('inputName').value = currentUser.name;
+            document.getElementById('inputUsername').value = currentUser.username;
+            document.getElementById('inputBio').value = currentUser.bio;
             document.getElementById('profileModal').style.display = 'flex';
         }
-        function closeProfileModal() {
-            document.getElementById('profileModal').style.display = 'none';
-        }
-        function saveProfile() {
-            userData.name = document.getElementById('inputName').value;
-            userData.username = document.getElementById('inputUsername').value;
-            userData.bio = document.getElementById('inputBio').value;
-            userData.avatar = document.getElementById('inputAvatar').value;
+        function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
 
-            updateUI();
+        function saveProfileChanges() {
+            currentUser.name = document.getElementById('inputName').value;
+            currentUser.username = document.getElementById('inputUsername').value;
+            currentUser.bio = document.getElementById('inputBio').value;
+
+            const avatarFile = document.getElementById('inputAvatarFile').files[0];
+            const bannerFile = document.getElementById('inputBannerFile').files[0];
+
+            if (avatarFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUser.avatar = e.target.result;
+                    updateAllUI();
+                }
+                reader.readAsDataURL(avatarFile);
+            }
+
+            if (bannerFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUser.banner = e.target.result;
+                    updateAllUI();
+                }
+                reader.readAsDataURL(bannerFile);
+            }
+
+            updateAllUI();
             closeProfileModal();
         }
 
-        function updateUI() {
-            document.getElementById('profileNameDisplay').innerText = userData.name;
-            document.getElementById('profileUsernameDisplay').innerText = userData.username;
-            document.getElementById('profileBioDisplay').innerText = userData.bio;
-            document.getElementById('drawerName').innerText = userData.name;
-            document.getElementById('drawerUsername').innerText = userData.username;
-            document.getElementById('feedName').innerText = userData.name;
-            document.getElementById('feedUsername').innerText = userData.username;
+        function updateAllUI() {
+            document.getElementById('profileNameDisplay').innerHTML = `${escapeHtml(currentUser.name)} <i class="fa-solid fa-circle-check" style="color:#1d9bf0;"></i>`;
+            document.getElementById('profileUsernameDisplay').innerText = currentUser.username;
+            document.getElementById('profileBioDisplay').innerText = currentUser.bio;
+            document.getElementById('drawerName').innerText = currentUser.name;
+            document.getElementById('drawerUsername').innerText = currentUser.username;
+
+            if (currentUser.banner) {
+                document.getElementById('profileBannerDisplay').style.backgroundImage = `url('${currentUser.banner}')`;
+            }
 
             const avatars = [
-                document.getElementById('topAvatar'), 
-                document.getElementById('boxAvatar'), 
+                document.getElementById('topAvatar'),
+                document.getElementById('boxAvatar'),
                 document.getElementById('drawerAvatar'),
                 document.getElementById('profileBigAvatar')
             ];
 
             avatars.forEach(el => {
-                if (userData.avatar) {
-                    el.innerHTML = `<img src="${userData.avatar}" alt="Avatar">`;
+                if (currentUser.avatar) {
+                    el.innerHTML = `<img src="${currentUser.avatar}" alt="Avatar">`;
                 } else {
-                    el.innerText = userData.name.charAt(0);
+                    el.innerText = currentUser.name.charAt(0).toUpperCase();
                 }
             });
         }
 
-        // إنشاء تغريدة
+        // معاينة صورة التغريدة
+        function previewTweetImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    tempTweetImage = e.target.result;
+                    document.getElementById('tweetImgPreview').src = tempTweetImage;
+                    document.getElementById('tweetImgPreviewContainer').style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        function removeTweetImage() {
+            tempTweetImage = "";
+            document.getElementById('tweetImgPreviewContainer').style.display = 'none';
+            document.getElementById('tweetImageUpload').value = "";
+        }
+
+        // إنشاء تغريدة جديدة
         function createTweet() {
             const text = document.getElementById('tweetInput').value.trim();
-            if (!text) return;
+            if (!text && !tempTweetImage) return;
 
-            const newTweetHTML = `
+            let avatarHTML = currentUser.avatar ? `<img src="${currentUser.avatar}" alt="Avatar">` : currentUser.name.charAt(0).toUpperCase();
+            let imgHTML = tempTweetImage ? `<img src="${tempTweetImage}" class="tweet-img">` : '';
+
+            const tweetHTML = `
                 <div class="tweet">
-                    <div class="tweet-main">
-                        <div class="header-avatar" style="width: 40px; height: 40px;"><img src="${userData.avatar}" alt="avatar"></div>
-                        <div class="tweet-content">
-                            <div class="tweet-header">
-                                <span class="name">${escapeHtml(userData.name)}</span>
-                                <span class="username">${escapeHtml(userData.username)}</span>
-                                <span class="time">· الآن</span>
-                            </div>
-                            <div class="tweet-text">${escapeHtml(text)}</div>
-                            <div class="tweet-actions">
-                                <div class="action-icon"><i class="fa-regular fa-comment"></i> ٠</div>
-                                <div class="action-icon"><i class="fa-solid fa-retweet"></i> ٠</div>
-                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>٠</b></div>
-                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-                            </div>
+                    <div class="header-avatar" style="width: 40px; height: 40px;">${avatarHTML}</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">${escapeHtml(currentUser.name)} <i class="fa-solid fa-circle-check"></i></span>
+                            <span class="username">${escapeHtml(currentUser.username)}</span>
+                            <span class="time">· الآن</span>
+                        </div>
+                        <div class="tweet-text">${escapeHtml(text)}</div>
+                        ${imgHTML}
+                        <div class="tweet-actions">
+                            <div class="action-icon"><i class="fa-regular fa-comment"></i> 0</div>
+                            <div class="action-icon"><i class="fa-solid fa-retweet"></i> 0</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <b>0</b></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
                         </div>
                     </div>
                 </div>
             `;
-            document.getElementById('feed').insertAdjacentHTML('afterbegin', newTweetHTML);
+
+            document.getElementById('feed').insertAdjacentHTML('afterbegin', tweetHTML);
             document.getElementById('tweetInput').value = '';
+            removeTweetImage();
             switchTab('home');
         }
 
@@ -853,16 +857,41 @@
             }
         }
 
-        function focusTweetBox() {
-            switchTab('home');
-            document.getElementById('tweetInput').focus();
+        // نظام الرسائل الخاصة السلس والفعال
+        function openChatRoom(name, id) {
+            document.getElementById('chatListSection').style.display = 'none';
+            document.getElementById('chatRoomSection').style.display = 'flex';
+            document.getElementById('activeChatName').innerText = name;
+        }
+
+        function closeChatRoom() {
+            document.getElementById('chatListSection').style.display = 'flex';
+            document.getElementById('chatRoomSection').style.display = 'none';
+            document.getElementById('activeChatName').innerText = "المحادثة";
+        }
+
+        function sendDirectMessage() {
+            const input = document.getElementById('chatInputText');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const msgHTML = `<div class="msg-bubble outgoing">${escapeHtml(text)}</div>`;
+            document.getElementById('chatMessagesContainer').insertAdjacentHTML('beforeend', msgHTML);
+            input.value = '';
+            const container = document.getElementById('chatMessagesContainer');
+            container.scrollTop = container.scrollHeight;
+
+            // رد تلقائي ذكي بعد ثانية لتعزيز التفاعل
+            setTimeout(() => {
+                const replyHTML = `<div class="msg-bubble incoming">تم استلام رسالتك بنجاح في نظام X الخاص! 👍</div>`;
+                document.getElementById('chatMessagesContainer').insertAdjacentHTML('beforeend', replyHTML);
+                container.scrollTop = container.scrollHeight;
+            }, 1000);
         }
 
         function escapeHtml(text) {
             return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
-
-        updateUI();
     </script>
 </body>
 </html>
