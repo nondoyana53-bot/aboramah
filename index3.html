@@ -5,742 +5,788 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>بلياردو 3D | 8-Ball Pool</title>
+<title>بلياردو | Plato Style Portrait</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;}
-  html,body{width:100%;height:100%;overflow:hidden;background:#0a0a0a;font-family:'Segoe UI',Tahoma,sans-serif;}
-  #game{position:fixed;inset:0;width:100%;height:100%;display:block;}
-  
-  /* واجهة المستخدم */
-  #ui{position:fixed;inset:0;pointer-events:none;z-index:10;}
-  #ui > *{pointer-events:auto;}
-  
-  /* شريط القوة الجانبي */
-  #power-container{
-    position:absolute;right:12px;top:50%;transform:translateY(-50%);
-    width:42px;height:min(55vh,380px);
-    background:rgba(20,15,10,0.85);border-radius:22px;
-    border:2px solid #d4af37;box-shadow:0 0 20px rgba(212,175,55,0.25);
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-    overflow:hidden;padding:6px;
-  }
-  #power-fill{
-    width:100%;border-radius:16px;transition:height 0.05s linear;
-    background:linear-gradient(to top,#1a7a3a,#d4af37,#c0392b);
-    box-shadow:0 0 12px rgba(212,175,55,0.4);
-  }
-  #power-label{
-    position:absolute;top:8px;left:0;right:0;text-align:center;
-    font-size:11px;color:#d4af37;font-weight:700;letter-spacing:1px;
-  }
-  
-  /* أزرار */
-  .btn{
-    position:absolute;background:linear-gradient(145deg,#2a2118,#1a140f);
-    border:2px solid #d4af37;color:#f5e6c8;font-size:15px;font-weight:700;
-    padding:12px 22px;border-radius:14px;box-shadow:0 4px 15px rgba(0,0,0,0.5);
-    cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;
-  }
-  .btn:active{transform:scale(0.95);}
-  #shoot-btn{bottom:28px;left:50%;transform:translateX(-50%);min-width:140px;}
-  #reset-btn{bottom:28px;right:18px;font-size:13px;padding:10px 16px;}
-  #fs-btn{top:18px;left:18px;font-size:13px;padding:8px 14px;}
-  
-  /* معلومات */
-  #info{
-    position:absolute;top:18px;right:18px;left:70px;
-    background:rgba(15,12,8,0.75);border:1px solid #d4af37aa;
-    border-radius:12px;padding:10px 14px;color:#f5e6c8;font-size:13px;
-    text-align:center;backdrop-filter:blur(6px);
-  }
-  #info strong{color:#d4af37;}
-  
-  /* رسالة الحالة */
-  #status{
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    background:rgba(10,8,5,0.9);border:2px solid #d4af37;
-    color:#f5e6c8;padding:18px 28px;border-radius:16px;font-size:18px;
-    font-weight:700;text-align:center;display:none;z-index:20;
-    box-shadow:0 0 40px rgba(212,175,55,0.3);
-  }
-  
-  /* تعليمات */
-  #help{
-    position:absolute;bottom:90px;left:50%;transform:translateX(-50%);
-    color:#d4af37cc;font-size:12px;text-align:center;max-width:90%;
-    pointer-events:none;
-  }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;-webkit-user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;background:#0d0c0b;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;background:#0d0c0b;}
+#ui{position:fixed;inset:0;pointer-events:none;z-index:20;}
+#ui>*{pointer-events:auto;}
+
+/* الشريط العلوي - أسماء اللاعبين */
+#top-bar{
+  position:absolute;top:0;left:0;right:0;height:68px;
+  background:linear-gradient(180deg,rgba(18,14,10,0.97),rgba(12,10,8,0.85));
+  border-bottom:1px solid #3a2e1f;display:flex;align-items:center;justify-content:space-between;
+  padding:0 10px;backdrop-filter:blur(8px);
+}
+.player{
+  display:flex;align-items:center;gap:8px;min-width:110px;
+}
+.player.left{flex-direction:row;}
+.player.right{flex-direction:row-reverse;}
+.avatar{
+  width:40px;height:40px;border-radius:50%;border:2px solid #d4af37;
+  background:#2a2118;display:flex;align-items:center;justify-content:center;
+  font-size:18px;overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover;}
+.pname{color:#f5e6c8;font-size:13px;font-weight:700;}
+.pballs{display:flex;gap:2px;margin-top:2px;}
+.pball{width:10px;height:10px;border-radius:50%;border:1px solid #0005;}
+.turn-box{
+  background:rgba(212,175,55,0.15);border:1px solid #d4af37aa;
+  color:#d4af37;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;
+  letter-spacing:0.5px;
+}
+
+/* شريط القوة على اليسار */
+#power-wrap{
+  position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  width:36px;height:min(42vh,320px);
+  background:rgba(20,15,10,0.9);border-radius:18px;border:2px solid #d4af37;
+  box-shadow:0 0 18px rgba(212,175,55,0.2);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:5px;
+}
+#power-fill{
+  width:100%;border-radius:13px;transition:height 0.04s linear;
+  background:linear-gradient(to top,#1a8a3c 0%,#d4af37 55%,#c0392b 100%);
+  box-shadow:0 0 10px rgba(212,175,55,0.35);
+}
+#power-txt{
+  position:absolute;top:7px;left:0;right:0;text-align:center;
+  font-size:10px;color:#d4af37;font-weight:800;letter-spacing:0.5px;
+}
+
+/* أزرار اليمين */
+#side-btns{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;align-items:center;
+}
+.sbtn{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(145deg,#2e241a,#1a140f);
+  border:2px solid #d4af37;color:#f5e6c8;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 12px rgba(0,0,0,0.5);cursor:pointer;
+}
+.sbtn:active{transform:scale(0.92);}
+.fine-group{display:flex;flex-direction:column;gap:6px;}
+.fine-group .sbtn{width:38px;height:38px;font-size:16px;}
+
+/* زر القائمة */
+#menu-btn{
+  position:absolute;top:76px;right:10px;
+  width:36px;height:36px;border-radius:10px;
+  background:rgba(30,22,15,0.9);border:1px solid #d4af37aa;
+  color:#d4af37;font-size:18px;display:flex;align-items:center;justify-content:center;
+}
+
+/* رسالة */
+#msg{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(12,10,8,0.92);border:2px solid #d4af37;
+  color:#f5e6c8;padding:16px 26px;border-radius:14px;font-size:16px;
+  font-weight:700;text-align:center;display:none;z-index:30;
+  box-shadow:0 0 30px rgba(212,175,55,0.25);max-width:80%;
+}
 </style>
 </head>
 <body>
-<canvas id="game"></canvas>
+<canvas id="c"></canvas>
 
 <div id="ui">
-  <div id="info">
-    <div>كرات مقطوعة: <strong id="score">0</strong> / 15</div>
-    <div style="margin-top:4px;font-size:11px;opacity:0.85">وضع التدريب • اسحب للتوجيه</div>
+  <div id="top-bar">
+    <div class="player left">
+      <div class="avatar">👤</div>
+      <div>
+        <div class="pname">You</div>
+        <div class="pballs" id="p1-balls"></div>
+      </div>
+    </div>
+    <div class="turn-box" id="turn-txt">Your Turn</div>
+    <div class="player right">
+      <div class="avatar">🎮</div>
+      <div>
+        <div class="pname">CPU</div>
+        <div class="pballs" id="p2-balls"></div>
+      </div>
+    </div>
   </div>
-  
-  <div id="power-container">
-    <div id="power-label">قوة</div>
+
+  <div id="power-wrap">
+    <div id="power-txt">POWER</div>
     <div id="power-fill" style="height:0%"></div>
   </div>
-  
-  <button class="btn" id="shoot-btn">اطلق</button>
-  <button class="btn" id="reset-btn">إعادة</button>
-  <button class="btn" id="fs-btn">ملء الشاشة</button>
-  
-  <div id="help">اسحب على الطاولة لتحديد الاتجاه • حرّك شريط القوة • ثم اضغط «اطلق»</div>
-  <div id="status"></div>
+
+  <div id="side-btns">
+    <div class="sbtn" id="eye-btn" title="Aim Assist">👁</div>
+    <div class="fine-group">
+      <div class="sbtn" id="aim-up">▲</div>
+      <div class="sbtn" id="aim-dn">▼</div>
+    </div>
+    <div class="sbtn" id="spin-btn" title="Spin">⚪</div>
+  </div>
+
+  <div id="menu-btn">☰</div>
+  <div id="msg"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-/* =========================================================
-   بلياردو 3D - 8-Ball Pool (Mobile Full-Screen)
-   Three.js + فيزياء مخصصة محسّنة للجوال
-   ========================================================= */
+/* ============================================================
+   Plato-Style Portrait Top-Down 8-Ball Pool
+   Full-screen Mobile • Portrait only • Canvas 2D
+   ============================================================ */
 
-const canvas = document.getElementById('game');
-const scoreEl = document.getElementById('score');
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
 const powerFill = document.getElementById('power-fill');
-const statusEl = document.getElementById('status');
-const shootBtn = document.getElementById('shoot-btn');
-const resetBtn = document.getElementById('reset-btn');
-const fsBtn = document.getElementById('fs-btn');
+const turnTxt = document.getElementById('turn-txt');
+const msgEl = document.getElementById('msg');
 
-// -------------------- إعدادات الطاولة --------------------
-const TABLE_L = 9.0;          // طول الطاولة
-const TABLE_W = 4.5;          // عرض الطاولة
-const BALL_R  = 0.12;         // نصف قطر الكرة
-const POCKET_R = 0.28;        // نصف قطر الجيب
-const CUSHION = 0.18;         // سمك الحافة
-const FRICTION = 0.985;       // احتكاك
-const WALL_REST = 0.78;       // ارتداد الحواف
-const BALL_REST = 0.92;       // ارتداد الكرات
-const MAX_SPEED = 18;         // أقصى سرعة
-
-// -------------------- Three.js Scene --------------------
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x080605);
-scene.fog = new THREE.Fog(0x080605, 18, 35);
-
-const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 100);
-camera.position.set(0, 7.2, 6.8);
-camera.lookAt(0, 0, 0);
-
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:'high-performance'});
-renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.outputEncoding = THREE.sRGBEncoding;
-
-// إضاءة سينمائية
-const ambient = new THREE.AmbientLight(0x3a2f22, 0.45);
-scene.add(ambient);
-
-const spot = new THREE.SpotLight(0xfff0d8, 1.6, 40, Math.PI/4.2, 0.35, 1);
-spot.position.set(0, 14, 0);
-spot.target.position.set(0, 0, 0);
-spot.castShadow = true;
-spot.shadow.mapSize.set(2048, 2048);
-spot.shadow.camera.near = 4;
-spot.shadow.camera.far = 25;
-spot.shadow.bias = -0.0002;
-scene.add(spot);
-scene.add(spot.target);
-
-const fillLight = new THREE.DirectionalLight(0xb8a070, 0.35);
-fillLight.position.set(-6, 8, 4);
-scene.add(fillLight);
-
-// -------------------- مواد --------------------
-const feltMat = new THREE.MeshStandardMaterial({
-  color: 0x0a5c36, roughness: 0.92, metalness: 0.05
-});
-const woodMat = new THREE.MeshStandardMaterial({
-  color: 0x4a2f18, roughness: 0.65, metalness: 0.15
-});
-const pocketMat = new THREE.MeshStandardMaterial({
-  color: 0x111111, roughness: 0.9, metalness: 0.2
-});
-const railTopMat = new THREE.MeshStandardMaterial({
-  color: 0x3d2815, roughness: 0.55, metalness: 0.25
-});
-
-// -------------------- بناء الطاولة --------------------
-const tableGroup = new THREE.Group();
-
-// الجوّخ (Felt)
-const felt = new THREE.Mesh(
-  new THREE.PlaneGeometry(TABLE_L - CUSHION*1.6, TABLE_W - CUSHION*1.6),
-  feltMat
-);
-felt.rotation.x = -Math.PI/2;
-felt.receiveShadow = true;
-tableGroup.add(felt);
-
-// قاعدة خشبية أسفل الجوّخ
-const base = new THREE.Mesh(
-  new THREE.BoxGeometry(TABLE_L + 0.15, 0.25, TABLE_W + 0.15),
-  woodMat
-);
-base.position.y = -0.13;
-base.receiveShadow = true;
-tableGroup.add(base);
-
-// الحواف (Rails)
-function makeRail(w, h, d, x, y, z) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), railTopMat);
-  m.position.set(x, y, z);
-  m.castShadow = true;
-  m.receiveShadow = true;
-  tableGroup.add(m);
+let W, H, dpr;
+function resize() {
+  dpr = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth;
+  H = innerHeight;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
-const rh = 0.22;
-makeRail(TABLE_L + 0.3, rh, CUSHION, 0, rh/2,  TABLE_W/2 + CUSHION/2 - 0.02);
-makeRail(TABLE_L + 0.3, rh, CUSHION, 0, rh/2, -TABLE_W/2 - CUSHION/2 + 0.02);
-makeRail(CUSHION, rh, TABLE_W + 0.3,  TABLE_L/2 + CUSHION/2 - 0.02, rh/2, 0);
-makeRail(CUSHION, rh, TABLE_W + 0.3, -TABLE_L/2 - CUSHION/2 + 0.02, rh/2, 0);
+window.addEventListener('resize', resize);
+resize();
 
-// الجيوب (Pockets)
-const pocketPos = [
-  [ TABLE_L/2 - 0.08,  TABLE_W/2 - 0.08],
-  [-TABLE_L/2 + 0.08,  TABLE_W/2 - 0.08],
-  [ TABLE_L/2 - 0.08, -TABLE_W/2 + 0.08],
-  [-TABLE_L/2 + 0.08, -TABLE_W/2 + 0.08],
-  [0,  TABLE_W/2 - 0.02],
-  [0, -TABLE_W/2 + 0.02]
-];
-pocketPos.forEach(([x,z]) => {
-  const p = new THREE.Mesh(
-    new THREE.CylinderGeometry(POCKET_R, POCKET_R*0.85, 0.12, 24),
-    pocketMat
-  );
-  p.position.set(x, -0.04, z);
-  p.receiveShadow = true;
-  tableGroup.add(p);
-});
-
-// أرجل الطاولة (بسيطة)
-[[1,1], [1,-1], [-1,1], [-1,-1]].forEach(([sx,sz]) => {
-  const leg = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.12, 0.16, 1.1, 10),
-    woodMat
-  );
-  leg.position.set(sx*(TABLE_L/2-0.4), -0.68, sz*(TABLE_W/2-0.3));
-  leg.castShadow = true;
-  tableGroup.add(leg);
-});
-
-scene.add(tableGroup);
-
-// -------------------- الكرات --------------------
-const ballColors = {
-  0: 0xf5f5f0, // cue
-  1: 0xf1c40f, 2: 0x2980b9, 3: 0xc0392b, 4: 0x8e44ad,
-  5: 0xe67e22, 6: 0x27ae60, 7: 0x6d1a1a, 8: 0x1a1a1a,
-  9: 0xf1c40f,10: 0x2980b9,11: 0xc0392b,12: 0x8e44ad,
- 13: 0xe67e22,14: 0x27ae60,15: 0x6d1a1a
+// -------------------- أبعاد الطاولة (عمودية) --------------------
+const TABLE = {
+  // نسب ثابتة لملء الشاشة عمودياً
+  get margin() { return Math.min(W * 0.07, 28); },
+  get top() { return 78; },
+  get bottom() { return H - 18; },
+  get left() { return this.margin; },
+  get right() { return W - this.margin; },
+  get w() { return this.right - this.left; },
+  get h() { return this.bottom - this.top; },
+  get cx() { return (this.left + this.right) / 2; },
+  get cy() { return (this.top + this.bottom) / 2; }
 };
 
-function createBallTexture(num, hex, isStripe) {
-  const c = document.createElement('canvas');
-  c.width = c.height = 256;
-  const ctx = c.getContext('2d');
-  const col = '#' + hex.toString(16).padStart(6,'0');
-  
-  ctx.fillStyle = isStripe ? '#f8f8f8' : col;
-  ctx.fillRect(0,0,256,256);
-  
-  if (isStripe) {
-    ctx.fillStyle = col;
-    ctx.fillRect(0, 70, 256, 116);
-  }
-  
-  // دائرة الرقم
-  ctx.beginPath();
-  ctx.arc(128,128,48,0,Math.PI*2);
-  ctx.fillStyle = isStripe ? col : '#f8f8f8';
-  ctx.fill();
-  ctx.strokeStyle = '#222';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  
-  if (num > 0) {
-    ctx.fillStyle = isStripe ? '#f8f8f8' : '#111';
-    ctx.font = 'bold 72px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(String(num), 128, 132);
-  }
-  
-  const tex = new THREE.CanvasTexture(c);
-  tex.anisotropy = 4;
-  return tex;
-}
-
-const balls = [];
-function createBall(num, x, z) {
-  const isStripe = num >= 9;
-  const hex = ballColors[num];
-  const mat = new THREE.MeshStandardMaterial({
-    map: createBallTexture(num, hex, isStripe),
-    roughness: 0.25,
-    metalness: 0.15
-  });
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(BALL_R, 28, 20), mat);
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-  mesh.position.set(x, BALL_R, z);
-  scene.add(mesh);
-  
-  const b = {
-    mesh, num,
-    pos: new THREE.Vector3(x, BALL_R, z),
-    vel: new THREE.Vector3(),
-    pocketed: false,
-    isCue: num === 0
-  };
-  balls.push(b);
-  return b;
-}
-
-// رصّ الكرات (مثلث قياسي)
-function rackBalls() {
-  // إزالة القديم
-  balls.forEach(b => scene.remove(b.mesh));
-  balls.length = 0;
-  
-  // الكرة البيضاء
-  createBall(0, -TABLE_L*0.28, 0);
-  
-  // المثلث
-  const startX = TABLE_L * 0.22;
-  const rows = [1,2,3,4,5];
-  let n = 1;
-  const order = [1,9,2,10,8,11,3,12,4,13,5,14,6,15,7]; // ترتيب شائع
-  let idx = 0;
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c <= r; c++) {
-      const x = startX + r * (BALL_R * 2.05);
-      const z = (c - r/2) * (BALL_R * 2.05);
-      createBall(order[idx++], x, z);
-    }
-  }
-  updateScore();
-}
-
-// -------------------- العصا (Cue Stick) --------------------
-const cueGroup = new THREE.Group();
-scene.add(cueGroup);
-
-function buildCue() {
-  // العمود الرئيسي
-  const shaft = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.018, 0.028, 2.6, 12),
-    new THREE.MeshStandardMaterial({color:0xc4a574, roughness:0.4, metalness:0.1})
-  );
-  shaft.rotation.z = Math.PI/2;
-  shaft.position.x = -1.3;
-  cueGroup.add(shaft);
-  
-  // الحلقة الذهبية
-  const ring1 = new THREE.Mesh(
-    new THREE.TorusGeometry(0.032, 0.008, 8, 16),
-    new THREE.MeshStandardMaterial({color:0xd4af37, metalness:0.85, roughness:0.2})
-  );
-  ring1.rotation.y = Math.PI/2;
-  ring1.position.x = -0.35;
-  cueGroup.add(ring1);
-  
-  // الفريول (أبيض)
-  const ferrule = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.019, 0.019, 0.08, 10),
-    new THREE.MeshStandardMaterial({color:0xf0f0f0, roughness:0.3})
-  );
-  ferrule.rotation.z = Math.PI/2;
-  ferrule.position.x = -0.08;
-  cueGroup.add(ferrule);
-  
-  // الرأس (Tip)
-  const tip = new THREE.Mesh(
-    new THREE.SphereGeometry(0.02, 10, 8),
-    new THREE.MeshStandardMaterial({color:0x2c5aa0, roughness:0.6})
-  );
-  tip.position.x = 0.01;
-  cueGroup.add(tip);
-  
-  // المقبض المزخرف
-  const butt = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.032, 0.038, 0.55, 12),
-    new THREE.MeshStandardMaterial({color:0x2a1810, roughness:0.7, metalness:0.05})
-  );
-  butt.rotation.z = Math.PI/2;
-  butt.position.x = -2.55;
-  cueGroup.add(butt);
-  
-  // حلقات زخرفية
-  [ -2.35, -2.55, -2.75 ].forEach(px => {
-    const r = new THREE.Mesh(
-      new THREE.TorusGeometry(0.04, 0.006, 6, 14),
-      new THREE.MeshStandardMaterial({color:0xd4af37, metalness:0.9, roughness:0.15})
-    );
-    r.rotation.y = Math.PI/2;
-    r.position.x = px;
-    cueGroup.add(r);
-  });
-}
-buildCue();
-cueGroup.visible = false;
+const BALL_R = () => Math.min(TABLE.w, TABLE.h) * 0.028;
+const POCKET_R = () => BALL_R() * 1.85;
 
 // -------------------- حالة اللعبة --------------------
-let aimAngle = 0;           // راديان
-let power = 0;              // 0 → 1
-let state = 'aim';          // aim | simulating | wait
-let aimLine = null;
+let balls = [];
+let cueBall = null;
+let aimAngle = -Math.PI / 2; // افتراضي للأعلى
+let power = 0;
+let state = 'aim'; // aim | pulling | shooting | simulating
+let showAimAssist = true;
+let pullDist = 0;
+let cueAnim = 0; // 0..1 أثناء التقدم
+let pocketed = { solids: 0, stripes: 0, eight: false };
+let currentPlayer = 1; // 1 = You
+let playerType = { 1: null, 2: null }; // 'solid' | 'stripe'
 let lastTime = performance.now();
-let pocketedCount = 0;
 
-// خط التوجيه
-function createAimLine() {
-  const geo = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(), new THREE.Vector3(1,0,0)
-  ]);
-  aimLine = new THREE.Line(geo, new THREE.LineBasicMaterial({
-    color: 0xd4af37, transparent:true, opacity:0.7
-  }));
-  scene.add(aimLine);
+// ألوان الكرات القياسية
+const BALL_COL = {
+  0: '#f4f0e6',
+  1: '#f1c40f', 2: '#2980b9', 3: '#c0392b', 4: '#8e44ad',
+  5: '#e67e22', 6: '#27ae60', 7: '#6d1a1a', 8: '#1a1a1a',
+  9: '#f1c40f',10: '#2980b9',11: '#c0392b',12: '#8e44ad',
+ 13: '#e67e22',14: '#27ae60',15: '#6d1a1a'
+};
+
+// -------------------- بناء الكرات --------------------
+function createBall(n, x, y) {
+  return {
+    n, x, y,
+    vx: 0, vy: 0,
+    r: BALL_R(),
+    pocketed: false,
+    isCue: n === 0,
+    isStripe: n >= 9,
+    isEight: n === 8
+  };
 }
-createAimLine();
+
+function rack() {
+  balls = [];
+  const r = BALL_R();
+  const gap = r * 2.08;
+  // الكرة البيضاء في الأسفل
+  cueBall = createBall(0, TABLE.cx, TABLE.bottom - TABLE.h * 0.22);
+  balls.push(cueBall);
+
+  // مثلث في الأعلى
+  const startY = TABLE.top + TABLE.h * 0.22;
+  const order = [1, 9, 2, 10, 8, 11, 3, 12, 4, 13, 5, 14, 6, 15, 7];
+  let idx = 0;
+  for (let row = 0; row < 5; row++) {
+    for (let col = 0; col <= row; col++) {
+      const x = TABLE.cx + (col - row / 2) * gap;
+      const y = startY + row * gap * 0.92;
+      balls.push(createBall(order[idx++], x, y));
+    }
+  }
+  pocketed = { solids: 0, stripes: 0, eight: false };
+  power = 0;
+  pullDist = 0;
+  state = 'aim';
+  updatePowerUI();
+  updateBallIndicators();
+}
+
+// -------------------- الجيوب --------------------
+function getPockets() {
+  const m = 4;
+  return [
+    { x: TABLE.left + m, y: TABLE.top + m },
+    { x: TABLE.right - m, y: TABLE.top + m },
+    { x: TABLE.left + m, y: TABLE.bottom - m },
+    { x: TABLE.right - m, y: TABLE.bottom - m },
+    { x: TABLE.cx, y: TABLE.top + 2 },
+    { x: TABLE.cx, y: TABLE.bottom - 2 }
+  ];
+}
+
+// -------------------- الرسم --------------------
+function drawBackground() {
+  // خلفية داكنة منقطة
+  ctx.fillStyle = '#0d0c0b';
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(180,150,90,0.04)';
+  for (let i = 0; i < 120; i++) {
+    const x = (i * 97) % W;
+    const y = (i * 53) % H;
+    ctx.beginPath();
+    ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // نقوش خفيفة
+  ctx.strokeStyle = 'rgba(212,175,55,0.03)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < 8; i++) {
+    ctx.beginPath();
+    ctx.arc(W / 2, H / 2, 80 + i * 55, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+function drawTable() {
+  const { left, right, top, bottom, w, h } = TABLE;
+  const wood = 14;
+
+  // ظل الطاولة
+  ctx.fillStyle = 'rgba(0,0,0,0.45)';
+  ctx.beginPath();
+  roundRect(ctx, left - wood + 4, top - wood + 6, w + wood * 2, h + wood * 2, 10);
+  ctx.fill();
+
+  // الإطار الخشبي
+  const woodGrad = ctx.createLinearGradient(left, top, right, bottom);
+  woodGrad.addColorStop(0, '#5c3a1e');
+  woodGrad.addColorStop(0.5, '#3d2612');
+  woodGrad.addColorStop(1, '#4a2f15');
+  ctx.fillStyle = woodGrad;
+  ctx.beginPath();
+  roundRect(ctx, left - wood, top - wood, w + wood * 2, h + wood * 2, 8);
+  ctx.fill();
+
+  // حافة داخلية لامعة
+  ctx.strokeStyle = '#8b6914';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  roundRect(ctx, left - 3, top - 3, w + 6, h + 6, 4);
+  ctx.stroke();
+
+  // الجوّخ الأخضر
+  const felt = ctx.createRadialGradient(TABLE.cx, TABLE.cy, 10, TABLE.cx, TABLE.cy, Math.max(w, h) * 0.7);
+  felt.addColorStop(0, '#0f6b40');
+  felt.addColorStop(1, '#0a4d2e');
+  ctx.fillStyle = felt;
+  ctx.fillRect(left, top, w, h);
+
+  // خطوط خفيفة على الجوّخ
+  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i < 6; i++) {
+    const yy = top + (h / 6) * i;
+    ctx.beginPath();
+    ctx.moveTo(left + 8, yy);
+    ctx.lineTo(right - 8, yy);
+    ctx.stroke();
+  }
+
+  // الجيوب
+  const pockets = getPockets();
+  pockets.forEach(p => {
+    // فتحة خارجية
+    ctx.fillStyle = '#111';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, POCKET_R(), 0, Math.PI * 2);
+    ctx.fill();
+    // ظل داخلي
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, POCKET_R() * 0.7, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawBall(b) {
+  if (b.pocketed) return;
+  const r = b.r;
+
+  // ظل
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.beginPath();
+  ctx.ellipse(b.x + 1.5, b.y + 2.5, r * 0.95, r * 0.55, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // الجسم
+  const g = ctx.createRadialGradient(b.x - r * 0.35, b.y - r * 0.35, r * 0.1, b.x, b.y, r);
+  const col = BALL_COL[b.n];
+  if (b.isStripe) {
+    g.addColorStop(0, '#fff');
+    g.addColorStop(0.45, '#fff');
+    g.addColorStop(0.55, col);
+    g.addColorStop(1, shade(col, -30));
+  } else {
+    g.addColorStop(0, shade(col, 50));
+    g.addColorStop(0.5, col);
+    g.addColorStop(1, shade(col, -40));
+  }
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(b.x, b.y, r, 0, Math.PI * 2);
+  ctx.fill();
+
+  // رقم
+  if (b.n > 0) {
+    ctx.fillStyle = b.isStripe ? col : '#fff';
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, r * 0.48, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = b.isStripe ? '#fff' : '#111';
+    ctx.font = `bold ${r * 0.85}px Arial`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(b.n, b.x, b.y + 0.5);
+  }
+
+  // لمعان
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  ctx.beginPath();
+  ctx.ellipse(b.x - r * 0.3, b.y - r * 0.35, r * 0.28, r * 0.18, -0.5, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function shade(hex, pct) {
+  const num = parseInt(hex.slice(1), 16);
+  let r = (num >> 16) + pct;
+  let g = ((num >> 8) & 0x00FF) + pct;
+  let b = (num & 0x0000FF) + pct;
+  r = Math.min(255, Math.max(0, r));
+  g = Math.min(255, Math.max(0, g));
+  b = Math.min(255, Math.max(0, b));
+  return `rgb(${r},${g},${b})`;
+}
+
+function drawCue() {
+  if (state === 'simulating' || !cueBall || cueBall.pocketed) return;
+
+  const r = cueBall.r;
+  const angle = aimAngle;
+  const pull = (state === 'pulling' || state === 'aim') ? pullDist : 0;
+  const shootOffset = state === 'shooting' ? (1 - cueAnim) * 18 : 0;
+
+  // موضع رأس العصا (tip)
+  const tipDist = r + 2 + pull + shootOffset;
+  const tipX = cueBall.x - Math.cos(angle) * tipDist;
+  const tipY = cueBall.y - Math.sin(angle) * tipDist;
+
+  // طول العصا
+  const cueLen = Math.min(W, H) * 0.55;
+  const buttX = tipX - Math.cos(angle) * cueLen;
+  const buttY = tipY - Math.sin(angle) * cueLen;
+
+  // رسم العصا
+  ctx.save();
+  ctx.lineCap = 'round';
+
+  // ظل العصا
+  ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+  ctx.lineWidth = 7;
+  ctx.beginPath();
+  ctx.moveTo(buttX + 2, buttY + 3);
+  ctx.lineTo(tipX + 2, tipY + 3);
+  ctx.stroke();
+
+  // جسم العصا (تدرج خشب)
+  const cueGrad = ctx.createLinearGradient(buttX, buttY, tipX, tipY);
+  cueGrad.addColorStop(0, '#2a1810');
+  cueGrad.addColorStop(0.15, '#5c3a1e');
+  cueGrad.addColorStop(0.7, '#c4a574');
+  cueGrad.addColorStop(0.92, '#e8d5b0');
+  cueGrad.addColorStop(1, '#2c5aa0');
+  ctx.strokeStyle = cueGrad;
+  ctx.lineWidth = 5.5;
+  ctx.beginPath();
+  ctx.moveTo(buttX, buttY);
+  ctx.lineTo(tipX, tipY);
+  ctx.stroke();
+
+  // حلقات ذهبية
+  ctx.strokeStyle = '#d4af37';
+  ctx.lineWidth = 2.5;
+  for (const t of [0.12, 0.18, 0.85]) {
+    const rx = buttX + (tipX - buttX) * t;
+    const ry = buttY + (tipY - buttY) * t;
+    ctx.beginPath();
+    ctx.arc(rx, ry, 4, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // الرأس الأزرق
+  ctx.fillStyle = '#2c5aa0';
+  ctx.beginPath();
+  ctx.arc(tipX, tipY, 3.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+
+  // خط التوجيه الأبيض الطويل
+  if (showAimAssist && (state === 'aim' || state === 'pulling')) {
+    const len = Math.max(TABLE.w, TABLE.h) * 1.4;
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath();
+    ctx.moveTo(cueBall.x + Math.cos(angle) * (r + 3), cueBall.y + Math.sin(angle) * (r + 3));
+    ctx.lineTo(cueBall.x + Math.cos(angle) * len, cueBall.y + Math.sin(angle) * len);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // خط ثانٍ قصير للتنبؤ بالتصادم الأول
+    const hit = findFirstHit(angle);
+    if (hit) {
+      ctx.strokeStyle = 'rgba(255,220,100,0.7)';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(hit.x, hit.y);
+      ctx.lineTo(hit.x + hit.nx * 40, hit.y + hit.ny * 40);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+}
+
+function findFirstHit(angle) {
+  const dx = Math.cos(angle);
+  const dy = Math.sin(angle);
+  let best = null;
+  let bestT = 1e9;
+  for (const b of balls) {
+    if (b.pocketed || b.isCue) continue;
+    // حل معادلة الدائرة-الخط
+    const ox = cueBall.x - b.x;
+    const oy = cueBall.y - b.y;
+    const a = dx * dx + dy * dy;
+    const bb = 2 * (ox * dx + oy * dy);
+    const c = ox * ox + oy * oy - (cueBall.r + b.r) ** 2;
+    const disc = bb * bb - 4 * a * c;
+    if (disc < 0) continue;
+    const t = (-bb - Math.sqrt(disc)) / (2 * a);
+    if (t > 0.5 && t < bestT) {
+      bestT = t;
+      const hx = cueBall.x + dx * t;
+      const hy = cueBall.y + dy * t;
+      const nx = (hx - b.x) / (cueBall.r + b.r);
+      const ny = (hy - b.y) / (cueBall.r + b.r);
+      best = { x: hx, y: hy, nx, ny };
+    }
+  }
+  return best;
+}
 
 // -------------------- الفيزياء --------------------
 function updatePhysics(dt) {
   const active = balls.filter(b => !b.pocketed);
-  
-  // حركة + احتكاك
+  const fric = Math.pow(0.987, dt * 60);
+  const wallRest = 0.76;
+  const ballRest = 0.93;
+
+  // حركة
   active.forEach(b => {
-    b.pos.x += b.vel.x * dt;
-    b.pos.z += b.vel.z * dt;
-    b.vel.multiplyScalar(Math.pow(FRICTION, dt * 60));
-    
-    // دوران بصري
-    const speed = b.vel.length();
-    if (speed > 0.01) {
-      const axis = new THREE.Vector3(-b.vel.z, 0, b.vel.x).normalize();
-      b.mesh.rotateOnWorldAxis(axis, speed * dt * 4.2);
-    }
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
+    b.vx *= fric;
+    b.vy *= fric;
   });
-  
-  // اصطدام الكرات
+
+  // اصطدام كرات
   for (let i = 0; i < active.length; i++) {
-    for (let j = i+1; j < active.length; j++) {
+    for (let j = i + 1; j < active.length; j++) {
       const a = active[i], b = active[j];
-      const dx = b.pos.x - a.pos.x;
-      const dz = b.pos.z - a.pos.z;
-      const dist = Math.sqrt(dx*dx + dz*dz);
-      const minD = BALL_R * 2;
-      
-      if (dist < minD && dist > 0.0001) {
-        // فصل
-        const nx = dx / dist, nz = dz / dist;
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.hypot(dx, dy);
+      const minD = a.r + b.r;
+      if (dist < minD && dist > 0.001) {
+        const nx = dx / dist, ny = dy / dist;
         const overlap = minD - dist;
-        a.pos.x -= nx * overlap * 0.5;
-        a.pos.z -= nz * overlap * 0.5;
-        b.pos.x += nx * overlap * 0.5;
-        b.pos.z += nz * overlap * 0.5;
-        
-        // تبادل السرعات (مرن)
-        const dvx = a.vel.x - b.vel.x;
-        const dvz = a.vel.z - b.vel.z;
-        const impact = dvx * nx + dvz * nz;
+        a.x -= nx * overlap * 0.5;
+        a.y -= ny * overlap * 0.5;
+        b.x += nx * overlap * 0.5;
+        b.y += ny * overlap * 0.5;
+        const dvx = a.vx - b.vx, dvy = a.vy - b.vy;
+        const impact = dvx * nx + dvy * ny;
         if (impact > 0) {
-          const impulse = impact * BALL_REST;
-          a.vel.x -= impulse * nx;
-          a.vel.z -= impulse * nz;
-          b.vel.x += impulse * nx;
-          b.vel.z += impulse * nz;
+          const imp = impact * ballRest;
+          a.vx -= imp * nx; a.vy -= imp * ny;
+          b.vx += imp * nx; b.vy += imp * ny;
         }
       }
     }
   }
-  
-  // الجدران + الجيوب
-  const halfL = TABLE_L/2 - CUSHION*0.55 - BALL_R;
-  const halfW = TABLE_W/2 - CUSHION*0.55 - BALL_R;
-  
+
+  // جدران + جيوب
+  const pad = 2;
+  const pockets = getPockets();
   active.forEach(b => {
-    // فحص الجيوب أولاً
-    for (const [px, pz] of pocketPos) {
-      const dx = b.pos.x - px;
-      const dz = b.pos.z - pz;
-      if (dx*dx + dz*dz < (POCKET_R - BALL_R*0.3)**2) {
+    // جيوب
+    for (const p of pockets) {
+      if (Math.hypot(b.x - p.x, b.y - p.y) < POCKET_R() - b.r * 0.25) {
         pocketBall(b);
         return;
       }
     }
-    
-    // ارتداد الحواف
-    if (b.pos.x > halfL) {
-      b.pos.x = halfL;
-      b.vel.x *= -WALL_REST;
-    } else if (b.pos.x < -halfL) {
-      b.pos.x = -halfL;
-      b.vel.x *= -WALL_REST;
+    // ارتداد
+    if (b.x < TABLE.left + b.r + pad) {
+      b.x = TABLE.left + b.r + pad;
+      b.vx *= -wallRest;
+    } else if (b.x > TABLE.right - b.r - pad) {
+      b.x = TABLE.right - b.r - pad;
+      b.vx *= -wallRest;
     }
-    if (b.pos.z > halfW) {
-      b.pos.z = halfW;
-      b.vel.z *= -WALL_REST;
-    } else if (b.pos.z < -halfW) {
-      b.pos.z = -halfW;
-      b.vel.z *= -WALL_REST;
+    if (b.y < TABLE.top + b.r + pad) {
+      b.y = TABLE.top + b.r + pad;
+      b.vy *= -wallRest;
+    } else if (b.y > TABLE.bottom - b.r - pad) {
+      b.y = TABLE.bottom - b.r - pad;
+      b.vy *= -wallRest;
     }
   });
-  
-  // تحديث المواضع المرئية
-  active.forEach(b => {
-    b.mesh.position.copy(b.pos);
-  });
-  
-  // هل توقفت كل الكرات؟
-  const moving = active.some(b => b.vel.lengthSq() > 0.0008);
+
+  // توقف؟
+  const moving = active.some(b => b.vx * b.vx + b.vy * b.vy > 0.8);
   if (!moving && state === 'simulating') {
     state = 'aim';
-    // إذا سقطت البيضاء نعيدها
-    const cue = balls.find(b => b.isCue);
-    if (cue && cue.pocketed) {
-      cue.pocketed = false;
-      cue.pos.set(-TABLE_L*0.28, BALL_R, 0);
-      cue.vel.set(0,0,0);
-      cue.mesh.visible = true;
-      cue.mesh.position.copy(cue.pos);
-      showStatus('خطأ! الكرة البيضاء عادت');
+    // إعادة البيضاء إذا سقطت
+    if (cueBall.pocketed) {
+      cueBall.pocketed = false;
+      cueBall.x = TABLE.cx;
+      cueBall.y = TABLE.bottom - TABLE.h * 0.22;
+      cueBall.vx = cueBall.vy = 0;
+      showMsg('خطأ! الكرة البيضاء عادت');
     }
-    updateCueVisibility(true);
+    // تبديل الدور بسيط (لـ CPU لاحقاً)
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+    turnTxt.textContent = currentPlayer === 1 ? 'Your Turn' : 'CPU Turn';
+    if (currentPlayer === 2) setTimeout(cpuPlay, 700);
   }
 }
 
 function pocketBall(b) {
   if (b.pocketed) return;
   b.pocketed = true;
-  b.vel.set(0,0,0);
-  b.mesh.visible = false;
-  
-  if (!b.isCue) {
-    pocketedCount++;
-    updateScore();
-    if (pocketedCount >= 15) {
-      showStatus('أحسنت! أكملت كل الكرات 🎉');
-      setTimeout(() => rackBalls(), 2200);
-    }
-  }
+  b.vx = b.vy = 0;
+  if (b.isCue) return;
+  if (b.isEight) {
+    pocketed.eight = true;
+    const remaining = balls.filter(x => !x.pocketed && !x.isCue && !x.isEight).length;
+    if (remaining === 0) showMsg('أحسنت! فزت 🎉');
+    else showMsg('خسرت! سقطت الـ 8 مبكراً');
+    setTimeout(rack, 2200);
+  } else if (b.isStripe) pocketed.stripes++;
+  else pocketed.solids++;
+  updateBallIndicators();
 }
 
-function updateScore() {
-  scoreEl.textContent = pocketedCount;
+function updateBallIndicators() {
+  // بسيط: نعرض عدد المقطوع
+  const p1 = document.getElementById('p1-balls');
+  const p2 = document.getElementById('p2-balls');
+  p1.innerHTML = '';
+  p2.innerHTML = '';
+  // يمكن توسيعها لاحقاً لعرض أنواع الكرات
 }
 
-// -------------------- التوجيه والعصا --------------------
-function updateCue() {
-  const cue = balls.find(b => b.isCue && !b.pocketed);
-  if (!cue || state !== 'aim') {
-    cueGroup.visible = false;
-    aimLine.visible = false;
-    return;
-  }
-  
-  const pull = 0.15 + power * 1.35; // سحب العصا حسب القوة
-  const dirX = Math.cos(aimAngle);
-  const dirZ = Math.sin(aimAngle);
-  
-  cueGroup.visible = true;
-  cueGroup.position.set(
-    cue.pos.x - dirX * pull,
-    BALL_R + 0.02,
-    cue.pos.z - dirZ * pull
-  );
-  cueGroup.rotation.y = -aimAngle;
-  
-  // خط التوجيه
-  aimLine.visible = true;
-  const len = 3.8;
-  const positions = aimLine.geometry.attributes.position;
-  positions.setXYZ(0, cue.pos.x, BALL_R + 0.01, cue.pos.z);
-  positions.setXYZ(1, cue.pos.x + dirX * len, BALL_R + 0.01, cue.pos.z + dirZ * len);
-  positions.needsUpdate = true;
-}
-
-function shoot() {
-  if (state !== 'aim' || power < 0.04) return;
-  const cue = balls.find(b => b.isCue && !b.pocketed);
-  if (!cue) return;
-  
-  const speed = power * MAX_SPEED;
-  cue.vel.set(Math.cos(aimAngle) * speed, 0, Math.sin(aimAngle) * speed);
-  
-  // اهتزاز خفيف
-  if (navigator.vibrate) navigator.vibrate(Math.min(40, 12 + power * 35));
-  
-  power = 0;
-  powerFill.style.height = '0%';
-  state = 'simulating';
-  updateCueVisibility(false);
-}
-
-function updateCueVisibility(show) {
-  cueGroup.visible = show;
-  aimLine.visible = show;
+function updatePowerUI() {
+  powerFill.style.height = (power * 100) + '%';
 }
 
 // -------------------- التحكم باللمس --------------------
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-const plane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
-const hit = new THREE.Vector3();
+let dragging = false;
+let dragStart = null;
+let lastAngleTouch = null;
 
-let isAiming = false;
-let isPowerDragging = false;
-
-function getTablePoint(clientX, clientY) {
-  mouse.x = (clientX / innerWidth) * 2 - 1;
-  mouse.y = -(clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(mouse, camera);
-  raycaster.ray.intersectPlane(plane, hit);
-  return hit;
-}
-
-// توجيه باللمس على الطاولة
 canvas.addEventListener('pointerdown', e => {
-  if (state !== 'aim') return;
-  const pt = getTablePoint(e.clientX, e.clientY);
-  const cue = balls.find(b => b.isCue && !b.pocketed);
-  if (!cue) return;
-  
-  // إذا كان اللمس بعيداً عن شريط القوة
-  if (e.clientX < innerWidth - 70) {
-    isAiming = true;
-    aimAngle = Math.atan2(pt.z - cue.pos.z, pt.x - cue.pos.x);
-    updateCue();
+  if (state !== 'aim' && state !== 'pulling') return;
+  const x = e.clientX, y = e.clientY;
+  dragging = true;
+  dragStart = { x, y };
+  lastAngleTouch = { x, y };
+
+  // تحديد الزاوية الأولية
+  if (cueBall && !cueBall.pocketed) {
+    aimAngle = Math.atan2(y - cueBall.y, x - cueBall.x);
   }
 });
 
 canvas.addEventListener('pointermove', e => {
-  if (!isAiming || state !== 'aim') return;
-  const pt = getTablePoint(e.clientX, e.clientY);
-  const cue = balls.find(b => b.isCue && !b.pocketed);
-  if (!cue) return;
-  aimAngle = Math.atan2(pt.z - cue.pos.z, pt.x - cue.pos.x);
-  updateCue();
+  if (!dragging || (state !== 'aim' && state !== 'pulling')) return;
+  const x = e.clientX, y = e.clientY;
+
+  if (!cueBall || cueBall.pocketed) return;
+
+  // تحديث الزاوية
+  aimAngle = Math.atan2(y - cueBall.y, x - cueBall.x);
+
+  // حساب القوة من المسافة المسحوبة للخلف (عكس اتجاه التصويب)
+  const dx = x - cueBall.x;
+  const dy = y - cueBall.y;
+  const dist = Math.hypot(dx, dy);
+  // القوة تتناسب مع كم سحبنا بعيداً عن الكرة في الاتجاه المعاكس
+  const proj = -(dx * Math.cos(aimAngle) + dy * Math.sin(aimAngle));
+  pullDist = Math.max(0, Math.min(55, proj - cueBall.r - 5));
+  power = Math.min(1, pullDist / 48);
+  state = power > 0.03 ? 'pulling' : 'aim';
+  updatePowerUI();
+
+  if (navigator.vibrate && power > 0.15) navigator.vibrate(6);
 });
 
-canvas.addEventListener('pointerup', () => { isAiming = false; });
-canvas.addEventListener('pointercancel', () => { isAiming = false; });
-
-// شريط القوة
-const powerContainer = document.getElementById('power-container');
-powerContainer.addEventListener('pointerdown', e => {
-  e.stopPropagation();
-  isPowerDragging = true;
-  setPowerFromEvent(e);
-});
-powerContainer.addEventListener('pointermove', e => {
-  if (!isPowerDragging) return;
-  e.stopPropagation();
-  setPowerFromEvent(e);
-});
-window.addEventListener('pointerup', () => { isPowerDragging = false; });
-
-function setPowerFromEvent(e) {
-  if (state !== 'aim') return;
-  const rect = powerContainer.getBoundingClientRect();
-  const y = e.clientY - rect.top;
-  const h = rect.height;
-  power = Math.max(0, Math.min(1, 1 - y / h));
-  powerFill.style.height = (power * 100) + '%';
-  updateCue();
-  
-  // اهتزاز تدريجي خفيف
-  if (navigator.vibrate && power > 0.1) {
-    navigator.vibrate(8);
-  }
-}
-
-// أزرار
-shootBtn.addEventListener('click', shoot);
-resetBtn.addEventListener('click', () => {
-  pocketedCount = 0;
-  rackBalls();
-  state = 'aim';
-  power = 0;
-  powerFill.style.height = '0%';
-  aimAngle = 0;
-  updateCue();
-  showStatus('تم إعادة الرصّ');
-});
-fsBtn.addEventListener('click', () => {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen?.() ||
-    document.documentElement.webkitRequestFullscreen?.();
+canvas.addEventListener('pointerup', e => {
+  if (!dragging) return;
+  dragging = false;
+  if (state === 'pulling' && power > 0.05) {
+    // إطلاق
+    state = 'shooting';
+    cueAnim = 0;
+    if (navigator.vibrate) navigator.vibrate(Math.min(45, 15 + power * 40));
   } else {
-    document.exitFullscreen?.();
+    state = 'aim';
+    power = 0;
+    pullDist = 0;
+    updatePowerUI();
   }
 });
 
-// منع السلوك الافتراضي للجوال
-document.addEventListener('touchmove', e => e.preventDefault(), {passive:false});
-document.addEventListener('gesturestart', e => e.preventDefault());
+canvas.addEventListener('pointercancel', () => {
+  dragging = false;
+  if (state === 'pulling') {
+    state = 'aim';
+    power = 0;
+    pullDist = 0;
+    updatePowerUI();
+  }
+});
+
+// أزرار التوجيه الدقيق
+document.getElementById('aim-up').addEventListener('click', () => {
+  if (state === 'aim' || state === 'pulling') aimAngle -= 0.04;
+});
+document.getElementById('aim-dn').addEventListener('click', () => {
+  if (state === 'aim' || state === 'pulling') aimAngle += 0.04;
+});
+document.getElementById('eye-btn').addEventListener('click', () => {
+  showAimAssist = !showAimAssist;
+});
+document.getElementById('spin-btn').addEventListener('click', () => {
+  showMsg('السبن قريباً');
+});
+document.getElementById('menu-btn').addEventListener('click', () => {
+  if (confirm('إعادة اللعبة؟')) rack();
+});
+
+// منع التمرير
+document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+
+// -------------------- CPU بسيط --------------------
+function cpuPlay() {
+  if (currentPlayer !== 2 || state !== 'aim') return;
+  // اختيار عشوائي بسيط
+  const targets = balls.filter(b => !b.pocketed && !b.isCue);
+  if (targets.length === 0) return;
+  const t = targets[Math.floor(Math.random() * targets.length)];
+  aimAngle = Math.atan2(t.y - cueBall.y, t.x - cueBall.x);
+  power = 0.35 + Math.random() * 0.4;
+  pullDist = power * 48;
+  updatePowerUI();
+  setTimeout(() => {
+    state = 'shooting';
+    cueAnim = 0;
+  }, 400);
+}
 
 // -------------------- رسائل --------------------
-let statusTimer = null;
-function showStatus(msg) {
-  statusEl.textContent = msg;
-  statusEl.style.display = 'block';
-  clearTimeout(statusTimer);
-  statusTimer = setTimeout(() => { statusEl.style.display = 'none'; }, 1800);
+let msgTimer;
+function showMsg(txt) {
+  msgEl.textContent = txt;
+  msgEl.style.display = 'block';
+  clearTimeout(msgTimer);
+  msgTimer = setTimeout(() => msgEl.style.display = 'none', 1800);
 }
 
-// -------------------- حلقة الرسم --------------------
-function animate(now) {
-  requestAnimationFrame(animate);
-  const dt = Math.min((now - lastTime) / 1000, 0.05);
+// -------------------- الحلقة الرئيسية --------------------
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min((now - lastTime) / 1000, 0.04);
   lastTime = now;
-  
+
+  // أنيميشن العصا عند الإطلاق
+  if (state === 'shooting') {
+    cueAnim += dt * 9;
+    if (cueAnim >= 1) {
+      // تطبيق السرعة
+      const spd = power * 920;
+      cueBall.vx = Math.cos(aimAngle) * spd;
+      cueBall.vy = Math.sin(aimAngle) * spd;
+      power = 0;
+      pullDist = 0;
+      updatePowerUI();
+      state = 'simulating';
+    }
+  }
+
   if (state === 'simulating') {
-    // خطوات فيزياء فرعية لثبات أكبر
-    const steps = 3;
-    for (let i = 0; i < steps; i++) updatePhysics(dt / steps);
-  } else {
-    updateCue();
+    for (let i = 0; i < 3; i++) updatePhysics(dt / 3);
   }
-  
-  renderer.render(scene, camera);
+
+  // رسم
+  drawBackground();
+  drawTable();
+  balls.forEach(drawBall);
+  drawCue();
 }
 
-// -------------------- تهيئة --------------------
-function onResize() {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-  
-  // تعديل زاوية الكاميرا حسب الاتجاه
-  if (innerWidth > innerHeight) {
-    camera.position.set(0, 6.8, 6.2);
-  } else {
-    camera.position.set(0, 9.5, 5.5);
-  }
-  camera.lookAt(0, 0, 0);
-}
-window.addEventListener('resize', onResize);
-window.addEventListener('orientationchange', () => setTimeout(onResize, 120));
-
-rackBalls();
-onResize();
-updateCue();
-requestAnimationFrame(animate);
-
-// رسالة ترحيب
-setTimeout(() => showStatus('مرحباً بك في بلياردو 3D'), 400);
+// بدء
+rack();
+requestAnimationFrame(loop);
+showMsg('اسحب العصا للخلف ثم أفلت');
 </script>
 </body>
 </html>
