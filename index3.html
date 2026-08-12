@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X / استكشاف</title>
+    <title>X</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -22,123 +22,37 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
+        /* حاوية التطبيق بحجم الجوال المتوافق مع X */
         .app-container {
-            display: flex;
             width: 100%;
-            max-width: 1265px;
-            justify-content: space-between;
+            max-width: 600px;
+            background-color: #000000;
+            min-height: 100vh;
+            border-left: 1px solid #2f3336;
+            border-right: 1px solid #2f3336;
+            position: relative;
+            padding-bottom: 60px; /* مساحة للشريط السفلي */
         }
 
-        /* ================= الشريط الجانبي الأيسر (Navigation) ================= */
-        sidebar {
-            width: 275px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 0 10px;
-            height: 100vh;
+        /* --- الهيدر العلوي (Header) --- */
+        .top-header {
             position: sticky;
             top: 0;
-            border-left: 1px solid #2f3336;
-        }
-
-        .sidebar-top {
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #2f3336;
             display: flex;
-            flex-direction: column;
-        }
-
-        .logo {
-            font-size: 32px;
-            color: #ffffff;
-            padding: 12px;
-            margin-bottom: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .logo:hover {
-            background-color: rgba(231, 233, 234, 0.1);
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 12px 16px;
-            color: #e7e9ea;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 9999px;
-            width: fit-content;
-            transition: background 0.2s;
-            margin-bottom: 4px;
-            cursor: pointer;
-        }
-
-        .nav-item:hover {
-            background-color: rgba(231, 233, 234, 0.1);
-        }
-
-        .nav-item.active {
-            font-weight: 700;
-        }
-
-        .nav-item i {
-            font-size: 26px;
-            width: 32px;
-            text-align: center;
-        }
-
-        .post-btn-sidebar {
-            background-color: #ffffff;
-            color: #0f1419;
-            border: none;
-            border-radius: 9999px;
-            padding: 15px 0;
-            width: 90%;
-            font-size: 17px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.2s;
-        }
-
-        .post-btn-sidebar:hover {
-            background-color: #d7d7d7;
-        }
-
-        .user-profile-mini {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 10px 12px;
-            border-radius: 9999px;
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: background 0.2s;
-        }
-
-        .user-profile-mini:hover {
-            background-color: rgba(231, 233, 234, 0.1);
-        }
-
-        .user-info {
-            display: flex;
-            gap: 10px;
             align-items: center;
+            padding: 10px 16px;
+            z-index: 100;
         }
 
-        .avatar {
-            width: 40px;
-            height: 40px;
+        .header-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background-color: #1d9bf0;
             display: flex;
@@ -146,70 +60,45 @@
             justify-content: center;
             font-weight: bold;
             color: white;
-            font-size: 16px;
+            font-size: 14px;
+            cursor: pointer;
             overflow: hidden;
-            flex-shrink: 0;
         }
 
-        .avatar img {
+        .header-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .user-names h4 {
-            font-size: 15px;
-            color: #e7e9ea;
-            line-height: 20px;
+        .header-logo {
+            font-size: 24px;
+            color: #ffffff;
+            cursor: pointer;
         }
 
-        .user-names span {
-            font-size: 13px;
-            color: #71767b;
-            line-height: 16px;
-        }
-
-        /* ================= المحتوى الرئيسي (Timeline) ================= */
-        main {
-            flex-grow: 1;
-            max-width: 600px;
-            border-left: 1px solid #2f3336;
-            min-height: 100vh;
-        }
-
-        .main-header {
-            position: sticky;
-            top: 0;
-            background-color: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #2f3336;
-            z-index: 10;
-        }
-
-        .header-title {
-            padding: 15px 16px;
+        .header-settings {
             font-size: 20px;
-            font-weight: 700;
+            color: #e7e9ea;
+            cursor: pointer;
         }
 
+        /* --- شريط التبويبات العلوي --- */
         .header-tabs {
             display: flex;
             text-align: center;
+            border-bottom: 1px solid #2f3336;
             cursor: pointer;
+            background-color: #000;
         }
 
         .tab {
             flex: 1;
-            padding: 15px 0;
+            padding: 14px 0;
             font-size: 15px;
             font-weight: 700;
             color: #71767b;
             position: relative;
-            transition: background 0.2s;
-        }
-
-        .tab:hover {
-            background-color: rgba(231, 233, 234, 0.1);
         }
 
         .tab.active {
@@ -228,7 +117,7 @@
             border-radius: 2px;
         }
 
-        /* صندوق التغريد */
+        /* --- صندوق التغريد (Tweet Box) --- */
         .tweet-box {
             display: flex;
             padding: 12px 16px;
@@ -245,11 +134,11 @@
             background: transparent;
             border: none;
             color: #e7e9ea;
-            font-size: 20px;
+            font-size: 18px;
             resize: none;
             outline: none;
-            padding-top: 8px;
-            min-height: 80px;
+            padding-top: 6px;
+            min-height: 70px;
         }
 
         .tweet-box-footer {
@@ -257,8 +146,8 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #2f3336;
-            padding-top: 12px;
-            margin-top: 4px;
+            padding-top: 10px;
+            margin-top: 6px;
         }
 
         .tweet-icons {
@@ -274,28 +163,22 @@
             color: #0f1419;
             border: none;
             border-radius: 9999px;
-            padding: 8px 18px;
+            padding: 6px 16px;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         .post-btn:hover {
             background-color: #d7d7d7;
         }
 
-        /* عرض التغريدات */
+        /* --- عرض المنشورات والتغريدات --- */
         .tweet {
             display: flex;
             padding: 12px 16px;
             border-bottom: 1px solid #2f3336;
             gap: 12px;
-            transition: background 0.2s;
-        }
-
-        .tweet:hover {
-            background-color: rgba(231, 233, 234, 0.03);
         }
 
         .tweet-content {
@@ -324,23 +207,23 @@
             font-size: 15px;
             line-height: 1.5;
             color: #e7e9ea;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             word-break: break-word;
         }
 
         .tweet-image {
             width: 100%;
-            max-height: 380px;
+            max-height: 320px;
             border-radius: 16px;
             object-fit: cover;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             border: 1px solid #2f3336;
         }
 
         .tweet-actions {
             display: flex;
             justify-content: space-between;
-            max-width: 425px;
+            max-width: 380px;
             color: #71767b;
         }
 
@@ -350,7 +233,6 @@
             gap: 6px;
             font-size: 13px;
             cursor: pointer;
-            transition: color 0.2s;
         }
 
         .action-icon.comment:hover { color: #1d9bf0; }
@@ -359,99 +241,85 @@
         .action-icon.like.liked { color: #f91880; }
         .action-icon.like.liked i { font-weight: 900; }
 
-        /* ================= شاشة الرسائل (الخاص DM) ================= */
-        .messages-container {
-            display: none;
-            flex-direction: column;
-            height: calc(100vh - 53px);
-        }
-        .chat-list {
-            flex-grow: 1;
-            overflow-y: auto;
-        }
-        .chat-item {
-            display: flex;
-            gap: 12px;
-            padding: 15px;
-            border-bottom: 1px solid #2f3336;
-            cursor: pointer;
-            align-items: center;
-            transition: background 0.2s;
-        }
-        .chat-item:hover { background-color: rgba(231,233,234,0.05); }
-
-        /* ================= الشريط الجانبي الأيمن (Widgets & Search) ================= */
-        .widgets {
-            width: 350px;
-            padding: 10px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: #202327;
-            border-radius: 9999px;
-            padding: 12px 16px;
-            gap: 14px;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-            border: 1px solid transparent;
-            transition: border 0.2s, background 0.2s;
-        }
-        .search-bar:focus-within {
-            border-color: #1d9bf0;
-            background-color: #000;
-        }
-
-        .search-bar input {
-            background: transparent;
-            border: none;
-            color: #e7e9ea;
-            outline: none;
-            font-size: 15px;
+        /* --- الشريط السفلي (Navigation Bar تحت) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
+            max-width: 600px;
+            background-color: #000000;
+            border-top: 1px solid #2f3336;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            z-index: 100;
         }
 
-        .search-bar i {
+        .nav-icon {
             color: #71767b;
-        }
-
-        .widget-card {
-            background-color: #16181c;
-            border-radius: 16px;
-            padding: 15px;
-        }
-
-        .widget-card h3 {
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .trending-item {
-            padding: 8px 0;
+            font-size: 22px;
             cursor: pointer;
+            transition: color 0.2s;
         }
 
-        .trending-item span {
-            font-size: 13px;
-            color: #71767b;
+        .nav-icon.active {
+            color: #ffffff;
         }
 
-        .trending-item p {
-            font-size: 15px;
-            font-weight: 700;
-            color: #e7e9ea;
+        .nav-icon:hover {
+            color: #ffffff;
         }
 
-        /* ================= نافذة تعديل الحساب (Modal) ================= */
+        /* --- زر النشر العائم (Floating Action Button) --- */
+        .fab-btn {
+            position: fixed;
+            bottom: 75px;
+            left: 20px;
+            background-color: #1d9bf0;
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            cursor: pointer;
+            z-index: 99;
+        }
+
+        /* --- شاشة الملف الشخصي (Profile View) --- */
+        .profile-view {
+            display: none;
+            padding: 20px;
+        }
+        .profile-header-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #2f3336;
+            padding-bottom: 20px;
+        }
+        .profile-big-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #1d9bf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            overflow: hidden;
+        }
+        .profile-big-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- نافذة تعديل الحساب (Modal) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -462,40 +330,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 200;
             display: none;
         }
 
         .modal-box {
             background-color: #000000;
             border: 1px solid #2f3336;
-            width: 100%;
-            max-width: 450px;
+            width: 90%;
+            max-width: 400px;
             border-radius: 20px;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .modal-header i {
-            cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-        }
-        .modal-header i:hover {
-            background-color: rgba(231, 233, 234, 0.1);
-        }
-
-        .modal-form {
+            padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -505,205 +350,126 @@
             background: transparent;
             border: 1px solid #2f3336;
             border-radius: 8px;
-            padding: 14px;
+            padding: 12px;
             color: white;
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
+            width: 100%;
         }
-
-        .modal-form input:focus {
-            border-color: #1d9bf0;
-        }
-
-        .modal-form label {
-            font-size: 14px;
-            color: #71767b;
-        }
-
-        .modal-submit {
-            background-color: #ffffff;
-            color: #0f1419;
-            font-weight: 700;
-            border: none;
-            border-radius: 9999px;
-            padding: 14px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
-        }
-
-        .modal-submit:hover {
-            background-color: #d7d7d7;
-        }
-
-        /* التجاوبي للشاشات الصغيرة */
-        @media (max-width: 1020px) {
-            .widgets { display: none; }
-            sidebar { width: 88px; align-items: center; }
-            sidebar .logo span, sidebar .nav-item span, sidebar .post-btn-sidebar, sidebar .user-profile-mini .user-names, sidebar .user-profile-mini i { display: none; }
-            sidebar { padding: 0; }
-        }
+        .modal-form label { font-size: 13px; color: #71767b; }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        <!-- ================= الشريط الجانبي الأيسر ================= -->
-        <sidebar>
-            <div class="sidebar-top">
-                <div class="logo" onclick="switchTab('home')" title="X">
-                    <i class="fa-solid fa-x" style="font-size: 26px;"></i>
-                </div>
-                <a href="#" class="nav-item active" id="navHome" onclick="switchTab('home')"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
-                <a href="#" class="nav-item" onclick="switchTab('explore')"><i class="fa-solid fa-hashtag"></i><span>استكشاف</span></a>
-                <a href="#" class="nav-item" onclick="switchTab('notifications')"><i class="fa-regular fa-bell"></i><span>الإشعارات</span></a>
-                <a href="#" class="nav-item" id="navMessages" onclick="switchTab('messages')"><i class="fa-regular fa-envelope"></i><span>الرسائل</span></a>
-                <a href="#" class="nav-item" onclick="openProfileModal()"><i class="fa-regular fa-user"></i><span>الملف الشخصي</span></a>
-                <button class="post-btn-sidebar" onclick="focusTweetBox()">منشور</button>
-            </div>
-            <!-- الملف الشخصي المصغر -->
-            <div class="user-profile-mini" onclick="openProfileModal()" title="إعدادات الحساب">
-                <div class="user-info">
-                    <div class="avatar" id="sidebarAvatar">X</div>
-                    <div class="user-names">
-                        <h4 id="sidebarName">مستخدم X</h4>
-                        <span id="sidebarUsername">@x_user</span>
-                    </div>
-                </div>
-                <i class="fa-solid fa-ellipsis"></i>
-            </div>
-        </sidebar>
+        
+        <!-- الهيدر العلوي بنظام الجوال -->
+        <div class="top-header">
+            <div class="header-avatar" id="topAvatar" onclick="openProfileModal()" title="حسابي">X</div>
+            <div class="header-logo"><i class="fa-solid fa-x"></i></div>
+            <div class="header-settings" onclick="openProfileModal()"><i class="fa-solid fa-sliders"></i></div>
+        </div>
 
-        <!-- ================= المحتوى الرئيسي ================= -->
-        <main>
-            <!-- الرئيسية -->
-            <div id="homeView">
-                <div class="main-header">
-                    <div class="header-title">الرئيسية</div>
-                    <div class="header-tabs">
-                        <div class="tab active">لك</div>
-                        <div class="tab">المتابِعون</div>
-                    </div>
-                </div>
+        <!-- المحتوى الرئيسي (الرئيسية) -->
+        <div id="homeView">
+            <div class="header-tabs">
+                <div class="tab active">لك</div>
+                <div class="tab">المتابِعون</div>
+            </div>
 
-                <!-- صندوق التغريد -->
-                <div class="tweet-box">
-                    <div class="avatar" id="boxAvatar">X</div>
-                    <div class="tweet-box-input">
-                        <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
-                        
-                        <!-- معاينة الصورة المرفقة -->
-                        <div id="imagePreviewContainer" style="position: relative; display: none; margin-bottom: 10px;">
-                            <img id="imagePreview" class="tweet-image" src="" alt="معاينة">
-                            <i class="fa-solid fa-xmark" onclick="removeImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 50%; cursor: pointer;"></i>
+            <!-- صندوق التغريد -->
+            <div class="tweet-box">
+                <div class="header-avatar" id="boxAvatar" style="width: 40px; height: 40px;">X</div>
+                <div class="tweet-box-input">
+                    <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
+                    
+                    <!-- معاينة الصورة -->
+                    <div id="imagePreviewContainer" style="position: relative; display: none; margin-bottom: 10px;">
+                        <img id="imagePreview" class="tweet-image" src="" alt="معاينة">
+                        <i class="fa-solid fa-xmark" onclick="removeImage()" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 6px; border-radius: 50%; cursor: pointer;"></i>
+                    </div>
+
+                    <div class="tweet-box-footer">
+                        <div class="tweet-icons">
+                            <label for="imageUpload" style="cursor: pointer;"><i class="fa-regular fa-image"></i></label>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="previewFile()">
+                            <i class="fa-solid fa-gift"></i>
+                            <i class="fa-regular fa-face-smile"></i>
                         </div>
+                        <button class="post-btn" onclick="createTweet()">نشر</button>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="tweet-box-footer">
-                            <div class="tweet-icons">
-                                <label for="imageUpload" style="cursor: pointer;"><i class="fa-regular fa-image"></i></label>
-                                <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="previewFile()">
-                                <i class="fa-solid fa-gift"></i>
-                                <i class="fa-regular fa-face-smile"></i>
-                                <i class="fa-regular fa-calendar"></i>
-                            </div>
-                            <button class="post-btn" onclick="createTweet()">منشور</button>
+            <!-- جدول المنشورات -->
+            <div id="feed">
+                <div class="tweet">
+                    <div class="header-avatar" style="width: 40px; height: 40px; background-color: #1d9bf0;"><i class="fa-solid fa-x"></i></div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">X</span>
+                            <span class="username">@X</span>
+                            <span class="time">· الآن</span>
+                        </div>
+                        <div class="tweet-text">
+                            أهلاً بك في واجهة تطبيق X للهواتف. الشريط السفلي فعال، اضغط على أيقونة حسابك بالأسفل أو الهيدر لتعديل ملفك الشخصي وغرد بكل حرية! 🚀
+                        </div>
+                        <div class="tweet-actions">
+                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 25</div>
+                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 110</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">1.5K</span></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
                         </div>
                     </div>
-                </div>
-
-                <!-- جدول المنشورات -->
-                <div id="feed">
-                    <div class="tweet" data-text="أهلاً بك في منصة x.com المحدثة بنظام تفاعلي كامل وكتابة بوستات وحسابات شخصية حقيقية.">
-                        <div class="avatar" style="background-color: #1d9bf0;"><i class="fa-solid fa-x"></i></div>
-                        <div class="tweet-content">
-                            <div class="tweet-header">
-                                <span class="name">X</span>
-                                <span class="username">@X</span>
-                                <span class="time">· الآن</span>
-                            </div>
-                            <div class="tweet-text">
-                                أهلاً بك في منصة x.com المحدثة بنظام تفاعلي كامل وكتابة بوستات وحسابات شخصية حقيقية. ابحث في الشريط الجانبي أو غرد بنفسك الآن! 🚀
-                            </div>
-                            <div class="tweet-actions">
-                                <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 142</div>
-                                <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 580</div>
-                                <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">3.2K</span></div>
-                                <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- الرسائل الخاصة (الخاص DM) -->
-            <div id="messagesView" class="messages-container">
-                <div class="main-header">
-                    <div class="header-title">الرسائل</div>
-                </div>
-                <div class="chat-list">
-                    <div class="chat-item">
-                        <div class="avatar" style="background-color: #00ba7c;">د</div>
-                        <div>
-                            <h4 style="font-size: 15px;">فريق دعم X</h4>
-                            <span style="font-size: 13px; color: #71767b;">أهلاً بك، منصتك تعمل بكفاءة تامة.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- تبويبات إضافية -->
-            <div id="exploreView" style="display: none;">
-                <div class="main-header"><div class="header-title">استكشاف</div></div>
-                <p style="padding: 20px; color: #71767b;">الأحداث الرائجة والترندات العالمية حالياً.</p>
-            </div>
-            <div id="notificationsView" style="display: none;">
-                <div class="main-header"><div class="header-title">الإشعارات</div></div>
-                <p style="padding: 20px; color: #71767b;">لا توجد إشعارات جديدة.</p>
-            </div>
-        </main>
-
-        <!-- ================= الشريط الجانبي الأيمن (بحث وترند) ================= -->
-        <div class="widgets">
-            <div class="search-bar">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="بحث" oninput="filterTweets(this.value)">
-            </div>
-
-            <div class="widget-card">
-                <h3>ما يُعقد الآن</h3>
-                <div class="trending-item">
-                    <span>تقنية · ترند</span>
-                    <p>#X_com</p>
-                    <span>٢٤٥ ألف منشور</span>
-                </div>
-                <div class="trending-item" style="margin-top: 15px;">
-                    <span>برمجة · رائج</span>
-                    <p>#Frontend</p>
-                    <span>٦٨ ألف منشور</span>
                 </div>
             </div>
         </div>
+
+        <!-- شاشة الملف الشخصي (لما تضغط على حسابك تحت) -->
+        <div id="profileView" class="profile-view">
+            <div class="profile-header-box">
+                <div class="profile-big-avatar" id="profileBigAvatar">X</div>
+                <h2 id="profileDisplayName" style="font-size: 20px;">مستخدم X</h2>
+                <span id="profileDisplayUsername" style="color: #71767b; font-size: 14px;">@x_user</span>
+                <button class="post-btn" style="background: transparent; border: 1px solid #536471; color: white; margin-top: 10px;" onclick="openProfileModal()">تعديل الملف الشخصي</button>
+            </div>
+            <p style="text-align: center; color: #71767b; margin-top: 30px;">لا توجد منشورات خاصة بك حتى الآن.</p>
+        </div>
+
+        <!-- زر النشر العائم الجانبي -->
+        <div class="fab-btn" onclick="focusTweetBox()">
+            <i class="fa-solid fa-feather-pointed"></i>
+        </div>
+
+        <!-- الشريط السفلي (Navigation Bar تحت) -->
+        <div class="bottom-nav">
+            <i class="fa-solid fa-house nav-icon active" onclick="switchTab('home')" id="navHome" title="الرئيسية"></i>
+            <i class="fa-solid fa-magnifying-glass nav-icon" onclick="switchTab('explore')" id="navExplore" title="بحث واستكشاف"></i>
+            <i class="fa-regular fa-bell nav-icon" onclick="switchTab('notifications')" id="navNotif" title="الإشعارات"></i>
+            <i class="fa-regular fa-envelope nav-icon" onclick="switchTab('messages')" id="navMsg" title="الرسائل"></i>
+            <i class="fa-regular fa-user nav-icon" onclick="switchTab('profile')" id="navProfile" title="حسابي"></i>
+        </div>
+
     </div>
 
-    <!-- ================= نافذة تعديل الحساب ================= -->
+    <!-- نافذة تعديل الحساب -->
     <div class="modal-overlay" id="profileModal">
         <div class="modal-box">
-            <div class="modal-header">
-                <span>تعديل ملفك الشخصي</span>
-                <i class="fa-solid fa-xmark" onclick="closeProfileModal()"></i>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 700;">
+                <span>تعديل حسابك</span>
+                <i class="fa-solid fa-xmark" onclick="closeProfileModal()" style="cursor: pointer;"></i>
             </div>
             <div class="modal-form">
-                <label>الاسم الكامل:</label>
-                <input type="text" id="inputName" placeholder="مثال: سعود العتيبي">
+                <label>اسمك الكامل:</label>
+                <input type="text" id="inputName" placeholder="مثال: خالد الحربي">
                 
-                <label>معرف الحساب (اليوزر):</label>
-                <input type="text" id="inputUsername" placeholder="مثال: @saud">
+                <label>معرف الحساب (يوزر):</label>
+                <input type="text" id="inputUsername" placeholder="مثال: @khaled">
 
                 <label>رابط صورة الملف الشخصي (اختياري):</label>
                 <input type="text" id="inputAvatar" placeholder="ضع رابط صورة مباشرة هنا">
 
-                <button class="modal-submit" onclick="saveProfile()">حفظ التعديلات</button>
+                <button class="post-btn" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="saveProfile()">حفظ التغييرات</button>
             </div>
         </div>
     </div>
@@ -717,26 +483,24 @@
 
         let uploadedImageSrc = "";
 
-        // إدارة التنقل بين الصفحات
-        function switchTab(tabName) {
+        // التنقل بين الصفحات من الشريط السفلي
+        function switchTab(tab) {
             document.getElementById('homeView').style.display = 'none';
-            document.getElementById('messagesView').style.display = 'none';
-            document.getElementById('exploreView').style.display = 'none';
-            document.getElementById('notificationsView').style.display = 'none';
+            document.getElementById('profileView').style.display = 'none';
 
-            // إزالة الأنشطة من القائمة
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.bottom-nav i').forEach(el => el.classList.remove('active'));
 
-            if (tabName === 'home') {
+            if (tab === 'home') {
                 document.getElementById('homeView').style.display = 'block';
                 document.getElementById('navHome').classList.add('active');
-            } else if (tabName === 'messages') {
-                document.getElementById('messagesView').style.display = 'flex';
-                document.getElementById('navMessages').classList.add('active');
-            } else if (tabName === 'explore') {
-                document.getElementById('exploreView').style.display = 'block';
-            } else if (tabName === 'notifications') {
-                document.getElementById('notificationsView').style.display = 'block';
+            } else if (tab === 'profile') {
+                document.getElementById('profileView').style.display = 'block';
+                document.getElementById('navProfile').classList.add('active');
+            } else {
+                document.getElementById('homeView').style.display = 'block';
+                if(tab === 'explore') document.getElementById('navExplore').classList.add('active');
+                if(tab === 'notifications') document.getElementById('navNotif').classList.add('active');
+                if(tab === 'messages') document.getElementById('navMsg').classList.add('active');
             }
         }
 
@@ -765,11 +529,16 @@
         }
 
         function updateUserInterface() {
-            document.getElementById('sidebarName').innerText = currentUser.name;
-            document.getElementById('sidebarUsername').innerText = currentUser.username;
+            document.getElementById('profileDisplayName').innerText = currentUser.name;
+            document.getElementById('profileDisplayUsername').innerText = currentUser.username;
             
-            const avatars = [document.getElementById('sidebarAvatar'), document.getElementById('boxAvatar')];
-            avatars.forEach(el => {
+            const avatarElements = [
+                document.getElementById('topAvatar'), 
+                document.getElementById('boxAvatar'), 
+                document.getElementById('profileBigAvatar')
+            ];
+
+            avatarElements.forEach(el => {
                 if (currentUser.avatar) {
                     el.innerHTML = `<img src="${currentUser.avatar}" alt="صورة">`;
                 } else {
@@ -778,7 +547,7 @@
             });
         }
 
-        // رفع وإرفاق الصور
+        // معاينة الصورة المرفقة
         function previewFile() {
             const file = document.getElementById('imageUpload').files[0];
             if (file) {
@@ -798,7 +567,7 @@
             document.getElementById('imageUpload').value = "";
         }
 
-        // نشر بوست / تغريدة جديدة
+        // إنشاء تغريدة أو بوست
         function createTweet() {
             const text = document.getElementById('tweetInput').value.trim();
             if (text === '' && uploadedImageSrc === '') return;
@@ -807,8 +576,8 @@
             let imageHTML = uploadedImageSrc ? `<img src="${uploadedImageSrc}" class="tweet-image">` : '';
 
             const newTweetHTML = `
-                <div class="tweet" data-text="${escapeHtml(text)}">
-                    <div class="avatar">${avatarContent}</div>
+                <div class="tweet">
+                    <div class="header-avatar" style="width: 40px; height: 40px;">${avatarContent}</div>
                     <div class="tweet-content">
                         <div class="tweet-header">
                             <span class="name">${escapeHtml(currentUser.name)}</span>
@@ -833,7 +602,7 @@
             switchTab('home');
         }
 
-        // تفاعل الإعجاب الحقيقي
+        // الإعجاب
         function toggleLike(element) {
             element.classList.toggle('liked');
             const icon = element.querySelector('i');
@@ -849,20 +618,6 @@
                 icon.classList.add('fa-regular');
                 countSpan.innerText = count - 1;
             }
-        }
-
-        // البحث الفوري في المنشورات عبر خانة البحث اليمنى
-        function filterTweets(query) {
-            const tweets = document.querySelectorAll('.tweet');
-            query = query.toLowerCase();
-            tweets.forEach(tweet => {
-                const text = tweet.querySelector('.tweet-text').innerText.toLowerCase();
-                if (text.includes(query)) {
-                    tweet.style.display = 'flex';
-                } else {
-                    tweet.style.display = 'none';
-                }
-            });
         }
 
         function focusTweetBox() {
