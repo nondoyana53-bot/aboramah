@@ -1,566 +1,588 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>بلياردو | Plato Style Exact</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;}
-html,body{width:100%;height:100%;overflow:hidden;background:#1a1525;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;}
-#c{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:1;}
-#ui{position:fixed;inset:0;pointer-events:none;z-index:10;}
-#ui > *{pointer-events:auto;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>86o</title>
+    <!-- استيراد خط أنيق يدعم العربية -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
 
-/* ===== شاشة اختيار الوضع ===== */
-#mode-screen{
-  position:fixed;inset:0;z-index:100;
-  background:radial-gradient(ellipse at 50% 30%,#2a2035 0%,#12101a 70%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-#mode-screen h1{color:#e8d5a3;font-size:26px;font-weight:800;margin-bottom:6px;text-shadow:0 0 18px rgba(212,175,55,0.35);}
-#mode-screen .sub{color:#9a8b7a;font-size:13px;margin-bottom:32px;}
-.mode-btn{
-  width:min(270px,86vw);padding:16px 20px;margin:9px 0;border-radius:14px;
-  background:linear-gradient(145deg,#2e2438,#1a1525);border:1.5px solid #c9a84c;
-  color:#f5e6c8;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 5px 18px rgba(0,0,0,0.45);
-}
-.mode-btn:active{transform:scale(0.97);}
+        body {
+            background-color: #000000;
+            color: #e7e9ea;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-/* ===== الشريط العلوي ===== */
-#top-bar{
-  position:absolute;top:0;left:0;right:0;height:62px;
-  background:linear-gradient(180deg,rgba(20,16,28,0.97),rgba(14,11,20,0.9));
-  display:flex;align-items:center;justify-content:space-between;padding:0 10px;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-}
-.top-btn{
-  width:36px;height:36px;border-radius:50%;background:rgba(40,35,55,0.9);
-  border:1px solid rgba(255,255,255,0.12);color:#ddd;font-size:18px;
-  display:flex;align-items:center;justify-content:center;
-}
-.players-row{display:flex;align-items:center;gap:8px;}
-.p-card{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.p-avatar{
-  width:36px;height:36px;border-radius:50%;border:2px solid #c9a84c;
-  background:#2a2438;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:16px;
-}
-.p-name{font-size:11px;color:#eee;font-weight:600;}
-.p-badges{display:flex;gap:3px;align-items:center;font-size:10px;}
-.vs{color:#aaa;font-size:13px;font-weight:700;margin:0 4px;}
-.turn-pill{
-  background:#1a73e8;color:#fff;font-size:12px;font-weight:700;
-  padding:5px 12px;border-radius:14px;box-shadow:0 2px 8px rgba(26,115,232,0.4);
-}
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1260px;
+        }
 
-/* ===== بانر فوق الطاولة ===== */
-#table-banner{
-  position:absolute;top:72px;left:50%;transform:translateX(-50%);
-  background:rgba(20,18,25,0.92);color:#eee;font-size:13px;font-weight:600;
-  padding:6px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);
-  z-index:15;pointer-events:none;
-}
+        /* --- الشريط الجانبي الأيسر (القائمة) --- */
+        sidebar {
+            width: 275px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 10px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            border-left: 1px solid #2f3336;
+        }
 
-/* ===== شريط القوة (يسار) ===== */
-#power-area{
-  position:absolute;left:6px;top:50%;transform:translateY(-40%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-}
-#star-btn{
-  width:34px;height:34px;border-radius:50%;background:rgba(30,25,40,0.95);
-  border:1.5px solid #c9a84c;color:#f1c40f;font-size:16px;
-  display:flex;align-items:center;justify-content:center;
-}
-#power-bar{
-  width:14px;height:min(38vh,280px);background:rgba(30,25,40,0.9);
-  border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);
-  overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
-}
-#power-fill{
-  width:100%;background:linear-gradient(to top,#e67e22,#e74c3c 70%,#c0392b);
-  border-radius:6px;transition:height 0.04s linear;
-}
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+        }
 
-/* ===== أزرار اليمين ===== */
-#right-btns{
-  position:absolute;right:8px;top:50%;transform:translateY(-30%);
-  display:flex;flex-direction:column;align-items:center;gap:14px;
-}
-.r-btn{
-  width:40px;height:40px;border-radius:50%;background:rgba(30,25,40,0.95);
-  border:1.5px solid rgba(255,255,255,0.18);color:#eee;
-  display:flex;align-items:center;justify-content:center;font-size:18px;
-}
-#spin-btn{
-  width:44px;height:44px;border-radius:50%;background:#f5f0e6;
-  border:2px solid #ccc;position:relative;
-}
-#spin-btn::after{
-  content:'';position:absolute;width:10px;height:10px;border-radius:50%;
-  background:#e74c3c;top:50%;left:50%;transform:translate(-50%,-50%);
-}
-.fine-label{font-size:10px;color:#aaa;margin-bottom:-6px;}
-.fine-group{display:flex;flex-direction:column;gap:6px;}
-.fine-btn{
-  width:38px;height:32px;border-radius:8px;background:rgba(25,22,35,0.95);
-  border:1px solid rgba(255,255,255,0.15);color:#ddd;font-size:14px;
-  display:flex;align-items:center;justify-content:center;
-}
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-/* ===== الشات السفلي ===== */
-#chat-bar{
-  position:absolute;bottom:0;left:0;right:0;height:52px;
-  background:linear-gradient(180deg,rgba(18,14,28,0.0),rgba(12,10,18,0.97));
-  display:flex;align-items:center;padding:0 12px 8px;gap:10px;
-}
-#chat-input{
-  flex:1;height:36px;border-radius:20px;background:rgba(40,35,55,0.9);
-  border:1px solid rgba(255,255,255,0.1);color:#ccc;font-size:13px;
-  padding:0 14px;outline:none;pointer-events:auto;
-}
-#chat-input::placeholder{color:#777;}
-.chat-icon{width:34px;height:34px;border-radius:50%;background:#25d366;
-  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;}
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 12px 15px;
+            color: #e7e9ea;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 9999px;
+            width: fit-content;
+            transition: background 0.2s;
+            margin-bottom: 5px;
+        }
 
-/* ===== رسالة ===== */
-#msg{
-  position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);
-  background:rgba(15,12,22,0.95);border:1.5px solid #c9a84c;
-  color:#f5e6c8;padding:12px 22px;border-radius:12px;font-size:14px;
-  font-weight:700;display:none;z-index:30;text-align:center;max-width:80%;
-}
-</style>
+        .nav-item:hover {
+            background-color: rgba(231, 233, 234, 0.1);
+        }
+
+        .nav-item.active {
+            font-weight: 700;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            width: 30px;
+        }
+
+        .post-btn-sidebar {
+            background-color: #1d9bf0;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 15px 0;
+            width: 90%;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        .post-btn-sidebar:hover {
+            background-color: #1a8cd8;
+        }
+
+        .user-profile-mini {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-radius: 9999px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+
+        .user-profile-mini:hover {
+            background-color: rgba(231, 233, 234, 0.1);
+        }
+
+        .user-info {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #536471;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .user-names h4 {
+            font-size: 15px;
+            color: #e7e9ea;
+        }
+
+        .user-names span {
+            font-size: 13px;
+            color: #71767b;
+        }
+
+        /* --- المحتوى الرئيسي (Timeline) --- */
+        main {
+            flex-grow: 1;
+            max-width: 600px;
+            border-left: 1px solid #2f3336;
+            min-height: 100vh;
+        }
+
+        .main-header {
+            position: sticky;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #2f3336;
+            z-index: 10;
+        }
+
+        .header-title {
+            padding: 15px 16px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .header-tabs {
+            display: flex;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 0;
+            font-size: 15px;
+            font-weight: 700;
+            color: #71767b;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .tab:hover {
+            background-color: rgba(231, 233, 234, 0.1);
+        }
+
+        .tab.active {
+            color: #e7e9ea;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 56px;
+            height: 4px;
+            background-color: #1d9bf0;
+            border-radius: 2px;
+        }
+
+        /* صندوق إنشاء التغريدة */
+        .tweet-box {
+            display: flex;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2f3336;
+            gap: 12px;
+        }
+
+        .tweet-box-input {
+            flex-grow: 1;
+        }
+
+        .tweet-box-input textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #e7e9ea;
+            font-size: 20px;
+            resize: none;
+            outline: none;
+            padding-top: 10px;
+            min-height: 80px;
+        }
+
+        .tweet-box-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #2f3336;
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+
+        .tweet-icons {
+            display: flex;
+            gap: 15px;
+            color: #1d9bf0;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .post-btn {
+            background-color: #1d9bf0;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            padding: 8px 18px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .post-btn:hover {
+            background-color: #1a8cd8;
+        }
+
+        /* قائمة التغريدات */
+        .tweet {
+            display: flex;
+            padding: 12px 16px;
+            border-bottom: 1px solid #2f3336;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tweet:hover {
+            background-color: rgba(231, 233, 234, 0.03);
+        }
+
+        .tweet-content {
+            flex-grow: 1;
+        }
+
+        .tweet-header {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .tweet-header .name {
+            font-weight: 700;
+            color: #e7e9ea;
+        }
+
+        .tweet-header .username, .tweet-header .time {
+            color: #71767b;
+            font-size: 14px;
+        }
+
+        .tweet-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #e7e9ea;
+            margin-bottom: 12px;
+        }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 425px;
+            color: #71767b;
+        }
+
+        .action-icon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .action-icon.comment:hover { color: #1d9bf0; }
+        .action-icon.retweet:hover { color: #00ba7c; }
+        .action-icon.like:hover { color: #f91880; }
+        .action-icon.like.liked { color: #f91880; }
+
+        /* --- الشريط الجانبي الأيمن (Widgets) --- */
+        .widgets {
+            width: 350px;
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #202327;
+            border-radius: 9999px;
+            padding: 10px 15px;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: #e7e9ea;
+            outline: none;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        .search-bar i {
+            color: #71767b;
+        }
+
+        .widget-card {
+            background-color: #16181c;
+            border-radius: 16px;
+            padding: 15px;
+        }
+
+        .widget-card h3 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .trending-item {
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .trending-item span {
+            font-size: 13px;
+            color: #71767b;
+        }
+
+        .trending-item p {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e7e9ea;
+        }
+
+        /* التصميم التجاوبي للشاشات الصغيرة */
+        @media (max-width: 1020px) {
+            .widgets { display: none; }
+            sidebar { width: 88px; align-items: center; }
+            sidebar .logo span, sidebar .nav-item span, sidebar .post-btn-sidebar, sidebar .user-profile-mini .user-names, sidebar .user-profile-mini i { display: none; }
+            sidebar { padding: 0; }
+        }
+    </style>
 </head>
 <body>
-<canvas id="c"></canvas>
 
-<!-- شاشة الأوضاع -->
-<div id="mode-screen">
-  <h1>🎱 بلياردو</h1>
-  <div class="sub">مطابق لتصميم Plato</div>
-  <button class="mode-btn" id="btn-pvp">👥 اللعب مع صديق (2 Players)</button>
-  <button class="mode-btn" id="btn-cpu">🤖 اللعب ضد الروبوت (vs CPU)</button>
-</div>
+    <div class="app-container">
+        <!-- الشريط الجانبي -->
+        <sidebar>
+            <div class="sidebar-top">
+                <div class="logo">
+                    <i class="fa-solid fa-x"></i>
+                    <span>86o</span>
+                </div>
+                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i><span>الرئيسية</span></a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-hashtag"></i><span>استكشاف</span></a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i><span>الإشعارات</span></a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-envelope"></i><span>الرسائل</span></a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-user"></i><span>الملف الشخصي</span></a>
+                <button class="post-btn-sidebar">نشر</button>
+            </div>
+            <div class="user-profile-mini">
+                <div class="user-info">
+                    <div class="avatar">86</div>
+                    <div class="user-names">
+                        <h4>مستخدم 86o</h4>
+                        <span>@86o_user</span>
+                    </div>
+                </div>
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+        </sidebar>
 
-<div id="ui" style="display:none;">
-  <!-- الشريط العلوي -->
-  <div id="top-bar">
-    <div class="top-btn" id="back-btn">‹</div>
-    <div class="players-row">
-      <div class="p-card">
-        <div class="p-avatar">🔴</div>
-        <div class="p-name">sc7q</div>
-        <div class="p-badges"><span>⭐</span><span style="color:#e74c3c">♥</span><span style="color:#2ecc71">●</span></div>
-      </div>
-      <div class="vs">VS</div>
-      <div class="p-card">
-        <div class="p-avatar" id="p2-av">🤖</div>
-        <div class="p-name" id="p2-nm">CPU</div>
-      </div>
-      <div class="turn-pill" id="turn-pill">دورك</div>
+        <!-- المحتوى الرئيسي -->
+        <main>
+            <div class="main-header">
+                <div class="header-title">الرئيسية</div>
+                <div class="header-tabs">
+                    <div class="tab active">لك</div>
+                    <div class="tab">المتابِعون</div>
+                </div>
+            </div>
+
+            <!-- صندوق التغريد -->
+            <div class="tweet-box">
+                <div class="avatar">86</div>
+                <div class="tweet-box-input">
+                    <textarea id="tweetInput" placeholder="ما الذي يحدث؟!"></textarea>
+                    <div class="tweet-box-footer">
+                        <div class="tweet-icons">
+                            <i class="fa-regular fa-image"></i>
+                            <i class="fa-solid fa-gift"></i>
+                            <i class="fa-regular fa-face-smile"></i>
+                            <i class="fa-regular fa-calendar"></i>
+                        </div>
+                        <button class="post-btn" id="postBtn">نشر</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قائمة التغريدات (Timeline) -->
+            <div id="feed">
+                <!-- تغريدة تجريبية 1 -->
+                <div class="tweet">
+                    <div class="avatar" style="background-color: #1d9bf0;">X</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">منصة 86o</span>
+                            <span class="username">@86o_official</span>
+                            <span class="time">· ٣ س</span>
+                        </div>
+                        <div class="tweet-text">
+                            أهلاً بك في منصة 86o الرقمية! استمتع بتجربة تواصل سلسة، سريعة، وبنفس تصميم وتفاصيل التطبيق العالمي المفضل لديك. 🚀🔥
+                        </div>
+                        <div class="tweet-actions">
+                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 24</div>
+                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 152</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">1.2K</span></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تغريدة تجريبية 2 -->
+                <div class="tweet">
+                    <div class="avatar" style="background-color: #00ba7c;">بر</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">برمجة وتصميم</span>
+                            <span class="username">@code_86o</span>
+                            <span class="time">· ٥ س</span>
+                        </div>
+                        <div class="tweet-text">
+                            تم تصميم واجهة 86o باستخدام أحدث معايير الـ HTML5 و CSS لتوفير الوضع المظلم (Dark Mode) والأداء السريع. جرب كتابة تغريدتك الخاصة الآن!
+                        </div>
+                        <div class="tweet-actions">
+                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 8</div>
+                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 45</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">340</span></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- الشريط الجانبي الأيمن -->
+        <div class="widgets">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="بحث">
+            </div>
+
+            <div class="widget-card">
+                <h3>ما يُعقد الآن</h3>
+                <div class="trending-item">
+                    <span>تقنية · ترند</span>
+                    <p>#86o_تطبيق_المستقبل</p>
+                    <span>٢٥٫٤ ألف منشور</span>
+                </div>
+                <div class="trending-item" style="margin-top: 15px;">
+                    <span>برمجة · رائج</span>
+                    <p>#تصميم_واجهات</p>
+                    <span>١٢ ألف منشور</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="top-btn" id="menu-btn">⋯</div>
-  </div>
 
-  <div id="table-banner">دورك للبدء</div>
+    <script>
+        // تفاعل زر الإعجاب (Like)
+        function toggleLike(element) {
+            element.classList.toggle('liked');
+            const icon = element.querySelector('i');
+            const countSpan = element.querySelector('.likes-count');
+            let count = parseFloat(countSpan.innerText);
 
-  <!-- شريط القوة -->
-  <div id="power-area">
-    <div id="star-btn">⭐</div>
-    <div id="power-bar"><div id="power-fill" style="height:0%"></div></div>
-  </div>
+            if (element.classList.contains('liked')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+                countSpan.innerText = (count + 0.1).toFixed(1) + 'K';
+            } else {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+                countSpan.innerText = (count - 0.1).toFixed(1) + 'K';
+            }
+        }
 
-  <!-- أزرار اليمين -->
-  <div id="right-btns">
-    <div class="r-btn" id="eye-btn">👁</div>
-    <div id="spin-btn"></div>
-    <div class="fine-label">تصويب دقيق</div>
-    <div class="fine-group">
-      <div class="fine-btn" id="aim-up">▲</div>
-      <div class="fine-btn" id="aim-dn">▼</div>
-    </div>
-  </div>
+        // إضافة تغريدة جديدة تفاعلياً
+        const postBtn = document.getElementById('postBtn');
+        const tweetInput = document.getElementById('tweetInput');
+        const feed = document.getElementById('feed');
 
-  <!-- الشات -->
-  <div id="chat-bar">
-    <div class="chat-icon">💬</div>
-    <input id="chat-input" placeholder="قل مرحباً" readonly>
-  </div>
+        postBtn.addEventListener('click', function() {
+            const text = tweetInput.value.trim();
+            if (text === '') return;
 
-  <div id="msg"></div>
-</div>
+            const newTweetHTML = `
+                <div class="tweet">
+                    <div class="avatar">86</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="name">مستخدم 86o</span>
+                            <span class="username">@86o_user</span>
+                            <span class="time">· الآن</span>
+                        </div>
+                        <div class="tweet-text">${escapeHtml(text)}</div>
+                        <div class="tweet-actions">
+                            <div class="action-icon comment"><i class="fa-regular fa-comment"></i> 0</div>
+                            <div class="action-icon retweet"><i class="fa-solid fa-retweet"></i> 0</div>
+                            <div class="action-icon like" onclick="toggleLike(this)"><i class="fa-regular fa-heart"></i> <span class="likes-count">0</span></div>
+                            <div class="action-icon"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
-<script>
-/* ============================================================
-   Plato-Style Exact Portrait Pool
-   Visual match + Direct Cue Touch Control + 2P / CPU
-   ============================================================ */
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
-const powerFill = document.getElementById('power-fill');
-const turnPill = document.getElementById('turn-pill');
-const tableBanner = document.getElementById('table-banner');
-const msgEl = document.getElementById('msg');
-const modeScreen = document.getElementById('mode-screen');
-const ui = document.getElementById('ui');
+            feed.insertAdjacentHTML('afterbegin', newTweetHTML);
+            tweetInput.value = '';
+        });
 
-let W, H, dpr;
-function resize(){
-  dpr = Math.min(devicePixelRatio||1, 2.5);
-  W = innerWidth; H = innerHeight;
-  canvas.width = W*dpr; canvas.height = H*dpr;
-  canvas.style.width = W+'px'; canvas.style.height = H+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-window.addEventListener('resize', resize);
-resize();
-
-/* أبعاد الطاولة – نسب مطابقة للصورة */
-const T = {
-  get top(){ return 95; },
-  get bot(){ return H - 58; },
-  get L(){ return W*0.09; },
-  get R(){ return W*0.91; },
-  get w(){ return this.R - this.L; },
-  get h(){ return this.bot - this.top; },
-  get cx(){ return (this.L+this.R)/2; },
-  get cy(){ return (this.top+this.bot)/2; }
-};
-const bR = () => Math.min(T.w, T.h) * 0.026;
-const pR = () => bR() * 1.85;
-
-/* حالة اللعبة */
-let balls=[], cue=null;
-let aim = -Math.PI/2;
-let power=0, pull=0;
-let state = 'aim';
-let showAim = true;
-let cueAnim = 0;
-let mode = 'cpu';
-let turn = 1;
-let lastT = performance.now();
-let started = false;
-
-const COL = {
-  0:'#f5f1e6',1:'#f1c40f',2:'#2980b9',3:'#c0392b',4:'#8e44ad',
-  5:'#e67e22',6:'#27ae60',7:'#6d1a1a',8:'#1a1a1a',
-  9:'#f1c40f',10:'#2980b9',11:'#c0392b',12:'#8e44ad',
- 13:'#e67e22',14:'#27ae60',15:'#6d1a1a'
-};
-
-function make(n,x,y){return{n,x,y,vx:0,vy:0,r:bR(),pocketed:false,isCue:n===0,stripe:n>=9,eight:n===8};}
-
-function rack(){
-  balls=[];
-  const r=bR(), g=r*2.05;
-  cue = make(0, T.cx, T.bot - T.h*0.18);
-  balls.push(cue);
-  const order=[1,9,2,10,8,11,3,12,4,13,5,14,6,15,7];
-  let i=0, sy=T.top + T.h*0.18;
-  for(let row=0;row<5;row++){
-    for(let col=0;col<=row;col++){
-      balls.push(make(order[i++], T.cx+(col-row/2)*g, sy+row*g*0.9));
-    }
-  }
-  power=pull=0; state='aim';
-  updatePower(); updateTurnUI();
-}
-
-function pockets(){
-  const m=4;
-  return [
-    {x:T.L+m,y:T.top+m},{x:T.R-m,y:T.top+m},
-    {x:T.L+m,y:T.bot-m},{x:T.R-m,y:T.bot-m},
-    {x:T.cx,y:T.top+2},{x:T.cx,y:T.bot-2}
-  ];
-}
-
-/* ========== الرسم المطابق للصورة ========== */
-function drawBG(){
-  // خلفية داكنة منقطة بنقوش
-  ctx.fillStyle = '#1a1525';
-  ctx.fillRect(0,0,W,H);
-  ctx.fillStyle = 'rgba(200,180,140,0.04)';
-  for(let i=0;i<140;i++){
-    const x=(i*73)%W, y=(i*41)%H;
-    ctx.beginPath(); ctx.arc(x,y,1.3,0,7); ctx.fill();
-  }
-  // زهور خفيفة
-  ctx.strokeStyle = 'rgba(180,160,120,0.03)';
-  ctx.lineWidth=1;
-  for(let i=0;i<12;i++){
-    const x=(i*97)%W, y=(i*67)%H;
-    ctx.beginPath(); ctx.arc(x,y,18+i%5,0,7); ctx.stroke();
-  }
-}
-
-function drawTable(){
-  const wood=16;
-  // ظل
-  ctx.fillStyle='rgba(0,0,0,0.45)';
-  roundRect(T.L-wood+4, T.top-wood+6, T.w+wood*2, T.h+wood*2, 14);
-  ctx.fill();
-
-  // الإطار الخشبي
-  const wg=ctx.createLinearGradient(T.L,T.top,T.R,T.bot);
-  wg.addColorStop(0,'#6b3f22'); wg.addColorStop(0.4,'#4a2c16');
-  wg.addColorStop(0.7,'#3d2412'); wg.addColorStop(1,'#5c3a1e');
-  ctx.fillStyle=wg;
-  roundRect(T.L-wood, T.top-wood, T.w+wood*2, T.h+wood*2, 12);
-  ctx.fill();
-
-  // حواف فضية (مطابقة للصورة)
-  ctx.fillStyle='#c0c5ce';
-  // زوايا
-  [[T.L-2,T.top-2],[T.R+2,T.top-2],[T.L-2,T.bot+2],[T.R+2,T.bot+2]].forEach(([x,y])=>{
-    ctx.beginPath(); ctx.arc(x,y,11,0,7); ctx.fill();
-  });
-  // منتصف الجوانب
-  ctx.fillRect(T.cx-14, T.top-wood-1, 28, 8);
-  ctx.fillRect(T.cx-14, T.bot+wood-7, 28, 8);
-
-  // الجوّخ الأخضر النقي
-  const felt=ctx.createRadialGradient(T.cx,T.cy,30,T.cx,T.cy,Math.max(T.w,T.h)*0.7);
-  felt.addColorStop(0,'#0f8a4a'); felt.addColorStop(1,'#0a6b38');
-  ctx.fillStyle=felt;
-  ctx.fillRect(T.L, T.top, T.w, T.h);
-
-  // خط المنتصف الخفيف
-  ctx.strokeStyle='rgba(255,255,255,0.06)';
-  ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(T.L+8,T.cy); ctx.lineTo(T.R-8,T.cy); ctx.stroke();
-
-  // الجيوب السوداء الدائرية
-  pockets().forEach(p=>{
-    ctx.fillStyle='#111';
-    ctx.beginPath(); ctx.arc(p.x,p.y,pR()+1.5,0,7); ctx.fill();
-    ctx.fillStyle='#000';
-    ctx.beginPath(); ctx.arc(p.x,p.y,pR()*0.7,0,7); ctx.fill();
-  });
-}
-
-function roundRect(x,y,w,h,r){
-  ctx.beginPath();
-  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
-}
-
-function drawBall(b){
-  if(b.pocketed) return;
-  const r=b.r;
-  // ظل
-  ctx.fillStyle='rgba(0,0,0,0.3)';
-  ctx.beginPath(); ctx.ellipse(b.x+1.5,b.y+2.5,r*0.9,r*0.48,0,0,7); ctx.fill();
-  // جسم لامع
-  const g=ctx.createRadialGradient(b.x-r*0.35,b.y-r*0.35,r*0.08,b.x,b.y,r);
-  const c=COL[b.n];
-  if(b.stripe){
-    g.addColorStop(0,'#fff'); g.addColorStop(0.45,'#f8f8f8');
-    g.addColorStop(0.52,c); g.addColorStop(1,shade(c,-30));
-  }else{
-    g.addColorStop(0,shade(c,50)); g.addColorStop(0.5,c); g.addColorStop(1,shade(c,-40));
-  }
-  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(b.x,b.y,r,0,7); ctx.fill();
-  // رقم
-  if(b.n>0){
-    ctx.fillStyle=b.stripe?c:'#fff';
-    ctx.beginPath(); ctx.arc(b.x,b.y,r*0.45,0,7); ctx.fill();
-    ctx.fillStyle=b.stripe?'#fff':'#111';
-    ctx.font=`bold ${Math.round(r*0.8)}px Arial`;
-    ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText(b.n,b.x,b.y+0.5);
-  }
-  // لمعان
-  ctx.fillStyle='rgba(255,255,255,0.38)';
-  ctx.beginPath(); ctx.ellipse(b.x-r*0.3,b.y-r*0.36,r*0.25,r*0.15,-0.5,0,7); ctx.fill();
-}
-function shade(h,p){
-  const n=parseInt(h.slice(1),16);
-  let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;
-  return `rgb(${Math.max(0,Math.min(255,r))},${Math.max(0,Math.min(255,g))},${Math.max(0,Math.min(255,b))})`;
-}
-
-function drawCue(){
-  if(state==='sim'||!cue||cue.pocketed) return;
-  const r=cue.r, a=aim;
-  const back=(state==='pulling'||state==='aim')?pull:0;
-  const fwd=state==='shooting'?(1-cueAnim)*18:0;
-  const tipD=r+2+back+fwd;
-  const tipX=cue.x-Math.cos(a)*tipD;
-  const tipY=cue.y-Math.sin(a)*tipD;
-  const len=Math.min(W,H)*0.48;
-  const bx=tipX-Math.cos(a)*len;
-  const by=tipY-Math.sin(a)*len;
-
-  ctx.save(); ctx.lineCap='round';
-  // ظل
-  ctx.strokeStyle='rgba(0,0,0,0.25)'; ctx.lineWidth=7;
-  ctx.beginPath(); ctx.moveTo(bx+2,by+3); ctx.lineTo(tipX+2,tipY+3); ctx.stroke();
-  // العصا
-  const cg=ctx.createLinearGradient(bx,by,tipX,tipY);
-  cg.addColorStop(0,'#2a1810'); cg.addColorStop(0.15,'#5c3a1e');
-  cg.addColorStop(0.7,'#d4b483'); cg.addColorStop(0.92,'#e8d5b0'); cg.addColorStop(1,'#2c5aa0');
-  ctx.strokeStyle=cg; ctx.lineWidth=5.2;
-  ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(tipX,tipY); ctx.stroke();
-  // حلقات
-  ctx.strokeStyle='#c9a84c'; ctx.lineWidth=2;
-  [0.12,0.18,0.85].forEach(t=>{
-    const rx=bx+(tipX-bx)*t, ry=by+(tipY-by)*t;
-    ctx.beginPath(); ctx.arc(rx,ry,3.5,0,7); ctx.stroke();
-  });
-  // رأس
-  ctx.fillStyle='#2a5a9e'; ctx.beginPath(); ctx.arc(tipX,tipY,3.5,0,7); ctx.fill();
-  ctx.restore();
-
-  // خط التوجيه الأبيض المتقطع
-  if(showAim && (state==='aim'||state==='pulling')){
-    const L=Math.max(T.w,T.h)*1.4;
-    ctx.strokeStyle='rgba(255,255,255,0.92)';
-    ctx.lineWidth=1.5; ctx.setLineDash([6,5]);
-    ctx.beginPath();
-    ctx.moveTo(cue.x+Math.cos(a)*(r+3), cue.y+Math.sin(a)*(r+3));
-    ctx.lineTo(cue.x+Math.cos(a)*L, cue.y+Math.sin(a)*L);
-    ctx.stroke(); ctx.setLineDash([]);
-  }
-}
-
-/* ========== الفيزياء ========== */
-function physics(dt){
-  const act=balls.filter(b=>!b.pocketed);
-  const fric=Math.pow(0.986,dt*60), wR=0.76, bR=0.93;
-  act.forEach(b=>{b.x+=b.vx*dt; b.y+=b.vy*dt; b.vx*=fric; b.vy*=fric;});
-  for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++){
-    const a=act[i],b=act[j];
-    const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),min=a.r+b.r;
-    if(d<min&&d>0.001){
-      const nx=dx/d,ny=dy/d,ov=min-d;
-      a.x-=nx*ov*0.5; a.y-=ny*ov*0.5; b.x+=nx*ov*0.5; b.y+=ny*ov*0.5;
-      const imp=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
-      if(imp>0){const j=imp*bR; a.vx-=j*nx;a.vy-=j*ny; b.vx+=j*nx;b.vy+=j*ny;}
-    }
-  }
-  const pad=2, pks=pockets();
-  act.forEach(b=>{
-    for(const p of pks) if(Math.hypot(b.x-p.x,b.y-p.y)<pR()-b.r*0.2){pocket(b);return;}
-    if(b.x<T.L+b.r+pad){b.x=T.L+b.r+pad;b.vx*=-wR;}
-    else if(b.x>T.R-b.r-pad){b.x=T.R-b.r-pad;b.vx*=-wR;}
-    if(b.y<T.top+b.r+pad){b.y=T.top+b.r+pad;b.vy*=-wR;}
-    else if(b.y>T.bot-b.r-pad){b.y=T.bot-b.r-pad;b.vy*=-wR;}
-  });
-  if(!act.some(b=>b.vx*b.vx+b.vy*b.vy>1.1) && state==='sim') endTurn();
-}
-
-function pocket(b){
-  if(b.pocketed) return;
-  b.pocketed=true; b.vx=b.vy=0;
-  if(b.isCue) return;
-  if(b.eight){
-    const left=balls.filter(x=>!x.pocketed&&!x.isCue&&!x.eight).length;
-    showMsg(left===0?(turn===1?'أحسنت! فزت 🎉':'خسرت'):'سقوط الـ 8 مبكراً');
-    setTimeout(()=>{rack();turn=1;updateTurnUI();},2200);
-  }
-}
-
-function endTurn(){
-  state='aim';
-  if(cue.pocketed){
-    cue.pocketed=false; cue.x=T.cx; cue.y=T.bot-T.h*0.18; cue.vx=cue.vy=0;
-    showMsg('خطأ! الكرة البيضاء عادت');
-  }
-  turn = turn===1?2:1;
-  updateTurnUI();
-  if(mode==='cpu' && turn===2) setTimeout(cpuShot,600);
-}
-
-function cpuShot(){
-  if(turn!==2||state!=='aim') return;
-  const tg=balls.filter(b=>!b.pocketed&&!b.isCue);
-  if(!tg.length) return;
-  let best=tg[0], bd=1e9;
-  tg.forEach(b=>{const d=Math.hypot(b.x-cue.x,b.y-cue.y); if(d<bd){bd=d;best=b;}});
-  aim=Math.atan2(best.y-cue.y,best.x-cue.x)+(Math.random()-0.5)*0.15;
-  power=0.4+Math.random()*0.3; pull=power*48; updatePower();
-  setTimeout(()=>{state='shooting';cueAnim=0;},350);
-}
-
-function updateTurnUI(){
-  turnPill.textContent = turn===1?'دورك':(mode==='cpu'?'دور CPU':'دور اللاعب 2');
-  tableBanner.textContent = turn===1?'دورك للبدء':(mode==='cpu'?'دور الروبوت':'دور اللاعب 2');
-  document.getElementById('p2-nm').textContent = mode==='cpu'?'CPU':'Player 2';
-  document.getElementById('p2-av').textContent = mode==='cpu'?'🤖':'👤';
-}
-function updatePower(){powerFill.style.height=(power*100)+'%';}
-let msgT;
-function showMsg(t){msgEl.textContent=t;msgEl.style.display='block';clearTimeout(msgT);msgT=setTimeout(()=>msgEl.style.display='none',1700);}
-
-/* ========== التحكم الحصري بالعصا ========== */
-let dragging=false;
-canvas.addEventListener('pointerdown',e=>{
-  if(state!=='aim'&&state!=='pulling') return;
-  if(mode==='cpu'&&turn===2) return;
-  dragging=true;
-  if(cue&&!cue.pocketed) aim=Math.atan2(e.clientY-cue.y,e.clientX-cue.x);
-});
-canvas.addEventListener('pointermove',e=>{
-  if(!dragging||(state!=='aim'&&state!=='pulling')) return;
-  if(mode==='cpu'&&turn===2) return;
-  if(!cue||cue.pocketed) return;
-  // توجيه مباشر بتحريك العصا
-  aim=Math.atan2(e.clientY-cue.y,e.clientX-cue.x);
-  // سحب للخلف = قوة
-  const dx=e.clientX-cue.x, dy=e.clientY-cue.y;
-  const proj=-(dx*Math.cos(aim)+dy*Math.sin(aim));
-  pull=Math.max(0,Math.min(52,proj-cue.r-3));
-  power=Math.min(1,pull/48);
-  state=power>0.05?'pulling':'aim';
-  updatePower();
-  if(navigator.vibrate&&power>0.1) navigator.vibrate(5);
-});
-canvas.addEventListener('pointerup',()=>{
-  if(!dragging) return;
-  dragging=false;
-  if(state==='pulling'&&power>0.07){
-    state='shooting'; cueAnim=0;
-    if(navigator.vibrate) navigator.vibrate(Math.min(48,10+power*40));
-  }else{state='aim';power=0;pull=0;updatePower();}
-});
-canvas.addEventListener('pointercancel',()=>{dragging=false;});
-
-/* أزرار */
-document.getElementById('eye-btn').onclick=()=>showAim=!showAim;
-document.getElementById('aim-up').onclick=()=>{if(state==='aim'||state==='pulling')aim-=0.035;};
-document.getElementById('aim-dn').onclick=()=>{if(state==='aim'||state==='pulling')aim+=0.035;};
-document.getElementById('back-btn').onclick=()=>{started=false;ui.style.display='none';modeScreen.style.display='flex';};
-document.getElementById('menu-btn').onclick=()=>{if(confirm('إعادة اللعبة؟')){rack();turn=1;updateTurnUI();}};
-document.getElementById('btn-pvp').onclick=()=>{mode='pvp';start();};
-document.getElementById('btn-cpu').onclick=()=>{mode='cpu';start();};
-function start(){
-  modeScreen.style.display='none'; ui.style.display='block';
-  started=true; turn=1; rack();
-  showMsg(mode==='cpu'?'أنت ضد الروبوت':'لعب ثنائي');
-}
-document.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
-
-/* الحلقة */
-function loop(now){
-  requestAnimationFrame(loop);
-  const dt=Math.min((now-lastT)/1000,0.033); lastT=now;
-  if(!started) return;
-  if(state==='shooting'){
-    cueAnim+=dt*9.5;
-    if(cueAnim>=1){
-      const spd=power*960;
-      cue.vx=Math.cos(aim)*spd; cue.vy=Math.sin(aim)*spd;
-      power=0;pull=0;updatePower(); state='sim';
-    }
-  }
-  if(state==='sim') for(let i=0;i<4;i++) physics(dt/4);
-  drawBG(); drawTable(); balls.forEach(drawBall); drawCue();
-}
-requestAnimationFrame(loop);
-</script>
+        // دالة حماية بسيطة للنصوص المدخلة
+        function escapeHtml(text) {
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
 </body>
 </html>
