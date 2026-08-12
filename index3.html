@@ -3,606 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plato - العب وتحدث مع الأصدقاء</title>
+    <title>Stryker Pro - منصة الألعاب الشاملة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- مكتبة Three.js للرسومات ثلاثية الأبعاد -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; user-select: none; }
         :root {
-            --bg-main: #121212;
-            --bg-card: #1e1e1e;
-            --bg-hover: #2c2c2c;
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --accent-green: #22c55e;
-            --text-main: #ffffff;
-            --text-muted: #a1a1aa;
-            --border: #2e2e2e;
+            --bg-main: #0f172a; --bg-card: #1e293b; --bg-hover: #334155;
+            --primary: #6366f1; --accent-green: #10b981; --text-main: #f8fafc; --text-muted: #94a3b8; --border: #334155;
         }
+        body { background-color: var(--bg-main); color: var(--text-main); height: 100vh; display: flex; overflow: hidden; }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            height: 100vh;
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* --- القائمة الجانبية (شبه بلاتو تماماً) --- */
+        /* القائمة الجانبية للمنصة */
         aside {
-            width: 260px;
-            background-color: var(--bg-card);
-            border-left: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 100;
+            width: 280px; background-color: var(--bg-card); border-left: 1px solid var(--border);
+            display: flex; flex-direction: column; justify-content: space-between; z-index: 100;
+            transition: transform 0.3s ease;
         }
-
-        .brand {
-            padding: 20px;
-            font-size: 24px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .brand i {
-            color: var(--primary);
-        }
-
-        .menu-list {
-            list-style: none;
-            padding: 15px 10px;
-            flex: 1;
-            overflow-y: auto;
-        }
-
+        .brand { padding: 20px; font-size: 24px; font-weight: 900; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
+        .brand span { color: var(--primary); }
+        .menu-list { list-style: none; padding: 15px 10px; flex: 1; overflow-y: auto; }
         .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 14px 18px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 15px;
-            border-radius: 12px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: 0.2s;
+            display: flex; align-items: center; gap: 15px; padding: 14px 18px; color: var(--text-muted);
+            text-decoration: none; font-weight: 700; font-size: 15px; border-radius: 12px; margin-bottom: 5px; cursor: pointer; transition: 0.2s;
         }
+        .menu-item:hover, .menu-item.active { background-color: var(--bg-hover); color: var(--text-main); }
+        .menu-item.active { color: var(--primary); }
 
-        .menu-item:hover, .menu-item.active {
-            background-color: var(--bg-hover);
-            color: var(--text-main);
-        }
+        .user-panel { padding: 15px 20px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.2); }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b, #ef4444); display: flex; align-items: center; justify-content: center; font-weight: 900; position: relative; }
+        .online-dot { width: 12px; height: 12px; background-color: var(--accent-green); border: 2px solid var(--bg-card); border-radius: 50%; position: absolute; bottom: 0; right: 0; }
 
-        .menu-item.active {
-            color: var(--primary);
-        }
+        /* المحتوى الرئيسي */
+        main { flex: 1; height: 100vh; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; }
+        .view-section { display: none; flex: 1; flex-direction: column; }
+        .view-section.active { display: flex; }
+        .header-title { font-size: 26px; font-weight: 900; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
 
-        .user-panel {
-            padding: 15px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0,0,0,0.2);
-        }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+        .game-box { background-color: var(--bg-card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .game-box:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .game-banner { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 50px; color: white; }
+        .game-desc { padding: 15px; }
+        .game-desc h4 { font-size: 16px; margin-bottom: 5px; }
+        .game-desc p { font-size: 12px; color: var(--text-muted); }
 
-        .avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f59e0b, #ef4444);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            position: relative;
-            font-size: 18px;
-        }
-
-        .online-dot {
-            width: 12px;
-            height: 12px;
-            background-color: var(--accent-green);
-            border: 2px solid var(--bg-card);
-            border-radius: 50%;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
-
-        /* --- المحتوى الرئيسي --- */
-        main {
-            flex: 1;
-            height: 100vh;
-            overflow-y: auto;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .view-section {
-            display: none;
-            padding: 30px;
-            flex: 1;
-        }
-
-        .view-section.active {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header-title {
-            font-size: 26px;
-            font-weight: 900;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* شبكة الألعاب */
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-            gap: 20px;
-        }
-
-        .game-box {
-            background-color: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .game-box:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .game-banner {
-            height: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: white;
-        }
-
-        .game-desc {
-            padding: 15px;
-        }
-
-        .game-desc h4 {
-            font-size: 16px;
-            margin-bottom: 5px;
-        }
-
-        .game-desc p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* --- شاشة لعبة البلياردو الاحترافية (مطابقة لصورتك تماماً) --- */
+        /* --- غرفة البلياردو ثلاثية الأبعاد بملء الشاشة --- */
         #billiards-room {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #111;
-            display: none;
-            flex-direction: column;
-            z-index: 200;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #090d16; display: none; flex-direction: column; z-index: 1000;
         }
-
         .billiards-topbar {
-            height: 70px;
-            background: rgba(30,30,30,0.9);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 25px;
-            border-bottom: 1px solid var(--border);
+            height: 70px; background: rgba(15, 23, 42, 0.95); display: flex; justify-content: space-between;
+            align-items: center; padding: 0 25px; border-bottom: 1px solid var(--border);
         }
+        .back-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
+        .match-players { display: flex; align-items: center; gap: 20px; font-weight: 700; }
+        .player-badge { background: rgba(255,255,255,0.08); padding: 6px 15px; border-radius: 20px; font-size: 14px; }
+        .player-badge.active-turn { background: var(--primary); }
 
-        .back-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
+        .billiards-board-area { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        #canvas3D { width: 100%; height: 100%; display: block; }
+
+        /* شريط القوة والأزرار الجانبية المطابقة لصورتك */
+        .power-container {
+            position: absolute; left: 30px; top: 50%; transform: translateY(-50%);
+            width: 22px; height: 260px; background: rgba(0,0,0,0.6); border: 2px solid var(--border);
+            border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end;
+            cursor: pointer; box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
-
-        .match-players {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-weight: 700;
+        .power-fill { width: 100%; height: 0%; background: linear-gradient(to top, #10b981, #f59e0b, #ef4444); transition: height 0.05s linear; }
+        
+        .controls-right {
+            position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px;
         }
-
-        .player-badge {
-            background: rgba(255,255,255,0.1);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .ctrl-btn {
+            width: 55px; height: 55px; background: var(--bg-card); border: 2px solid var(--border);
+            color: white; border-radius: 50%; font-size: 18px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
+        .ctrl-btn:hover { background: var(--primary); border-color: var(--primary); }
 
-        .player-badge.active-turn {
-            background: var(--primary);
-        }
-
-        /* ساحة البلياردو الكانفاس */
-        .billiards-board-area {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background: radial-gradient(circle, #224c1e 0%, #0e240c 100%);
-            overflow: hidden;
-        }
-
-        /* أدوات التحكم الجانبية البلياردو (شريط القوة وأزرار التصويب الدقيق) */
-        .billiards-controls-left {
-            position: absolute;
-            left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .power-bar-container {
-            width: 18px;
-            height: 250px;
-            background: #1e1e1e;
-            border-radius: 10px;
-            border: 2px solid #333;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .power-bar-fill {
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(to top, #22c55e, #eab308, #ef4444);
-            transition: height 0.1s;
-        }
-
-        .billiards-controls-right {
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .bill-btn {
-            width: 55px;
-            height: 55px;
-            background: #2a2a2a;
-            border: 2px solid #444;
-            color: white;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-
-        .bill-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-
-        /* شات داخل اللعبة في الأسفل */
         .in-game-chat {
-            height: 60px;
-            background: rgba(20,20,20,0.9);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 15px;
-            border-top: 1px solid var(--border);
+            height: 65px; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; padding: 0 25px; gap: 15px; border-top: 1px solid var(--border);
         }
-
         .in-game-chat input {
-            flex: 1;
-            background: #2a2a2a;
-            border: 1px solid var(--border);
-            padding: 10px 15px;
-            border-radius: 20px;
-            color: white;
-            outline: none;
-        }
-
-        /* التجاوب والتفاصيل الإضافية */
-        @media(max-width: 768px) {
-            aside { width: 70px; }
-            aside .brand span, aside .menu-item span, aside .user-panel .user-details { display: none; }
+            flex: 1; background: var(--bg-card); border: 1px solid var(--border); padding: 10px 15px; border-radius: 20px; color: white; outline: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- القائمة الجانبية (Plato Sidebar) -->
-    <aside>
+    <!-- القائمة الجانبية للمنصة -->
+    <aside id="sidebar">
         <div>
             <div class="brand">
                 <i class="fa-solid fa-gamepad"></i>
-                <span>Plato</span>
+                <span>Stryker</span>
             </div>
             <ul class="menu-list">
-                <li class="menu-item active" onclick="switchView('games', this)">
-                    <i class="fa-solid fa-fire"></i> <span>الألعاب</span>
-                </li>
-                <li class="menu-item" onclick="switchView('chats', this)">
-                    <i class="fa-solid fa-comments"></i> <span>المحادثات</span>
-                </li>
-                <li class="menu-item" onclick="switchView('friends', this)">
-                    <i class="fa-solid fa-user-group"></i> <span>الأصدقاء</span>
-                </li>
-                <li class="menu-item" onclick="switchView('profile', this)">
-                    <i class="fa-solid fa-user"></i> <span>الملف الشخصي</span>
-                </li>
+                <li class="menu-item active" onclick="switchView('games', this)"><i class="fa-solid fa-fire"></i> <span>الألعاب</span></li>
+                <li class="menu-item" onclick="switchView('chats', this)"><i class="fa-solid fa-comments"></i> <span>المحادثات</span></li>
+                <li class="menu-item" onclick="switchView('friends', this)"><i class="fa-solid fa-user-group"></i> <span>الأصدقاء</span></li>
+                <li class="menu-item" onclick="switchView('profile', this)"><i class="fa-solid fa-user"></i> <span>الملف الشخصي</span></li>
             </ul>
         </div>
         <div class="user-panel">
-            <div class="avatar">
-                س
-                <div class="online-dot"></div>
-            </div>
-            <div class="user-details">
+            <div class="avatar">س<div class="online-dot"></div></div>
+            <div>
                 <div style="font-weight: 700; font-size: 14px;">سلطان</div>
                 <div style="font-size: 11px; color: var(--text-muted);">متصل الآن</div>
             </div>
         </div>
     </aside>
 
-    <!-- المحتوى الداخلي -->
+    <!-- المحتوى الرئيسي -->
     <main>
-        <!-- تبويب الألعاب -->
         <div id="games-view" class="view-section active">
-            <div class="header-title">
-                <i class="fa-solid fa-gamepad" style="color: var(--primary);"></i> الألعاب الشهيرة
-            </div>
+            <div class="header-title"><i class="fa-solid fa-gamepad" style="color: var(--primary);"></i> الألعاب الشائعة</div>
             <div class="games-grid">
-                <!-- لعبة البلياردو - عند النقر تفتح غرفة اللعبة الحقيقية -->
-                <div class="game-box" onclick="startBilliards()">
-                    <div class="game-banner" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);">
-                        <i class="fa-solid fa-circle-dot"></i>
-                    </div>
+                <!-- عند الضغط هنا تدخل لعبة البلياردو بملء الشاشة بالكامل -->
+                <div class="game-box" onclick="launchBilliards()">
+                    <div class="game-banner" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);"><i class="fa-solid fa-circle-dot"></i></div>
                     <div class="game-desc">
                         <h4>بلياردو 8 كرات</h4>
-                        <p>1,840 لاعب متصل الآن</p>
+                        <p>1,420 لاعب يلعبون الآن</p>
                     </div>
                 </div>
                 <div class="game-box">
-                    <div class="game-banner" style="background: linear-gradient(135deg, #991b1b, #ef4444);">
-                        <i class="fa-solid fa-clone"></i>
-                    </div>
+                    <div class="game-banner" style="background: linear-gradient(135deg, #991b1b, #ef4444);"><i class="fa-solid fa-clone"></i></div>
                     <div class="game-desc">
                         <h4>أونو (UNO)</h4>
-                        <p>3,120 لاعب متصل الآن</p>
-                    </div>
-                </div>
-                <div class="game-box">
-                    <div class="game-banner" style="background: linear-gradient(135deg, #065f46, #10b981);">
-                        <i class="fa-solid fa-dice"></i>
-                    </div>
-                    <div class="game-desc">
-                        <h4>لودو (Ludo)</h4>
-                        <p>1,450 لاعب متصل الآن</p>
-                    </div>
-                </div>
-                <div class="game-box">
-                    <div class="game-banner" style="background: linear-gradient(135deg, #581c87, #a855f7);">
-                        <i class="fa-solid fa-chess-board"></i>
-                    </div>
-                    <div class="game-desc">
-                        <h4>شطرنج</h4>
-                        <p>890 لاعب متصل الآن</p>
+                        <p>2,150 لاعب يلعبون الآن</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- تبويب المحادثات -->
-        <div id="chats-view" class="view-section">
-            <div class="header-title">المحادثات النشطة</div>
-            <p style="color: var(--text-muted);">لا توجد رسائل جديدة حالياً. ابدأ بالدردشة مع أصدقائك عبر قائمة الأصدقاء.</p>
-        </div>
-
-        <!-- تبويب الأصدقاء -->
-        <div id="friends-view" class="view-section">
-            <div class="header-title">قائمة أصدقائك</div>
-            <p style="color: var(--text-muted);">أضف أصدقاءك عبر معرّفاتهم للعب سوياً مباشرة.</p>
-        </div>
-
-        <!-- تبويب الملف الشخصي -->
-        <div id="profile-view" class="view-section">
-            <div class="header-title">ملفك الشخصي</div>
-            <div style="background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border); max-width: 350px;">
-                <div style="font-size: 20px; font-weight: 900; margin-bottom: 5px;">سلطان</div>
-                <div style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">@sultan_pro</div>
-                <div style="display: flex; gap: 20px; border-top: 1px solid var(--border); pt: 15px; margin-top: 15px; padding-top: 15px;">
-                    <div><b>48</b> مباراة</div>
-                    <div><b>19</b> فوز</div>
-                </div>
-            </div>
-        </div>
+        <div id="chats-view" class="view-section"><div class="header-title">المحادثات الفورية</div><p style="color: var(--text-muted);">لا توجد رسائل حالياً.</p></div>
+        <div id="friends-view" class="view-section"><div class="header-title">قائمة الأصدقاء</div><p style="color: var(--text-muted);">أضف أصدقاءك للعب معهم.</p></div>
+        <div id="profile-view" class="view-section"><div class="header-title">الملف الشخصي</div><p style="color: var(--text-muted);">سلطان (@sultan_pro)</p></div>
     </main>
 
-    <!-- شاشة لعبة البلياردو الكاملة (تفتح عند الضغط على بلياردو) -->
+    <!-- غرفة البلياردو ثلاثية الأبعاد بملء الشاشة -->
     <div id="billiards-room">
-        <!-- شريط علوي -->
         <div class="billiards-topbar">
-            <button class="back-btn" onclick="closeBilliards()"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="back-btn" onclick="exitBilliards()"><i class="fa-solid fa-chevron-right"></i></button>
             <div class="match-players">
                 <div class="player-badge">⭐ sc7q</div>
                 <span style="color: var(--text-muted); font-size: 12px;">VS</span>
-                <div class="player-badge active-turn">دورك</div>
+                <div class="player-badge active-turn">دورك للبدء</div>
             </div>
             <button class="back-btn"><i class="fa-solid fa-ellipsis"></i></button>
         </div>
 
-        <!-- ساحة الطاولة مع شريط القوة والأزرار -->
-        <div class="billiards-board-area">
-            <!-- شريط القوة الجانبي الأيسر -->
-            <div class="billiards-controls-left">
-                <div class="power-bar-container">
-                    <div class="power-bar-fill" id="powerFill"></div>
-                </div>
-                <i class="fa-solid fa-bolt" style="color: #eab308; font-size: 18px;"></i>
+        <div class="billiards-board-area" id="boardArea">
+            <!-- شريط القوة الجانبي -->
+            <div class="power-container" id="powerContainer" mousedown="startPower()" mouseup="releasePower()">
+                <div class="power-fill" id="powerFill"></div>
             </div>
 
-            <!-- الكانفاس (طاولة البلياردو والكرات الحية) -->
-            <canvas id="poolCanvas" width="360" height="620" style="border: 14px solid #4a2e18; border-radius: 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.8);"></canvas>
+            <!-- شاشة الرسم 3D -->
+            <canvas id="canvas3D"></canvas>
 
-            <!-- أزرار التصويب الدقيق الجانبية اليمنى -->
-            <div class="billiards-controls-right">
-                <button class="bill-btn" onclick="adjustAim(-5)"><i class="fa-solid fa-chevron-up"></i></button>
-                <button class="bill-btn" onclick="adjustAim(5)"><i class="fa-solid fa-chevron-down"></i></button>
-                <button class="bill-btn" title="تصويب دقيق" style="background: var(--primary); border-color: var(--primary);"><i class="fa-solid fa-bullseye"></i></button>
+            <!-- أزرار التصويب الجانبية اليمنى -->
+            <div class="controls-right">
+                <button class="ctrl-btn" onclick="adjustAim(-0.1)"><i class="fa-solid fa-chevron-up"></i></button>
+                <button class="ctrl-btn" onclick="adjustAim(0.1)"><i class="fa-solid fa-chevron-down"></i></button>
+                <button class="ctrl-btn" style="background: var(--primary); border-color: var(--primary);"><i class="fa-solid fa-bullseye"></i></button>
             </div>
         </div>
 
-        <!-- شات اللعبة السفلي -->
         <div class="in-game-chat">
             <i class="fa-regular fa-comment-dots" style="color: var(--text-muted); font-size: 20px;"></i>
-            <input type="text" placeholder="قل مرحباً...">
-            <button style="background: var(--primary); border: none; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+            <input type="text5" placeholder="قل مرحباً للمنافس...">
+            <button style="background: var(--primary); border: none; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer;">إرسال</button>
         </div>
     </div>
 
     <script>
-        // التنقل بين واجهات المنصة الرئيسية
+        // التنقل بين الأقسام الرئيسية
         function switchView(viewId, element) {
             document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            
             document.getElementById(viewId + '-view').classList.add('active');
             element.classList.add('active');
         }
 
-        // تشغيل غرفة البلياردو
-        function startBilliards() {
+        // إدارة فتح وإغلاق بلياردو بملء الشاشة
+        let scene, camera, renderer, cueStick;
+        let balls = [];
+        let cueBall;
+        let power = 0;
+        let isCharging = false;
+        let aimAngle = 0;
+
+        function launchBilliards() {
             document.getElementById('billiards-room').style.display = 'flex';
-            initPoolGame();
+            init3DPhysicsPool();
         }
 
-        // إغلاق البلياردو والعودة للقائمة
-        function closeBilliards() {
+        function exitBilliards() {
             document.getElementById('billiards-room').style.display = 'none';
         }
 
-        // محرك لعبة البلياردو الديناميكي السلس
-        let canvas, ctx;
-        let cueAngle = 0;
-        let powerVal = 40;
+        function init3DPhysicsPool() {
+            const container = document.getElementById('boardArea');
+            if (renderer) return; // منع التكرار
 
-        function initPoolGame() {
-            canvas = document.getElementById('poolCanvas');
-            ctx = canvas.getContext('2d');
-            drawPoolTable();
-        }
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('canvas3D'), antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
 
-        function drawPoolTable() {
-            // مسح الشاشة
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // إضاءة الطاولة
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1.2, 50);
+            pointLight.position.set(0, 15, 0);
+            scene.add(pointLight);
 
-            // جوخ الطاولة الأخضر
-            ctx.fillStyle = '#1b4d2e';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // طاولة البلياردو (الجوخ الأخضر)
+            const tableGeo = new THREE.BoxGeometry(7, 0.4, 13);
+            const tableMat = new THREE.MeshStandardMaterial({ color: 0x155223, roughness: 0.8 });
+            const table = new THREE.Mesh(tableGeo, tableMat);
+            scene.add(table);
 
-            // فتحات الجيوب (الأركان وفي المنتصف)
-            ctx.fillStyle = '#050a06';
-            const holes = [
-                {x: 15, y: 15}, {x: canvas.width/2, y: 10}, {x: canvas.width-15, y: 15},
-                {x: 15, y: canvas.height-15}, {x: canvas.width/2, y: canvas.height-10}, {x: canvas.width-15, y: canvas.height-15}
-            ];
-            holes.forEach(h => {
-                ctx.beginPath();
-                ctx.arc(h.x, h.y, 16, 0, Math.PI * 2);
-                ctx.fill();
-            });
+            // إطار خشبي للطاولة
+            const frameGeo = new THREE.BoxGeometry(7.6, 0.6, 13.6);
+            const frameMat = new THREE.MeshStandardMaterial({ color: 0x3e2723 });
+            const frame = new THREE.Mesh(frameGeo, frameMat);
+            frame.position.y = -0.1;
+            scene.add(frame);
 
-            // خط التهديف
-            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(30, canvas.height - 150);
-            ctx.lineTo(canvas.width - 30, canvas.height - 150);
-            ctx.stroke();
+            // تكوين الكرات الثلاثية الأبعاد (البيضاء وباقي الكرات)
+            balls = [];
+            cueBall = createBall(0, 0.2, 4.5, 0xffffff, true);
 
-            // رسم كرات مثلث البداية العلوي
-            let startX = canvas.width / 2;
-            let startY = 160;
-            let ballColors = ['#eab308', '#ef4444', '#3b82f6', '#9333ea', '#10b981', '#f97316', '#64748b'];
+            // تشكيل مثلث الكرات العلوي
+            let colors = [0xf59e0b, 0xef4444, 0x3b82f6, 0x9333ea, 0x10b981, 0xf97316, 0x64748b, 0xd97706, 0x2563eb];
             let colorIdx = 0;
-
-            for (let row = 0; row < 4; row++) {
-                for (let i = 0; i <= row; i++) {
-                    let bx = startX + (i - row / 2) * 26;
-                    let by = startY + (row * 22);
-                    drawBall(bx, by, ballColors[colorIdx % ballColors.length]);
+            let startZ = -3;
+            for (let r = 0; r < 4; r++) {
+                for (let i = 0; i <= r; i++) {
+                    let bx = (i - r / 2) * 0.65;
+                    let bz = startZ + (r * 0.55);
+                    createBall(bx, 0.2, bz, colors[colorIdx % colors.length], false);
                     colorIdx++;
                 }
             }
 
-            // الكرة البيضاء للاعب في الأسفل
-            drawBall(canvas.width / 2, canvas.height - 150, '#ffffff', true);
+            // عصا البلياردو 3D
+            const cueGeo = new THREE.CylinderGeometry(0.04, 0.08, 6, 16);
+            const cueMat = new THREE.MeshStandardMaterial({ color: 0xd97706 });
+            cueStick = new THREE.Mesh(cueGeo, cueMat);
+            cueStick.rotation.x = Math.PI / 2;
+            scene.add(cueStick);
+
+            camera.position.set(0, 11, 8.5);
+            camera.lookAt(0, 0, 0);
+
+            // تحريك العصا بالماوس لتغيير الزاوية
+            container.addEventListener('mousemove', (e) => {
+                let rect = container.getBoundingClientRect();
+                let x = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+                aimAngle = x * 1.2;
+            });
+
+            animatePool();
         }
 
-        function drawBall(x, y, color, isWhite = false) {
-            ctx.beginPath();
-            ctx.arc(x, y, 11, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-            ctx.strokeStyle = isWhite ? '#cbd5e1' : '#000';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            // لمعة الكرة لإعطاء مظهر ثلاثي الأبعاد احترافي
-            ctx.beginPath();
-            ctx.arc(x - 3, y - 3, 3, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.4)';
-            ctx.fill();
+        function createBall(x, y, z, color, isWhite) {
+            const ballGeo = new THREE.SphereGeometry(0.3, 32, 32);
+            const ballMat = new THREE.MeshStandardMaterial({ color: color, roughness: 0.3, metalness: 0.1 });
+            const ball = new THREE.Mesh(ballGeo, ballMat);
+            ball.position.set(x, y, z);
+            ball.userData = { velocity: new THREE.Vector3(0, 0, 0), isWhite: isWhite };
+            scene.add(ball);
+            balls.push(ball);
+            return ball;
         }
 
         function adjustAim(val) {
-            powerVal = Math.min(100, Math.max(10, powerVal + val));
-            document.getElementById('powerFill').style.height = powerVal + '%';
+            aimAngle += val;
+        }
+
+        // تفاعلات شريط القوة
+        const powerContainer = document.getElementById('powerContainer');
+        powerContainer.addEventListener('mousedown', () => { isCharging = true; });
+        window.addEventListener('mouseup', () => {
+            if (isCharging) {
+                isCharging = false;
+                shootCueBall();
+            }
+        });
+
+        function shootCueBall() {
+            // دفع الكرة البيضاء للأمام حسب القوة والزاوية الحالية
+            cueBall.userData.velocity.set(
+                Math.sin(aimAngle) * (power / 10),
+                0,
+                -Math.cos(aimAngle) * (power / 10)
+            );
+            power = 0;
+            document.getElementById('powerFill').style.height = '0%';
+        }
+
+        // حلقة اللعبة والفيزياء (60 إطار بالثانية)
+        function animatePool() {
+            requestAnimationFrame(animatePool);
+
+            // شحن القوة بالضغط المستمر
+            if (isCharging) {
+                power = Math.min(100, power + 2);
+                document.getElementById('powerFill').style.height = power + '%';
+            }
+
+            // تحديث موقع عصا البلياردو خلف الكرة البيضاء دائماً
+            if (cueStick && cueBall) {
+                cueStick.position.set(
+                    cueBall.position.x - Math.sin(aimAngle) * (2.5 + power * 0.01),
+                    cueBall.position.y,
+                    cueBall.position.z + Math.cos(aimAngle) * (2.5 + power * 0.01)
+                );
+                cueStick.rotation.y = aimAngle;
+            }
+
+            // تطبيق الفيزياء البسيطة لحركة الكرات والتصادم والارتداد
+            balls.forEach(ball => {
+                let v = ball.userData.velocity;
+                if (v.lengthSq() > 0.0001) {
+                    ball.position.add(v);
+                    v.multiplyScalar(0.98); // الاحتكاك ببطء لإيقاف الكرات تدريجياً
+
+                    // الارتداد من حواف الطاولة
+                    if (ball.position.x > 3.2 || ball.position.x < -3.2) { v.x *= -1; }
+                    if (ball.position.z > 6.0 || ball.position.z < -6.0) { v.z *= -1; }
+                }
+            });
+
+            renderer.render(scene, camera);
         }
     </script>
 </body>
