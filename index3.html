@@ -4,697 +4,561 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<title>بلياردو احترافي | Plato Style</title>
+<title>بلياردو | Plato Style Exact</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;-webkit-user-select:none;}
-html,body{width:100%;height:100%;overflow:hidden;background:#0a0908;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
-#c{position:fixed;inset:0;width:100%;height:100%;display:block;}
-#ui{position:fixed;inset:0;pointer-events:none;z-index:20;}
-#ui>*{pointer-events:auto;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:none;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;background:#1a1525;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:1;}
+#ui{position:fixed;inset:0;pointer-events:none;z-index:10;}
+#ui > *{pointer-events:auto;}
 
-/* شاشة اختيار الوضع */
+/* ===== شاشة اختيار الوضع ===== */
 #mode-screen{
-  position:fixed;inset:0;background:radial-gradient(ellipse at center,#1a1510 0%,#0a0908 70%);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;
-  padding:20px;
+  position:fixed;inset:0;z-index:100;
+  background:radial-gradient(ellipse at 50% 30%,#2a2035 0%,#12101a 70%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
-#mode-screen h1{
-  color:#d4af37;font-size:28px;font-weight:800;margin-bottom:8px;text-shadow:0 0 20px rgba(212,175,55,0.4);
-}
-#mode-screen p{color:#a09070;font-size:14px;margin-bottom:36px;text-align:center;}
+#mode-screen h1{color:#e8d5a3;font-size:26px;font-weight:800;margin-bottom:6px;text-shadow:0 0 18px rgba(212,175,55,0.35);}
+#mode-screen .sub{color:#9a8b7a;font-size:13px;margin-bottom:32px;}
 .mode-btn{
-  width:min(280px,85vw);padding:18px 24px;margin:10px 0;border-radius:16px;
-  background:linear-gradient(145deg,#2e241a,#1a140f);border:2px solid #d4af37;
-  color:#f5e6c8;font-size:17px;font-weight:700;cursor:pointer;
-  box-shadow:0 6px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.08);
-  transition:transform 0.15s,box-shadow 0.15s;display:flex;align-items:center;justify-content:center;gap:12px;
+  width:min(270px,86vw);padding:16px 20px;margin:9px 0;border-radius:14px;
+  background:linear-gradient(145deg,#2e2438,#1a1525);border:1.5px solid #c9a84c;
+  color:#f5e6c8;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:0 5px 18px rgba(0,0,0,0.45);
 }
 .mode-btn:active{transform:scale(0.97);}
-.mode-btn span{font-size:24px;}
 
-/* الشريط العلوي */
+/* ===== الشريط العلوي ===== */
 #top-bar{
-  position:absolute;top:0;left:0;right:0;height:64px;
-  background:linear-gradient(180deg,rgba(16,12,8,0.97),rgba(10,8,6,0.88));
-  border-bottom:1px solid #3a2e1f;display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px;backdrop-filter:blur(10px);
+  position:absolute;top:0;left:0;right:0;height:62px;
+  background:linear-gradient(180deg,rgba(20,16,28,0.97),rgba(14,11,20,0.9));
+  display:flex;align-items:center;justify-content:space-between;padding:0 10px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
 }
-.player{display:flex;align-items:center;gap:8px;min-width:105px;}
-.player.right{flex-direction:row-reverse;}
-.avatar{
-  width:38px;height:38px;border-radius:50%;border:2px solid #d4af37;
-  background:#2a2118;display:flex;align-items:center;justify-content:center;font-size:17px;
+.top-btn{
+  width:36px;height:36px;border-radius:50%;background:rgba(40,35,55,0.9);
+  border:1px solid rgba(255,255,255,0.12);color:#ddd;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
 }
-.pname{color:#f5e6c8;font-size:13px;font-weight:700;}
-.psub{color:#a09070;font-size:10px;margin-top:1px;}
-.turn-box{
-  background:rgba(212,175,55,0.18);border:1px solid #d4af37;
-  color:#d4af37;font-size:12px;font-weight:800;padding:6px 14px;border-radius:20px;
+.players-row{display:flex;align-items:center;gap:8px;}
+.p-card{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.p-avatar{
+  width:36px;height:36px;border-radius:50%;border:2px solid #c9a84c;
+  background:#2a2438;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.p-name{font-size:11px;color:#eee;font-weight:600;}
+.p-badges{display:flex;gap:3px;align-items:center;font-size:10px;}
+.vs{color:#aaa;font-size:13px;font-weight:700;margin:0 4px;}
+.turn-pill{
+  background:#1a73e8;color:#fff;font-size:12px;font-weight:700;
+  padding:5px 12px;border-radius:14px;box-shadow:0 2px 8px rgba(26,115,232,0.4);
 }
 
-/* شريط القوة */
-#power-wrap{
-  position:absolute;left:7px;top:50%;transform:translateY(-50%);
-  width:34px;height:min(40vh,300px);
-  background:rgba(18,14,10,0.92);border-radius:17px;border:2px solid #d4af37;
-  box-shadow:0 0 16px rgba(212,175,55,0.22);overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:4px;
+/* ===== بانر فوق الطاولة ===== */
+#table-banner{
+  position:absolute;top:72px;left:50%;transform:translateX(-50%);
+  background:rgba(20,18,25,0.92);color:#eee;font-size:13px;font-weight:600;
+  padding:6px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);
+  z-index:15;pointer-events:none;
+}
+
+/* ===== شريط القوة (يسار) ===== */
+#power-area{
+  position:absolute;left:6px;top:50%;transform:translateY(-40%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+#star-btn{
+  width:34px;height:34px;border-radius:50%;background:rgba(30,25,40,0.95);
+  border:1.5px solid #c9a84c;color:#f1c40f;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+#power-bar{
+  width:14px;height:min(38vh,280px);background:rgba(30,25,40,0.9);
+  border-radius:8px;border:1.5px solid rgba(255,255,255,0.15);
+  overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
 }
 #power-fill{
-  width:100%;border-radius:12px;transition:height 0.03s linear;
-  background:linear-gradient(to top,#1a8a3c,#d4af37 55%,#c0392b);
-  box-shadow:0 0 10px rgba(212,175,55,0.4);
+  width:100%;background:linear-gradient(to top,#e67e22,#e74c3c 70%,#c0392b);
+  border-radius:6px;transition:height 0.04s linear;
 }
-#power-txt{position:absolute;top:6px;left:0;right:0;text-align:center;font-size:9px;color:#d4af37;font-weight:800;}
 
-/* أزرار صغيرة فقط */
-#eye-btn,#menu-btn{
-  position:absolute;width:36px;height:36px;border-radius:50%;
-  background:rgba(30,22,15,0.92);border:1.5px solid #d4af37aa;
-  color:#d4af37;font-size:16px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 10px rgba(0,0,0,0.4);
+/* ===== أزرار اليمين ===== */
+#right-btns{
+  position:absolute;right:8px;top:50%;transform:translateY(-30%);
+  display:flex;flex-direction:column;align-items:center;gap:14px;
 }
-#eye-btn{right:10px;top:50%;transform:translateY(-50%);}
-#menu-btn{top:72px;right:10px;border-radius:10px;}
+.r-btn{
+  width:40px;height:40px;border-radius:50%;background:rgba(30,25,40,0.95);
+  border:1.5px solid rgba(255,255,255,0.18);color:#eee;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+#spin-btn{
+  width:44px;height:44px;border-radius:50%;background:#f5f0e6;
+  border:2px solid #ccc;position:relative;
+}
+#spin-btn::after{
+  content:'';position:absolute;width:10px;height:10px;border-radius:50%;
+  background:#e74c3c;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.fine-label{font-size:10px;color:#aaa;margin-bottom:-6px;}
+.fine-group{display:flex;flex-direction:column;gap:6px;}
+.fine-btn{
+  width:38px;height:32px;border-radius:8px;background:rgba(25,22,35,0.95);
+  border:1px solid rgba(255,255,255,0.15);color:#ddd;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+}
 
+/* ===== الشات السفلي ===== */
+#chat-bar{
+  position:absolute;bottom:0;left:0;right:0;height:52px;
+  background:linear-gradient(180deg,rgba(18,14,28,0.0),rgba(12,10,18,0.97));
+  display:flex;align-items:center;padding:0 12px 8px;gap:10px;
+}
+#chat-input{
+  flex:1;height:36px;border-radius:20px;background:rgba(40,35,55,0.9);
+  border:1px solid rgba(255,255,255,0.1);color:#ccc;font-size:13px;
+  padding:0 14px;outline:none;pointer-events:auto;
+}
+#chat-input::placeholder{color:#777;}
+.chat-icon{width:34px;height:34px;border-radius:50%;background:#25d366;
+  display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;}
+
+/* ===== رسالة ===== */
 #msg{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  background:rgba(12,10,8,0.94);border:2px solid #d4af37;
-  color:#f5e6c8;padding:14px 24px;border-radius:14px;font-size:15px;
-  font-weight:700;text-align:center;display:none;z-index:40;
-  box-shadow:0 0 28px rgba(212,175,55,0.25);max-width:82%;
+  position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(15,12,22,0.95);border:1.5px solid #c9a84c;
+  color:#f5e6c8;padding:12px 22px;border-radius:12px;font-size:14px;
+  font-weight:700;display:none;z-index:30;text-align:center;max-width:80%;
 }
 </style>
 </head>
 <body>
 <canvas id="c"></canvas>
 
-<!-- شاشة اختيار الوضع -->
+<!-- شاشة الأوضاع -->
 <div id="mode-screen">
-  <h1>🎱 بلياردو احترافي</h1>
-  <p>اختر طريقة اللعب</p>
-  <button class="mode-btn" id="btn-pvp"><span>👥</span> اللعب مع صديق (2 Players)</button>
-  <button class="mode-btn" id="btn-cpu"><span>🤖</span> اللعب ضد الروبوت (vs CPU)</button>
+  <h1>🎱 بلياردو</h1>
+  <div class="sub">مطابق لتصميم Plato</div>
+  <button class="mode-btn" id="btn-pvp">👥 اللعب مع صديق (2 Players)</button>
+  <button class="mode-btn" id="btn-cpu">🤖 اللعب ضد الروبوت (vs CPU)</button>
 </div>
 
 <div id="ui" style="display:none;">
+  <!-- الشريط العلوي -->
   <div id="top-bar">
-    <div class="player">
-      <div class="avatar">👤</div>
-      <div>
-        <div class="pname" id="p1-name">You</div>
-        <div class="psub" id="p1-type">—</div>
+    <div class="top-btn" id="back-btn">‹</div>
+    <div class="players-row">
+      <div class="p-card">
+        <div class="p-avatar">🔴</div>
+        <div class="p-name">sc7q</div>
+        <div class="p-badges"><span>⭐</span><span style="color:#e74c3c">♥</span><span style="color:#2ecc71">●</span></div>
       </div>
+      <div class="vs">VS</div>
+      <div class="p-card">
+        <div class="p-avatar" id="p2-av">🤖</div>
+        <div class="p-name" id="p2-nm">CPU</div>
+      </div>
+      <div class="turn-pill" id="turn-pill">دورك</div>
     </div>
-    <div class="turn-box" id="turn-txt">Your Turn</div>
-    <div class="player right">
-      <div class="avatar" id="p2-avatar">🎮</div>
-      <div>
-        <div class="pname" id="p2-name">CPU</div>
-        <div class="psub" id="p2-type">—</div>
-      </div>
+    <div class="top-btn" id="menu-btn">⋯</div>
+  </div>
+
+  <div id="table-banner">دورك للبدء</div>
+
+  <!-- شريط القوة -->
+  <div id="power-area">
+    <div id="star-btn">⭐</div>
+    <div id="power-bar"><div id="power-fill" style="height:0%"></div></div>
+  </div>
+
+  <!-- أزرار اليمين -->
+  <div id="right-btns">
+    <div class="r-btn" id="eye-btn">👁</div>
+    <div id="spin-btn"></div>
+    <div class="fine-label">تصويب دقيق</div>
+    <div class="fine-group">
+      <div class="fine-btn" id="aim-up">▲</div>
+      <div class="fine-btn" id="aim-dn">▼</div>
     </div>
   </div>
 
-  <div id="power-wrap">
-    <div id="power-txt">POWER</div>
-    <div id="power-fill" style="height:0%"></div>
+  <!-- الشات -->
+  <div id="chat-bar">
+    <div class="chat-icon">💬</div>
+    <input id="chat-input" placeholder="قل مرحباً" readonly>
   </div>
 
-  <div id="eye-btn" title="Aim Line">👁</div>
-  <div id="menu-btn">☰</div>
   <div id="msg"></div>
 </div>
 
 <script>
-/* ================================================================
-   Professional Portrait Top-Down 8-Ball Pool
-   • 2 Players / vs CPU
-   • Direct touch aiming (no arrows)
-   • High-quality graphics + smooth 60fps physics
-   ================================================================ */
-
+/* ============================================================
+   Plato-Style Exact Portrait Pool
+   Visual match + Direct Cue Touch Control + 2P / CPU
+   ============================================================ */
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 const powerFill = document.getElementById('power-fill');
-const turnTxt = document.getElementById('turn-txt');
+const turnPill = document.getElementById('turn-pill');
+const tableBanner = document.getElementById('table-banner');
 const msgEl = document.getElementById('msg');
 const modeScreen = document.getElementById('mode-screen');
 const ui = document.getElementById('ui');
 
-let W, H, dpr = 1;
-function resize() {
-  dpr = Math.min(devicePixelRatio || 1, 2.5);
+let W, H, dpr;
+function resize(){
+  dpr = Math.min(devicePixelRatio||1, 2.5);
   W = innerWidth; H = innerHeight;
-  canvas.width = W * dpr; canvas.height = H * dpr;
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
 window.addEventListener('resize', resize);
 resize();
 
-/* ---------- أبعاد الطاولة ---------- */
+/* أبعاد الطاولة – نسب مطابقة للصورة */
 const T = {
-  get m()  { return Math.min(W * 0.065, 26); },
-  get top(){ return 70; },
-  get bot(){ return H - 14; },
-  get L()  { return this.m; },
-  get R()  { return W - this.m; },
-  get w()  { return this.R - this.L; },
-  get h()  { return this.bot - this.top; },
-  get cx() { return (this.L + this.R) / 2; },
-  get cy() { return (this.top + this.bot) / 2; }
+  get top(){ return 95; },
+  get bot(){ return H - 58; },
+  get L(){ return W*0.09; },
+  get R(){ return W*0.91; },
+  get w(){ return this.R - this.L; },
+  get h(){ return this.bot - this.top; },
+  get cx(){ return (this.L+this.R)/2; },
+  get cy(){ return (this.top+this.bot)/2; }
 };
+const bR = () => Math.min(T.w, T.h) * 0.026;
+const pR = () => bR() * 1.85;
 
-const ballR = () => Math.min(T.w, T.h) * 0.0275;
-const pocketR = () => ballR() * 1.9;
-
-/* ---------- حالة اللعبة ---------- */
-let balls = [], cue = null;
-let aim = -Math.PI / 2;
-let power = 0, pull = 0;
-let state = 'aim';          // aim | pulling | shooting | sim
+/* حالة اللعبة */
+let balls=[], cue=null;
+let aim = -Math.PI/2;
+let power=0, pull=0;
+let state = 'aim';
 let showAim = true;
 let cueAnim = 0;
-let mode = 'cpu';           // 'pvp' | 'cpu'
-let turn = 1;               // 1 or 2
-let pType = {1: null, 2: null};
-let firstPocket = true;
+let mode = 'cpu';
+let turn = 1;
 let lastT = performance.now();
-let gameStarted = false;
+let started = false;
 
-/* ألوان الكرات الحقيقية */
 const COL = {
-  0:'#f5f1e6', 1:'#f1c40f', 2:'#2980b9', 3:'#c0392b', 4:'#8e44ad',
-  5:'#e67e22', 6:'#27ae60', 7:'#6d1a1a', 8:'#1a1a1a',
+  0:'#f5f1e6',1:'#f1c40f',2:'#2980b9',3:'#c0392b',4:'#8e44ad',
+  5:'#e67e22',6:'#27ae60',7:'#6d1a1a',8:'#1a1a1a',
   9:'#f1c40f',10:'#2980b9',11:'#c0392b',12:'#8e44ad',
  13:'#e67e22',14:'#27ae60',15:'#6d1a1a'
 };
 
-/* ---------- بناء الكرات ---------- */
-function makeBall(n, x, y) {
-  return { n, x, y, vx:0, vy:0, r:ballR(), pocketed:false,
-           isCue:n===0, stripe:n>=9, eight:n===8 };
-}
+function make(n,x,y){return{n,x,y,vx:0,vy:0,r:bR(),pocketed:false,isCue:n===0,stripe:n>=9,eight:n===8};}
 
-function rack() {
-  balls = [];
-  const r = ballR(), g = r * 2.07;
-  cue = makeBall(0, T.cx, T.bot - T.h * 0.20);
+function rack(){
+  balls=[];
+  const r=bR(), g=r*2.05;
+  cue = make(0, T.cx, T.bot - T.h*0.18);
   balls.push(cue);
-
-  const order = [1,9,2,10,8,11,3,12,4,13,5,14,6,15,7];
-  let i = 0;
-  const sy = T.top + T.h * 0.20;
-  for (let row=0; row<5; row++) {
-    for (let col=0; col<=row; col++) {
-      balls.push(makeBall(order[i++],
-        T.cx + (col - row/2) * g,
-        sy + row * g * 0.91));
+  const order=[1,9,2,10,8,11,3,12,4,13,5,14,6,15,7];
+  let i=0, sy=T.top + T.h*0.18;
+  for(let row=0;row<5;row++){
+    for(let col=0;col<=row;col++){
+      balls.push(make(order[i++], T.cx+(col-row/2)*g, sy+row*g*0.9));
     }
   }
-  power = pull = 0;
-  state = 'aim';
-  firstPocket = true;
-  pType = {1:null, 2:null};
-  updatePower();
-  updateUI();
+  power=pull=0; state='aim';
+  updatePower(); updateTurnUI();
 }
 
-/* ---------- الجيوب ---------- */
-function pockets() {
-  const m = 3;
+function pockets(){
+  const m=4;
   return [
-    {x:T.L+m, y:T.top+m}, {x:T.R-m, y:T.top+m},
-    {x:T.L+m, y:T.bot-m}, {x:T.R-m, y:T.bot-m},
-    {x:T.cx,  y:T.top+1}, {x:T.cx,  y:T.bot-1}
+    {x:T.L+m,y:T.top+m},{x:T.R-m,y:T.top+m},
+    {x:T.L+m,y:T.bot-m},{x:T.R-m,y:T.bot-m},
+    {x:T.cx,y:T.top+2},{x:T.cx,y:T.bot-2}
   ];
 }
 
-/* ==================== الرسم الاحترافي ==================== */
-function drawBG() {
-  ctx.fillStyle = '#0a0908';
+/* ========== الرسم المطابق للصورة ========== */
+function drawBG(){
+  // خلفية داكنة منقطة بنقوش
+  ctx.fillStyle = '#1a1525';
   ctx.fillRect(0,0,W,H);
-  // نقاط خفيفة
-  ctx.fillStyle = 'rgba(180,150,90,0.035)';
-  for (let i=0;i<90;i++) {
-    ctx.beginPath();
-    ctx.arc((i*89)%W, (i*47)%H, 1.1, 0, 7);
-    ctx.fill();
+  ctx.fillStyle = 'rgba(200,180,140,0.04)';
+  for(let i=0;i<140;i++){
+    const x=(i*73)%W, y=(i*41)%H;
+    ctx.beginPath(); ctx.arc(x,y,1.3,0,7); ctx.fill();
+  }
+  // زهور خفيفة
+  ctx.strokeStyle = 'rgba(180,160,120,0.03)';
+  ctx.lineWidth=1;
+  for(let i=0;i<12;i++){
+    const x=(i*97)%W, y=(i*67)%H;
+    ctx.beginPath(); ctx.arc(x,y,18+i%5,0,7); ctx.stroke();
   }
 }
 
-function drawTable() {
-  const wood = 15;
-  // ظل خارجي
-  ctx.fillStyle = 'rgba(0,0,0,0.5)';
-  roundRect(T.L-wood+5, T.top-wood+7, T.w+wood*2, T.h+wood*2, 12);
+function drawTable(){
+  const wood=16;
+  // ظل
+  ctx.fillStyle='rgba(0,0,0,0.45)';
+  roundRect(T.L-wood+4, T.top-wood+6, T.w+wood*2, T.h+wood*2, 14);
   ctx.fill();
 
-  // الإطار الخشبي ثلاثي الأبعاد
-  const wg = ctx.createLinearGradient(T.L, T.top, T.R, T.bot);
-  wg.addColorStop(0,'#6b4423');
-  wg.addColorStop(0.3,'#4a2f15');
-  wg.addColorStop(0.7,'#3d2612');
-  wg.addColorStop(1,'#5c3a1e');
-  ctx.fillStyle = wg;
-  roundRect(T.L-wood, T.top-wood, T.w+wood*2, T.h+wood*2, 10);
+  // الإطار الخشبي
+  const wg=ctx.createLinearGradient(T.L,T.top,T.R,T.bot);
+  wg.addColorStop(0,'#6b3f22'); wg.addColorStop(0.4,'#4a2c16');
+  wg.addColorStop(0.7,'#3d2412'); wg.addColorStop(1,'#5c3a1e');
+  ctx.fillStyle=wg;
+  roundRect(T.L-wood, T.top-wood, T.w+wood*2, T.h+wood*2, 12);
   ctx.fill();
 
-  // حافة ذهبية رفيعة
-  ctx.strokeStyle = '#a07830';
-  ctx.lineWidth = 2.5;
-  roundRect(T.L-4, T.top-4, T.w+8, T.h+8, 5);
-  ctx.stroke();
+  // حواف فضية (مطابقة للصورة)
+  ctx.fillStyle='#c0c5ce';
+  // زوايا
+  [[T.L-2,T.top-2],[T.R+2,T.top-2],[T.L-2,T.bot+2],[T.R+2,T.bot+2]].forEach(([x,y])=>{
+    ctx.beginPath(); ctx.arc(x,y,11,0,7); ctx.fill();
+  });
+  // منتصف الجوانب
+  ctx.fillRect(T.cx-14, T.top-wood-1, 28, 8);
+  ctx.fillRect(T.cx-14, T.bot+wood-7, 28, 8);
 
-  // ظل داخلي للإطار
-  ctx.strokeStyle = 'rgba(0,0,0,0.35)';
-  ctx.lineWidth = 4;
-  roundRect(T.L-1, T.top-1, T.w+2, T.h+2, 3);
-  ctx.stroke();
-
-  // الجوّخ الأخضر المصقول
-  const felt = ctx.createRadialGradient(T.cx, T.cy, 20, T.cx, T.cy, Math.max(T.w,T.h)*0.75);
-  felt.addColorStop(0, '#128a4e');
-  felt.addColorStop(0.6, '#0c6b3c');
-  felt.addColorStop(1, '#085530');
-  ctx.fillStyle = felt;
+  // الجوّخ الأخضر النقي
+  const felt=ctx.createRadialGradient(T.cx,T.cy,30,T.cx,T.cy,Math.max(T.w,T.h)*0.7);
+  felt.addColorStop(0,'#0f8a4a'); felt.addColorStop(1,'#0a6b38');
+  ctx.fillStyle=felt;
   ctx.fillRect(T.L, T.top, T.w, T.h);
 
-  // نسيج خفيف
-  ctx.strokeStyle = 'rgba(0,0,0,0.04)';
-  ctx.lineWidth = 1;
-  for (let i=1;i<7;i++) {
-    const y = T.top + (T.h/7)*i;
-    ctx.beginPath(); ctx.moveTo(T.L+6,y); ctx.lineTo(T.R-6,y); ctx.stroke();
-  }
+  // خط المنتصف الخفيف
+  ctx.strokeStyle='rgba(255,255,255,0.06)';
+  ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(T.L+8,T.cy); ctx.lineTo(T.R-8,T.cy); ctx.stroke();
 
-  // الجيوب الدائرية الدقيقة
-  pockets().forEach(p => {
-    // حلقة خارجية
-    ctx.fillStyle = '#1a120c';
-    ctx.beginPath(); ctx.arc(p.x, p.y, pocketR()+2, 0, 7); ctx.fill();
-    // الثقب
-    ctx.fillStyle = '#050505';
-    ctx.beginPath(); ctx.arc(p.x, p.y, pocketR(), 0, 7); ctx.fill();
-    // عمق
-    ctx.fillStyle = '#000';
-    ctx.beginPath(); ctx.arc(p.x, p.y, pocketR()*0.65, 0, 7); ctx.fill();
+  // الجيوب السوداء الدائرية
+  pockets().forEach(p=>{
+    ctx.fillStyle='#111';
+    ctx.beginPath(); ctx.arc(p.x,p.y,pR()+1.5,0,7); ctx.fill();
+    ctx.fillStyle='#000';
+    ctx.beginPath(); ctx.arc(p.x,p.y,pR()*0.7,0,7); ctx.fill();
   });
 }
 
-function roundRect(x,y,w,h,r) {
+function roundRect(x,y,w,h,r){
   ctx.beginPath();
-  ctx.moveTo(x+r,y);
-  ctx.arcTo(x+w,y,x+w,y+h,r);
-  ctx.arcTo(x+w,y+h,x,y+h,r);
-  ctx.arcTo(x,y+h,x,y,r);
-  ctx.arcTo(x,y,x+w,y,r);
-  ctx.closePath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
 }
 
-function drawBall(b) {
-  if (b.pocketed) return;
-  const r = b.r;
-
-  // ظل ناعم
-  ctx.fillStyle = 'rgba(0,0,0,0.32)';
-  ctx.beginPath();
-  ctx.ellipse(b.x+1.8, b.y+2.8, r*0.92, r*0.5, 0, 0, 7);
-  ctx.fill();
-
-  // الجسم اللامع
-  const g = ctx.createRadialGradient(
-    b.x - r*0.38, b.y - r*0.38, r*0.05,
-    b.x, b.y, r
-  );
-  const c = COL[b.n];
-  if (b.stripe) {
-    g.addColorStop(0, '#ffffff');
-    g.addColorStop(0.42, '#f8f8f8');
-    g.addColorStop(0.5, c);
-    g.addColorStop(1, shade(c,-35));
-  } else {
-    g.addColorStop(0, shade(c,55));
-    g.addColorStop(0.45, c);
-    g.addColorStop(1, shade(c,-45));
+function drawBall(b){
+  if(b.pocketed) return;
+  const r=b.r;
+  // ظل
+  ctx.fillStyle='rgba(0,0,0,0.3)';
+  ctx.beginPath(); ctx.ellipse(b.x+1.5,b.y+2.5,r*0.9,r*0.48,0,0,7); ctx.fill();
+  // جسم لامع
+  const g=ctx.createRadialGradient(b.x-r*0.35,b.y-r*0.35,r*0.08,b.x,b.y,r);
+  const c=COL[b.n];
+  if(b.stripe){
+    g.addColorStop(0,'#fff'); g.addColorStop(0.45,'#f8f8f8');
+    g.addColorStop(0.52,c); g.addColorStop(1,shade(c,-30));
+  }else{
+    g.addColorStop(0,shade(c,50)); g.addColorStop(0.5,c); g.addColorStop(1,shade(c,-40));
   }
-  ctx.fillStyle = g;
-  ctx.beginPath(); ctx.arc(b.x, b.y, r, 0, 7); ctx.fill();
-
-  // دائرة الرقم
-  if (b.n > 0) {
-    ctx.fillStyle = b.stripe ? c : '#fff';
-    ctx.beginPath(); ctx.arc(b.x, b.y, r*0.46, 0, 7); ctx.fill();
-    ctx.fillStyle = b.stripe ? '#fff' : '#111';
-    ctx.font = `bold ${Math.round(r*0.82)}px Arial`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(b.n, b.x, b.y+0.5);
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(b.x,b.y,r,0,7); ctx.fill();
+  // رقم
+  if(b.n>0){
+    ctx.fillStyle=b.stripe?c:'#fff';
+    ctx.beginPath(); ctx.arc(b.x,b.y,r*0.45,0,7); ctx.fill();
+    ctx.fillStyle=b.stripe?'#fff':'#111';
+    ctx.font=`bold ${Math.round(r*0.8)}px Arial`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(b.n,b.x,b.y+0.5);
   }
-
-  // لمعان معدني
-  ctx.fillStyle = 'rgba(255,255,255,0.4)';
-  ctx.beginPath();
-  ctx.ellipse(b.x-r*0.32, b.y-r*0.38, r*0.26, r*0.16, -0.6, 0, 7);
-  ctx.fill();
+  // لمعان
+  ctx.fillStyle='rgba(255,255,255,0.38)';
+  ctx.beginPath(); ctx.ellipse(b.x-r*0.3,b.y-r*0.36,r*0.25,r*0.15,-0.5,0,7); ctx.fill();
 }
-
-function shade(hex, p) {
-  const n = parseInt(hex.slice(1),16);
-  let r=(n>>16)+p, g=((n>>8)&255)+p, b=(n&255)+p;
+function shade(h,p){
+  const n=parseInt(h.slice(1),16);
+  let r=(n>>16)+p,g=((n>>8)&255)+p,b=(n&255)+p;
   return `rgb(${Math.max(0,Math.min(255,r))},${Math.max(0,Math.min(255,g))},${Math.max(0,Math.min(255,b))})`;
 }
 
-function drawCue() {
-  if (state==='sim' || !cue || cue.pocketed) return;
+function drawCue(){
+  if(state==='sim'||!cue||cue.pocketed) return;
+  const r=cue.r, a=aim;
+  const back=(state==='pulling'||state==='aim')?pull:0;
+  const fwd=state==='shooting'?(1-cueAnim)*18:0;
+  const tipD=r+2+back+fwd;
+  const tipX=cue.x-Math.cos(a)*tipD;
+  const tipY=cue.y-Math.sin(a)*tipD;
+  const len=Math.min(W,H)*0.48;
+  const bx=tipX-Math.cos(a)*len;
+  const by=tipY-Math.sin(a)*len;
 
-  const r = cue.r;
-  const a = aim;
-  const back = (state==='pulling'||state==='aim') ? pull : 0;
-  const fwd = state==='shooting' ? (1-cueAnim)*20 : 0;
-
-  const tipDist = r + 3 + back + fwd;
-  const tipX = cue.x - Math.cos(a)*tipDist;
-  const tipY = cue.y - Math.sin(a)*tipDist;
-  const len = Math.min(W,H)*0.52;
-  const bx = tipX - Math.cos(a)*len;
-  const by = tipY - Math.sin(a)*len;
-
-  ctx.save();
-  ctx.lineCap = 'round';
-
+  ctx.save(); ctx.lineCap='round';
   // ظل
-  ctx.strokeStyle = 'rgba(0,0,0,0.28)';
-  ctx.lineWidth = 8;
+  ctx.strokeStyle='rgba(0,0,0,0.25)'; ctx.lineWidth=7;
   ctx.beginPath(); ctx.moveTo(bx+2,by+3); ctx.lineTo(tipX+2,tipY+3); ctx.stroke();
-
-  // جسم العصا الفاخر
-  const cg = ctx.createLinearGradient(bx,by,tipX,tipY);
-  cg.addColorStop(0, '#1f120b');
-  cg.addColorStop(0.12, '#4a2f18');
-  cg.addColorStop(0.55, '#c9a66b');
-  cg.addColorStop(0.88, '#e8d4a8');
-  cg.addColorStop(0.95, '#f0e0c0');
-  cg.addColorStop(1, '#2a5a9e');
-  ctx.strokeStyle = cg;
-  ctx.lineWidth = 5.8;
+  // العصا
+  const cg=ctx.createLinearGradient(bx,by,tipX,tipY);
+  cg.addColorStop(0,'#2a1810'); cg.addColorStop(0.15,'#5c3a1e');
+  cg.addColorStop(0.7,'#d4b483'); cg.addColorStop(0.92,'#e8d5b0'); cg.addColorStop(1,'#2c5aa0');
+  ctx.strokeStyle=cg; ctx.lineWidth=5.2;
   ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(tipX,tipY); ctx.stroke();
-
-  // حلقات ذهبية مرصعة
-  ctx.strokeStyle = '#d4af37';
-  ctx.lineWidth = 2.2;
-  [0.10,0.16,0.22,0.82,0.88].forEach(t => {
-    const rx = bx+(tipX-bx)*t, ry = by+(tipY-by)*t;
-    ctx.beginPath(); ctx.arc(rx,ry,3.8,0,7); ctx.stroke();
+  // حلقات
+  ctx.strokeStyle='#c9a84c'; ctx.lineWidth=2;
+  [0.12,0.18,0.85].forEach(t=>{
+    const rx=bx+(tipX-bx)*t, ry=by+(tipY-by)*t;
+    ctx.beginPath(); ctx.arc(rx,ry,3.5,0,7); ctx.stroke();
   });
-
-  // الرأس
-  ctx.fillStyle = '#1e4a8c';
-  ctx.beginPath(); ctx.arc(tipX,tipY,3.8,0,7); ctx.fill();
-  ctx.fillStyle = '#3a7ad9';
-  ctx.beginPath(); ctx.arc(tipX-0.8,tipY-0.8,1.6,0,7); ctx.fill();
-
+  // رأس
+  ctx.fillStyle='#2a5a9e'; ctx.beginPath(); ctx.arc(tipX,tipY,3.5,0,7); ctx.fill();
   ctx.restore();
 
-  // خط التوجيه المتقطع الاحترافي
-  if (showAim && (state==='aim'||state==='pulling')) {
-    const len2 = Math.max(T.w,T.h)*1.5;
-    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-    ctx.lineWidth = 1.6;
-    ctx.setLineDash([7,5]);
+  // خط التوجيه الأبيض المتقطع
+  if(showAim && (state==='aim'||state==='pulling')){
+    const L=Math.max(T.w,T.h)*1.4;
+    ctx.strokeStyle='rgba(255,255,255,0.92)';
+    ctx.lineWidth=1.5; ctx.setLineDash([6,5]);
     ctx.beginPath();
-    ctx.moveTo(cue.x+Math.cos(a)*(r+4), cue.y+Math.sin(a)*(r+4));
-    ctx.lineTo(cue.x+Math.cos(a)*len2, cue.y+Math.sin(a)*len2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // تنبؤ الاصطدام
-    const hit = firstHit(a);
-    if (hit) {
-      ctx.strokeStyle = 'rgba(255,210,80,0.75)';
-      ctx.lineWidth = 1.3;
-      ctx.setLineDash([4,4]);
-      ctx.beginPath();
-      ctx.moveTo(hit.x,hit.y);
-      ctx.lineTo(hit.x+hit.nx*48, hit.y+hit.ny*48);
-      ctx.stroke();
-      ctx.setLineDash([]);
-      // نقطة الاصطدام
-      ctx.fillStyle = 'rgba(255,210,80,0.6)';
-      ctx.beginPath(); ctx.arc(hit.x,hit.y,3,0,7); ctx.fill();
-    }
+    ctx.moveTo(cue.x+Math.cos(a)*(r+3), cue.y+Math.sin(a)*(r+3));
+    ctx.lineTo(cue.x+Math.cos(a)*L, cue.y+Math.sin(a)*L);
+    ctx.stroke(); ctx.setLineDash([]);
   }
 }
 
-function firstHit(a) {
-  const dx=Math.cos(a), dy=Math.sin(a);
-  let best=null, bestT=1e9;
-  for (const b of balls) {
-    if (b.pocketed||b.isCue) continue;
-    const ox=cue.x-b.x, oy=cue.y-b.y;
-    const A=dx*dx+dy*dy, B=2*(ox*dx+oy*dy), C=ox*ox+oy*oy-(cue.r+b.r)**2;
-    const disc=B*B-4*A*C;
-    if (disc<0) continue;
-    const t=(-B-Math.sqrt(disc))/(2*A);
-    if (t>0.8 && t<bestT) {
-      bestT=t;
-      const hx=cue.x+dx*t, hy=cue.y+dy*t;
-      best={x:hx,y:hy,nx:(hx-b.x)/(cue.r+b.r),ny:(hy-b.y)/(cue.r+b.r)};
+/* ========== الفيزياء ========== */
+function physics(dt){
+  const act=balls.filter(b=>!b.pocketed);
+  const fric=Math.pow(0.986,dt*60), wR=0.76, bR=0.93;
+  act.forEach(b=>{b.x+=b.vx*dt; b.y+=b.vy*dt; b.vx*=fric; b.vy*=fric;});
+  for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++){
+    const a=act[i],b=act[j];
+    const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),min=a.r+b.r;
+    if(d<min&&d>0.001){
+      const nx=dx/d,ny=dy/d,ov=min-d;
+      a.x-=nx*ov*0.5; a.y-=ny*ov*0.5; b.x+=nx*ov*0.5; b.y+=ny*ov*0.5;
+      const imp=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
+      if(imp>0){const j=imp*bR; a.vx-=j*nx;a.vy-=j*ny; b.vx+=j*nx;b.vy+=j*ny;}
     }
   }
-  return best;
-}
-
-/* ==================== الفيزياء الدقيقة ==================== */
-function physics(dt) {
-  const act = balls.filter(b=>!b.pocketed);
-  const fric = Math.pow(0.986, dt*60);
-  const wRest=0.77, bRest=0.935;
-
-  act.forEach(b=>{
-    b.x+=b.vx*dt; b.y+=b.vy*dt;
-    b.vx*=fric; b.vy*=fric;
-  });
-
-  // اصطدام
-  for (let i=0;i<act.length;i++){
-    for (let j=i+1;j<act.length;j++){
-      const a=act[i], b=act[j];
-      const dx=b.x-a.x, dy=b.y-a.y, dist=Math.hypot(dx,dy);
-      const minD=a.r+b.r;
-      if (dist<minD && dist>0.001){
-        const nx=dx/dist, ny=dy/dist, ov=minD-dist;
-        a.x-=nx*ov*0.5; a.y-=ny*ov*0.5;
-        b.x+=nx*ov*0.5; b.y+=ny*ov*0.5;
-        const imp=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
-        if (imp>0){
-          const j=imp*bRest;
-          a.vx-=j*nx; a.vy-=j*ny;
-          b.vx+=j*nx; b.vy+=j*ny;
-        }
-      }
-    }
-  }
-
-  // جدران + جيوب
   const pad=2, pks=pockets();
   act.forEach(b=>{
-    for (const p of pks){
-      if (Math.hypot(b.x-p.x,b.y-p.y)<pocketR()-b.r*0.2){
-        pocket(b); return;
-      }
-    }
-    if (b.x<T.L+b.r+pad){b.x=T.L+b.r+pad; b.vx*=-wRest;}
-    else if (b.x>T.R-b.r-pad){b.x=T.R-b.r-pad; b.vx*=-wRest;}
-    if (b.y<T.top+b.r+pad){b.y=T.top+b.r+pad; b.vy*=-wRest;}
-    else if (b.y>T.bot-b.r-pad){b.y=T.bot-b.r-pad; b.vy*=-wRest;}
+    for(const p of pks) if(Math.hypot(b.x-p.x,b.y-p.y)<pR()-b.r*0.2){pocket(b);return;}
+    if(b.x<T.L+b.r+pad){b.x=T.L+b.r+pad;b.vx*=-wR;}
+    else if(b.x>T.R-b.r-pad){b.x=T.R-b.r-pad;b.vx*=-wR;}
+    if(b.y<T.top+b.r+pad){b.y=T.top+b.r+pad;b.vy*=-wR;}
+    else if(b.y>T.bot-b.r-pad){b.y=T.bot-b.r-pad;b.vy*=-wR;}
   });
-
-  // توقف؟
-  if (!act.some(b=>b.vx*b.vx+b.vy*b.vy>1.2) && state==='sim'){
-    endTurn();
-  }
+  if(!act.some(b=>b.vx*b.vx+b.vy*b.vy>1.1) && state==='sim') endTurn();
 }
 
-function pocket(b) {
-  if (b.pocketed) return;
+function pocket(b){
+  if(b.pocketed) return;
   b.pocketed=true; b.vx=b.vy=0;
-  if (b.isCue) return;
-
-  if (b.eight) {
-    const left = balls.filter(x=>!x.pocketed&&!x.isCue&&!x.eight).length;
-    if (left===0) showMsg(turn===1 ? 'أحسنت! فزت 🎉' : 'خسرت...');
-    else showMsg('سقوط الـ 8 مبكراً!');
-    setTimeout(()=>{ rack(); turn=1; updateUI(); }, 2200);
-    return;
-  }
-
-  // تعيين النوع عند أول سقوط
-  if (firstPocket) {
-    firstPocket=false;
-    pType[turn] = b.stripe ? 'stripe' : 'solid';
-    pType[3-turn] = b.stripe ? 'solid' : 'stripe';
-    updateUI();
+  if(b.isCue) return;
+  if(b.eight){
+    const left=balls.filter(x=>!x.pocketed&&!x.isCue&&!x.eight).length;
+    showMsg(left===0?(turn===1?'أحسنت! فزت 🎉':'خسرت'):'سقوط الـ 8 مبكراً');
+    setTimeout(()=>{rack();turn=1;updateTurnUI();},2200);
   }
 }
 
-function endTurn() {
+function endTurn(){
   state='aim';
-  if (cue.pocketed) {
-    cue.pocketed=false;
-    cue.x=T.cx; cue.y=T.bot-T.h*0.20;
-    cue.vx=cue.vy=0;
+  if(cue.pocketed){
+    cue.pocketed=false; cue.x=T.cx; cue.y=T.bot-T.h*0.18; cue.vx=cue.vy=0;
     showMsg('خطأ! الكرة البيضاء عادت');
   }
-  // تبديل الدور
-  turn = turn===1 ? 2 : 1;
-  updateUI();
-  if (mode==='cpu' && turn===2) setTimeout(cpuShot, 650);
+  turn = turn===1?2:1;
+  updateTurnUI();
+  if(mode==='cpu' && turn===2) setTimeout(cpuShot,600);
 }
 
-/* ---------- الذكاء الاصطناعي ---------- */
-function cpuShot() {
-  if (turn!==2 || state!=='aim') return;
-  const targets = balls.filter(b=>!b.pocketed && !b.isCue && !b.eight);
-  if (!targets.length) return;
-
-  // يختار أقرب كرة مناسبة
-  let best=null, bestD=1e9;
-  targets.forEach(b=>{
-    const d=Math.hypot(b.x-cue.x,b.y-cue.y);
-    if (d<bestD){bestD=d; best=b;}
-  });
-  if (!best) return;
-
-  // زاوية نحو الكرة + انحراف بسيط
-  let ang = Math.atan2(best.y-cue.y, best.x-cue.x);
-  ang += (Math.random()-0.5)*0.18;
-  aim = ang;
-  power = 0.38 + Math.random()*0.35;
-  pull = power * 50;
-  updatePower();
-
-  setTimeout(()=>{
-    state='shooting'; cueAnim=0;
-  }, 380);
+function cpuShot(){
+  if(turn!==2||state!=='aim') return;
+  const tg=balls.filter(b=>!b.pocketed&&!b.isCue);
+  if(!tg.length) return;
+  let best=tg[0], bd=1e9;
+  tg.forEach(b=>{const d=Math.hypot(b.x-cue.x,b.y-cue.y); if(d<bd){bd=d;best=b;}});
+  aim=Math.atan2(best.y-cue.y,best.x-cue.x)+(Math.random()-0.5)*0.15;
+  power=0.4+Math.random()*0.3; pull=power*48; updatePower();
+  setTimeout(()=>{state='shooting';cueAnim=0;},350);
 }
 
-/* ---------- واجهة ---------- */
-function updateUI() {
-  turnTxt.textContent = turn===1 ? 'Your Turn' : (mode==='cpu'?'CPU Turn':'Player 2');
-  document.getElementById('p1-type').textContent = pType[1]==='solid'?'● Solids':pType[1]==='stripe'?'◎ Stripes':'—';
-  document.getElementById('p2-type').textContent = pType[2]==='solid'?'● Solids':pType[2]==='stripe'?'◎ Stripes':'—';
-  document.getElementById('p2-name').textContent = mode==='cpu'?'CPU':'Player 2';
-  document.getElementById('p2-avatar').textContent = mode==='cpu'?'🤖':'👤';
+function updateTurnUI(){
+  turnPill.textContent = turn===1?'دورك':(mode==='cpu'?'دور CPU':'دور اللاعب 2');
+  tableBanner.textContent = turn===1?'دورك للبدء':(mode==='cpu'?'دور الروبوت':'دور اللاعب 2');
+  document.getElementById('p2-nm').textContent = mode==='cpu'?'CPU':'Player 2';
+  document.getElementById('p2-av').textContent = mode==='cpu'?'🤖':'👤';
 }
-function updatePower(){ powerFill.style.height=(power*100)+'%'; }
-
+function updatePower(){powerFill.style.height=(power*100)+'%';}
 let msgT;
-function showMsg(t){
-  msgEl.textContent=t; msgEl.style.display='block';
-  clearTimeout(msgT); msgT=setTimeout(()=>msgEl.style.display='none',1800);
-}
+function showMsg(t){msgEl.textContent=t;msgEl.style.display='block';clearTimeout(msgT);msgT=setTimeout(()=>msgEl.style.display='none',1700);}
 
-/* ==================== التحكم باللمس المباشر ==================== */
+/* ========== التحكم الحصري بالعصا ========== */
 let dragging=false;
-
-canvas.addEventListener('pointerdown', e=>{
-  if (state!=='aim' && state!=='pulling') return;
-  if (mode==='cpu' && turn===2) return;
+canvas.addEventListener('pointerdown',e=>{
+  if(state!=='aim'&&state!=='pulling') return;
+  if(mode==='cpu'&&turn===2) return;
   dragging=true;
-  const x=e.clientX, y=e.clientY;
-  if (cue && !cue.pocketed) {
-    aim = Math.atan2(y-cue.y, x-cue.x);
-  }
+  if(cue&&!cue.pocketed) aim=Math.atan2(e.clientY-cue.y,e.clientX-cue.x);
 });
-
-canvas.addEventListener('pointermove', e=>{
-  if (!dragging || (state!=='aim'&&state!=='pulling')) return;
-  if (mode==='cpu' && turn===2) return;
-  const x=e.clientX, y=e.clientY;
-  if (!cue||cue.pocketed) return;
-
-  // توجيه مباشر باللمس حول الكرة
-  aim = Math.atan2(y-cue.y, x-cue.x);
-
+canvas.addEventListener('pointermove',e=>{
+  if(!dragging||(state!=='aim'&&state!=='pulling')) return;
+  if(mode==='cpu'&&turn===2) return;
+  if(!cue||cue.pocketed) return;
+  // توجيه مباشر بتحريك العصا
+  aim=Math.atan2(e.clientY-cue.y,e.clientX-cue.x);
   // سحب للخلف = قوة
-  const dx=x-cue.x, dy=y-cue.y;
-  const proj = -(dx*Math.cos(aim)+dy*Math.sin(aim));
-  pull = Math.max(0, Math.min(55, proj - cue.r - 4));
-  power = Math.min(1, pull/50);
-  state = power>0.04 ? 'pulling' : 'aim';
+  const dx=e.clientX-cue.x, dy=e.clientY-cue.y;
+  const proj=-(dx*Math.cos(aim)+dy*Math.sin(aim));
+  pull=Math.max(0,Math.min(52,proj-cue.r-3));
+  power=Math.min(1,pull/48);
+  state=power>0.05?'pulling':'aim';
   updatePower();
-  if (navigator.vibrate && power>0.12) navigator.vibrate(5);
+  if(navigator.vibrate&&power>0.1) navigator.vibrate(5);
 });
-
-canvas.addEventListener('pointerup', ()=>{
-  if (!dragging) return;
+canvas.addEventListener('pointerup',()=>{
+  if(!dragging) return;
   dragging=false;
-  if (state==='pulling' && power>0.06) {
+  if(state==='pulling'&&power>0.07){
     state='shooting'; cueAnim=0;
-    if (navigator.vibrate) navigator.vibrate(Math.min(50,12+power*45));
-  } else {
-    state='aim'; power=0; pull=0; updatePower();
-  }
+    if(navigator.vibrate) navigator.vibrate(Math.min(48,10+power*40));
+  }else{state='aim';power=0;pull=0;updatePower();}
 });
-canvas.addEventListener('pointercancel', ()=>{ dragging=false; });
+canvas.addEventListener('pointercancel',()=>{dragging=false;});
 
 /* أزرار */
-document.getElementById('eye-btn').onclick = ()=> showAim=!showAim;
-document.getElementById('menu-btn').onclick = ()=>{
-  if (confirm('العودة لقائمة الأوضاع؟')) {
-    gameStarted=false;
-    ui.style.display='none';
-    modeScreen.style.display='flex';
-  }
-};
-
-document.getElementById('btn-pvp').onclick = ()=>{
-  mode='pvp'; startGame();
-};
-document.getElementById('btn-cpu').onclick = ()=>{
-  mode='cpu'; startGame();
-};
-
-function startGame() {
-  modeScreen.style.display='none';
-  ui.style.display='block';
-  gameStarted=true;
-  turn=1;
-  rack();
-  showMsg(mode==='cpu' ? 'أنت ضد الروبوت' : 'لعب ثنائي - تناوب الأدوار');
+document.getElementById('eye-btn').onclick=()=>showAim=!showAim;
+document.getElementById('aim-up').onclick=()=>{if(state==='aim'||state==='pulling')aim-=0.035;};
+document.getElementById('aim-dn').onclick=()=>{if(state==='aim'||state==='pulling')aim+=0.035;};
+document.getElementById('back-btn').onclick=()=>{started=false;ui.style.display='none';modeScreen.style.display='flex';};
+document.getElementById('menu-btn').onclick=()=>{if(confirm('إعادة اللعبة؟')){rack();turn=1;updateTurnUI();}};
+document.getElementById('btn-pvp').onclick=()=>{mode='pvp';start();};
+document.getElementById('btn-cpu').onclick=()=>{mode='cpu';start();};
+function start(){
+  modeScreen.style.display='none'; ui.style.display='block';
+  started=true; turn=1; rack();
+  showMsg(mode==='cpu'?'أنت ضد الروبوت':'لعب ثنائي');
 }
+document.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
 
-document.addEventListener('touchmove', e=>e.preventDefault(), {passive:false});
-
-/* ==================== الحلقة ==================== */
-function loop(now) {
+/* الحلقة */
+function loop(now){
   requestAnimationFrame(loop);
-  const dt = Math.min((now-lastT)/1000, 0.033);
-  lastT = now;
-
-  if (!gameStarted) return;
-
-  if (state==='shooting') {
-    cueAnim += dt*10;
-    if (cueAnim>=1) {
-      const spd = power * 980;
-      cue.vx = Math.cos(aim)*spd;
-      cue.vy = Math.sin(aim)*spd;
-      power=0; pull=0; updatePower();
-      state='sim';
+  const dt=Math.min((now-lastT)/1000,0.033); lastT=now;
+  if(!started) return;
+  if(state==='shooting'){
+    cueAnim+=dt*9.5;
+    if(cueAnim>=1){
+      const spd=power*960;
+      cue.vx=Math.cos(aim)*spd; cue.vy=Math.sin(aim)*spd;
+      power=0;pull=0;updatePower(); state='sim';
     }
   }
-
-  if (state==='sim') {
-    for (let i=0;i<4;i++) physics(dt/4);
-  }
-
-  drawBG();
-  drawTable();
-  balls.forEach(drawBall);
-  drawCue();
+  if(state==='sim') for(let i=0;i<4;i++) physics(dt/4);
+  drawBG(); drawTable(); balls.forEach(drawBall); drawCue();
 }
 requestAnimationFrame(loop);
 </script>
